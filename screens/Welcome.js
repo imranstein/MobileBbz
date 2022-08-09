@@ -11,8 +11,12 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AuthContext} from '../context/AuthContext';
 import Login from './Login';
 import RegisterScreen from './RegisterScreen';
+import { useTranslation } from "react-i18next";
 
-const Welcome = ({navigation}) => {
+
+const Welcome = ({ navigation }) => {
+    const {t, } = useTranslation();
+  
   return (
     <ImageBackground
       source={require('../assets/background.png')}
@@ -22,19 +26,20 @@ const Welcome = ({navigation}) => {
       <View>
         <Text style={styles.welcome}>Welcome To BBZ!</Text>
         <Text style={styles.description}>
-          Login/SignUp to get your profile and stay updated with the upcoming
-          exams and news
+         {t('common:Login')}/{t('common:SignUp')} {t('common:ToGetYourProfileAndStayUpdatedWithTheUpcomingExamsAndNews')}
         </Text>
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate(Login)}>
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.buttonText}>{t('common:Login')}
+</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.signup}>
-        <Text style={{fontSize: 16}}>Do not have an account? </Text>
+        <Text style={{fontSize: 16}}>{t('common:DoNotHaveAnAccount')}</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-          <Text style={styles.signupButton}>Signup</Text>
+          <Text style={styles.signupButton}>{t('common:SignUp')}
+</Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity>
@@ -45,7 +50,7 @@ const Welcome = ({navigation}) => {
             textAlign: 'center',
             marginTop: '1%',
           }}>
-          Continue as a Guest
+          {t('common:ContinueAsAGuest')}
         </Text>
       </TouchableOpacity>
     </ImageBackground>

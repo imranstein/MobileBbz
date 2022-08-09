@@ -6,8 +6,19 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Icons from 'react-native-vector-icons/EvilIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import { useTranslation } from "react-i18next";
+
+const LANGUAGES = [
+  { code: "en", label: "English" },
+  { code: "de", label: "Deutsch" },
+];
 
 const ProfileScreen = () => {
+    const {t, i18n } = useTranslation();
+  const selectedLanguageCode = i18n.language;
+const setLanguage = (code) => {
+    return i18n.changeLanguage(code);
+  };
   const navigation = useNavigation();
   const {userInfo, logout} = useContext(AuthContext);
   return (
@@ -22,11 +33,28 @@ const ProfileScreen = () => {
               IconStyle={styles.icon}
             />
           </View>
-          {userInfo.name}
+            {userInfo.name}
           {/* user */}
         </Text>
       </View>
       <View style={styles.list}>
+        {LANGUAGES.map((language) => {
+        const selectedLanguage = language.code === selectedLanguageCode;
+return (
+          <TouchableOpacity
+            key={language.code}
+            style={styles.buttonContainer}
+            disabled={selectedLanguage}
+            onPress={() => setLanguage(language.code)}
+          >
+            <Text
+              style={[selectedLanguage ? styles.selectedText : styles.text]}
+            >
+              {language.label}
+            </Text>
+          </TouchableOpacity>
+        );
+      })}
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('My Profile');
@@ -38,7 +66,7 @@ const ProfileScreen = () => {
               color="#1a6997"
               style={styles.icon}
             />
-            My Profile
+               {t('common:MyProfile')}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => {}}>
@@ -49,7 +77,7 @@ const ProfileScreen = () => {
               color="#1a6997"
               style={styles.icon}
             />
-            Booking History
+             {t('common:BookingHistory')}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -61,7 +89,7 @@ const ProfileScreen = () => {
               color="#1a6997"
               style={styles.icon}
             />
-            Change Password
+             {t('common:ChangePassword')}
           </Text>
         </TouchableOpacity>
       </View>
@@ -74,9 +102,10 @@ const ProfileScreen = () => {
               color="red"
               style={styles.icon}
             />
-            Log Out
+             {t('common:LogOut')}
           </Text>
         </TouchableOpacity>
+
       </View>
     </View>
   );

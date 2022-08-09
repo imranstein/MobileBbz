@@ -6,6 +6,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ProfileScreen from './ProfileScreen';
 import SearchPage from './SearchScreen';
+// react-native-vector-icons/Ionicons otherwise.
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Icons from 'react-native-vector-icons/EvilIcons';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,7 +21,25 @@ const HomeScreen = () => {
     //   <Text style={styles.welcome}>Welcome {userInfo.name}</Text>
     //   <Button title="Logout" color="red" onPress={logout} />
     // </View>
-    <Tab.Navigator>
+    <Tab.Navigator
+    screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+
+            if (route.name === 'Search') {
+              iconName = focused
+                ? 'ios-reader-outline'
+                : 'ios-reader';
+            } else if (route.name === 'Profile') {
+              iconName = focused ? 'ios-person-circle-outline' : 'ios-person-circle-sharp';
+            }
+
+            // You can return any component that you like here!
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+          tabBarActiveTintColor: '#166795',
+          tabBarInactiveTintColor: 'gray',
+        })}>
       <Tab.Screen name="Search" component={SearchPage} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>

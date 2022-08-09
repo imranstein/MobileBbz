@@ -11,6 +11,7 @@ import {
 import CheckBox from '@react-native-community/checkbox';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {AuthContext} from '../context/AuthContext';
+import { t } from 'i18next';
 
 const RegisterScreen = ({navigation}) => {
   const [first_name, setFirstName] = useState(null);
@@ -36,7 +37,7 @@ const RegisterScreen = ({navigation}) => {
             <TextInput
               style={styles.input}
               value={first_name}
-              placeholder="Enter FirstName"
+              placeholder={t('common:FirstName')}
               onChangeText={text => setFirstName(text)}
             />
             <TextInput
@@ -51,7 +52,7 @@ const RegisterScreen = ({navigation}) => {
                 width: 160,
               }}
               value={last_name}
-              placeholder="Enter LastName"
+              placeholder={t('common:LastName')}
               onChangeText={text => setLastName(text)}
             />
           </View>
@@ -59,20 +60,20 @@ const RegisterScreen = ({navigation}) => {
           <TextInput
             style={styles.input}
             value={email}
-            placeholder="Enter email"
+            placeholder={t('common:Email')}
             onChangeText={text => setEmail(text)}
           />
           <TextInput
             style={styles.input}
             value={phone}
-            placeholder="Enter Phone"
+            placeholder={t('common:Phone')}
             onChangeText={text => setPhone(text)}
           />
 
           <TextInput
             style={styles.input}
             value={password}
-            placeholder="Enter password"
+            placeholder={t('common:Password')}
             onChangeText={text => setPassword(text)}
             secureTextEntry
           />
@@ -91,7 +92,7 @@ const RegisterScreen = ({navigation}) => {
               onValueChange={newValue => setTerm(newValue)}
             />
             <Text style={{marginLeft: 10, fontSize: 15}}>
-              I have read and accept the terms and conditions
+              {t('common:IHaveReadAndAcceptTheTermsAndConditions')}
             </Text>
           </View>
           <Button
@@ -107,9 +108,9 @@ const RegisterScreen = ({navigation}) => {
               marginTop: 20,
               justifyContent: 'center',
             }}>
-            <Text>Already have an account? </Text>
+            <Text>{t('common:AlreadyHaveAnAccount')} </Text>
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-              <Text style={styles.link}>Login</Text>
+              <Text style={styles.link}>{t('common:Login')}</Text>
             </TouchableOpacity>
           </View>
         </View>

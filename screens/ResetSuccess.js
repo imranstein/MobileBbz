@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
+import { t } from 'i18next';
 
 const ResetSuccess = ({navigation}) => {
   return (
@@ -17,12 +18,12 @@ const ResetSuccess = ({navigation}) => {
       imageStyle={styles.ImageBackground}>
       <View style={styles.container}>
         <Text style={styles.text}>
-          We Have Emailed Your Password Reset Link to Your Registered E-mail
+          {t('common:EmailResetLink')}
         </Text>
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.buttonText}>{t('common:Login')}</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>

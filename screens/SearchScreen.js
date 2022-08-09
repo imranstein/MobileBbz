@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import {ScrollView} from 'react-native';
+import { t } from 'i18next';
 
 const SearchPage = () => {
   return (
@@ -15,15 +16,15 @@ const SearchPage = () => {
       <ScrollView>
         <View style={styles.header}>
           <ImageBackground source={require('../assets/searchBackground.png')}>
-            <Text style={styles.h1}>Book your Exam Now!</Text>
+            <Text style={styles.h1}>{t('common:BookYourExamNow')}</Text>
             <Text style={styles.h5}>
-              use the search filter to find specific courses faster and easier
+              {t('common:SearchPageTitle')}
             </Text>
           </ImageBackground>
         </View>
         <View style={styles.search}>
           <View style={styles.label}>
-            <Text style={styles.title}> Location ,Date Or Level</Text>
+            <Text style={styles.title}> {t('common:Location')} ,{t('common:Date')} Or {t('common:Level')}</Text>
             <View style={styles.titleHeader}>
               <TextInput style={styles.titleHeader} placeholder="Search" />
             </View>
@@ -32,7 +33,7 @@ const SearchPage = () => {
         </View>
         <View style={styles.searchButton}>
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Search</Text>
+            <Text style={styles.buttonText}>{t('common:Search')}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

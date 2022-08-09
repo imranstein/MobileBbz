@@ -10,6 +10,7 @@ import {
 import React from 'react';
 import {useState, useContext} from 'react';
 import {AuthContext} from '../context/AuthContext';
+import { t } from 'i18next';
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState(null);
@@ -27,14 +28,14 @@ const Login = ({navigation}) => {
         <View style={styles.loginContent}>
           <TextInput
             style={styles.textInput}
-            placeholder="email"
+            placeholder={t('common:Email')}
             onChangeText={text => setEmail(text)}
           />
         </View>
         <View>
           <TextInput
             style={styles.textInput}
-            placeholder="Password"
+            placeholder={t('common:Password')}
             onChangeText={text => setPassword(text)}
             secureTextEntry
           />
@@ -42,19 +43,19 @@ const Login = ({navigation}) => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate('Reset Your Password')}>
-          <Text style={styles.buttonText}>Forgot Password?</Text>
+          <Text style={styles.buttonText}>{t('common:ForgotPassword')}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.loginButton}
           onPress={() => {
             login(email, password);
           }}>
-          <Text style={styles.loginButtonText}>Login</Text>
+          <Text style={styles.loginButtonText}>{t('common:Login')}</Text>
         </TouchableOpacity>
         <View style={styles.signup}>
-          <Text>Do not have an account? </Text>
+          <Text>{t('common:DoNotHaveAnAccount')} </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={styles.signupButton}>Signup</Text>
+            <Text style={styles.signupButton}>{t('common:SignUp')}</Text>
           </TouchableOpacity>
         </View>
       </View>

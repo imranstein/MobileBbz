@@ -12,6 +12,7 @@ import {AuthContext} from '../context/AuthContext';
 import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
 import {BASE_URL} from '../config';
+import { t } from 'i18next';
 
 const ResetPassword = () => {
   const navigation = useNavigation();
@@ -49,12 +50,11 @@ const ResetPassword = () => {
       imageStyle={styles.ImageBackground}>
       <View style={styles.container}>
         <Text style={styles.text}>
-          Kindly insert your registered E-mail Address to continue to Reset your
-          password
+          {t('common:ResetPasswordMessage')}
         </Text>
         <TextInput
           style={styles.input}
-          placeholder="Enter E-mail Address"
+          placeholder={t('common:Email')}
           onChangeText={text => setEmail(text)}
         />
         <TouchableOpacity
@@ -62,7 +62,7 @@ const ResetPassword = () => {
           onPress={() => {
             PasswordReset();
           }}>
-          <Text style={styles.buttonText}>Send Password Reset Link</Text>
+          <Text style={styles.buttonText}>{t('common:SendPassword')}</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>

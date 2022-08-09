@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import React from 'react';
+import { t } from 'i18next';
 
 const AboutUs = () => {
   return (
@@ -15,35 +16,18 @@ const AboutUs = () => {
       <ScrollView>
         <View style={styles.header}>
           <ImageBackground source={require('../assets/searchBackground.png')}>
-            <Text style={styles.h1}>Know Who We Are!</Text>
+            <Text style={styles.h1}>{t('common:AboutUsTitle')}</Text>
           </ImageBackground>
         </View>
         <View style={styles.search}>
           <Text style={styles.description}>
-            The BBZ Language Schools are part of the Kiry Group of Companies,
-            which has been working continuously and successfully in the areas of
-            training, coaching and implementation of activation and placement
-            measures since 1987. As an integration course provider recognized by
-            the Federal Office for Migration and Refugees (BAMF), we offer
-            courses at all levels at our locations in Koblenz, Bonn,
-            Gelsenkirchen and Frankfurt am Main. Our services also include
-            job-related German language support.
+            {t('common:AboutUsFirstParagraph')}
           </Text>
           <Text style={styles.description}>
-            Whether it's a classic integration course with or without literacy
-            or specifically for second language learners, or job-related German
-            language support - our focus is always on the language learner. With
-            our needs-based German courses, experienced German language
-            specialists specifically promote the basic skills of reading,
-            listening, writing, and speaking.
+            {t('common:AboutUsSecondParagraph')}
           </Text>
           <Text style={styles.lastdescription}>
-            In addition, we deploy language support staff within various
-            placement-oriented measures, e.g. KomBer (job-related language
-            course with certificate), PerF or Aktivcenter as well as other
-            offers in which the practical use of the German language in a
-            professional context is trained or an initial assessment of German
-            language skills takes place.
+            {t('common:AboutUsThirdParagraph')}
           </Text>
         </View>
       </ScrollView>
