@@ -9,8 +9,11 @@ import {
 import React from 'react';
 import {ScrollView} from 'react-native';
 import { t } from 'i18next';
+import { useTranslation } from "react-i18next";
+
 
 const SearchPage = () => {
+  const { t } = useTranslation();
   return (
     <View style={styles.container}>
       <ScrollView>

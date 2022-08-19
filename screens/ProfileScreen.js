@@ -77,7 +77,7 @@ return (
               color="#1a6997"
               style={styles.icon}
             />
-             {t('common:BookingHistory')}
+             <Text style={{ marginRight:20 }}>{t('common:BookingHistory')}</Text>
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
