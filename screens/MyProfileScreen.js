@@ -5,8 +5,11 @@ import Icons from 'react-native-vector-icons/EvilIcons';
 import axios from 'axios';
 import { BASE_URL } from '../config';
 import { AuthContext } from '../context/AuthContext';
+import { useNavigation } from '@react-navigation/native';
+
 
 const MyProfileScreen = (props) => {
+  const navigation = useNavigation();
   const { userInfo } = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [first_name, setFirstName] = useState('');
@@ -23,7 +26,6 @@ const MyProfileScreen = (props) => {
 
 
   const UpdateProfile = async function (): Promise<boolena> {
-    const emailValue = email;
 
 
     return await axios
@@ -177,14 +179,18 @@ const MyProfileScreen = (props) => {
             </View>
           </View>
           <View style={styles.inputs}>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Change Password')}>
               <Text style={styles.changePassword}>{t('common:ChangePassword')}</Text>
             </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
       <View style={styles.submit}>
-        <TouchableOpacity onPress={() => { UpdateProfile(); }}>
+        <TouchableOpacity
+          onPress={() => {
+            UpdateProfile();
+          }}>
           <Text style={styles.submitLabel}>{t('common:SaveChanges')}</Text>
         </TouchableOpacity>
       </View>

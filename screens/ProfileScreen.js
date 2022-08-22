@@ -1,7 +1,7 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React, {useContext} from 'react';
-import {AuthContext} from '../context/AuthContext';
-import {useNavigation} from '@react-navigation/native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React, { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icons from 'react-native-vector-icons/EvilIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -14,18 +14,18 @@ const LANGUAGES = [
 ];
 
 const ProfileScreen = () => {
-    const {t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const selectedLanguageCode = i18n.language;
-const setLanguage = (code) => {
+  const setLanguage = (code) => {
     return i18n.changeLanguage(code);
   };
   const navigation = useNavigation();
-  const {userInfo, logout} = useContext(AuthContext);
+  const { userInfo, logout } = useContext(AuthContext);
   return (
     <View style={styles.container}>
       <View style={styles.profile}>
         <Text style={styles.name}>
-          <View style={{marginTop: 100}}>
+          <View style={{ marginTop: 100 }}>
             <Icons
               name="user"
               size={40}
@@ -33,77 +33,93 @@ const setLanguage = (code) => {
               IconStyle={styles.icon}
             />
           </View>
-            {userInfo.name}
+          {userInfo.name}
           {/* user */}
         </Text>
       </View>
       <View style={styles.list}>
         {LANGUAGES.map((language) => {
-        const selectedLanguage = language.code === selectedLanguageCode;
-return (
-          <TouchableOpacity
-            key={language.code}
-            style={styles.buttonContainer}
-            disabled={selectedLanguage}
-            onPress={() => setLanguage(language.code)}
-          >
-            <Text
-              style={[selectedLanguage ? styles.selectedText : styles.text]}
+          const selectedLanguage = language.code === selectedLanguageCode;
+          return (
+            <TouchableOpacity
+              key={language.code}
+              style={styles.buttonContainer}
+              disabled={selectedLanguage}
+              onPress={() => setLanguage(language.code)}
             >
-              {language.label}
-            </Text>
-          </TouchableOpacity>
-        );
-      })}
+              <Text
+                style={[selectedLanguage ? styles.selectedText : styles.text]}
+              >
+                {language.label}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('My Profile');
           }}>
-          <Text style={styles.label}>
-            <MaterialIcons
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.icon}><MaterialIcons
               name="tag-faces"
-              size={22}
+              size={25}
               color="#1a6997"
               style={styles.icon}
-            />
-               {t('common:MyProfile')}
-          </Text>
+            /></Text>
+            <Text style={styles.label}>
+
+              {t('common:MyProfile')}
+            </Text>
+          </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {}}>
-          <Text style={styles.label}>
-            <Entypo
-              name="back-in-time"
-              size={22}
-              color="#1a6997"
-              style={styles.icon}
-            />
-             <Text style={{ marginRight:20 }}>{t('common:BookingHistory')}</Text>
-          </Text>
+        <TouchableOpacity onPress={() => { }}>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.icon}>
+              <Entypo
+                name="back-in-time"
+                size={25}
+                color="#1a6997"
+                style={styles.icon}
+              />
+            </Text>
+            <Text style={styles.label}>
+
+              <Text style={{ marginRight: 20 }}>{t('common:BookingHistory')}</Text>
+            </Text>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate('Change Password')}>
-          <Text style={styles.label}>
-            <MaterialIcons
-              name="lock"
-              size={22}
-              color="#1a6997"
-              style={styles.icon}
-            />
-             {t('common:ChangePassword')}
-          </Text>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.icon}>
+              <MaterialIcons
+                name="lock"
+                size={25}
+                color="#1a6997"
+                style={styles.icon}
+              />
+            </Text>
+            <Text style={styles.label}>
+
+              {t('common:ChangePassword')}
+            </Text>
+          </View>
         </TouchableOpacity>
       </View>
       <View style={styles.logout}>
-        <TouchableOpacity onPress={() => {}}>
-          <Text style={styles.logoutLabel} onPress={logout}>
-            <MaterialIcons
-              name="power-settings-new"
-              size={22}
-              color="red"
-              style={styles.icon}
-            />
-             {t('common:LogOut')}
-          </Text>
+        <TouchableOpacity onPress={() => { }}>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.logoutIcon}>
+              <MaterialIcons
+                name="power-settings-new"
+                size={25}
+                color="red"
+              />
+            </Text>
+            <Text style={styles.logoutLabel} onPress={logout}>
+              {t('common:LogOut')}
+            </Text>
+          </View>
         </TouchableOpacity>
 
       </View>
@@ -121,7 +137,7 @@ const styles = StyleSheet.create({
   profile: {
     flex: 0.1,
     borderBottomWidth: 1,
-    borderBottomColor: '#fff',
+    borderBottomColor: '#cecece',
   },
   name: {
     fontSize: 28,
@@ -131,29 +147,42 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   label: {
-    fontSize: 16,
-    color: '#1a6997',
-    marginLeft: 50,
+    fontSize: 15,
+    color: '#000',
+    marginLeft: 20,
     marginTop: 27,
-    fontWeight: 'bold',
+    fontWeight: '500',
   },
   list: {
     flex: 0.3,
-    borderBottomWidth: 1,
-    borderBottomColor: '#999',
+    borderTopWidth: 0.1,
+    borderBottomColor: '#cecece',
   },
   logout: {
-    flex: 0.1,
-    borderBottomWidth: 1,
-    borderBottomColor: '#999',
+    flex: 0.15,
+    marginTop: '22%',
+    marginBottom: '2%',
+    borderTopWidth: 0.1,
+    borderBottomColor: '#cecece',
   },
   logoutLabel: {
-    fontSize: 18,
+    fontSize: 15,
     color: 'red',
-    marginLeft: 50,
+    marginLeft: 20,
     marginTop: 27,
+    fontWeight: '600',
+    marginBottom: '2%',
   },
   icon: {
-    marginRight: 100,
+    color: '#1a6997',
+    marginLeft: 30,
+    marginTop: 27,
+    fontWeight: 'bold',
   },
+  logoutIcon: {
+    color: 'red',
+    marginLeft: 30,
+    marginTop: 27,
+    fontWeight: 'bold',
+  }
 });

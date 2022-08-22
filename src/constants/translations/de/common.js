@@ -46,13 +46,21 @@ export default {
     FindUsHere: 'Sie können uns hier finden',
     EditPicture: 'Bild bearbeiten',
     SaveChanges: 'Änderungen speichern',
-    pleaseEnter: 'Bitte geben Sie',
+    PleaseEnter: 'Bitte geben Sie',
     Birthdate: 'Geburtsdatum',
     Address: 'Adresse',
     Street: 'Straße',
     City: 'Stadt',
     PostalCode: 'Postleitzahl',
     Country: 'Land',
+    CurrentPassword: 'Aktuelles Passwort',
+    NewPassword: 'Neues Passwort',
+    ConfirmNewPassword: 'Neues Passwort bestätigen',
+    LoveToHear: 'Wir freuen uns, von Ihnen zu hören!',
+    SendUsAMessage: 'Senden Sie uns eine Nachricht und wir antworten so schnell wie möglich',
+    Message: 'Nachricht',
+    YourName: 'Ihr Name',
+    SendMessage: 'Nachricht senden',
 
 
 }
