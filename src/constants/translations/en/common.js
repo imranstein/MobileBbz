@@ -59,4 +59,6 @@ export default {
     Message: 'Message',
     YourName: 'Your Name',
     SendMessage: 'Send Message',
+    UpcomingExams: 'Upcoming Exams',
+    UpcomingExamsSubTitle: 'All the coming exams For you',
 }

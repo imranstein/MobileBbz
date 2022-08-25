@@ -41,21 +41,21 @@ const NewsItem = ({ item }) => {
                     <Text style={styles.titleText}>{item.title}</Text>
                 </View>
             </TouchableOpacity>
-            {/* <View style={styles.description}>
-                    {/* <Text style={styles.descriptionText}>{item.content}</Text> 
-                    <RenderHtml
-                        contentWidth={width}
-                        source={{ html: item.content || '' }}
-                        enableExperimentalMarginCollapsing={true}
-                        enableExperimentalGhostLinesPrevention={true}
-                        baseStyle={{
-                            color: '#15181E',
-                            textAlign: 'justify',
-                            fontSize: '16px',
-                            marginRight: '4%',
-                        }}
-                    />
-                </View> */}
+            <View style={styles.description}>
+                {/* {/* <Text style={styles.descriptionText}>{item.content}</Text>  */}
+                <RenderHtml
+                    contentWidth={width}
+                    source={{ html: item.content || '' }}
+                    enableExperimentalMarginCollapsing={true}
+                    enableExperimentalGhostLinesPrevention={true}
+                    baseStyle={{
+                        color: '#15181E',
+                        textAlign: 'justify',
+                        fontSize: '16px',
+                        marginRight: '4%',
+                    }}
+                />
+            </View>
 
 
 
@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     description: {
         marginBottom: 20,
         flexDirection: 'row',
+        maxHeight: 82,
     },
     descriptionText: {
         fontSize: 14,

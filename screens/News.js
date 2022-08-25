@@ -33,7 +33,7 @@ export default class News extends React.Component {
         // console.log('res.data', res.data.data);
       })
       .catch(e => {
-        console.log(e); 5
+        console.log(e); 
       });
   }
   _renderItem = ({ item }) => {

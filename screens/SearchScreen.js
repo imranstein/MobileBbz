@@ -5,15 +5,43 @@ import {
   TextInput,
   TouchableOpacity,
   ImageBackground,
+  FlatList,
+  ScrollView
 } from 'react-native';
-import React from 'react';
-import {ScrollView} from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { LogBox } from 'react-native';
 import { t } from 'i18next';
 import { useTranslation } from "react-i18next";
+import axios from 'axios';
+import { BASE_URL } from '../config';
+import { AuthContext } from '../context/AuthContext';
+import { useNavigation } from '@react-navigation/native';
+import ExamItem from '../util/ExamItem';
+
 
 
 const SearchPage = () => {
+
+  const navigation = useNavigation();
+  const { userInfo } = useContext(AuthContext);
+  const [data, setData] = useState([]);
   const { t } = useTranslation();
+  useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested','TRenderHtml']);
+  }, [])
+  const getData = async () => {
+    const { data } = await axios
+      .get(`${BASE_URL}/exams`, {
+      });
+    setData(data.data);
+    console.log(data);
+  };
+  useEffect(() => {
+    getData();
+  }, [])
+  const renderItem = ({ item }) => {
+    return <ExamItem item={item} />;
+  };
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -39,6 +67,21 @@ const SearchPage = () => {
             <Text style={styles.buttonText}>{t('common:Search')}</Text>
           </TouchableOpacity>
         </View>
+        <View style={styles.list}>
+          <Text style={styles.listTitle}>{t('common:UpcomingExams')}</Text>
+          <Text style={styles.listSubTitle}>{t('common:UpcomingExamsSubTitle')}</Text>
+          <FlatList
+            style={{ backgroundColor: '#f5f5f5', padding: 5 }}
+            data={data}
+            numColumns={1}
+            keyExtractor={item => item.id.toString()}
+            // keyExtractor={(item, id) => {
+            //   return id.toString();
+            // }}
+            renderItem={renderItem}
+          />
+        </View>
+
       </ScrollView>
     </View>
   );
@@ -49,6 +92,7 @@ export default SearchPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#cecece',
   },
   header: {
     flex: 1,
@@ -120,5 +164,29 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  list: {
+    width: '94%',
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    paddingVertical: 10,
+    elevation: 1,
+  },
+  listTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#1a6997',
+    marginHorizontal: 10,
+    paddingTop: 5,
+  },
+  listSubTitle: {
+    fontSize: 16,
+    color: '#000',
+    marginHorizontal: 10,
+    paddingTop: 5,
+    marginBottom: 10,
   },
 });
