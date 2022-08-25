@@ -62,7 +62,7 @@ const ExamItem = ({ item }) => {
                             size={18}
                             color="#000"
                             style={styles.icon}
-                        />
+                        />alignContent
                     </Text>
                     <Text style={styles.locationText}>
                         {location.name} - {location.city}/ {location.street_name}
