@@ -1,11 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import React, {createContext, useEffect, useState} from 'react';
-import {BASE_URL} from '../config';
+import React, { createContext, useEffect, useState } from 'react';
+import { BASE_URL } from '../config';
 
 export const AuthContext = createContext();
 
-export const AuthProvider = ({children}) => {
+export const AuthProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [splashLoading, setSplashLoading] = useState(false);
@@ -31,6 +31,7 @@ export const AuthProvider = ({children}) => {
       })
       .catch(e => {
         console.log(`register error ${e}`);
+        alert(e.response.data.error.messages.email, 'Error');
         setIsLoading(false);
       });
   };
@@ -52,6 +53,9 @@ export const AuthProvider = ({children}) => {
       })
       .catch(e => {
         console.log(`login error ${e}`);
+        if (e.response.status === 401) {
+          alert(e.response.data.error, 'Error');
+        }
         setIsLoading(false);
       });
   };

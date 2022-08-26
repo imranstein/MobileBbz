@@ -24,17 +24,38 @@ const ProfileScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.profile}>
+        <Text style={{
+          color: '#1a6997',
+          marginLeft: 30,
+          marginTop: 27,
+          fontWeight: 'bold',
+        }}>
+
+          <Icon
+            name="user-circle-o"
+            size={30}
+            color="#1a6997"
+            IconStyle={styles.icon}
+          />
+        </Text>
         <Text style={styles.name}>
-          <View style={{ marginTop: 100 }}>
-            <Icons
-              name="user"
-              size={40}
-              color="#1a6997"
-              IconStyle={styles.icon}
-            />
-          </View>
+
           {userInfo.name}
           {/* user */}
+        </Text>
+      </View>
+      <View style={{ flexDirection: 'row' }}>
+        <Text style={styles.icon}>
+          <Entypo
+            name="back-in-time"
+            size={25}
+            color="#1a6997"
+            style={styles.icon}
+          />
+        </Text>
+        <Text style={styles.label}>
+
+          <Text style={{ marginRight: 20 }}>{t('common:Language')}</Text>
         </Text>
       </View>
       <View style={styles.list}>
@@ -135,23 +156,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   profile: {
-    flex: 0.1,
-    borderBottomWidth: 1,
-    borderBottomColor: '#cecece',
+    flexDirection: 'row',
+    flex: 0.2,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#fff',
+    marginBottom: 5,
   },
   name: {
-    fontSize: 28,
+    fontSize: 24,
     color: '#1a6997',
-    marginLeft: 30,
-    marginTop: 5,
-    fontWeight: 'bold',
+    marginLeft: 10,
+    marginTop: 27,
+    fontWeight: '600',
   },
   label: {
     fontSize: 15,
-    color: '#000',
+    color: '#777',
     marginLeft: 20,
     marginTop: 27,
-    fontWeight: '500',
+    fontWeight: '400',
   },
   list: {
     flex: 0.3,
@@ -160,7 +183,7 @@ const styles = StyleSheet.create({
   },
   logout: {
     flex: 0.15,
-    marginTop: '22%',
+    marginTop: '45%',
     marginBottom: '2%',
     borderTopWidth: 0.1,
     borderBottomColor: '#cecece',
@@ -184,5 +207,18 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginTop: 27,
     fontWeight: 'bold',
+  },
+  selectedText: {
+    fontSize: 15,
+    color: '#1a6997',
+    marginLeft: 70,
+    marginTop: 10,
+    fontWeight: '500',
+  }, text: {
+    fontSize: 15,
+    color: '#000',
+    marginLeft: 70,
+    marginTop: 10,
+    fontWeight: '500',
   }
 });

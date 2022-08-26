@@ -61,6 +61,7 @@ const ChangePasswordScreen = () => {
               </View>
               <TextInput style={styles.input}
                 placeholder={t('common:PleaseEnter')}
+                placeholderTextColor='#9c9c9c'
                 onChangeText={text => setOldPassword(text)}
                 secureTextEntry />
             </View>
@@ -73,6 +74,7 @@ const ChangePasswordScreen = () => {
               </View>
               <TextInput style={styles.input}
                 placeholder={t('common:PleaseEnter')}
+                placeholderTextColor='#9c9c9c'
                 onChangeText={text => setNewPassword(text)}
                 secureTextEntry />
             </View>
@@ -85,6 +87,7 @@ const ChangePasswordScreen = () => {
               </View>
               <TextInput style={styles.input}
                 placeholder={t('common:PleaseEnter')}
+                placeholderTextColor='#9c9c9c'
                 onChangeText={text => setConfirmPassword(text)}
                 secureTextEntry />
             </View>
@@ -146,7 +149,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     justifyContent: 'flex-start',
     paddingHorizontal: 10,
-    color: 'black',
+    color: '#000',
     width: '95%',
     marginRight: '5%',
   },

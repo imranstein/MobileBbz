@@ -40,8 +40,8 @@ const HomeScreen = () => {
           tabBarActiveTintColor: '#166795',
           tabBarInactiveTintColor: 'gray',
         })}>
-      <Tab.Screen name="Search" component={SearchPage} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Search" component={SearchPage} options={{ headerShown: false }} />
+      <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
     </Tab.Navigator>
   );
 };

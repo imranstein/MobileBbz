@@ -8,14 +8,14 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {useState, useContext} from 'react';
-import {AuthContext} from '../context/AuthContext';
+import { useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import { t } from 'i18next';
 
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const {isLoading, login} = useContext(AuthContext);
+  const { isLoading, login } = useContext(AuthContext);
 
   return (
     <ImageBackground
@@ -29,6 +29,7 @@ const Login = ({navigation}) => {
           <TextInput
             style={styles.textInput}
             placeholder={t('common:Email')}
+            placeholderTextColor='#9c9c9c'
             onChangeText={text => setEmail(text)}
           />
         </View>
@@ -36,6 +37,7 @@ const Login = ({navigation}) => {
           <TextInput
             style={styles.textInput}
             placeholder={t('common:Password')}
+            placeholderTextColor='#9c9c9c'
             onChangeText={text => setPassword(text)}
             secureTextEntry
           />
@@ -53,7 +55,7 @@ const Login = ({navigation}) => {
           <Text style={styles.loginButtonText}>{t('common:Login')}</Text>
         </TouchableOpacity>
         <View style={styles.signup}>
-          <Text>{t('common:DoNotHaveAnAccount')} </Text>
+          <Text style={{ color:'#999' }}>{t('common:DoNotHaveAnAccount')} </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Register')}>
             <Text style={styles.signupButton}>{t('common:SignUp')}</Text>
           </TouchableOpacity>
@@ -82,7 +84,7 @@ const styles = StyleSheet.create({
     borderColor: '#fff',
     borderRadius: 10,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 1,
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     justifyContent: 'flex-start',
     paddingHorizontal: 10,
-    color: 'black',
+    color: '#000',
   },
   loginContent: {
     marginTop: 50,

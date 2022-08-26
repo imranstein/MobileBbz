@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     justifyContent: 'flex-start',
     paddingHorizontal: 10,
-    color: 'black',
+    color: '#000',
   },
   message: {
     borderWidth: 0.3,
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     justifyContent: 'flex-start',
     paddingHorizontal: 10,
-    color: 'black',
+    color: '#000',
     // height: 200,
     marginBottom: 20,
     alignItems: 'flex-start',

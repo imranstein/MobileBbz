@@ -6,17 +6,17 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {AuthContext} from '../context/AuthContext';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { AuthContext } from '../context/AuthContext';
 import Login from './Login';
 import RegisterScreen from './RegisterScreen';
 import { useTranslation } from "react-i18next";
 
 
 const Welcome = ({ navigation }) => {
-    const {t, } = useTranslation();
-  
+  const { t, } = useTranslation();
+
   return (
     <ImageBackground
       source={require('../assets/background.png')}
@@ -24,22 +24,22 @@ const Welcome = ({ navigation }) => {
       style={styles.container}
       imageStyle={styles.ImageBackground}>
       <View>
-        <Text style={styles.welcome}>Welcome To BBZ!</Text>
+        <Text style={styles.welcome}>{t('common:WelcomeTo')} BBZ!</Text>
         <Text style={styles.description}>
-         {t('common:Login')}/{t('common:SignUp')} {t('common:ToGetYourProfileAndStayUpdatedWithTheUpcomingExamsAndNews')}
+          {t('common:Login')}/{t('common:SignUp')} {t('common:ToGetYourProfileAndStayUpdatedWithTheUpcomingExamsAndNews')}
         </Text>
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate(Login)}>
           <Text style={styles.buttonText}>{t('common:Login')}
-</Text>
+          </Text>
         </TouchableOpacity>
       </View>
       <View style={styles.signup}>
-        <Text style={{fontSize: 16}}>{t('common:DoNotHaveAnAccount')}</Text>
+        <Text style={{ fontSize: 16, color: '#999' }}>{t('common:DoNotHaveAnAccount')} </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.signupButton}>{t('common:SignUp')}
-</Text>
+          </Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity>

@@ -63,6 +63,7 @@ export default {
     SendMessage: 'Nachricht senden',
     UpcomingExams: 'Bevorstehende Prüfungen',
     UpcomingExamsSubTitle: 'All the coming exams For you',
+    Language: 'Sprachen',
 
 
 

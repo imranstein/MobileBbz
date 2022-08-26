@@ -5,45 +5,50 @@ import Icons from 'react-native-vector-icons/EvilIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 
-const Item = ({item}) => {
+const Item = ({ item }) => {
   return (
     <View style={styles.Image_view}>
       {/* <Image
         style={{width: 50, height: 50, borderRadius: 100}}
         source={{uri: item.thumbnailUrl}}
       /> */}
-          <View style={styles.Date}>
-               
-        <Text style={{width: 10, color: 'black'}}>
-          
+      <View style={styles.Date}>
+
+        <Text style={{ width: 10, color: '#000' }}>
+
         </Text>
-        <Text style={{color: 'black'}}>
-          
+        <Text style={{ color: '#000' }}>
+
         </Text>
       </View>
       <View style={styles.Text}>
-              <Text style={{ marginLeft: -8, fontSize:16,fontWeight: '700', color: '#166795'}}>
+        <Text style={{ marginLeft: -8, fontSize: 16, fontWeight: '700', color: '#166795' }}>
           {item.name}
-              </Text>
-              
-        
-        <Text style={{ marginLeft: 20, marginTop: 10, color: 'black' }}>
-          <Entypo
+        </Text>
+
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={{ marginLeft: -8, marginTop: 10, color: '#000' }}>
+            <Entypo
               name="location-pin"
               size={18}
               color="#1a6997"
               style={styles.icon}
             />
-          {item.city},{item.street_name}</Text>
-       
-        <Text style={{ marginLeft: 20, marginTop: 10, color: 'black' }}>
-           <Entypo
+          </Text>
+          <Text style={{ marginLeft: 5, marginTop: 10, color: '#000' }}>{item.city},{item.street_name}</Text>
+        </View>
+        <View style={{ flexDirection: 'row' }}>
+
+          <Text style={{ marginLeft: -8, marginTop: 10, color: '#000' }}>
+            <Entypo
               name="mail"
               size={18}
               color="#1a6997"
               style={{ marginRight: 18 }}
             />
-          {item.email}</Text>
+          </Text>
+          <Text style={{ marginLeft: 5, marginTop: 10, color: '#000' }}> {item.email}</Text>
+        </View>
       </View>
     </View>
   );
@@ -71,7 +76,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-      backgroundColor: '#fff',
+    backgroundColor: '#fff',
   },
   ImageBackground: {
     opacity: 0.3,

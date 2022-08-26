@@ -50,13 +50,13 @@ const ExamItem = ({ item }) => {
                     <Text style={styles.titleText}>{item.title}</Text>
                 </View>
             </TouchableOpacity>
-            <View style={{ flexDirection: 'row' }}>
-                <Text style={{ fontSize: 16, fontWeight: 'bold', marginRight: 3, }}>Exam Date:</Text><Text style={styles.examDateText}>{moment(item.exam_date).format('DD/MM/YY')}</Text>
-                <Text style={{ fontSize: 16, fontWeight: 'bold', marginRight: 3, }}>Reg Date:</Text><Text style={styles.regDateText}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text>
+            <View style={{ flexDirection: 'row', marginLeft: 5 }}>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', marginRight: 3, color: '#000' }}>Exam Date:</Text><Text style={styles.examDateText}>{moment(item.exam_date).format('DD/MM/YY')}</Text>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', marginRight: 3, color: '#000' }}>Reg Date:</Text><Text style={styles.regDateText}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text>
             </View>
             {location != null ?
                 <View View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 15 }}>
-                    <Text style={{ marginRight: 10, }}>
+                    <Text style={{ marginRight: 10, marginLeft: 5, }}>
                         <Entypo
                             name="location-pin"
                             size={18}
@@ -68,7 +68,7 @@ const ExamItem = ({ item }) => {
                         {location.name} - {location.city}/ {location.street_name}
                     </Text>
                 </View> : <View View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 15 }}>
-                    <Text style={{ marginRight: 10, }}>
+                    <Text style={{ marginRight: 5, marginLeft: 5, }}>
                         <Entypo
                             name="location-pin"
                             size={18}
@@ -116,7 +116,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         // padding: 10,
-        marginLeft: '2%',
+        // marginLeft: '2%',
+        marginBottom: '5%',
+        elevation: 1,
+        backgroundColor: '#fff',
     },
     image: {
         flex: 1,
@@ -141,6 +144,7 @@ const styles = StyleSheet.create({
     title: {
         marginBottom: 10,
         flexDirection: 'row',
+        marginLeft: 5,
     },
     titleText: {
         fontSize: 15,
@@ -197,7 +201,9 @@ const styles = StyleSheet.create({
     locationText: {
         fontSize: 15,
         color: "#1a6997",
+        width: '70%',
         fontWeight: '400',
+        marginRight: '4%',
     },
     AvailableSeats: {
         fontSize: 16,
@@ -206,6 +212,7 @@ const styles = StyleSheet.create({
         marginRight: '4%',
         marginTop: '6%',
         marginBottom: '6%',
+        marginLeft: 5,
     }
 });
 

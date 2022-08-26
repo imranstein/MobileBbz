@@ -61,4 +61,5 @@ export default {
     SendMessage: 'Send Message',
     UpcomingExams: 'Upcoming Exams',
     UpcomingExamsSubTitle: 'All the coming exams For you',
+    Language: 'Languages',
 }

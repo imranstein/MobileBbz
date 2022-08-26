@@ -100,13 +100,39 @@ const MyProfileScreen = (props) => {
           <View style={styles.name}>
             <View>
               <Text style={styles.label}>First name</Text>
-              <TextInput style={styles.input}
+              <TextInput style={{
+                flex: 1,
+                fontSize: 15,
+                marginTop: '5%',
+                marginBottom: '5%',
+                borderColor: '#cecece',
+                borderWidth: 0.5,
+                borderRadius: 5,
+                marginLeft: '2%',
+                // paddingHorizontal: '%',
+                width: 132,
+                height: 42,
+                color: '#999',
+              }}
                 value={first_name}
                 onChangeText={setFirstName} />
             </View>
             <View>
               <Text style={styles.label}>Last name</Text>
-              <TextInput style={styles.input}
+              <TextInput style={{
+                flex: 1,
+                fontSize: 15,
+                marginTop: '5%',
+                marginBottom: '5%',
+                marginLeft: '7%',
+                borderColor: '#cecece',
+                borderWidth: 0.5,
+                borderRadius: 5,
+                // paddingHorizontal: '%',
+                width: 132,
+                height: 42,
+                color: '#999',
+              }}
                 value={last_name}
                 onChangeText={setLastName} />
             </View>
@@ -215,7 +241,8 @@ const styles = StyleSheet.create({
   },
   name: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    marginLeft: '6%',
+    marginTop: '2%',
   },
   image: {
     width: '90%',
@@ -267,10 +294,12 @@ const styles = StyleSheet.create({
     marginBottom: '5%',
     marginLeft: '2%',
     borderColor: '#cecece',
-    borderWidth: 1,
+    borderWidth: 0.5,
+    borderRadius: 5,
     // paddingHorizontal: '%',
     width: '90%',
-    height: '37%',
+    height: 42,
+    color: '#999',
   },
   inputs: {
     marginLeft: '5%',
@@ -288,5 +317,10 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     alignSelf: 'center',
     justifyContent: 'center',
-  }
+  },
+  label: {
+    fontSize: 18,
+    marginLeft: '2%',
+    color: '#000',
+  },
 });

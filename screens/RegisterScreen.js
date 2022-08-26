@@ -35,24 +35,35 @@ const RegisterScreen = ({navigation}) => {
         <View style={styles.wrapper}>
           <View style={styles.name}>
             <TextInput
-              style={styles.input}
-              value={first_name}
-              placeholder={t('common:FirstName')}
-              onChangeText={text => setFirstName(text)}
-            />
-            <TextInput
               style={{
-                marginLeft: 20,
                 marginBottom: 12,
                 borderWidth: 1,
                 borderColor: '#bbb',
                 borderRadius: 5,
                 paddingVertical: 10,
                 paddingHorizontal: 14,
-                width: 160,
+                width: 136,
+                color: '#000', }}
+              value={first_name}
+              placeholder={t('common:FirstName')}
+              placeholderTextColor='#9c9c9c'
+              onChangeText={text => setFirstName(text)}
+            />
+            <TextInput
+              style={{
+                marginLeft: 16,
+                marginBottom: 12,
+                borderWidth: 1,
+                borderColor: '#bbb',
+                borderRadius: 5,
+                paddingVertical: 10,
+                paddingHorizontal: 14,
+                width: 136,
+                color: '#000',
               }}
               value={last_name}
               placeholder={t('common:LastName')}
+              placeholderTextColor='#9c9c9c'
               onChangeText={text => setLastName(text)}
             />
           </View>
@@ -61,12 +72,15 @@ const RegisterScreen = ({navigation}) => {
             style={styles.input}
             value={email}
             placeholder={t('common:Email')}
+            placeholderTextColor='#9c9c9c'
             onChangeText={text => setEmail(text)}
           />
           <TextInput
             style={styles.input}
             value={phone}
             placeholder={t('common:Phone')}
+            placeholderTextColor='#9c9c9c'
+            keyboardType='numeric'
             onChangeText={text => setPhone(text)}
           />
 
@@ -74,6 +88,7 @@ const RegisterScreen = ({navigation}) => {
             style={styles.input}
             value={password}
             placeholder={t('common:Password')}
+            placeholderTextColor='#9c9c9c'
             onChangeText={text => setPassword(text)}
             secureTextEntry
           />
@@ -90,8 +105,9 @@ const RegisterScreen = ({navigation}) => {
               value={term}
               onPress={() => setTerm(!term)}
               onValueChange={newValue => setTerm(newValue)}
+              style={{ flex: 1, marginRight: 10, color: '#000',borderColor: '#999'}}
             />
-            <Text style={{marginLeft: 10, fontSize: 15}}>
+            <Text style={{marginLeft: 10, fontSize: 15,color:'#999'}}>
               {t('common:IHaveReadAndAcceptTheTermsAndConditions')}
             </Text>
           </View>
@@ -108,7 +124,7 @@ const RegisterScreen = ({navigation}) => {
               marginTop: 20,
               justifyContent: 'center',
             }}>
-            <Text>{t('common:AlreadyHaveAnAccount')} </Text>
+            <Text style={{ color:'#999' }}>{t('common:AlreadyHaveAnAccount')} </Text>
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>
               <Text style={styles.link}>{t('common:Login')}</Text>
             </TouchableOpacity>
@@ -135,6 +151,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 14,
+    color: '#000',
   },
   link: {
     color: '#166795',

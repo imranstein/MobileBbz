@@ -92,7 +92,7 @@ export default SearchPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#cecece',
+    backgroundColor: '#efefef',
   },
   header: {
     flex: 1,
