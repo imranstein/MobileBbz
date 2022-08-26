@@ -75,11 +75,13 @@ const ContactUs = () => {
           <TextInput
             style={styles.textInput}
             placeholder={t('common:YourName')}
+            placeholderTextColor="#000"
             onChangeText={text => setName(text)}
           />
           <TextInput
             style={styles.textInput}
             placeholder={t('common:EmailAddress')}
+            placeholderTextColor="#000"
             onChangeText={text => setEmail(text)}
           />
           <TextInput
@@ -87,6 +89,7 @@ const ContactUs = () => {
             multiline={true}
             numberOfLines={8}
             placeholder={t('common:Message')}
+            placeholderTextColor="#000"
             onChangeText={text => setMessage(text)}
           />
         </View>
@@ -176,7 +179,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textInput: {
-    borderWidth: 0.3,
+    borderWidth: 0.5,
     borderRadius: 5,
     borderColor: '#cecece',
     marginVertical: 10,
@@ -185,7 +188,7 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   message: {
-    borderWidth: 0.3,
+    borderWidth: 0.5,
     borderRadius: 5,
     borderColor: '#cecece',
     marginVertical: 10,

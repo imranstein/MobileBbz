@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import { LogBox } from 'react-native';
 import axios from 'axios';
 import { BASE_URL, IMAGE_URL } from '../config';
 import moment from 'moment';
@@ -10,10 +11,13 @@ const NewsDetailScreen = React.memo(({ route }) => {
     const [data, setData] = useState(null)
     const [title, setTitle] = useState(null)
     const [description, setDescription] = useState(null)
-    const [image, setImage] = useState(null)
+    const [image, setImage] = useState('')
     const [date, setDate] = useState(null)
     const { width } = useWindowDimensions()
 
+    useEffect(() => {
+        LogBox.ignoreLogs(['VirtualizedLists should never be nested', 'TRenderEngineProvider','']);
+    }, [])
 
     const id = route.params.paramKey;
     const getData = async () => {

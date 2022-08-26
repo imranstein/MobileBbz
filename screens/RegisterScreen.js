@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Button,
   Text,
@@ -10,10 +10,10 @@ import {
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {AuthContext} from '../context/AuthContext';
+import { AuthContext } from '../context/AuthContext';
 import { t } from 'i18next';
 
-const RegisterScreen = ({navigation}) => {
+const RegisterScreen = ({ navigation }) => {
   const [first_name, setFirstName] = useState(null);
   const [last_name, setLastName] = useState(null);
   const [email, setEmail] = useState(null);
@@ -22,7 +22,7 @@ const RegisterScreen = ({navigation}) => {
   const [term, setTerm] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState(null);
 
-  const {isLoading, register} = useContext(AuthContext);
+  const { isLoading, register } = useContext(AuthContext);
 
   return (
     <ImageBackground
@@ -43,7 +43,8 @@ const RegisterScreen = ({navigation}) => {
                 paddingVertical: 10,
                 paddingHorizontal: 14,
                 width: 136,
-                color: '#000', }}
+                color: '#000',
+              }}
               value={first_name}
               placeholder={t('common:FirstName')}
               placeholderTextColor='#9c9c9c'
@@ -99,24 +100,33 @@ const RegisterScreen = ({navigation}) => {
             onChangeText={text => setConfirmPassword(text)}
             secureTextEntry
           /> */}
-          <View style={{flexDirection: 'row', marginBottom: 10}}>
+          <View style={{ flexDirection: 'row', marginBottom: 10 }}>
             <CheckBox
               title="I have read and accept the terms and conditions"
               value={term}
               onPress={() => setTerm(!term)}
               onValueChange={newValue => setTerm(newValue)}
-              style={{ flex: 1, marginRight: 10, color: '#000',borderColor: '#999'}}
+              // style={{ backgroundColor: '#1570a5' }}
+              tintColors={{ true: '#1570a5', false: 'black' }}
             />
-            <Text style={{marginLeft: 10, fontSize: 15,color:'#999'}}>
+            <Text style={{ marginLeft: 10, fontSize: 15, color: '#999' }}>
               {t('common:IHaveReadAndAcceptTheTermsAndConditions')}
             </Text>
           </View>
-          <Button
+          {/* <TouchableOpacity
             title="Sign Up"
             onPress={() => {
               register(first_name, last_name, email, phone, password, term);
             }}
-          />
+          >
+          </TouchableOpacity> */}
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={() => {
+              register(first_name, last_name, email, phone, password, term);
+            }}>
+            <Text style={styles.loginButtonText}>{t('common:SignUp')}</Text>
+          </TouchableOpacity>
 
           <View
             style={{
@@ -124,7 +134,7 @@ const RegisterScreen = ({navigation}) => {
               marginTop: 20,
               justifyContent: 'center',
             }}>
-            <Text style={{ color:'#999' }}>{t('common:AlreadyHaveAnAccount')} </Text>
+            <Text style={{ color: '#999' }}>{t('common:AlreadyHaveAnAccount')} </Text>
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>
               <Text style={styles.link}>{t('common:Login')}</Text>
             </TouchableOpacity>
@@ -154,7 +164,7 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   link: {
-    color: '#166795',
+    color: '#1570a5',
   },
   name: {
     flexDirection: 'row',
@@ -165,6 +175,19 @@ const styles = StyleSheet.create({
   },
   ImageBackground: {
     opacity: 0.3,
+  },
+  loginButton: {
+    marginTop: 10,
+    backgroundColor: '#1570a5',
+    padding: 10,
+    borderRadius: 2,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  loginButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    textAlign: 'center',
   },
 });
 

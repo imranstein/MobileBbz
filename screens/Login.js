@@ -55,7 +55,7 @@ const Login = ({ navigation }) => {
           <Text style={styles.loginButtonText}>{t('common:Login')}</Text>
         </TouchableOpacity>
         <View style={styles.signup}>
-          <Text style={{ color:'#999' }}>{t('common:DoNotHaveAnAccount')} </Text>
+          <Text style={{ color: '#999' }}>{t('common:DoNotHaveAnAccount')} </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Register')}>
             <Text style={styles.signupButton}>{t('common:SignUp')}</Text>
           </TouchableOpacity>
@@ -84,11 +84,11 @@ const styles = StyleSheet.create({
     borderColor: '#fff',
     borderRadius: 10,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.8,
+    // shadowRadius: 2,
     elevation: 1,
-    opacity: 0.8,
+    // opacity: 0.8,
   },
   textInput: {
     borderWidth: 1,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     marginTop: 10,
-    backgroundColor: '#166795',
+    backgroundColor: '#1570a5',
     padding: 10,
     borderRadius: 2,
     alignItems: 'center',

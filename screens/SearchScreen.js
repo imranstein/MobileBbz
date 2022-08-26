@@ -27,7 +27,7 @@ const SearchPage = () => {
   const [data, setData] = useState([]);
   const { t } = useTranslation();
   useEffect(() => {
-    LogBox.ignoreLogs(['VirtualizedLists should never be nested','TRenderHtml']);
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested', 'TRenderHtml']);
   }, [])
   const getData = async () => {
     const { data } = await axios

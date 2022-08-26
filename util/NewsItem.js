@@ -68,6 +68,9 @@ const styles = StyleSheet.create({
         flex: 1,
         // padding: 10,
         marginLeft: '2%',
+        marginBottom: '5%',
+        elevation: 1,
+        backgroundColor: '#fff',
     },
     image: {
         flex: 1,
@@ -83,6 +86,7 @@ const styles = StyleSheet.create({
     },
     date: {
         marginBottom: 10,
+        marginLeft: '2%',
         flexDirection: 'row',
     },
     dateText: {
@@ -92,6 +96,7 @@ const styles = StyleSheet.create({
     title: {
         marginBottom: 10,
         flexDirection: 'row',
+        marginLeft: '2%',
     },
     titleText: {
         fontSize: 15,
@@ -101,7 +106,8 @@ const styles = StyleSheet.create({
     description: {
         marginBottom: 20,
         flexDirection: 'row',
-        maxHeight: 82,
+        maxHeight: 80,
+        marginLeft: '2%',
     },
     descriptionText: {
         fontSize: 14,

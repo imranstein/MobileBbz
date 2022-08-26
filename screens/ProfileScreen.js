@@ -47,7 +47,7 @@ const ProfileScreen = () => {
       <View style={{ flexDirection: 'row' }}>
         <Text style={styles.icon}>
           <Entypo
-            name="back-in-time"
+            name="language"
             size={25}
             color="#1a6997"
             style={styles.icon}

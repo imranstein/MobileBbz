@@ -7,13 +7,14 @@ import { useWindowDimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import Entypo from 'react-native-vector-icons/Entypo';
-
+import * as Progress from 'react-native-progress';
 
 
 const ExamItem = ({ item }) => {
     const navigation = useNavigation();
     const media = item.media;
     const location = item.location;
+    const progress = item.available_seats / item.total_seat;
     // const source = { html: item.content };
     // const { width } = useWindowDimensions();
 
@@ -87,10 +88,14 @@ const ExamItem = ({ item }) => {
                     fontSize: 16,
                     color: "#000",
                     fontWeight: '600',
-                    marginRight: '4%',
-                    marginTop: '6%',
-                    marginBottom: '6%',
-                }}>{item.available_seats}</Text>
+                    marginRight: '3%',
+                    marginTop: '5%',
+                    marginBottom: '7%',
+                }}>
+                    {/* {progress} */}
+                    <Progress.Circle thickness={4} progress={progress} size={40} animated={false} showsText={true} textStyle={{ fontWeight: 'bold', fontSize: 12, color: '#000' }} color={'green'} unfilledColor={'red'} />
+
+                </Text>
                 {/* {/* <Text style={styles.descriptionText}>{item.content}</Text>  */}
                 {/* <RenderHtml
                     contentWidth={width}
