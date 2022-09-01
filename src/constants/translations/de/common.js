@@ -80,13 +80,14 @@ export default {
     MessageIsRequired: 'Nachricht ist erforderlich',
     NameMustBeAtLeast4Characters: 'Name muss mindestens 4 Zeichen lang sein',
     NameIsRequired: 'Name ist erforderlich',
-    ExamDate: 'Prüfungsdatum',
-    RegDate: 'Registrierungsdatum',
+    ExamDate: 'Prüf datum',
+    RegDate: 'Anme datum',
     AvailableSeats: 'Verfügbare Plätze',
     Level: 'Eben',
     Fee: 'Gebühr',
     BookNow: 'Jetzt buchen',
     PayNow: 'Jetzt bezahlen',
+    ProfileUpdateSuccessfully: 'Profil erfolgreich aktualisiert',
 
 
 

@@ -6,7 +6,8 @@ import axios from 'axios';
 import { BASE_URL } from '../config';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigation } from '@react-navigation/native';
-
+import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment';
 
 const MyProfileScreen = (props) => {
   const navigation = useNavigation();
@@ -16,14 +17,29 @@ const MyProfileScreen = (props) => {
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [birthday, setBirthday] = useState('');
+  const [birthday, setBirthday] = useState(new Date());
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [zip_code, setZipCode] = useState('');
   const [country, setCountry] = useState('');
   const [address2, setAddress2] = useState('');
 
+  const [show, setShow] = useState(false);
+  const [mode, setMode] = useState('date');
+  const [date, setDate] = useState(new Date());
 
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+    setBirthday(currentDate);
+  }
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  }
 
   const UpdateProfile = async function (): Promise<boolena> {
 
@@ -85,7 +101,7 @@ const MyProfileScreen = (props) => {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.wrapper}>
-          <View style={styles.image}>
+          {/* <View style={styles.image}>
             <Text>
               <Icons
                 name="user"
@@ -97,10 +113,10 @@ const MyProfileScreen = (props) => {
             <TouchableOpacity>
               <Text style={styles.imageLabel}>{t('common:EditPicture')}</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
           <View style={styles.name}>
             <View>
-              <Text style={styles.label}>First name</Text>
+              <Text style={styles.label}>{t('common:FirstName')}</Text>
               <TextInput style={{
                 flex: 1,
                 fontSize: 15,
@@ -113,13 +129,13 @@ const MyProfileScreen = (props) => {
                 // paddingHorizontal: '%',
                 width: 132,
                 height: 42,
-                color: '#999',
+                color: '#000',
               }}
                 value={first_name}
                 onChangeText={setFirstName} />
             </View>
             <View>
-              <Text style={styles.label}>Last name</Text>
+              <Text style={styles.label}>{t('common:LastName')}</Text>
               <TextInput style={{
                 flex: 1,
                 fontSize: 15,
@@ -132,7 +148,7 @@ const MyProfileScreen = (props) => {
                 // paddingHorizontal: '%',
                 width: 132,
                 height: 42,
-                color: '#999',
+                color: '#000',
               }}
                 value={last_name}
                 onChangeText={setLastName} />
@@ -157,9 +173,38 @@ const MyProfileScreen = (props) => {
           <View style={styles.inputs}>
             <View>
               <Text style={styles.label}>{t('common:Birthdate')}</Text>
-              <TextInput style={styles.input}
+              {/* <TextInput style={styles.input}
                 value={birthday}
-                onChangeText={setBirthday} />
+                onChangeText={setBirthday} /> */}
+              <View style={{
+                flex: 1,
+                fontSize: 18,
+                marginTop: '5%',
+                marginBottom: '5%',
+                marginLeft: '2%',
+                borderColor: '#cecece',
+                borderWidth: 0.5,
+                borderRadius: 5,
+                // paddingHorizontal: '%',
+                width: '90%',
+                height: 42,
+                color: '#000',
+              }}>
+                <TouchableOpacity onPress={() => showMode('date')}>
+                  <Text style={{ fontSize: 18, color: '#000', marginTop: 10 }}>{moment(birthday).format('DD/MM/YYYY')}</Text>
+                </TouchableOpacity>
+                {show && (
+                  <DateTimePicker
+                    testID="dateTimePicker"
+                    timeZoneOffsetInMinutes={0}
+                    value={date}
+                    mode={mode}
+                    is24Hour={true}
+                    display="calendar"
+                    onChange={onChange}
+                  />
+                )}
+              </View>
             </View>
           </View>
           <View style={{ flex: 1, marginTop: '5%', marginBottom: '5%' }}>
@@ -300,7 +345,7 @@ const styles = StyleSheet.create({
     // paddingHorizontal: '%',
     width: '90%',
     height: 42,
-    color: '#999',
+    color: '#000',
   },
   inputs: {
     marginLeft: '5%',

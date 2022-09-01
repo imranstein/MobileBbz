@@ -85,4 +85,5 @@ export default {
     Fee: 'Fee',
     BookNow: 'Book Now',
     PayNow: 'Pay Now',
+    ProfileUpdateSuccessfully: 'Profile Updated Successfully',
 }
