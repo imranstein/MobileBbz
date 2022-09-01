@@ -9,20 +9,40 @@ import {
   StyleSheet,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import Spinner from 'react-native-loading-spinner-overlay';
 import { AuthContext } from '../context/AuthContext';
 import { t } from 'i18next';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import Spinner from 'react-native-loading-spinner-overlay';
+
+const validationSchema = Yup.object().shape({
+  first_name: Yup.string()
+    .required(t('common:FirstNameIsRequired'))
+    .min(2, t('common:FirstNameMustBeAtLeast2Characters')),
+  last_name: Yup.string()
+    .required(t('common:LastNameIsRequired'))
+    .min(2, t('common:LastNameMustBeAtLeast2Characters')),
+  email: Yup.string()
+    .required(t('common:EmailIsRequired'))
+    .email(t('common:EmailIsInvalid')),
+  password: Yup.string()
+    .required(t('common:PasswordIsRequired'))
+    .min(6, t('common:PasswordMustBeAtLeast6Characters')),
+  phone: Yup.string()
+    .required(t('common:PhoneIsRequired'))
+    .min(9, t('common:PhoneMustBeAtLeast9Characters'))
+    .max(15, t('common:PhoneMustBeAtMost15Characters')),
+  // confirmPassword: Yup.string()
+  //   .required(t('common:confirm_password_required'))
+  //   .oneOf([Yup.ref('password'), null], t('common:confirm_password_invalid')),
+  terms: Yup.boolean().oneOf([true], t('common:TermIsRequired')),
+}).strict();
 
 const RegisterScreen = ({ navigation }) => {
-  const [first_name, setFirstName] = useState(null);
-  const [last_name, setLastName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [phone, setPhone] = useState(null);
   const [term, setTerm] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState(null);
 
-  const { isLoading, register } = useContext(AuthContext);
+  const { isLoading, isAuthenticating, register } = useContext(AuthContext);
 
   return (
     <ImageBackground
@@ -33,101 +53,122 @@ const RegisterScreen = ({ navigation }) => {
       <View style={styles.container}>
         <Spinner visible={isLoading} />
         <View style={styles.wrapper}>
-          <View style={styles.name}>
-            <TextInput
-              style={{
-                marginBottom: 12,
-                borderWidth: 1,
-                borderColor: '#bbb',
-                borderRadius: 5,
-                paddingVertical: 10,
-                paddingHorizontal: 14,
-                width: 136,
-                color: '#000',
-              }}
-              value={first_name}
-              placeholder={t('common:FirstName')}
-              placeholderTextColor='#9c9c9c'
-              onChangeText={text => setFirstName(text)}
-            />
-            <TextInput
-              style={{
-                marginLeft: 16,
-                marginBottom: 12,
-                borderWidth: 1,
-                borderColor: '#bbb',
-                borderRadius: 5,
-                paddingVertical: 10,
-                paddingHorizontal: 14,
-                width: 136,
-                color: '#000',
-              }}
-              value={last_name}
-              placeholder={t('common:LastName')}
-              placeholderTextColor='#9c9c9c'
-              onChangeText={text => setLastName(text)}
-            />
-          </View>
+          <Formik initialValues={{ first_name: '', last_name: '', email: '', password: '', phone: '' }}
+            onSubmit={(values) => {
+              register(
+                values.first_name,
+                values.last_name,
+                values.email,
+                values.password,
+                values.phone,
+                term,
+              );
+            }
+            }
+            validationSchema={validationSchema}>
+            {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+              <View style={styles.form}>
+                <View style={styles.name}>
+                  <TextInput
+                    style={{
+                      marginBottom: 12,
+                      borderWidth: 1,
+                      borderColor: '#bbb',
+                      borderRadius: 5,
+                      paddingVertical: 10,
+                      paddingHorizontal: 14,
+                      width: 135,
+                      color: '#000',
+                    }}
+                    placeholder={t('common:FirstName')}
+                    placeholderTextColor='#9c9c9c'
+                    onChangeText={handleChange('first_name')}
+                    onBlur={handleBlur('first_name')}
+                    value={values.first_name}
+                  />
+                  <TextInput
+                    style={{
+                      marginLeft: 16,
+                      marginBottom: 12,
+                      borderWidth: 1,
+                      borderColor: '#bbb',
+                      borderRadius: 5,
+                      paddingVertical: 10,
+                      paddingHorizontal: 14,
+                      width: 135,
+                      color: '#000',
+                    }}
+                    placeholder={t('common:LastName')}
+                    placeholderTextColor='#9c9c9c'
+                    onChangeText={handleChange('last_name')}
+                    onBlur={handleBlur('last_name')}
+                    value={values.last_name}
+                  />
+                </View>
+                {touched.first_name && errors.first_name && <Text style={styles.error}>{errors.first_name}</Text>}
+                {touched.last_name && errors.last_name && <Text style={styles.error}>{errors.last_name}</Text>}
 
-          <TextInput
-            style={styles.input}
-            value={email}
-            placeholder={t('common:Email')}
-            placeholderTextColor='#9c9c9c'
-            onChangeText={text => setEmail(text)}
-          />
-          <TextInput
-            style={styles.input}
-            value={phone}
-            placeholder={t('common:Phone')}
-            placeholderTextColor='#9c9c9c'
-            keyboardType='numeric'
-            onChangeText={text => setPhone(text)}
-          />
+                <TextInput
+                  style={styles.input}
+                  placeholder={t('common:Email')}
+                  placeholderTextColor='#9c9c9c'
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  value={values.email}
+                  keyboardType='email-address'
+                />
+                {touched.email && errors.email && <Text style={styles.error}>{errors.email}</Text>}
+                <TextInput
+                  style={styles.input}
+                  placeholder={t('common:Password')}
+                  placeholderTextColor='#9c9c9c'
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  value={values.password}
+                  secureTextEntry={true}
+                />
+                {touched.password && errors.password && <Text style={styles.error}>{errors.password}</Text>}
+                <TextInput
+                  style={styles.input}
+                  placeholder={t('common:Phone')}
+                  placeholderTextColor='#9c9c9c'
+                  onChangeText={handleChange('phone')}
+                  onBlur={handleBlur('phone')}
+                  value={values.phone}
+                  keyboardType='phone-pad'
 
-          <TextInput
-            style={styles.input}
-            value={password}
-            placeholder={t('common:Password')}
-            placeholderTextColor='#9c9c9c'
-            onChangeText={text => setPassword(text)}
-            secureTextEntry
-          />
-          {/* <TextInput
-            style={styles.input}
-            value={confirmPassword}
-            placeholder="Confirm password"
-            onChangeText={text => setConfirmPassword(text)}
-            secureTextEntry
-          /> */}
-          <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-            <CheckBox
-              title="I have read and accept the terms and conditions"
-              value={term}
-              onPress={() => setTerm(!term)}
-              onValueChange={newValue => setTerm(newValue)}
-              // style={{ backgroundColor: '#1570a5' }}
-              tintColors={{ true: '#1570a5', false: 'black' }}
-            />
-            <Text style={{ marginLeft: 10, fontSize: 15, color: '#999' }}>
-              {t('common:IHaveReadAndAcceptTheTermsAndConditions')}
-            </Text>
-          </View>
-          {/* <TouchableOpacity
-            title="Sign Up"
-            onPress={() => {
-              register(first_name, last_name, email, phone, password, term);
-            }}
-          >
-          </TouchableOpacity> */}
-          <TouchableOpacity
-            style={styles.loginButton}
-            onPress={() => {
-              register(first_name, last_name, email, phone, password, term);
-            }}>
-            <Text style={styles.loginButtonText}>{t('common:SignUp')}</Text>
-          </TouchableOpacity>
+                />
+                {touched.phone && errors.phone && <Text style={styles.error}>{errors.phone}</Text>}
+                <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+                  <CheckBox
+                    value={term}
+                    onPress={() => setTerm(!term)}
+                    onValueChange={newValue => setTerm(newValue)}
+                    tintColors={{ true: '#1570a5', false: '#000' }}
+                  />
+                  <Text style={{ marginLeft: 10, fontSize: 15, color: '#999' }}>{t('common:IHaveReadAndAcceptTheTermsAndConditions')}</Text>
+                </View>
+                {/*               
+              <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+                <CheckBox
+                  value={term}
+                  title="I have read and accept the terms and conditions"
+                  onPress={() => setTerm(term)}
+                  onValueChange={newValue => setTerm(newValue)}
+                  tintColors={{ true: '#1570a5', false: 'black' }}
+                />
+                <Text style={{ marginLeft: 10, fontSize: 15, color: '#999' }}>
+                  {t('common:IHaveReadAndAcceptTheTermsAndConditions')}
+                </Text>
+              </View> */}
+                {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>}
+                <TouchableOpacity onPress={handleSubmit} style={styles.loginButton}>
+                  <Text style={styles.loginButtonText}>{t('common:SignUp')}</Text>
+                </TouchableOpacity>
 
+              </View>
+            )}
+          </Formik>
           <View
             style={{
               flexDirection: 'row',
@@ -188,6 +229,10 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     textAlign: 'center',
+  },
+  error: {
+    color: 'red',
+    marginBottom: 10,
   },
 });
 

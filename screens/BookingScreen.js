@@ -1,97 +1,25 @@
-import {
-    StyleSheet,
-    Text,
-    View,
-    TextInput,
-    TouchableOpacity,
-    ImageBackground,
-    FlatList,
-    ScrollView
-} from 'react-native';
-import React, { useContext, useEffect, useState } from 'react';
-import { LogBox } from 'react-native';
-import { t } from 'i18next';
-import { useTranslation } from "react-i18next";
-import axios from 'axios';
-import { BASE_URL } from '../config';
-import { AuthContext } from '../context/AuthContext';
+import React from 'react';
+import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
+import { IMAGE_URL } from '../config';
+import moment from 'moment';
+import RenderHtml from 'react-native-render-html';
+import { useWindowDimensions } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import Entypo from 'react-native-vector-icons/Entypo';
-import moment from 'moment';
-import { useWindowDimensions } from 'react-native';
-import RenderHtml from 'react-native-render-html';
+import * as Progress from 'react-native-progress';
+import { t } from 'i18next';
 
-
-const ExamDetailScreen = ({ route }) => {
-
-    const navigation = useNavigation();
-    const [data, setData] = useState(null);
-    const [title, setTitle] = useState(null);
-    const [slug, setSlug] = useState(null);
-    const [location, setLocation] = useState(null);
-    const [city, setCity] = useState(null);
-    const { userInfo } = useContext(AuthContext);
-    const [remaining, setRemaining] = useState(null);
-    const [total, setTotal] = useState(null);
-    const [examDate, setExamDate] = useState(null);
-    const [regDate, setRegDate] = useState(null);
-    const [examTime, setExamTime] = useState(null);
-    const [content, setContent] = useState(null);
-    const [price, setPrice] = useState(null);
-
-    // const [description, setDescription] = useState(null)
-    // const [image, setImage] = useState('')
-    // const [date, setDate] = useState(null)
-    const { width } = useWindowDimensions()
-
-    useEffect(() => {
-        LogBox.ignoreLogs(['VirtualizedLists should never be nested', 'TRenderEngineProvider', '']);
-    }, [])
-
-    const id = route.params.paramKey;
-    // console.log(id);
-    const getData = async () => {
-        const { data } = await axios
-            .get(`${BASE_URL}/exam-detail/${id}`, {
-                headers: {
-                    Authorization: 'Bearer ' + userInfo.token,
-                },
-            }).then(res => {
-                setData(res.data.data);
-                setTitle(res.data.data.title);
-                setSlug(res.data.data.slug);
-                setLocation(res.data.data.location);
-                setCity(res.data.data.location.city);
-                setRemaining(res.data.data.available_seats);
-                setTotal(res.data.data.total_seat);
-                setExamDate(res.data.data.exam_date);
-                setRegDate(res.data.data.reg_until_date);
-                setExamTime(res.data.data.exam_time);
-                setContent(res.data.data.content);
-                setPrice(res.data.data.price);
-                // setDescription(res.data.data.content);
-                // setImage(res.data.data.media.file_path);
-                // setDate(res.data.data.created_at);
-            }
-            ).catch(err => {
-                console.log(err);
-            }
-            );
-
-    };
-    useEffect(() => {
-        getData();
-    }, [])
-    // console.log(city);
-
-
+const BookingScreen = ({ route }) => {
     return (
         <View style={styles.container}>
             <ScrollView>
                 <View style={styles.header}>
                     <ImageBackground source={require('../assets/searchBackground.png')}>
-                        <Text style={styles.h1}>{slug} {t('common:Level')}</Text>
-                        {location != null ?
+                        <Text style={styles.h1}>
+                            {/* {slug} */}
+                            {t('common:Level')}</Text>
+                        {/* {location != null ?
                             <View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 15 }}>
                                 <Text style={{ marginRight: 10, marginLeft: 5, }}>
                                     <Entypo
@@ -113,10 +41,7 @@ const ExamDetailScreen = ({ route }) => {
                                         style={styles.icon}
                                     />
                                 </Text>
-                                {/* <Text style={style.LocationText}>
-                        NO LOCATION
-                    </Text> */}
-                            </View>}
+                            </View>} */}
                     </ImageBackground>
                 </View>
                 <View style={styles.search}>
@@ -129,7 +54,7 @@ const ExamDetailScreen = ({ route }) => {
                                 style={styles.icon}
                             />
                         </Text>
-                        <Text style={styles.title}> {t('common:AvailableSeats')} | {remaining}/{total} </Text>
+                        <Text style={styles.title}> {t('common:AvailableSeats')} |  </Text>
 
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 10 }}>
@@ -141,7 +66,7 @@ const ExamDetailScreen = ({ route }) => {
                                 style={styles.icon}
                             />
                         </Text>
-                        <Text style={styles.dateTitle}> {t('common:ExamDate')} | {moment(examDate).format('DD/MM/YY')} </Text>
+                        <Text style={styles.dateTitle}> {t('common:ExamDate')} |  </Text>
 
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 10 }}>
@@ -153,7 +78,7 @@ const ExamDetailScreen = ({ route }) => {
                                 style={styles.icon}
                             />
                         </Text>
-                        <Text style={styles.regTitle}> {t('common:ExamDate')} | {moment(regDate).format('DD/MM/YY')} </Text>
+                        <Text style={styles.regTitle}> {t('common:ExamDate')} |  </Text>
 
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 10 }}>
@@ -165,11 +90,11 @@ const ExamDetailScreen = ({ route }) => {
                                 style={styles.icon}
                             />
                         </Text>
-                        <Text style={styles.timeTitle}> {t('common:ExamDate')} | {examDate} </Text>
+                        <Text style={styles.timeTitle}> {t('common:ExamDate')} |  </Text>
 
                     </View>
                 </View>
-                <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#fff', height: 400 }}>
+                {/* <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#fff', height: 400 }}>
                     <Text style={styles.descriptionLabel}>{t('common:Description')}</Text>
                     <Text style={styles.description}><RenderHtml
                         contentWidth={width}
@@ -184,7 +109,7 @@ const ExamDetailScreen = ({ route }) => {
                             marginLeft: 15,
                         }}
                     /></Text>
-                </View>
+                </View> */}
 
 
 
@@ -208,34 +133,22 @@ const ExamDetailScreen = ({ route }) => {
                     color: '#1a6997'
 
                 }}
-                > {price} $ </Text>
+                >
+                    {/* {price} */}
+                    $ </Text>
                 <TouchableOpacity style={{ alignSelf: 'flex-end', justifyContent: 'flex-end', marginRight: 20 }}
                     onPress={() => {
-                        navigation.navigate('Booking', {
-                            slug: slug,
-                            price: price,
-                            examDate: examDate,
-                            examTime: examTime,
-                            regDate: regDate,
-                            location: location,
-                            city: city,
-                            total: total,
-                            remaining: remaining,
-                            content: content,
-                        })
+
                     }
                     }>
-                    <Text style={styles.submitLabel}>{t('common:BookNow')}</Text>
+                    <Text style={styles.submitLabel}>{t('common:PayNow')}</Text>
                 </TouchableOpacity>
             </View>
         </View>
-        // <View>
-        //     <Text>{route.params.paramKey}</Text>
-        // </View>
     )
 }
 
-export default ExamDetailScreen
+export default BookingScreen
 
 const styles = StyleSheet.create({
     container: {

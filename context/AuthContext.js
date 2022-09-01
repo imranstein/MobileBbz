@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
 import { BASE_URL } from '../config';
 
+
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -10,35 +11,36 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [splashLoading, setSplashLoading] = useState(false);
 
-  const register = (first_name, last_name, email, phone, password, term) => {
+  const register = (first_name, last_name, email, password, phone, term) => {
     setIsLoading(true);
-
+    console.log(first_name, last_name, email, phone, password, term);
     axios
       .post(`${BASE_URL}/signup`, {
         first_name,
         last_name,
         email,
-        phone,
         password,
+        phone,
         term,
       })
       .then(res => {
+        console.log(res.data);
         let userInfo = res.data;
         setUserInfo(userInfo);
         AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
         setIsLoading(false);
         console.log(userInfo);
+
       })
       .catch(e => {
         console.log(`register error ${e}`);
-        alert(e.response.data.error.messages.email, 'Error');
+        alert('email or Phone is already taken', 'Error');
         setIsLoading(false);
       });
   };
 
   const login = (email, password) => {
     setIsLoading(true);
-
     axios
       .post(`${BASE_URL}/login`, {
         email,
@@ -86,7 +88,6 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setIsLoading(true);
-
     axios
       .post(
         `${BASE_URL}/logout`,
@@ -141,6 +142,7 @@ export const AuthProvider = ({ children }) => {
         login,
         logout,
         reset,
+        isLoggedIn,
       }}>
       {children}
     </AuthContext.Provider>

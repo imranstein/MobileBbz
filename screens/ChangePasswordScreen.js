@@ -5,20 +5,51 @@ import axios from 'axios';
 import { BASE_URL } from '../config';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigation } from '@react-navigation/native';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object().shape({
+  old_password: Yup.string()
+    .required('Old Password is required')
+    .min(6, 'Old Password must be at least 6 characters'),
+  new_password: Yup.string()
+    .required('New Password is required')
+    .min(6, 'New Password must be at least 6 characters'),
+  new_password_confirmation: Yup.string()
+    .required('New Password Confirmation is required')
+    .min(6, 'New Password Confirmation must be at least 6 characters')
+    .oneOf([Yup.ref('new_password'), null], 'Passwords must match'),
+}).defined();
+
 
 
 
 const ChangePasswordScreen = () => {
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(false);
+
   const { userInfo, logout } = useContext(AuthContext);
-  const [old_password, setOldPassword] = useState('');
-  const [new_password, setNewPassword] = useState('');
-  const [new_password_confirmation, setConfirmPassword] = useState('');
+  // const [old_password, setOldPassword] = useState('');
+  // const [new_password, setNewPassword] = useState('');
+  // const [new_password_confirmation, setConfirmPassword] = useState('');
 
-  const ChangePassword = async function (): Promise<boolena> {
-
-    return await axios
-      .post(`${BASE_URL}/change-password`, { old_password, new_password, new_password_confirmation }, {
+  // const ChangePassword = async function (old_password, new_password, new_password_confirmation): Promise<boolena> {
+  //   setIsLoading(true);
+  //   return await axios
+  //     .post(`${BASE_URL}/change-password`, { old_password, new_password, new_password_confirmation }, {
+  //       headers: {
+  //         Authorization: 'Bearer ' + userInfo.token,
+  //       },
+  //     })
+  const ChangePassword = (old_password, new_password, new_password_confirmation) => {
+    setIsLoading(true);
+    console.log(old_password, new_password, new_password_confirmation);
+    axios
+      .post(`${BASE_URL}/change-password`, {
+        old_password,
+        new_password,
+        new_password_confirmation,
+      }, {
         headers: {
           Authorization: 'Bearer ' + userInfo.token,
         },
@@ -31,16 +62,18 @@ const ChangePasswordScreen = () => {
         return true;
       })
       .catch(e => {
-        console.log(e);
-        if (e.response.status === 400) {
-          alert(e.response.data.errors, 'Error');
-        } else if (e.response.status === 401) {
-          alert(e.response.data.error, 'Error');
-        } else if (e.response.status === 500) {
-          alert(e.response.data.error, 'Error');
-        } else if (e.response.status === 422) {
-          alert(e.response.data.errors.new_password, 'Error');
-        }
+        console.log(e.response.data.message);
+        alert(e.response.data.message, 'Error');
+        // if (e.response.status === 400) {
+        //   alert(e.response.data.errors, 'Error');
+        // } else if (e.response.message === 401) {
+        //   console.log(e.response.data.error);
+        //   alert('Old Password Is incorrect', 'Error');
+        // } else if (e.response.status === 500) {
+        //   alert(e.response.data.error, 'Error');
+        // } else if (e.response.status === 422) {
+        //   alert(e.response.data.errors.new_password, 'Error');
+        // }
         return false;
       });
   };
@@ -51,57 +84,91 @@ const ChangePasswordScreen = () => {
       resizeMode="cover"
       style={styles.container}
       imageStyle={styles.ImageBackground}>
-      <View style={{ flex: 1 }}>
-        <View style={styles.wrapper}>
-          <View style={styles.inputs}>
-            <View>
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.label}>{t('common:CurrentPassword')}</Text>
-                <Text style={{ color: 'red', fontSize: 17, height: 13, marginLeft: 5 }}>*</Text>
+      <Formik
+        initialValues={{ old_password: '', new_password: '', new_password_confirmation: '' }}
+        onSubmit={(values) => {
+          ChangePassword(
+            values.old_password,
+            values.new_password,
+            values.new_password_confirmation,
+          );
+        }
+        }
+        validationSchema={validationSchema}
+      >
+        {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+          <>
+            <View style={{ flex: 1 }}>
+              <View style={styles.wrapper}>
+                <View style={styles.inputs}>
+                  <View>
+                    <View style={{ flexDirection: 'row' }}>
+                      <Text style={styles.label}>{t('common:CurrentPassword')}</Text>
+                      <Text style={{ color: 'red', fontSize: 17, height: 13, marginLeft: 5 }}>*</Text>
+                    </View>
+                    <TextInput style={styles.input}
+                      placeholder={t('common:PleaseEnter')}
+                      placeholderTextColor='#9c9c9c'
+                      onChangeText={handleChange('old_password')}
+                      onBlur={handleBlur('old_password')}
+                      value={values.old_password}
+                      secureTextEntry />
+                    {errors.old_password && touched.old_password && (
+                      <Text style={styles.error}>{errors.old_password}</Text>
+                    )}
+                  </View>
+
+                </View>
+                <View style={styles.inputs}>
+                  <View>
+                    <View style={{ flexDirection: 'row' }}>
+                      <Text style={styles.label}>{t('common:NewPassword')}</Text>
+                      <Text style={{ color: 'red', fontSize: 17, height: 13, marginLeft: 5 }}>*</Text>
+                    </View>
+                    <TextInput style={styles.input}
+                      placeholder={t('common:PleaseEnter')}
+                      placeholderTextColor='#9c9c9c'
+                      onChangeText={handleChange('new_password')}
+                      onBlur={handleBlur('new_password')}
+                      value={values.new_password}
+                      secureTextEntry />
+                    {errors.new_password && touched.new_password && (
+                      <Text style={styles.error}>{errors.new_password}</Text>
+                    )}
+                  </View>
+
+                </View>
+                <View style={styles.inputs}>
+                  <View>
+                    <View style={{ flexDirection: 'row' }}>
+                      <Text style={styles.label}>{t('common:ConfirmPassword')}</Text>
+                      <Text style={{ color: 'red', fontSize: 17, height: 13, marginLeft: 5 }}>*</Text>
+                    </View>
+                    <TextInput style={styles.input}
+                      placeholder={t('common:PleaseEnter')}
+                      placeholderTextColor='#9c9c9c'
+                      onChangeText={handleChange('new_password_confirmation')}
+                      onBlur={handleBlur('new_password_confirmation')}
+                      value={values.new_password_confirmation}
+                      secureTextEntry />
+                    {errors.new_password_confirmation && touched.new_password_confirmation && (
+                      <Text style={styles.error}>{errors.new_password_confirmation}</Text>
+                    )}
+                  </View>
+
+                </View>
               </View>
-              <TextInput style={styles.input}
-                placeholder={t('common:PleaseEnter')}
-                placeholderTextColor='#9c9c9c'
-                onChangeText={text => setOldPassword(text)}
-                secureTextEntry />
             </View>
-          </View>
-          <View style={styles.inputs}>
-            <View>
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.label}>{t('common:NewPassword')}</Text>
-                <Text style={{ color: 'red', fontSize: 17, height: 13, marginLeft: 5 }}>*</Text>
-              </View>
-              <TextInput style={styles.input}
-                placeholder={t('common:PleaseEnter')}
-                placeholderTextColor='#9c9c9c'
-                onChangeText={text => setNewPassword(text)}
-                secureTextEntry />
+            <View style={styles.submit}>
+              <TouchableOpacity
+                onPress={handleSubmit}
+              >
+                <Text style={styles.submitLabel}>{t('common:SaveChanges')}</Text>
+              </TouchableOpacity>
             </View>
-          </View>
-          <View style={styles.inputs}>
-            <View>
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.label}>{t('common:ConfirmPassword')}</Text>
-                <Text style={{ color: 'red', fontSize: 17, height: 13, marginLeft: 5 }}>*</Text>
-              </View>
-              <TextInput style={styles.input}
-                placeholder={t('common:PleaseEnter')}
-                placeholderTextColor='#9c9c9c'
-                onChangeText={text => setConfirmPassword(text)}
-                secureTextEntry />
-            </View>
-          </View>
-        </View>
-      </View>
-      <View style={styles.submit}>
-        <TouchableOpacity
-          onPress={() => {
-            ChangePassword();
-          }}>
-          <Text style={styles.submitLabel}>{t('common:SaveChanges')}</Text>
-        </TouchableOpacity>
-      </View>
+          </>
+        )}
+      </Formik>
     </ImageBackground>
 
   );
@@ -165,5 +232,9 @@ const styles = StyleSheet.create({
     color: '#000',
     marginBottom: '2%',
     fontWeight: '400',
+  },
+  error: {
+    color: 'red',
+    marginBottom: 10,
   },
 });

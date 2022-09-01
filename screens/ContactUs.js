@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   StyleSheet,
   Text,
   View,
@@ -13,32 +14,46 @@ import axios from 'axios';
 import { BASE_URL } from '../config';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../context/AuthContext';
+import Spinner from 'react-native-loading-spinner-overlay';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 
+
+const validationSchema = Yup.object().shape({
+  name: Yup.string()
+    .required(t('common:NameIsRequired'))
+    .min(4, t('common:NameMustBeAtLeast4Characters')),
+  email: Yup.string()
+    .required(t('common:EmailIsRequired'))
+    .email(t('common:EmailIsInvalid')),
+  message: Yup.string()
+    .required(t('common:MessageIsRequired')),
+});
 
 
 const ContactUs = () => {
   const navigation = useNavigation();
   const { userInfo, logout } = useContext(AuthContext);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
 
-  const SendMessage = async function (): Promise<boolena> {
 
-    return await axios
-      .post(`${BASE_URL}/contact-us`, { name, email, message }, {
-        headers: {
-          Authorization: 'Bearer ' + userInfo.token,
-        },
+  const SendMessage = (name, email, message) => {
+    setIsLoading(true);
+
+    axios
+      .post(`${BASE_URL}/contact-us`, {
+        name,
+        email,
+        message,
       })
       .then(res => {
         console.log(res);
         alert(res.data.success, 'Success');
+        navigation.navigate('Home');
+        //clear the values
         // logout();
-        name.clear();
-        email.clear();
-        message.clear();
+        setIsLoading(false);
         return true;
       })
       .catch(e => {
@@ -62,6 +77,8 @@ const ContactUs = () => {
 
   return (
     <View style={styles.container}>
+      <Spinner visible={isLoading} />
+      <ActivityIndicator animating={isLoading} size="large" color="#0000ff" />
       <View style={styles.header}>
         <ImageBackground source={require('../assets/searchBackground.png')}>
           <Text style={styles.h1}>{t('common:LoveToHear')}</Text>
@@ -70,39 +87,67 @@ const ContactUs = () => {
           </Text>
         </ImageBackground>
       </View>
-      <View style={styles.search}>
-        <View style={styles.label}>
-          <TextInput
-            style={styles.textInput}
-            placeholder={t('common:YourName')}
-            placeholderTextColor="#000"
-            onChangeText={text => setName(text)}
-          />
-          <TextInput
-            style={styles.textInput}
-            placeholder={t('common:EmailAddress')}
-            placeholderTextColor="#000"
-            onChangeText={text => setEmail(text)}
-          />
-          <TextInput
-            style={styles.message}
-            multiline={true}
-            numberOfLines={8}
-            placeholder={t('common:Message')}
-            placeholderTextColor="#000"
-            onChangeText={text => setMessage(text)}
-          />
-        </View>
-
-      </View>
-      <View style={styles.searchButton}>
-        <TouchableOpacity style={styles.button}
-          onPress={() => {
-            SendMessage();
-          }}>
-          <Text style={styles.buttonText}>{t('common:SendMessage')}</Text>
-        </TouchableOpacity>
-      </View>
+      <Formik
+        initialValues={{ name: '', email: '', message: '' }}
+        onSubmit={(values) => {
+          console.log(values);
+          SendMessage(
+            fullname = values.name,
+            email = values.email,
+            message = values.message,
+          );
+        }}
+        validationSchema={validationSchema}>
+        {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+          <View style={styles.form}>
+            <View style={styles.search}>
+              <View style={styles.label}>
+                <TextInput
+                  style={styles.textInput}
+                  placeholder={t('common:Name')}
+                  // onChangeText={text => setName(text)}
+                  onChangeText={handleChange('name')}
+                  onBlur={handleBlur('name')}
+                  placeholderTextColor="#000"
+                  value={values.name}
+                />
+                {touched.name && errors.name && (
+                  <Text style={styles.error}>{errors.name}</Text>
+                )}
+                <TextInput
+                  style={styles.textInput}
+                  placeholder={t('common:Email')}
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  placeholderTextColor="#000"
+                  value={values.email}
+                />
+                {touched.email && errors.email && (
+                  <Text style={styles.error}>{errors.email}</Text>
+                )}
+                <TextInput
+                  style={styles.message}
+                  placeholder={t('common:Message')}
+                  onChangeText={handleChange('message')}
+                  onBlur={handleBlur('message')}
+                  placeholderTextColor="#000"
+                  multiline={true}
+                  numberOfLines={8}
+                  value={values.message}
+                />
+                {touched.message && errors.message && (
+                  <Text style={styles.error}>{errors.message}</Text>
+                )}
+              </View>
+            </View>
+            <View style={styles.searchButton}>
+              <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                <Text style={styles.buttonText}>{t('common:SendMessage')}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+      </Formik>
     </View>
   );
 };
@@ -198,5 +243,9 @@ const styles = StyleSheet.create({
     // height: 200,
     marginBottom: 20,
     alignItems: 'flex-start',
+  },
+  error: {
+    color: 'red',
+    marginBottom: 10,
   },
 });

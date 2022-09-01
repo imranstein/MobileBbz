@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   ImageBackground,
   StyleSheet,
   Text,
@@ -11,11 +12,29 @@ import React from 'react';
 import { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { t } from 'i18next';
+import Spinner from 'react-native-loading-spinner-overlay';
+
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import LoadingOverlay from '../components/ui/LoadingOverlay';
+
 
 const Login = ({ navigation }) => {
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-  const { isLoading, login } = useContext(AuthContext);
+  // const [email, setEmail] = useState(null);
+  // const [password, setPassword] = useState(null);
+  const { isLoading, isAuthenticating, login } = useContext(AuthContext);
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .required(t('common:EmailIsRequired'))
+      .email(t('common:EmailIsInvalid')),
+    password: Yup.string()
+      .required(t('common:PasswordIsRequired'))
+      .min(6, t('common:PasswordMustBeAtLeast6Characters')),
+  });
+  if (isAuthenticating) {
+    return <LoadingOverlay message="Logging you in..." />;
+  }
 
   return (
     <ImageBackground
@@ -24,42 +43,99 @@ const Login = ({ navigation }) => {
       style={styles.container}
       imageStyle={styles.ImageBackground}>
       <View style={styles.login}>
-        {/* <Spinner visible={isLoading} /> */}
-        <View style={styles.loginContent}>
-          <TextInput
-            style={styles.textInput}
-            placeholder={t('common:Email')}
-            placeholderTextColor='#9c9c9c'
-            onChangeText={text => setEmail(text)}
-          />
-        </View>
-        <View>
-          <TextInput
-            style={styles.textInput}
-            placeholder={t('common:Password')}
-            placeholderTextColor='#9c9c9c'
-            onChangeText={text => setPassword(text)}
-            secureTextEntry
-          />
-        </View>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('Reset Your Password')}>
-          <Text style={styles.buttonText}>{t('common:ForgotPassword')}</Text>
+        <Spinner visible={isLoading} />
+        {/* <ActivityIndicator animating={isLoading} size="large" color="#0000ff" /> */}
+        <Formik
+          initialValues={{ email: '', password: '' }}
+          onSubmit={(values) => {
+            login(values.email, values.password);
+          }
+          }
+          validationSchema={validationSchema}
+        >
+          {({
+            handleChange, handleBlur, handleSubmit, values, errors, touched,
+          }) => (
+            <View style={styles.form}>
+              <View style={styles.loginContent}>
+                <TextInput
+                  style={styles.textInput}
+                  placeholder={t('common:Email')}
+                  placeholderTextColor='#9c9c9c'
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  value={values.email}
+                />
+                {touched.email && errors.email && (
+                  <Text style={styles.error}>{errors.email}</Text>
+                )}
+              </View>
+              <View>
+                <TextInput
+                  style={styles.textInput}
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  value={values.password}
+                  placeholder={t('common:Password')}
+                  placeholderTextColor='#9c9c9c'
+                  secureTextEntry={true}
+                />
+                {touched.password && errors.password && (
+                  <Text style={styles.error}>{errors.password}</Text>
+                )}
+              </View>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('Reset Your Password')}>
+                <Text style={styles.buttonText}>{t('common:ForgotPassword')}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.loginButton} onPress={handleSubmit}>
+                <Text style={styles.loginButtonText}>{t('common:Login')}</Text>
+              </TouchableOpacity>
+              <View style={styles.signup}>
+                <Text style={{ color: '#999' }}>{t('common:DoNotHaveAnAccount')} </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+                  <Text style={styles.signupButton}>{t('common:SignUp')}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
+        </Formik>
+        {/* <View style={styles.loginContent}>
+        <TextInput
+          style={styles.textInput}
+          placeholder={t('common:Email')}
+          placeholderTextColor='#9c9c9c'
+          onChangeText={text => setEmail(text)}
+        />
+      </View>
+      <View>
+        <TextInput
+          style={styles.textInput}
+          placeholder={t('common:Password')}
+          placeholderTextColor='#9c9c9c'
+          onChangeText={text => setPassword(text)}
+          secureTextEntry
+        />
+      </View>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('Reset Your Password')}>
+        <Text style={styles.buttonText}>{t('common:ForgotPassword')}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.loginButton}
+        onPress={() => {
+          login(email, password);
+        }}>
+        <Text style={styles.loginButtonText}>{t('common:Login')}</Text>
+      </TouchableOpacity>
+      <View style={styles.signup}>
+        <Text style={{ color: '#999' }}>{t('common:DoNotHaveAnAccount')} </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+          <Text style={styles.signupButton}>{t('common:SignUp')}</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.loginButton}
-          onPress={() => {
-            login(email, password);
-          }}>
-          <Text style={styles.loginButtonText}>{t('common:Login')}</Text>
-        </TouchableOpacity>
-        <View style={styles.signup}>
-          <Text style={{ color: '#999' }}>{t('common:DoNotHaveAnAccount')} </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={styles.signupButton}>{t('common:SignUp')}</Text>
-          </TouchableOpacity>
-        </View>
+      </View> */}
       </View>
     </ImageBackground>
   );
@@ -131,5 +207,9 @@ const styles = StyleSheet.create({
     color: '#166795',
     fontSize: 14,
     marginLeft: 10,
+  },
+  error: {
+    color: 'red',
+    marginBottom: 10,
   },
 });

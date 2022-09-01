@@ -42,7 +42,8 @@ const Welcome = ({ navigation }) => {
           </Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Main')}>
         <Text
           style={{
             color: '#166795',

@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Icons from 'react-native-vector-icons/EvilIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import Spinner from 'react-native-loading-spinner-overlay';
 import { useTranslation } from "react-i18next";
 
 const LANGUAGES = [
@@ -14,15 +15,17 @@ const LANGUAGES = [
 ];
 
 const ProfileScreen = () => {
+
   const { t, i18n } = useTranslation();
   const selectedLanguageCode = i18n.language;
   const setLanguage = (code) => {
     return i18n.changeLanguage(code);
   };
   const navigation = useNavigation();
-  const { userInfo, logout } = useContext(AuthContext);
+  const { userInfo, isLoading, logout } = useContext(AuthContext);
   return (
     <View style={styles.container}>
+      <Spinner visible={isLoading} />
       <View style={styles.profile}>
         <Text style={{
           color: '#1a6997',
@@ -165,7 +168,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     color: '#1a6997',
-    marginLeft: 10,
+    marginLeft: 15,
     marginTop: 27,
     fontWeight: '600',
   },
@@ -211,13 +214,13 @@ const styles = StyleSheet.create({
   selectedText: {
     fontSize: 15,
     color: '#1a6997',
-    marginLeft: 70,
+    marginLeft: 100,
     marginTop: 10,
     fontWeight: '500',
   }, text: {
     fontSize: 15,
     color: '#000',
-    marginLeft: 70,
+    marginLeft: 100,
     marginTop: 10,
     fontWeight: '500',
   }

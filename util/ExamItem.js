@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
 import { IMAGE_URL } from '../config';
 import moment from 'moment';
@@ -8,10 +8,14 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import * as Progress from 'react-native-progress';
+import { t } from 'i18next';
+import { AuthContext } from '../context/AuthContext';
+
 
 
 const ExamItem = ({ item }) => {
     const navigation = useNavigation();
+    const { userInfo } = useContext(AuthContext);
     const media = item.media;
     const location = item.location;
     const progress = item.available_seats / item.total_seat;
@@ -44,16 +48,20 @@ const ExamItem = ({ item }) => {
                 </Text>
             </View> */}
             <TouchableOpacity
-                onPress={() => navigation.navigate('ExamDetail', {
-                    paramKey: item.id,
-                })}>
+                onPress={() => {
+                    userInfo.token ?
+                        navigation.navigate('ExamDetail', {
+                            paramKey: item.id,
+                        }) : navigation.navigate('Login')
+                }
+                }>
                 <View style={styles.title}>
                     <Text style={styles.titleText}>{item.title}</Text>
                 </View>
             </TouchableOpacity>
             <View style={{ flexDirection: 'row', marginLeft: 5 }}>
-                <Text style={{ fontSize: 16, fontWeight: 'bold', marginRight: 3, color: '#000' }}>Exam Date:</Text><Text style={styles.examDateText}>{moment(item.exam_date).format('DD/MM/YY')}</Text>
-                <Text style={{ fontSize: 16, fontWeight: 'bold', marginRight: 3, color: '#000' }}>Reg Date:</Text><Text style={styles.regDateText}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', marginRight: 3, color: '#000' }}>{t("common:ExamDate")}:</Text><Text style={styles.examDateText}>{moment(item.exam_date).format('DD/MM/YY')}</Text>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', marginRight: 3, color: '#000' }}>{t("common:RegDate")}:</Text><Text style={styles.regDateText}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text>
             </View>
             {location != null ?
                 <View View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 15 }}>
@@ -63,7 +71,7 @@ const ExamItem = ({ item }) => {
                             size={18}
                             color="#000"
                             style={styles.icon}
-                        />alignContent
+                        />
                     </Text>
                     <Text style={styles.locationText}>
                         {location.name} - {location.city}/ {location.street_name}
@@ -82,7 +90,7 @@ const ExamItem = ({ item }) => {
                     </Text> */}
                 </View>}
             <View style={styles.description}>
-                <Text style={styles.AvailableSeats}>Available Seats</Text>
+                <Text style={styles.AvailableSeats}>{t("common:AvailableSeats")}</Text>
                 <Text style={{
                     marginLeft: '50%',
                     fontSize: 16,

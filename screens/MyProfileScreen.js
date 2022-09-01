@@ -54,6 +54,7 @@ const MyProfileScreen = (props) => {
         return false;
       });
   };
+  console.log(userInfo.email)
   const getData = async () => {
     const { data } = await axios
       .get(`${BASE_URL}/profile`, {

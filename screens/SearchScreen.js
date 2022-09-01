@@ -34,7 +34,7 @@ const SearchPage = () => {
       .get(`${BASE_URL}/exams`, {
       });
     setData(data.data);
-    console.log(data);
+    // console.log(data);
   };
   useEffect(() => {
     getData();

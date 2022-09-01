@@ -16,6 +16,7 @@ import MyProfileScreen from '../screens/MyProfileScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import NewsDetailScreen from '../screens/NewsDetailScreen';
 import ExamDetailScreen from '../screens/ExamDetailScreen';
+import BookingScreen from '../screens/BookingScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +46,7 @@ const Navigation = () => {
             />
             <Stack.Screen name="NewsDetail" component={NewsDetailScreen} />
             <Stack.Screen name="ExamDetail" component={ExamDetailScreen} />
+            <Stack.Screen name="Booking" component={BookingScreen} />
 
           </>
         ) : (
@@ -66,6 +68,11 @@ const Navigation = () => {
             />
             <Stack.Screen name="Success" component={ResetSuccess} />
             <Stack.Screen name="NewsDetail" component={NewsDetailScreen} />
+            <Stack.Screen
+              name="Main"
+              component={MainScreen}
+              options={{ headerShown: false }}
+            />
           </>
         )}
       </Stack.Navigator>
