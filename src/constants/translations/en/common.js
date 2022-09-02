@@ -86,4 +86,12 @@ export default {
     BookNow: 'Book Now',
     PayNow: 'Pay Now',
     ProfileUpdateSuccessfully: 'Profile Updated Successfully',
+    NewsDetail: 'News Detail',
+    OldPasswordIsRequired: 'Old Password is required',
+    OldPasswordMustBeAtLeast6Characters: 'Old Password must be at least 6 characters',
+    NewPasswordIsRequired: 'New Password is required',
+    NewPasswordMustBeAtLeast6Characters: 'New Password must be at least 6 characters',
+    NewPasswordConfirmationIsRequired: 'New Password Confirmation is required',
+    PasswordsMustMatch: 'Passwords must match',
+    MyProfile: 'My Profile',
 }

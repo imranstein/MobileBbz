@@ -57,7 +57,7 @@ const SearchPage = () => {
           <View style={styles.label}>
             <Text style={styles.title}> {t('common:Location')} ,{t('common:Date')} Or {t('common:Level')}</Text>
             <View style={styles.titleHeader}>
-              <TextInput style={styles.titleHeader} placeholder="Search" />
+              <TextInput style={styles.titleHeader} placeholder={t('common:Search')} />
             </View>
           </View>
           <View style={styles.input} />
@@ -67,7 +67,7 @@ const SearchPage = () => {
             <Text style={styles.buttonText}>{t('common:Search')}</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.list}>
+        {/* <View style={styles.list}>
           <Text style={styles.listTitle}>{t('common:UpcomingExams')}</Text>
           <Text style={styles.listSubTitle}>{t('common:UpcomingExamsSubTitle')}</Text>
           <FlatList
@@ -80,7 +80,7 @@ const SearchPage = () => {
             // }}
             renderItem={renderItem}
           />
-        </View>
+        </View> */}
 
       </ScrollView>
     </View>
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   header: {
     flex: 1,
     backgroundColor: '#1a6997',
-    height: 200,
+    height: 240,
   },
   h1: {
     fontSize: 25,

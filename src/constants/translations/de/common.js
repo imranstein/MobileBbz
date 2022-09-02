@@ -26,6 +26,7 @@ export default {
     WelcomeTo: 'Willkommen bei',
     Enter: 'Eingabe',
     Email: 'E-Mail',
+    Name: 'Name',
     Password: 'Passwort',
     ConfirmPassword: 'Passwort bestätigen',
     ForgotPassword: 'Passwort vergessen',
@@ -60,7 +61,7 @@ export default {
     SendUsAMessage: 'Senden Sie uns eine Nachricht und wir antworten so schnell wie möglich',
     Message: 'Nachricht',
     YourName: 'Ihr Name',
-    SendMessage: 'Nachricht senden',
+    SendMessage: 'senden',
     UpcomingExams: 'Bevorstehende Prüfungen',
     UpcomingExamsSubTitle: 'All the coming exams For you',
     Language: 'Sprachen',
@@ -88,6 +89,16 @@ export default {
     BookNow: 'Jetzt buchen',
     PayNow: 'Jetzt bezahlen',
     ProfileUpdateSuccessfully: 'Profil erfolgreich aktualisiert',
+    Hello: 'Hallo',
+    HelloThere: 'Hallo da',
+    NewsDetail: 'Nachrichtendetail',
+    OldPasswordIsRequired: 'Altes Passwort ist erforderlich',
+    OldPasswordMustBeAtLeast6Characters: 'Altes Passwort muss mindestens 6 Zeichen lang sein',
+    NewPasswordIsRequired: 'Neues Passwort ist erforderlich',
+    NewPasswordMustBeAtLeast6Characters: 'Neues Passwort muss mindestens 6 Zeichen lang sein',
+    NewPasswordConfirmationIsRequired: 'Bestätigung des neuen Passworts ist erforderlich',
+    PasswordsMustMatch: 'Passwörter müssen übereinstimmen',
+    MyProfile: 'Mein Profil',
 
 
 

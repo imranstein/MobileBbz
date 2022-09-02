@@ -70,7 +70,7 @@ const Login = ({ navigation }) => {
                   <Text style={styles.error}>{errors.email}</Text>
                 )}
               </View>
-              <View>
+              <View style={styles.loginContent}>
                 <TextInput
                   style={styles.textInput}
                   onChangeText={handleChange('password')}
@@ -178,6 +178,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   button: {
+    marginTop: 10,
     justifyContent: 'flex-end',
   },
   buttonText: {

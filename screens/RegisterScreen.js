@@ -77,7 +77,7 @@ const RegisterScreen = ({ navigation }) => {
                       borderRadius: 5,
                       paddingVertical: 10,
                       paddingHorizontal: 14,
-                      width: 135,
+                      width: '47%',
                       color: '#000',
                     }}
                     placeholder={t('common:FirstName')}
@@ -88,14 +88,14 @@ const RegisterScreen = ({ navigation }) => {
                   />
                   <TextInput
                     style={{
-                      marginLeft: 16,
+                      marginLeft: '6%',
                       marginBottom: 12,
                       borderWidth: 1,
                       borderColor: '#bbb',
                       borderRadius: 5,
                       paddingVertical: 10,
                       paddingHorizontal: 14,
-                      width: 135,
+                      width: '47%',
                       color: '#000',
                     }}
                     placeholder={t('common:LastName')}
@@ -147,21 +147,8 @@ const RegisterScreen = ({ navigation }) => {
                     tintColors={{ true: '#1570a5', false: '#000' }}
                   />
                   <Text style={{ marginLeft: 10, fontSize: 15, color: '#999' }}>{t('common:IHaveReadAndAcceptTheTermsAndConditions')}</Text>
+                  {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>}
                 </View>
-                {/*               
-              <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-                <CheckBox
-                  value={term}
-                  title="I have read and accept the terms and conditions"
-                  onPress={() => setTerm(term)}
-                  onValueChange={newValue => setTerm(newValue)}
-                  tintColors={{ true: '#1570a5', false: 'black' }}
-                />
-                <Text style={{ marginLeft: 10, fontSize: 15, color: '#999' }}>
-                  {t('common:IHaveReadAndAcceptTheTermsAndConditions')}
-                </Text>
-              </View> */}
-                {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>}
                 <TouchableOpacity onPress={handleSubmit} style={styles.loginButton}>
                   <Text style={styles.loginButtonText}>{t('common:SignUp')}</Text>
                 </TouchableOpacity>

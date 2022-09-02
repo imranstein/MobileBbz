@@ -17,26 +17,27 @@ const NewsItem = ({ item }) => {
     return (
 
         <View style={styles.container}>
-            {media != null ? <View style={styles.image}>
-                <Image
-                    style={{ width: '96%', height: 230, borderRadius: 2 }}
-                    source={{ uri: `${IMAGE_URL}${item.media.file_path}` }}
-                />
-            </View> : <View style={styles.image}><Image
-                style={{ width: '96%', height: 200, borderRadius: 2 }}
-                source={require('../assets/searchBackground.png')}
-            /></View>}
-
-
-            <View style={styles.date}>
-                <Text style={styles.dateText}>
-                    {moment(item.created_at).format('DD/MM/YY')}
-                </Text>
-            </View>
             <TouchableOpacity
                 onPress={() => navigation.navigate('NewsDetail', {
                     paramKey: item.id,
                 })}>
+                {media != null ? <View style={styles.image}>
+                    <Image
+                        style={{ width: '96%', height: 230, borderRadius: 2 }}
+                        source={{ uri: `${IMAGE_URL}${item.media.file_path}` }}
+                    />
+                </View> : <View style={styles.image}><Image
+                    style={{ width: '96%', height: 200, borderRadius: 2 }}
+                    source={require('../assets/searchBackground.png')}
+                /></View>}
+
+
+                <View style={styles.date}>
+                    <Text style={styles.dateText}>
+                        {moment(item.created_at).format('DD/MM/YY')}
+                    </Text>
+                </View>
+
                 <View style={styles.title}>
                     <Text style={styles.titleText}>{item.title}</Text>
                 </View>

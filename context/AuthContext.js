@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = (first_name, last_name, email, password, phone, term) => {
     setIsLoading(true);
-    console.log(first_name, last_name, email, phone, password, term);
+    // console.log(first_name, last_name, email, phone, password, term);
     axios
       .post(`${BASE_URL}/signup`, {
         first_name,
@@ -24,17 +24,22 @@ export const AuthProvider = ({ children }) => {
         term,
       })
       .then(res => {
-        console.log(res.data);
-        let userInfo = res.data;
-        setUserInfo(userInfo);
-        AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
-        setIsLoading(false);
-        console.log(userInfo);
+        console.log(res.data.error,);
+        if (res.data.error) {
+          alert('email or Phone is already taken', 'Error');
+          setIsLoading(false);
+        } else {
+          alert('Successfully registered');
+          let userInfo = res.data;
+          setUserInfo(userInfo);
+          AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
+          setIsLoading(false);
+        }
 
       })
       .catch(e => {
         console.log(`register error ${e}`);
-        alert('email or Phone is already taken', 'Error');
+        alert('Something went wrong', 'Error');
         setIsLoading(false);
       });
   };

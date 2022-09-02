@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   ImageBackground,
+  ScrollView,
 } from 'react-native';
 import React, { useState, useContext } from 'react';
 import { t } from 'i18next';
@@ -78,7 +79,7 @@ const ContactUs = () => {
   return (
     <View style={styles.container}>
       <Spinner visible={isLoading} />
-      <ActivityIndicator animating={isLoading} size="large" color="#0000ff" />
+      {/* <ActivityIndicator animating={isLoading} size="large" color="#0000ff" /> */}
       <View style={styles.header}>
         <ImageBackground source={require('../assets/searchBackground.png')}>
           <Text style={styles.h1}>{t('common:LoveToHear')}</Text>
@@ -161,6 +162,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#1a6997',
     height: '25%',
+
   },
   h1: {
     fontSize: 25,
@@ -206,11 +208,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     elevation: 1,
     width: 150,
-    height: 50,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: -50,
-    zindex: -1,
+    marginTop: '-10%',
+    // zindex: -1,
   },
   buttonText: {
     color: '#fff',

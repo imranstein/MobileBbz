@@ -14,63 +14,71 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/EvilIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import CustomDrawer from './CustomDrawer';
 const Drawer = createDrawerNavigator();
 // const { t } = useTranslation();
 
 const MainScreen = () => {
   return (
-    <Drawer.Navigator initialRouteName="Main">
+    <Drawer.Navigator
+
+      screenOptions={{
+        drawerActiveBackgroundColor: '#166795',
+        drawerActiveTintColor: '#fff',
+        drawerLabelStyle: { fontSize: 15, marginLeft: -20, fontFamily: 'Roboto-medium' }
+      }}
+      drawerContent={props => <CustomDrawer{...props} />} initialRouteName="Main">
       <Drawer.Screen name={t('common:Home')} component={HomeScreen} options={{
-        title: 'Home',
+        // title: 'Home',
         drawerIcon: ({ focused, size }) => (
           <Ionicons
             name="md-home"
             size={size}
-            color={focused ? '#1a6997' : '#ccc'}
+            color={focused ? '#fff' : '#1a6997'}
           />
         ),
       }} />
       <Drawer.Screen name={t('common:AboutUs')} component={AboutUs}
         options={{
-          title: 'About Us',
+          // title: '.{t('common: AboutUs')}.',
           drawerIcon: ({ focused, size }) => (
             <Ionicons
               name="people"
               size={size}
-              color={focused ? '#1a6997' : '#ccc'}
+              color={focused ? '#fff' : '#1a6997'}
             />
           ),
         }} />
       <Drawer.Screen name={t('common:Location')} component={Location}
         options={{
-          title: 'Location',
+          // title: 'Location',
           drawerIcon: ({ focused, size }) => (
             <Ionicons
               name="location-outline"
               size={size}
-              color={focused ? '#1a6997' : '#ccc'}
+              color={focused ? '#fff' : '#1a6997'}
             />
           ),
         }} />
       <Drawer.Screen name={t('common:ContactUs')} component={ContactUs}
         options={{
-          title: 'Contact Us',
+          // title: 'Contact Us',
           drawerIcon: ({ focused, size }) => (
             <Ionicons
               name="phone-portrait"
               size={size}
-              color={focused ? '#1a6997' : '#ccc'}
+              color={focused ? '#fff' : '#1a6997'}
             />
           ),
         }} />
       <Drawer.Screen name={t('common:News')} component={News}
         options={{
-          title: 'News',
+          // title: 'News',
           drawerIcon: ({ focused, size }) => (
             <Ionicons
               name="newspaper"
               size={size}
-              color={focused ? '#1a6997' : '#ccc'}
+              color={focused ? '#fff' : '#1a6997'}
             />
           ),
         }} />

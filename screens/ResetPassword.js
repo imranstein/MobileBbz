@@ -7,30 +7,46 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
-import {useState, useContext} from 'react';
-import {AuthContext} from '../context/AuthContext';
+import { useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
-import {useNavigation} from '@react-navigation/native';
-import {BASE_URL} from '../config';
+import { useNavigation } from '@react-navigation/native';
+import { BASE_URL } from '../config';
 import { t } from 'i18next';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import Spinner from 'react-native-loading-spinner-overlay';
+
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string()
+    .required(t('common:EmailIsRequired'))
+    .email(t('common:EmailIsInvalid')),
+}).defined();
 
 const ResetPassword = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
   const [email, setEmail] = useState(null);
   // const {isLoading, reset} = useContext(AuthContext);
-  const PasswordReset = async function (): Promise<boolena> {
-    const emailValue = email;
-
-    return await axios
-      .post(`${BASE_URL}/reset-password`, {email})
+  const PasswordReset = (email) => {
+    setIsLoading(true);
+    console.log(email)
+    // const PasswordReset = async function (): Promise<boolena> {
+    //   const emailValue = email;
+    setIsLoading(true);
+    axios
+      .post(`${BASE_URL}/reset-password`, { email })
       .then(res => {
         console.log(res);
         alert(res.data.message, 'Success');
+        setIsLoading(false);
         navigation.navigate('Success');
         return true;
       })
       .catch(e => {
         console.log(e);
+
         if (e.response.status === 400) {
           alert(e.response.data.message, 'Error');
         } else if (e.response.status === 500) {
@@ -38,7 +54,9 @@ const ResetPassword = () => {
         } else if (e.response.status === 422) {
           alert('Please enter a valid email', 'Error');
         }
+        setIsLoading(false);
         return false;
+
       });
   };
 
@@ -48,22 +66,41 @@ const ResetPassword = () => {
       resizeMode="cover"
       style={styles.ImageContainer}
       imageStyle={styles.ImageBackground}>
+      <Spinner visible={isLoading} />
       <View style={styles.container}>
         <Text style={styles.text}>
           {t('common:ResetPasswordMessage')}
         </Text>
-        <TextInput
-          style={styles.input}
-          placeholder={t('common:Email')}
-          onChangeText={text => setEmail(text)}
-        />
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            PasswordReset();
-          }}>
-          <Text style={styles.buttonText}>{t('common:SendPassword')}</Text>
-        </TouchableOpacity>
+        <Formik
+          initialValues={{ email: '' }}
+          onSubmit={(values) => {
+            PasswordReset(
+              values.email,
+            );
+          }}
+          validationSchema={validationSchema}>
+          {({
+            handleChange, handleBlur, handleSubmit, values, errors, touched,
+          }) => (
+            <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+              <TextInput
+                style={styles.input}
+                placeholder={t('common:Email')}
+                placeholderTextColor='#9c9c9c'
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+                value={values.email}
+                keyboardType='email-address'
+              />
+              {touched.email && errors.email && <Text style={styles.error}>{errors.email}</Text>}
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleSubmit}>
+                <Text style={styles.buttonText}>{t('common:SendPassword')}</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </Formik>
       </View>
     </ImageBackground>
   );
@@ -114,5 +151,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 15,
     fontWeight: 'bold',
+  },
+  error: {
+    color: 'red',
+    marginBottom: 10,
   },
 });

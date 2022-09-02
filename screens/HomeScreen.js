@@ -10,6 +10,7 @@ import SearchPage from './SearchScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/EvilIcons';
 import Login from './Login';
+import { t } from 'i18next';
 
 const Tab = createBottomTabNavigator();
 
@@ -48,7 +49,7 @@ const HomeScreen = () => {
       {userInfo.token ?
         <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
         :
-        <Tab.Screen name="Login" component={Login} options={{ headerShown: false }} />}
+        <Tab.Screen name="Login" component={Login} options={{ title: t('common:Login') }} />}
     </Tab.Navigator>
   );
 };

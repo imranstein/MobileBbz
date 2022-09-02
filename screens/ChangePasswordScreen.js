@@ -10,15 +10,15 @@ import * as Yup from 'yup';
 
 const validationSchema = Yup.object().shape({
   old_password: Yup.string()
-    .required('Old Password is required')
-    .min(6, 'Old Password must be at least 6 characters'),
+    .required(t('common:OldPasswordIsRequired'))
+    .min(6, t('common:OldPasswordMustBeAtLeast6Characters')),
   new_password: Yup.string()
-    .required('New Password is required')
-    .min(6, 'New Password must be at least 6 characters'),
+    .required(t('common:NewPasswordIsRequired'))
+    .min(6, t('common:NewPasswordMustBeAtLeast6Characters')),
   new_password_confirmation: Yup.string()
-    .required('New Password Confirmation is required')
-    .min(6, 'New Password Confirmation must be at least 6 characters')
-    .oneOf([Yup.ref('new_password'), null], 'Passwords must match'),
+    .required(t('common:NewPasswordConfirmationIsRequired'))
+    .min(6, t('common:NewPasswordMustBeAtLeast6Characters'))
+    .oneOf([Yup.ref('new_password'), null], t('common:PasswordsMustMatch')),
 }).defined();
 
 

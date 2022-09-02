@@ -8,6 +8,8 @@ import { AuthContext } from '../context/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
+// import CountryPicker from "@volkenomakers/react-native-country-picker";
+import CountryPicker from 'react-native-country-picker-modal';
 
 const MyProfileScreen = (props) => {
   const navigation = useNavigation();
@@ -55,7 +57,7 @@ const MyProfileScreen = (props) => {
       .then(res => {
         console.log(res);
         alert(res.data.message, 'Success');
-        // navigation.navigate('Success');
+        navigation.navigate('Main');
         return true;
       })
       .catch(e => {
@@ -167,6 +169,7 @@ const MyProfileScreen = (props) => {
               <Text style={styles.label}>{t('common:Phone')}</Text>
               <TextInput style={styles.input}
                 value={phone}
+                keyboardType='phone-pad'
                 onChangeText={setPhone} />
             </View>
           </View>
@@ -239,15 +242,48 @@ const MyProfileScreen = (props) => {
               <Text style={styles.label}>{t('common:PostalCode')}</Text>
               <TextInput style={styles.input}
                 value={zip_code}
+                keyboardType='phone-pad'
                 onChangeText={setZipCode} />
             </View>
           </View>
           <View style={styles.inputs}>
             <View>
               <Text style={styles.label}>{t('common:Country')}</Text>
-              <TextInput style={styles.input}
-                value={country}
-                onChangeText={setCountry} />
+              <View style={{
+                marginLeft: '4%',
+                borderColor: '#cecece',
+                borderBottomWidth: 0.5,
+              }}
+              >
+                <CountryPicker
+                  withFilter
+                  withFlag
+                  preferredCountries={['DE', 'IN']}
+                  onSelect={(country) => {
+                    setCountry(country.name);
+                    console.log(country.name);
+                  }
+                  }
+                />
+              </View>
+              {country !== null && (
+                <Text style={{
+                  flex: 1,
+                  fontSize: 18,
+                  marginTop: '5%',
+                  marginBottom: '5%',
+                  marginLeft: '3%',
+                  borderColor: '#cecece',
+                  borderWidth: 0.5,
+                  borderRadius: 5,
+                  // paddingHorizontal: '%',
+                  paddingTop: '3%',
+                  paddingLeft: '2%',
+                  width: '90%',
+                  height: 42,
+                  color: '#000',
+                }}>{country}</Text>
+              )}
             </View>
           </View>
           <View style={styles.inputs}>
@@ -257,7 +293,7 @@ const MyProfileScreen = (props) => {
             </TouchableOpacity>
           </View>
         </View>
-      </ScrollView>
+      </ScrollView >
       <View style={styles.submit}>
         <TouchableOpacity
           onPress={() => {
@@ -266,7 +302,7 @@ const MyProfileScreen = (props) => {
           <Text style={styles.submitLabel}>{t('common:SaveChanges')}</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </View >
   );
   // }
 };

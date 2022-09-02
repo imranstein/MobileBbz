@@ -17,6 +17,8 @@ import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import NewsDetailScreen from '../screens/NewsDetailScreen';
 import ExamDetailScreen from '../screens/ExamDetailScreen';
 import BookingScreen from '../screens/BookingScreen';
+import { t } from 'i18next';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -39,7 +41,9 @@ const Navigation = () => {
               component={MainScreen}
               options={{ headerShown: false }}
             />
-            <Stack.Screen name="My Profile" component={MyProfileScreen} />
+              <Stack.Screen
+                options={{ title: t('common:MyProfile') }}
+                name="My Profile" component={MyProfileScreen} />
             <Stack.Screen
               name="Change Password"
               component={ChangePasswordScreen}
@@ -55,19 +59,20 @@ const Navigation = () => {
             <Stack.Screen
               name="Login"
               component={Login}
-              options={{ headerShown: false }}
+              options={{ title: t('common:Login') }}
             />
             <Stack.Screen
               name="Register"
               component={RegisterScreen}
-              options={{ headerShown: false }}
+              options={{ title: t('common:Register') }}
             />
             <Stack.Screen
               name="Reset Your Password"
               component={ResetPassword}
             />
             <Stack.Screen name="Success" component={ResetSuccess} />
-            <Stack.Screen name="NewsDetail" component={NewsDetailScreen} />
+            <Stack.Screen options={{ title: t("common:NewsDetail") }} name="NewsDetail" component={NewsDetailScreen} />
+            <Stack.Screen name="ExamDetail" component={ExamDetailScreen} />
             <Stack.Screen
               name="Main"
               component={MainScreen}

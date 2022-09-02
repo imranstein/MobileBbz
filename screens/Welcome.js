@@ -36,7 +36,7 @@ const Welcome = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.signup}>
-        <Text style={{ fontSize: 16, color: '#999' }}>{t('common:DoNotHaveAnAccount')} </Text>
+        <Text style={{ fontSize: 15, color: '#999' }}>{t('common:DoNotHaveAnAccount')} </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.signupButton}>{t('common:SignUp')}
           </Text>
@@ -47,7 +47,7 @@ const Welcome = ({ navigation }) => {
         <Text
           style={{
             color: '#166795',
-            fontSize: 16,
+            fontSize: 15,
             textAlign: 'center',
             marginTop: '1%',
           }}>
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   },
   signupButton: {
     color: '#166795',
-    fontSize: 16,
+    fontSize: 15,
     marginLeft: '1%',
   },
 });
