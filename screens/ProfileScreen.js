@@ -47,7 +47,7 @@ const ProfileScreen = () => {
           {/* user */}
         </Text>
       </View>
-      <View style={{ flexDirection: 'row' }}>
+      {/* <View style={{ flexDirection: 'row' }}>
         <Text style={styles.icon}>
           <Entypo
             name="language"
@@ -60,9 +60,9 @@ const ProfileScreen = () => {
 
           <Text style={{ marginRight: 20 }}>{t('common:Language')}</Text>
         </Text>
-      </View>
+      </View> */}
       <View style={styles.list}>
-        {LANGUAGES.map((language) => {
+        {/* {LANGUAGES.map((language) => {
           const selectedLanguage = language.code === selectedLanguageCode;
           return (
             <TouchableOpacity
@@ -78,7 +78,7 @@ const ProfileScreen = () => {
               </Text>
             </TouchableOpacity>
           );
-        })}
+        })} */}
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('My Profile');

@@ -15,6 +15,7 @@ import Icons from 'react-native-vector-icons/EvilIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import CustomDrawer from './CustomDrawer';
+import Language from './Language';
 const Drawer = createDrawerNavigator();
 // const { t } = useTranslation();
 
@@ -77,6 +78,17 @@ const MainScreen = () => {
           drawerIcon: ({ focused, size }) => (
             <Ionicons
               name="newspaper"
+              size={size}
+              color={focused ? '#fff' : '#1a6997'}
+            />
+          ),
+        }} />
+      <Drawer.Screen name={t('common:Language')} component={Language}
+        options={{
+          // title: 'News',
+          drawerIcon: ({ focused, size }) => (
+            <Entypo
+              name="language"
               size={size}
               color={focused ? '#fff' : '#1a6997'}
             />

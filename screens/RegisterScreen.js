@@ -104,6 +104,7 @@ const RegisterScreen = ({ navigation }) => {
                     onBlur={handleBlur('last_name')}
                     value={values.last_name}
                   />
+                  
                 </View>
                 {touched.first_name && errors.first_name && <Text style={styles.error}>{errors.first_name}</Text>}
                 {touched.last_name && errors.last_name && <Text style={styles.error}>{errors.last_name}</Text>}

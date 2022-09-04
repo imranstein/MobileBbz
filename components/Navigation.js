@@ -18,6 +18,7 @@ import NewsDetailScreen from '../screens/NewsDetailScreen';
 import ExamDetailScreen from '../screens/ExamDetailScreen';
 import BookingScreen from '../screens/BookingScreen';
 import { t } from 'i18next';
+import SearchPage from '../screens/SearchScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -41,13 +42,14 @@ const Navigation = () => {
               component={MainScreen}
               options={{ headerShown: false }}
             />
-              <Stack.Screen
-                options={{ title: t('common:MyProfile') }}
-                name="My Profile" component={MyProfileScreen} />
+            <Stack.Screen
+              options={{ title: t('common:MyProfile') }}
+              name="My Profile" component={MyProfileScreen} />
             <Stack.Screen
               name="Change Password"
               component={ChangePasswordScreen}
             />
+            <Stack.Screen name="Exams" component={SearchPage} />
             <Stack.Screen name="NewsDetail" component={NewsDetailScreen} />
             <Stack.Screen name="ExamDetail" component={ExamDetailScreen} />
             <Stack.Screen name="Booking" component={BookingScreen} />
@@ -78,6 +80,7 @@ const Navigation = () => {
               component={MainScreen}
               options={{ headerShown: false }}
             />
+
           </>
         )}
       </Stack.Navigator>

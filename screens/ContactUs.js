@@ -77,79 +77,81 @@ const ContactUs = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Spinner visible={isLoading} />
-      {/* <ActivityIndicator animating={isLoading} size="large" color="#0000ff" /> */}
-      <View style={styles.header}>
-        <ImageBackground source={require('../assets/searchBackground.png')}>
-          <Text style={styles.h1}>{t('common:LoveToHear')}</Text>
-          <Text style={styles.h5}>
-            {t('common:SendUsAMessage')}
-          </Text>
-        </ImageBackground>
-      </View>
-      <Formik
-        initialValues={{ name: '', email: '', message: '' }}
-        onSubmit={(values) => {
-          console.log(values);
-          SendMessage(
-            fullname = values.name,
-            email = values.email,
-            message = values.message,
-          );
-        }}
-        validationSchema={validationSchema}>
-        {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
-          <View style={styles.form}>
-            <View style={styles.search}>
-              <View style={styles.label}>
-                <TextInput
-                  style={styles.textInput}
-                  placeholder={t('common:Name')}
-                  // onChangeText={text => setName(text)}
-                  onChangeText={handleChange('name')}
-                  onBlur={handleBlur('name')}
-                  placeholderTextColor="#000"
-                  value={values.name}
-                />
-                {touched.name && errors.name && (
-                  <Text style={styles.error}>{errors.name}</Text>
-                )}
-                <TextInput
-                  style={styles.textInput}
-                  placeholder={t('common:Email')}
-                  onChangeText={handleChange('email')}
-                  onBlur={handleBlur('email')}
-                  placeholderTextColor="#000"
-                  value={values.email}
-                />
-                {touched.email && errors.email && (
-                  <Text style={styles.error}>{errors.email}</Text>
-                )}
-                <TextInput
-                  style={styles.message}
-                  placeholder={t('common:Message')}
-                  onChangeText={handleChange('message')}
-                  onBlur={handleBlur('message')}
-                  placeholderTextColor="#000"
-                  multiline={true}
-                  numberOfLines={8}
-                  value={values.message}
-                />
-                {touched.message && errors.message && (
-                  <Text style={styles.error}>{errors.message}</Text>
-                )}
+    <ScrollView contentContainerStyle={{ height:610 }}>
+      <View style={styles.container}>
+        <Spinner visible={isLoading} />
+        {/* <ActivityIndicator animating={isLoading} size="large" color="#0000ff" /> */}
+        <View style={styles.header}>
+          <ImageBackground source={require('../assets/searchBackground.png')}>
+            <Text style={styles.h1}>{t('common:LoveToHear')}</Text>
+            <Text style={styles.h5}>
+              {t('common:SendUsAMessage')}
+            </Text>
+          </ImageBackground>
+        </View>
+        <Formik
+          initialValues={{ name: '', email: '', message: '' }}
+          onSubmit={(values) => {
+            console.log(values);
+            SendMessage(
+              fullname = values.name,
+              email = values.email,
+              message = values.message,
+            );
+          }}
+          validationSchema={validationSchema}>
+          {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+            <View style={styles.form}>
+              <View style={styles.search}>
+                <View style={styles.label}>
+                  <TextInput
+                    style={styles.textInput}
+                    placeholder={t('common:Name')}
+                    // onChangeText={text => setName(text)}
+                    onChangeText={handleChange('name')}
+                    onBlur={handleBlur('name')}
+                    placeholderTextColor="#000"
+                    value={values.name}
+                  />
+                  {touched.name && errors.name && (
+                    <Text style={styles.error}>{errors.name}</Text>
+                  )}
+                  <TextInput
+                    style={styles.textInput}
+                    placeholder={t('common:Email')}
+                    onChangeText={handleChange('email')}
+                    onBlur={handleBlur('email')}
+                    placeholderTextColor="#000"
+                    value={values.email}
+                  />
+                  {touched.email && errors.email && (
+                    <Text style={styles.error}>{errors.email}</Text>
+                  )}
+                  <TextInput
+                    style={styles.message}
+                    placeholder={t('common:Message')}
+                    onChangeText={handleChange('message')}
+                    onBlur={handleBlur('message')}
+                    placeholderTextColor="#000"
+                    multiline={true}
+                    numberOfLines={8}
+                    value={values.message}
+                  />
+                  {touched.message && errors.message && (
+                    <Text style={styles.error}>{errors.message}</Text>
+                  )}
+                </View>
+              </View>
+              <View style={styles.searchButton}>
+                <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                  <Text style={styles.buttonText}>{t('common:SendMessage')}</Text>
+                </TouchableOpacity>
               </View>
             </View>
-            <View style={styles.searchButton}>
-              <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-                <Text style={styles.buttonText}>{t('common:SendMessage')}</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        )}
-      </Formik>
-    </View>
+          )}
+        </Formik>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -161,7 +163,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#1a6997',
-    height: '25%',
+    height: '29%',
 
   },
   h1: {
