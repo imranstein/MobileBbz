@@ -99,7 +99,7 @@ export default {
     NewPasswordConfirmationIsRequired: 'Bestätigung des neuen Passworts ist erforderlich',
     PasswordsMustMatch: 'Passwörter müssen übereinstimmen',
     MyProfile: 'Mein Profil',
-
-
-
+    FirstNameMustBeAlphabetical: 'Der Vorname muss alphabetisch sein',
+    LastNameMustBeAlphabetical: 'Der Nachname muss alphabetisch sein',
+    PhoneMustBeNumeric: 'Telefon muss numerisch sein',
 }

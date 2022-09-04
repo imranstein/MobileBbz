@@ -77,7 +77,7 @@ const ContactUs = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={{ height:610 }}>
+    <ScrollView contentContainerStyle={{ height: 610 }}>
       <View style={styles.container}>
         <Spinner visible={isLoading} />
         {/* <ActivityIndicator animating={isLoading} size="large" color="#0000ff" /> */}
@@ -91,6 +91,7 @@ const ContactUs = () => {
         </View>
         <Formik
           initialValues={{ name: '', email: '', message: '' }}
+          validateOnMount={true}
           onSubmit={(values) => {
             console.log(values);
             SendMessage(
@@ -100,7 +101,7 @@ const ContactUs = () => {
             );
           }}
           validationSchema={validationSchema}>
-          {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+          {({ handleChange, handleBlur, handleSubmit, values, errors, touched, isValid }) => (
             <View style={styles.form}>
               <View style={styles.search}>
                 <View style={styles.label}>
@@ -143,7 +144,11 @@ const ContactUs = () => {
                 </View>
               </View>
               <View style={styles.searchButton}>
-                <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                <TouchableOpacity style={[styles.button, {
+                  backgroundColor: isValid ? '#1a6997' : '#cacfd2',
+                }]}
+                  disabled={!isValid}
+                  onPress={handleSubmit}>
                   <Text style={styles.buttonText}>{t('common:SendMessage')}</Text>
                 </TouchableOpacity>
               </View>
@@ -204,7 +209,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   button: {
-    backgroundColor: '#1a6997',
+    // backgroundColor: '#1a6997',
     padding: 10,
     margin: 10,
     borderRadius: 5,

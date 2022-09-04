@@ -18,10 +18,12 @@ import Spinner from 'react-native-loading-spinner-overlay';
 const validationSchema = Yup.object().shape({
   first_name: Yup.string()
     .required(t('common:FirstNameIsRequired'))
-    .min(2, t('common:FirstNameMustBeAtLeast2Characters')),
+    .min(2, t('common:FirstNameMustBeAtLeast2Characters'))
+    .matches(/^[a-zA-Z]+$/, t('common:FirstNameMustBeAlphabetical')),
   last_name: Yup.string()
     .required(t('common:LastNameIsRequired'))
-    .min(2, t('common:LastNameMustBeAtLeast2Characters')),
+    .min(2, t('common:LastNameMustBeAtLeast2Characters'))
+    .matches(/^[a-zA-Z]+$/, t('common:LastNameMustBeAlphabetical')),
   email: Yup.string()
     .required(t('common:EmailIsRequired'))
     .email(t('common:EmailIsInvalid')),
@@ -31,11 +33,13 @@ const validationSchema = Yup.object().shape({
   phone: Yup.string()
     .required(t('common:PhoneIsRequired'))
     .min(9, t('common:PhoneMustBeAtLeast9Characters'))
-    .max(15, t('common:PhoneMustBeAtMost15Characters')),
+    .max(15, t('common:PhoneMustBeAtMost15Characters'))
+    .matches(/^[0-9]+$/, t('common:PhoneMustBeNumeric')),
   // confirmPassword: Yup.string()
   //   .required(t('common:confirm_password_required'))
   //   .oneOf([Yup.ref('password'), null], t('common:confirm_password_invalid')),
-  terms: Yup.boolean().oneOf([true], t('common:TermIsRequired')),
+  terms: Yup.boolean().oneOf([true], t('common:TermIsRequired'))
+    .required(t('common:TermIsRequired')),
 }).strict();
 
 const RegisterScreen = ({ navigation }) => {
@@ -54,6 +58,7 @@ const RegisterScreen = ({ navigation }) => {
         <Spinner visible={isLoading} />
         <View style={styles.wrapper}>
           <Formik initialValues={{ first_name: '', last_name: '', email: '', password: '', phone: '' }}
+            validateOnMount={true}
             onSubmit={(values) => {
               register(
                 values.first_name,
@@ -66,7 +71,7 @@ const RegisterScreen = ({ navigation }) => {
             }
             }
             validationSchema={validationSchema}>
-            {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+            {({ handleChange, handleBlur, handleSubmit, values, errors, touched, isValid }) => (
               <View style={styles.form}>
                 <View style={styles.name}>
                   <TextInput
@@ -104,7 +109,7 @@ const RegisterScreen = ({ navigation }) => {
                     onBlur={handleBlur('last_name')}
                     value={values.last_name}
                   />
-                  
+
                 </View>
                 {touched.first_name && errors.first_name && <Text style={styles.error}>{errors.first_name}</Text>}
                 {touched.last_name && errors.last_name && <Text style={styles.error}>{errors.last_name}</Text>}
@@ -150,7 +155,9 @@ const RegisterScreen = ({ navigation }) => {
                   <Text style={{ marginLeft: 10, fontSize: 15, color: '#999' }}>{t('common:IHaveReadAndAcceptTheTermsAndConditions')}</Text>
                   {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>}
                 </View>
-                <TouchableOpacity onPress={handleSubmit} style={styles.loginButton}>
+                <TouchableOpacity onPress={handleSubmit}
+                  disabled={!isValid}
+                  style={[styles.loginButton, { backgroundColor: isValid ? '#1570a5' : '#cacfd2' }]}>
                   <Text style={styles.loginButtonText}>{t('common:SignUp')}</Text>
                 </TouchableOpacity>
 
@@ -207,7 +214,7 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     marginTop: 10,
-    backgroundColor: '#1570a5',
+    // backgroundColor: '#1570a5',
     padding: 10,
     borderRadius: 2,
     alignItems: 'center',

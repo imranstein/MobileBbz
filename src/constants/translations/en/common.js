@@ -94,4 +94,7 @@ export default {
     NewPasswordConfirmationIsRequired: 'New Password Confirmation is required',
     PasswordsMustMatch: 'Passwords must match',
     MyProfile: 'My Profile',
+    FirstNameMustBeAlphabetical: 'First Name must be alphabetical',
+    LastNameMustBeAlphabetical: 'Last Name must be alphabetical',
+    PhoneMustBeNumeric: 'Phone must be numeric',
 }

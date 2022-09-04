@@ -47,6 +47,7 @@ const Login = ({ navigation }) => {
         {/* <ActivityIndicator animating={isLoading} size="large" color="#0000ff" /> */}
         <Formik
           initialValues={{ email: '', password: '' }}
+          validateOnMount={true}
           onSubmit={(values) => {
             login(values.email, values.password);
           }
@@ -54,7 +55,7 @@ const Login = ({ navigation }) => {
           validationSchema={validationSchema}
         >
           {({
-            handleChange, handleBlur, handleSubmit, values, errors, touched,
+            handleChange, handleBlur, handleSubmit, values, errors, touched, isValid
           }) => (
             <View style={styles.form}>
               <View style={styles.loginContent}>
@@ -89,7 +90,10 @@ const Login = ({ navigation }) => {
                 onPress={() => navigation.navigate('Reset Your Password')}>
                 <Text style={styles.buttonText}>{t('common:ForgotPassword')}</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.loginButton} onPress={handleSubmit}>
+              <TouchableOpacity style={[styles.loginButton, {
+                backgroundColor: isValid ? '#1a6997' : '#9c9c9c',
+              }]}
+                disabled={!isValid} onPress={handleSubmit}>
                 <Text style={styles.loginButtonText}>{t('common:Login')}</Text>
               </TouchableOpacity>
               <View style={styles.signup}>
@@ -187,7 +191,7 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     marginTop: 10,
-    backgroundColor: '#1570a5',
+    // backgroundColor: '#1570a5',
     padding: 10,
     borderRadius: 2,
     alignItems: 'center',
