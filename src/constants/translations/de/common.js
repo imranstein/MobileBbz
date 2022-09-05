@@ -102,4 +102,10 @@ export default {
     FirstNameMustBeAlphabetical: 'Der Vorname muss alphabetisch sein',
     LastNameMustBeAlphabetical: 'Der Nachname muss alphabetisch sein',
     PhoneMustBeNumeric: 'Telefon muss numerisch sein',
+    ExamLevel: 'Prüfungsstufe',
+    ExamTime: 'Prüfungszeit',
+    ExaminationFee: 'Prüfungsgebühr',
+    Total: 'Gesamt',
+    BookingSubmission: 'Buchung Einreichung',
+    ContactInformation: 'Kontakt informationen',
 }

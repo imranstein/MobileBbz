@@ -97,4 +97,9 @@ export default {
     FirstNameMustBeAlphabetical: 'First Name must be alphabetical',
     LastNameMustBeAlphabetical: 'Last Name must be alphabetical',
     PhoneMustBeNumeric: 'Phone must be numeric',
+    ExamLevel: 'Exam Level',
+    ExamTime: 'Exam Time',
+    ExaminationFee: 'Examination Fee',
+    BookingSubmission: 'Booking Submission',
+    ContactInformation: 'Contact Information',
 }

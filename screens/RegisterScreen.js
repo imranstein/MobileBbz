@@ -16,17 +16,17 @@ import * as Yup from 'yup';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 const validationSchema = Yup.object().shape({
-  first_name: Yup.string()
-    .required(t('common:FirstNameIsRequired'))
-    .min(2, t('common:FirstNameMustBeAtLeast2Characters'))
-    .matches(/^[a-zA-Z]+$/, t('common:FirstNameMustBeAlphabetical')),
-  last_name: Yup.string()
-    .required(t('common:LastNameIsRequired'))
-    .min(2, t('common:LastNameMustBeAtLeast2Characters'))
-    .matches(/^[a-zA-Z]+$/, t('common:LastNameMustBeAlphabetical')),
-  email: Yup.string()
-    .required(t('common:EmailIsRequired'))
-    .email(t('common:EmailIsInvalid')),
+    first_name: Yup.string()
+      .required(t('common:FirstNameIsRequired'))
+      .min(2, t('common:FirstNameMustBeAtLeast2Characters'))
+      .matches(/^[a-zA-Z]+$/, t('common:FirstNameMustBeAlphabetical')),
+    last_name: Yup.string()
+      .required(t('common:LastNameIsRequired'))
+      .min(2, t('common:LastNameMustBeAtLeast2Characters'))
+      .matches(/^[a-zA-Z]+$/, t('common:LastNameMustBeAlphabetical')),
+    email: Yup.string()
+      .required(t('common:EmailIsRequired'))
+      .email(t('common:EmailIsInvalid')),
   password: Yup.string()
     .required(t('common:PasswordIsRequired'))
     .min(6, t('common:PasswordMustBeAtLeast6Characters')),

@@ -136,7 +136,7 @@ const ProfileScreen = () => {
             <Text style={styles.logoutIcon}>
               <MaterialIcons
                 name="power-settings-new"
-                size={25}
+                size={27}
                 color="red"
               />
             </Text>
@@ -186,17 +186,18 @@ const styles = StyleSheet.create({
   },
   logout: {
     flex: 0.15,
-    marginTop: '45%',
+    marginTop: '15%',
     marginBottom: '2%',
     borderTopWidth: 0.1,
     borderBottomColor: '#cecece',
+    marginLeft: 5,
   },
   logoutLabel: {
-    fontSize: 15,
+    fontSize: 17,
     color: 'red',
     marginLeft: 20,
     marginTop: 27,
-    fontWeight: '600',
+    fontWeight: '700',
     marginBottom: '2%',
   },
   icon: {

@@ -212,12 +212,15 @@ const ExamDetailScreen = ({ route }) => {
                 <TouchableOpacity style={{ alignSelf: 'flex-end', justifyContent: 'flex-end', marginRight: 20 }}
                     onPress={() => {
                         navigation.navigate('Booking', {
+                            id: id,
                             slug: slug,
                             price: price,
                             examDate: examDate,
                             examTime: examTime,
                             regDate: regDate,
                             location: location,
+                            name: location.name,
+                            street_name: location.street_name,
                             city: city,
                             total: total,
                             remaining: remaining,
@@ -250,7 +253,7 @@ const styles = StyleSheet.create({
     h1: {
         fontSize: 25,
         color: '#fff',
-        marginHorizontal: 20,
+        marginHorizontal: 10,
         paddingTop: 12,
     },
     h5: {

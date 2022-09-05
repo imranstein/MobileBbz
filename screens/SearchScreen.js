@@ -67,7 +67,7 @@ const SearchPage = () => {
             <Text style={styles.buttonText}>{t('common:Search')}</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.list}>
+        {/* <View style={styles.list}>
           <Text style={styles.listTitle}>{t('common:UpcomingExams')}</Text>
           <Text style={styles.listSubTitle}>{t('common:UpcomingExamsSubTitle')}</Text>
           <FlatList
@@ -80,7 +80,7 @@ const SearchPage = () => {
             // }}
             renderItem={renderItem}
           />
-        </View>
+        </View> */}
 
       </ScrollView>
     </View>
