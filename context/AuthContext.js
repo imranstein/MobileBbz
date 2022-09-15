@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
 import { BASE_URL } from '../config';
-
+import { t } from 'i18next';
 
 export const AuthContext = createContext();
 
@@ -10,9 +10,12 @@ export const AuthProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [splashLoading, setSplashLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [error2, setError2] = useState(null);
 
   const register = (first_name, last_name, email, password, phone, term) => {
     setIsLoading(true);
+    setError2(null);
     // console.log(first_name, last_name, email, phone, password, term);
     axios
       .post(`${BASE_URL}/signup`, {
@@ -26,7 +29,8 @@ export const AuthProvider = ({ children }) => {
       .then(res => {
         console.log(res.data.error,);
         if (res.data.error) {
-          alert('email or Phone is already taken', 'Error');
+          // alert('email or Phone is already taken', 'Error');
+          setError2('email or Phone is already taken');
           setIsLoading(false);
         } else {
           alert('Successfully registered');
@@ -46,6 +50,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = (email, password) => {
     setIsLoading(true);
+    setError(null);
     axios
       .post(`${BASE_URL}/login`, {
         email,
@@ -61,7 +66,11 @@ export const AuthProvider = ({ children }) => {
       .catch(e => {
         console.log(`login error ${e}`);
         if (e.response.status === 401) {
-          alert(e.response.data.error, 'Error');
+          // alert(e.response.data.error, 'Error');
+          setError(t('common:PasswordIsIncorrect'));
+        }
+        else if (e.response.status == 404) {
+          setError(t('common:EmailIsNotFound'));
         }
         setIsLoading(false);
       });
@@ -108,6 +117,7 @@ export const AuthProvider = ({ children }) => {
         AsyncStorage.removeItem('userInfo');
         setUserInfo({});
         setIsLoading(false);
+
       })
       .catch(e => {
         console.log(`logout error ${e}`);
@@ -148,6 +158,7 @@ export const AuthProvider = ({ children }) => {
         logout,
         reset,
         isLoggedIn,
+        error,
       }}>
       {children}
     </AuthContext.Provider>

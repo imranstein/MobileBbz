@@ -17,6 +17,7 @@ import { BASE_URL } from '../config';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import ExamItem from '../util/ExamItem';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 
 
@@ -34,7 +35,7 @@ const SearchPage = () => {
       .get(`${BASE_URL}/exams`, {
       });
     setData(data.data);
-    // console.log(data);
+    // console.log(data.data);
   };
   useEffect(() => {
     getData();
@@ -100,13 +101,15 @@ const styles = StyleSheet.create({
     height: 240,
   },
   h1: {
-    fontSize: 25,
+    // fontSize: 25,
+    fontSize: RFPercentage(4),
     color: '#fff',
     marginHorizontal: 20,
     paddingTop: 12,
   },
   h5: {
-    fontSize: 16,
+    // fontSize: 16,
+    fontSize: RFPercentage(2.5),
     color: '#fff',
     marginHorizontal: 20,
     paddingTop: 5,
@@ -125,13 +128,14 @@ const styles = StyleSheet.create({
     zindex: -1,
   },
   title: {
-    fontSize: 16,
+    fontSize: RFPercentage(2.5),
     color: '#000',
     marginHorizontal: 10,
     paddingTop: 5,
   },
   titleHeader: {
-    fontSize: 13,
+    // fontSize: 13,
+    fontSize: RFPercentage(2.3),
     color: '#1a6997',
     marginHorizontal: 10,
     paddingTop: 5,
@@ -156,7 +160,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontSize: 18,
+    // fontSize: 18,
+    fontSize: RFPercentage(2.7),
     fontWeight: 'bold',
   },
   searchButton: {
@@ -176,14 +181,16 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   listTitle: {
-    fontSize: 20,
+    // fontSize: 20,
+    fontSize: RFPercentage(2.9),
     fontWeight: 'bold',
     color: '#1a6997',
     marginHorizontal: 10,
     paddingTop: 5,
   },
   listSubTitle: {
-    fontSize: 16,
+    // fontSize: 16,
+    fontSize: RFPercentage(2.5),
     color: '#000',
     marginHorizontal: 10,
     paddingTop: 5,

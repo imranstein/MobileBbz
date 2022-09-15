@@ -8,6 +8,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useTranslation } from "react-i18next";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+
 
 const LANGUAGES = [
   { code: "en", label: "English" },
@@ -96,7 +98,7 @@ const ProfileScreen = () => {
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => { }}>
+        <TouchableOpacity onPress={() => { navigation.navigate('BookingHistory') }}>
           <View style={{ flexDirection: 'row' }}>
             <Text style={styles.icon}>
               <Entypo
@@ -166,14 +168,14 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   name: {
-    fontSize: 24,
+    fontSize: RFPercentage(3.3),
     color: '#1a6997',
     marginLeft: 15,
     marginTop: 27,
     fontWeight: '600',
   },
   label: {
-    fontSize: 15,
+    fontSize: RFPercentage(2.5),
     color: '#777',
     marginLeft: 20,
     marginTop: 27,
@@ -193,7 +195,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   logoutLabel: {
-    fontSize: 17,
+    fontSize: RFPercentage(2.65),
     color: 'red',
     marginLeft: 20,
     marginTop: 27,
@@ -213,13 +215,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   selectedText: {
-    fontSize: 15,
+    fontSize: RFPercentage(2.5),
     color: '#1a6997',
     marginLeft: 100,
     marginTop: 10,
     fontWeight: '500',
   }, text: {
-    fontSize: 15,
+    fontSize: RFPercentage(2.5),
     color: '#000',
     marginLeft: 100,
     marginTop: 10,

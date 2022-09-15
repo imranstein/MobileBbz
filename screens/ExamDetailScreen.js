@@ -20,6 +20,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import moment from 'moment';
 import { useWindowDimensions } from 'react-native';
 import RenderHtml from 'react-native-render-html';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 
 const ExamDetailScreen = ({ route }) => {
@@ -153,7 +154,7 @@ const ExamDetailScreen = ({ route }) => {
                                 style={styles.icon}
                             />
                         </Text>
-                        <Text style={styles.regTitle}> {t('common:ExamDate')} | {moment(regDate).format('DD/MM/YY')} </Text>
+                        <Text style={styles.regTitle}> {t('common:RegUntil')} | {moment(regDate).format('DD/MM/YY')} </Text>
 
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 10 }}>
@@ -165,25 +166,44 @@ const ExamDetailScreen = ({ route }) => {
                                 style={styles.icon}
                             />
                         </Text>
-                        <Text style={styles.timeTitle}> {t('common:ExamDate')} | {examDate} </Text>
+                        <Text style={styles.timeTitle}> {t('common:ExamTime')} | {examTime} </Text>
 
                     </View>
                 </View>
-                <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#fff', height: 400 }}>
-                    <Text style={styles.descriptionLabel}>{t('common:Description')}</Text>
-                    <Text style={styles.description}><RenderHtml
+                {/* <View style={styles.description}>
+                    {/* <Text style={styles.descriptionText}>{item.content}</Text> *
+                    <RenderHtml
                         contentWidth={width}
-                        source={{ html: content || '' }}
+                        source={{ html: description || '' }}
                         enableExperimentalMarginCollapsing={true}
-                        enableExperimentalGhostLinesPrevention={true}
                         baseStyle={{
                             color: '#15181E',
                             textAlign: 'justify',
                             fontSize: '16px',
+                            marginRight: '5%',
+                            marginLeft: '2%',
+                        }}
+                    />
+                </View> */}
+                <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#fff', height: 400, width: '90%', marginLeft: '5%' }}>
+                    <Text style={styles.descriptionLabel}>{t('common:Description')}</Text>
+                    <RenderHtml
+                        // contentWidth={width}
+                        source={{ html: content || '' }}
+                        // enableExperimentalMarginCollapsing={true}
+                        // enableExperimentalGhostLinesPrevention={true}
+                        baseStyle={{
+                            color: '#15181E',
+                            textAlign: 'justify',
+                            fontSize: RFPercentage(2.2),
                             marginRight: '4%',
                             marginLeft: 15,
+                            width: '90%',
+                            alignContent: 'center',
+                            alignSelf: 'center',
+                            alignItems: 'center',
                         }}
-                    /></Text>
+                    />
                 </View>
 
 
@@ -192,15 +212,15 @@ const ExamDetailScreen = ({ route }) => {
             <View style={styles.submit}>
                 <Text style={{
                     flex: 0.4,
-                    fontSize: 16,
+                    fontSize: RFPercentage(2.5),
                     justifyContent: 'center',
                     alignSelf: 'center',
-                    marginLeft: 30,
+                    marginLeft: 20,
 
                 }}>{t('common:Fee')} </Text>
                 <Text style={{
                     flex: 0.6,
-                    fontSize: 24,
+                    fontSize: RFPercentage(3.2),
                     fontWeight: 'bold',
                     justifyContent: 'center',
                     alignSelf: 'center',
@@ -226,6 +246,7 @@ const ExamDetailScreen = ({ route }) => {
                             remaining: remaining,
                             content: content,
                         })
+                        // navigation.navigate('BookingSuccess')
                     }
                     }>
                     <Text style={styles.submitLabel}>{t('common:BookNow')}</Text>
@@ -251,13 +272,13 @@ const styles = StyleSheet.create({
         height: 200,
     },
     h1: {
-        fontSize: 25,
+        fontSize: RFPercentage(3.5),
         color: '#fff',
         marginHorizontal: 10,
         paddingTop: 12,
     },
     h5: {
-        fontSize: 16,
+        fontSize: RFPercentage(2.3),
         color: '#fff',
         marginHorizontal: 20,
         paddingTop: 5,
@@ -276,14 +297,14 @@ const styles = StyleSheet.create({
         zindex: -1,
     },
     title: {
-        fontSize: 16,
+        fontSize: RFPercentage(2.3),
         fontWeight: 'bold',
         color: '#3e8529',
         marginHorizontal: 10,
         paddingTop: 5,
     },
     titleHeader: {
-        fontSize: 13,
+        fontSize: RFPercentage(2),
         color: '#1a6997',
         marginHorizontal: 10,
         paddingTop: 5,
@@ -304,7 +325,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#fff',
-        fontSize: 18,
+        fontSize: RFPercentage(2.7),
         fontWeight: 'bold',
     },
     searchButton: {
@@ -324,14 +345,14 @@ const styles = StyleSheet.create({
         elevation: 1,
     },
     listTitle: {
-        fontSize: 20,
+        fontSize: RFPercentage(2.8),
         fontWeight: 'bold',
         color: '#1a6997',
         marginHorizontal: 10,
         paddingTop: 5,
     },
     listSubTitle: {
-        fontSize: 16,
+        fontSize: RFPercentage(2.3),
         color: '#000',
         marginHorizontal: 10,
         paddingTop: 5,
@@ -345,28 +366,28 @@ const styles = StyleSheet.create({
         marginRight: '4%',
     },
     dateTitle: {
-        fontSize: 16,
+        fontSize: RFPercentage(2.3),
         fontWeight: 'bold',
         color: '#000',
         marginHorizontal: 10,
         paddingTop: 5,
     },
     regTitle: {
-        fontSize: 16,
+        fontSize: RFPercentage(2.3),
         fontWeight: 'bold',
         color: '#d1a771',
         marginHorizontal: 10,
         paddingTop: 5,
     },
     timeTitle: {
-        fontSize: 16,
+        fontSize: RFPercentage(2.3),
         fontWeight: 'bold',
         color: '#7dbde0',
         marginHorizontal: 10,
         paddingTop: 5,
     },
     descriptionLabel: {
-        fontSize: 20,
+        fontSize: RFPercentage(2.8),
         fontWeight: 'bold',
         color: '#1a6997',
         marginHorizontal: 15,
@@ -386,7 +407,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     submitLabel: {
-        fontSize: 18,
+        fontSize: RFPercentage(2.7),
         marginTop: '2%',
         marginBottom: '2%',
         color: '#fff',

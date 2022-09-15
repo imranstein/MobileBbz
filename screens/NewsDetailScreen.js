@@ -6,17 +6,19 @@ import { BASE_URL, IMAGE_URL } from '../config';
 import moment from 'moment';
 import RenderHtml from 'react-native-render-html';
 import { useWindowDimensions } from 'react-native';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+
 
 const NewsDetailScreen = React.memo(({ route }) => {
     const [data, setData] = useState(null)
     const [title, setTitle] = useState(null)
     const [description, setDescription] = useState(null)
-    const [image, setImage] = useState('')
-    const [date, setDate] = useState(null)
+    const [image, setImage] = useState(null)
+    const [date, setDate] = useState()
     const { width } = useWindowDimensions()
 
     useEffect(() => {
-        LogBox.ignoreLogs(['VirtualizedLists should never be nested', 'TRenderEngineProvider','']);
+        LogBox.ignoreLogs(['VirtualizedLists should never be nested', 'TRenderEngineProvider', '']);
     }, [])
 
     const id = route.params.paramKey;
@@ -35,14 +37,13 @@ const NewsDetailScreen = React.memo(({ route }) => {
     }, [])
 
     return (
-        // console.log(image),
+        console.log(image),
 
         <View style={styles.container}>
             <View style={styles.title}>
                 <Text style={styles.titleText}>{title}</Text>
             </View>
             <ScrollView>
-
                 {image != null ? <View style={styles.image}>
                     <Image
                         style={{ width: '96%', height: 230, borderRadius: 2 }}
@@ -53,9 +54,11 @@ const NewsDetailScreen = React.memo(({ route }) => {
                     source={require('../assets/searchBackground.png')}
                 /></View>}
                 <View style={styles.date}>
-                    <Text style={styles.dateText}>
+                    {date != null ? <Text style={styles.dateText}>
                         {moment(date).format('DD/MM/YY')}
-                    </Text>
+                    </Text> : <Text style={styles.dateText}>
+                        {moment(date).format('DD/MM/YY')}
+                    </Text>}
                 </View>
                 <View style={styles.description}>
                     {/* <Text style={styles.descriptionText}>{item.content}</Text> */}
@@ -92,7 +95,7 @@ const styles = StyleSheet.create({
         marginBottom: '5%',
     },
     titleText: {
-        fontSize: 16,
+        fontSize: RFPercentage(2.5),
         fontWeight: 'bold',
         color: '#1a6997',
     },
@@ -106,7 +109,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     dateText: {
-        fontSize: 16,
+        fontSize: RFPercentage(2.5),
         color: "#1a6997",
         fontWeight: 'bold',
     },
@@ -115,7 +118,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     descriptionText: {
-        fontSize: 14,
+        fontSize: RFPercentage(2.3),
         color: "#000",
     },
 })

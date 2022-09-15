@@ -19,6 +19,10 @@ import ExamDetailScreen from '../screens/ExamDetailScreen';
 import BookingScreen from '../screens/BookingScreen';
 import { t } from 'i18next';
 import SearchPage from '../screens/SearchScreen';
+import BookingHistoryScreen from '../screens/BookingHistoryScreen';
+import StripePaymentScreen from '../screens/StripePaymentScreen';
+import BookingSuccessScreen from '../screens/BookingSuccessScreen';
+import BookingDetailScreen from '../screens/BookingDetailScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -43,37 +47,52 @@ const Navigation = () => {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              options={{ title: t('common:MyProfile') }}
+              options={{ title: t('common:MyProfile'), headerTintColor: '#1a6997' }}
               name="My Profile" component={MyProfileScreen} />
             <Stack.Screen
               name="Change Password"
               component={ChangePasswordScreen}
             />
             <Stack.Screen name="Exams" component={SearchPage} />
-            <Stack.Screen name="NewsDetail" component={NewsDetailScreen} />
-            <Stack.Screen name="ExamDetail" component={ExamDetailScreen} />
-            <Stack.Screen name="Booking" component={BookingScreen} />
-
+            <Stack.Screen name="NewsDetail"
+              options={{ title: t('common:NewsDetail'), headerTintColor: '#1a6997' }}
+              component={NewsDetailScreen} />
+            <Stack.Screen name="ExamDetail"
+              options={{ title: t('common:ExamDetail'), headerTintColor: '#1a6997' }}
+              component={ExamDetailScreen} />
+            <Stack.Screen name="Booking"
+              options={{ title: t('common:Booking'), headerTintColor: '#1a6997' }}
+              component={BookingScreen} />
+            <Stack.Screen name="BookingHistory"
+              options={{ title: t('common:BookingHistory'), headerTintColor: '#1a6997' }}
+              component={BookingHistoryScreen} />
+            <Stack.Screen name="StripePayment" component={StripePaymentScreen} />
+            <Stack.Screen name="BookingSuccess" component={BookingSuccessScreen} />
+            <Stack.Screen name="BookingDetail" component={BookingDetailScreen} />
           </>
         ) : (
           <>
-            <Stack.Screen name="Login/Signup" component={Welcome} />
+            <Stack.Screen name="Login/Signup"
+              options={{ title: t('common:Login'), headerTintColor: '#1a6997' }}
+              component={Welcome} />
             <Stack.Screen
               name="Login"
               component={Login}
-              options={{ title: t('common:Login') }}
+              options={{ title: t('common:Login'), headerTintColor: '#1a6997' }}
             />
             <Stack.Screen
               name="Register"
               component={RegisterScreen}
-              options={{ title: t('common:Register') }}
+              options={{ title: t('common:Register'), headerTintColor: '#1a6997' }}
             />
             <Stack.Screen
               name="Reset Your Password"
               component={ResetPassword}
             />
             <Stack.Screen name="Success" component={ResetSuccess} />
-            <Stack.Screen options={{ title: t("common:NewsDetail") }} name="NewsDetail" component={NewsDetailScreen} />
+            <Stack.Screen name="NewsDetail"
+              options={{ title: t('common:NewsDetail'), headerTintColor: '#1a6997' }}
+              component={NewsDetailScreen} />
             <Stack.Screen name="ExamDetail" component={ExamDetailScreen} />
             <Stack.Screen
               name="Main"

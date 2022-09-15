@@ -5,6 +5,7 @@ import Icons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { t } from 'i18next'
 import { useTranslation } from "react-i18next"
 import { AuthContext } from '../context/AuthContext'
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const CustomDrawer = (props) => {
     const { t } = useTranslation()
@@ -20,7 +21,7 @@ const CustomDrawer = (props) => {
                                 <Icons
                                     name="hand-wave-outline"
                                     color="#1a6997"
-                                    size={50}
+                                    size={45}
                                 />
                             </Text>
                             {userInfo.token ?
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
     },
     title: {
-        fontSize: 24,
+        fontSize: RFPercentage(3.2),
         marginTop: 12,
         fontWeight: '800',
         color: '#1570a5',

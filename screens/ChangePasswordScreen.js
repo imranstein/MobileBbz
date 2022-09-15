@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
 import React, { useContext, useState } from 'react';
 import { t } from 'i18next';
 import axios from 'axios';
@@ -21,13 +21,10 @@ const validationSchema = Yup.object().shape({
     .oneOf([Yup.ref('new_password'), null], t('common:PasswordsMustMatch')),
 }).defined();
 
-
-
-
 const ChangePasswordScreen = () => {
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
-
+  const [error, setError] = useState(null);
   const { userInfo, logout } = useContext(AuthContext);
   // const [old_password, setOldPassword] = useState('');
   // const [new_password, setNewPassword] = useState('');
@@ -63,7 +60,8 @@ const ChangePasswordScreen = () => {
       })
       .catch(e => {
         console.log(e.response.data.message);
-        alert(e.response.data.message, 'Error');
+        // alert(e.response.data.message, 'Error');
+        setError(e.response.data.message);
         // if (e.response.status === 400) {
         //   alert(e.response.data.errors, 'Error');
         // } else if (e.response.message === 401) {
@@ -79,6 +77,7 @@ const ChangePasswordScreen = () => {
   };
 
   return (
+
     <ImageBackground
       source={require('../assets/background.png')}
       resizeMode="cover"
@@ -98,66 +97,71 @@ const ChangePasswordScreen = () => {
       >
         {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
           <>
-            <View style={{ flex: 1 }}>
-              <View style={styles.wrapper}>
-                <View style={styles.inputs}>
-                  <View>
-                    <View style={{ flexDirection: 'row' }}>
-                      <Text style={styles.label}>{t('common:CurrentPassword')}</Text>
-                      <Text style={{ color: 'red', fontSize: 17, height: 13, marginLeft: 5 }}>*</Text>
+            <ScrollView>
+              <View style={{ flex: 1 }}>
+                <View style={styles.wrapper}>
+                  <View style={styles.inputs}>
+                    <View>
+                      <View style={{ flexDirection: 'row' }}>
+                        <Text style={styles.label}>{t('common:CurrentPassword')}</Text>
+                        <Text style={{ color: 'red', fontSize: 17, height: 13, marginLeft: 5 }}>*</Text>
+                      </View>
+                      <TextInput style={styles.input}
+                        placeholder={t('common:PleaseEnter')}
+                        placeholderTextColor='#9c9c9c'
+                        onChangeText={handleChange('old_password')}
+                        onBlur={handleBlur('old_password')}
+                        value={values.old_password}
+                        secureTextEntry />
+                      {errors.old_password && touched.old_password && (
+                        <Text style={styles.error}>{errors.old_password}</Text>
+                      )}
                     </View>
-                    <TextInput style={styles.input}
-                      placeholder={t('common:PleaseEnter')}
-                      placeholderTextColor='#9c9c9c'
-                      onChangeText={handleChange('old_password')}
-                      onBlur={handleBlur('old_password')}
-                      value={values.old_password}
-                      secureTextEntry />
-                    {errors.old_password && touched.old_password && (
-                      <Text style={styles.error}>{errors.old_password}</Text>
-                    )}
-                  </View>
 
-                </View>
-                <View style={styles.inputs}>
-                  <View>
-                    <View style={{ flexDirection: 'row' }}>
-                      <Text style={styles.label}>{t('common:NewPassword')}</Text>
-                      <Text style={{ color: 'red', fontSize: 17, height: 13, marginLeft: 5 }}>*</Text>
+                  </View>
+                  <View style={styles.inputs}>
+                    <View>
+                      <View style={{ flexDirection: 'row' }}>
+                        <Text style={styles.label}>{t('common:NewPassword')}</Text>
+                        <Text style={{ color: 'red', fontSize: 17, height: 13, marginLeft: 5 }}>*</Text>
+                      </View>
+                      <TextInput style={styles.input}
+                        placeholder={t('common:PleaseEnter')}
+                        placeholderTextColor='#9c9c9c'
+                        onChangeText={handleChange('new_password')}
+                        onBlur={handleBlur('new_password')}
+                        value={values.new_password}
+                        secureTextEntry />
+                      {errors.new_password && touched.new_password && (
+                        <Text style={styles.error}>{errors.new_password}</Text>
+                      )}
                     </View>
-                    <TextInput style={styles.input}
-                      placeholder={t('common:PleaseEnter')}
-                      placeholderTextColor='#9c9c9c'
-                      onChangeText={handleChange('new_password')}
-                      onBlur={handleBlur('new_password')}
-                      value={values.new_password}
-                      secureTextEntry />
-                    {errors.new_password && touched.new_password && (
-                      <Text style={styles.error}>{errors.new_password}</Text>
-                    )}
-                  </View>
 
-                </View>
-                <View style={styles.inputs}>
-                  <View>
-                    <View style={{ flexDirection: 'row' }}>
-                      <Text style={styles.label}>{t('common:ConfirmPassword')}</Text>
-                      <Text style={{ color: 'red', fontSize: 17, height: 13, marginLeft: 5 }}>*</Text>
+                  </View>
+                  <View style={styles.inputs}>
+                    <View>
+                      <View style={{ flexDirection: 'row' }}>
+                        <Text style={styles.label}>{t('common:ConfirmPassword')}</Text>
+                        <Text style={{ color: 'red', fontSize: 17, height: 13, marginLeft: 5 }}>*</Text>
+                      </View>
+                      <TextInput style={styles.input}
+                        placeholder={t('common:PleaseEnter')}
+                        placeholderTextColor='#9c9c9c'
+                        onChangeText={handleChange('new_password_confirmation')}
+                        onBlur={handleBlur('new_password_confirmation')}
+                        value={values.new_password_confirmation}
+                        secureTextEntry />
+                      {errors.new_password_confirmation && touched.new_password_confirmation && (
+                        <Text style={styles.error}>{errors.new_password_confirmation}</Text>
+                      )}
                     </View>
-                    <TextInput style={styles.input}
-                      placeholder={t('common:PleaseEnter')}
-                      placeholderTextColor='#9c9c9c'
-                      onChangeText={handleChange('new_password_confirmation')}
-                      onBlur={handleBlur('new_password_confirmation')}
-                      value={values.new_password_confirmation}
-                      secureTextEntry />
-                    {errors.new_password_confirmation && touched.new_password_confirmation && (
-                      <Text style={styles.error}>{errors.new_password_confirmation}</Text>
-                    )}
-                  </View>
 
+                  </View>
                 </View>
               </View>
+            </ScrollView>
+            <View>
+              <Text style={[styles.error, { alignSelf: 'center' }]}>{error ? error : ''}</Text>
             </View>
             <View style={styles.submit}>
               <TouchableOpacity

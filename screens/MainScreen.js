@@ -16,6 +16,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import CustomDrawer from './CustomDrawer';
 import Language from './Language';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+
 const Drawer = createDrawerNavigator();
 // const { t } = useTranslation();
 
@@ -26,18 +28,19 @@ const MainScreen = () => {
       screenOptions={{
         drawerActiveBackgroundColor: '#166795',
         drawerActiveTintColor: '#fff',
-        drawerLabelStyle: { fontSize: 15, marginLeft: -20, fontFamily: 'Roboto-medium' }
+        drawerLabelStyle: { fontSize: RFPercentage(2.4), marginLeft: -20, fontFamily: 'Roboto-medium' }
       }}
       drawerContent={props => <CustomDrawer{...props} />} initialRouteName="Main">
       <Drawer.Screen name={t('common:Home')} component={HomeScreen} options={{
         // title: 'Home',
+
         drawerIcon: ({ focused, size }) => (
           <Ionicons
             name="md-home"
             size={size}
             color={focused ? '#fff' : '#1a6997'}
           />
-        ),
+        ), headerTintColor: '#1a6997'
       }} />
       <Drawer.Screen name={t('common:AboutUs')} component={AboutUs}
         options={{
@@ -48,7 +51,7 @@ const MainScreen = () => {
               size={size}
               color={focused ? '#fff' : '#1a6997'}
             />
-          ),
+          ), headerTintColor: '#1a6997'
         }} />
       <Drawer.Screen name={t('common:Location')} component={Location}
         options={{
@@ -59,7 +62,7 @@ const MainScreen = () => {
               size={size}
               color={focused ? '#fff' : '#1a6997'}
             />
-          ),
+          ), headerTintColor: '#1a6997'
         }} />
       <Drawer.Screen name={t('common:ContactUs')} component={ContactUs}
         options={{
@@ -70,7 +73,7 @@ const MainScreen = () => {
               size={size}
               color={focused ? '#fff' : '#1a6997'}
             />
-          ),
+          ), headerTintColor: '#1a6997'
         }} />
       <Drawer.Screen name={t('common:News')} component={News}
         options={{
@@ -81,7 +84,7 @@ const MainScreen = () => {
               size={size}
               color={focused ? '#fff' : '#1a6997'}
             />
-          ),
+          ), headerTintColor: '#1a6997'
         }} />
       <Drawer.Screen name={t('common:Language')} component={Language}
         options={{
@@ -92,7 +95,7 @@ const MainScreen = () => {
               size={size}
               color={focused ? '#fff' : '#1a6997'}
             />
-          ),
+          ), headerTintColor: '#1a6997'
         }} />
     </Drawer.Navigator>
   );

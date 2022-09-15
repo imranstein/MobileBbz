@@ -18,6 +18,7 @@ import { AuthContext } from '../context/AuthContext';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 
 const validationSchema = Yup.object().shape({
@@ -105,7 +106,7 @@ const ContactUs = () => {
             <View style={styles.form}>
               <View style={styles.search}>
                 <View style={styles.label}>
-                  <TextInput
+                  <TextInpu
                     style={styles.textInput}
                     placeholder={t('common:Name')}
                     // onChangeText={text => setName(text)}
@@ -172,13 +173,13 @@ const styles = StyleSheet.create({
 
   },
   h1: {
-    fontSize: 25,
+    fontSize: RFPercentage(3.5),
     color: '#fff',
     marginHorizontal: 20,
     paddingTop: 12,
   },
   h5: {
-    fontSize: 16,
+    fontSize: RFPercentage(2.2),
     color: '#fff',
     marginHorizontal: 20,
     paddingTop: 5,
@@ -196,13 +197,13 @@ const styles = StyleSheet.create({
     zindex: -1,
   },
   title: {
-    fontSize: 16,
+    fontSize: RFPercentage(2.2),
     color: '#000',
     marginHorizontal: 10,
     paddingTop: 5,
   },
   titleHeader: {
-    fontSize: 13,
+    fontSize: RFPercentage(2.2),
     color: '#1a6997',
     marginHorizontal: 10,
     paddingTop: 5,
@@ -223,7 +224,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: RFPercentage(2.6),
     fontWeight: 'bold',
   },
   searchButton: {
@@ -240,6 +241,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingHorizontal: 10,
     color: '#000',
+    fontSize: RFPercentage(2.1),
   },
   message: {
     borderWidth: 0.5,
@@ -252,9 +254,11 @@ const styles = StyleSheet.create({
     // height: 200,
     marginBottom: 20,
     alignItems: 'flex-start',
+    fontSize: RFPercentage(2.1),
   },
   error: {
     color: 'red',
     marginBottom: 10,
+    fontSize: RFPercentage(2.1),
   },
 });

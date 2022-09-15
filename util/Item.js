@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Icons from 'react-native-vector-icons/EvilIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const Item = ({ item }) => {
   return (
@@ -22,7 +23,7 @@ const Item = ({ item }) => {
         </Text>
       </View>
       <View style={styles.Text}>
-        <Text style={{ marginLeft: -8, fontSize: 16, fontWeight: '700', color: '#166795' }}>
+        <Text style={{ marginLeft: -8, fontSize: RFPercentage(2.4), fontWeight: '700', color: '#166795' }}>
           {item.name}
         </Text>
 
@@ -35,7 +36,8 @@ const Item = ({ item }) => {
               style={styles.icon}
             />
           </Text>
-          <Text style={{ marginLeft: 5, marginTop: 10, color: '#000' }}>{item.city},{item.street_name}</Text>
+
+          <Text style={{ marginLeft: 5, marginTop: 10, color: '#000', fontSize: RFPercentage(2) }}>{item.city},{item.street_name}</Text>
         </View>
         <View style={{ flexDirection: 'row' }}>
 
@@ -47,7 +49,7 @@ const Item = ({ item }) => {
               style={{ marginRight: 18 }}
             />
           </Text>
-          <Text style={{ marginLeft: 5, marginTop: 10, color: '#000' }}> {item.email}</Text>
+          <Text style={{ marginLeft: 5, marginTop: 10, color: '#000', fontSize: RFPercentage(2) }}> {item.email}</Text>
         </View>
       </View>
     </View>

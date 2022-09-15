@@ -10,6 +10,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import * as Progress from 'react-native-progress';
 import { t } from 'i18next';
 import { AuthContext } from '../context/AuthContext';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 
 
@@ -25,28 +26,6 @@ const ExamItem = ({ item }) => {
     return (
 
         <View style={styles.container}>
-            {media != null ? <View style={styles.image}>
-                <ImageBackground
-                    style={{ width: '100%', height: 230, borderRadius: 2 }}
-                    source={{ uri: `${IMAGE_URL}${item.media.file_path}` }}
-                >
-                    <View style={styles.upperTextView}><Text style={styles.upperText}>{item.slug}</Text></View>
-                    <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} $</Text></View>
-                </ImageBackground>
-            </View> : <View style={styles.image}><ImageBackground
-                style={{ width: '100%', height: 200, borderRadius: 2 }}
-                source={require('../assets/testinghall.png')}
-            >
-                <View style={styles.upperTextView}><Text style={styles.upperText}>{item.slug}</Text></View>
-                <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} $</Text></View>
-            </ImageBackground></View>}
-
-
-            {/* <View style={styles.date}>
-                <Text style={styles.dateText}>
-                    {moment(item.created_at).format('DD/MM/YY')}
-                </Text>
-            </View> */}
             <TouchableOpacity
                 onPress={() => {
                     userInfo.token ?
@@ -54,14 +33,45 @@ const ExamItem = ({ item }) => {
                             paramKey: item.id,
                         }) : navigation.navigate('Login')
                 }
-                }>
+                }
+            >
+                {media != null ? <View style={styles.image}>
+                    <ImageBackground
+                        style={{ width: '100%', height: 230, borderRadius: 2 }}
+                        source={{ uri: `${IMAGE_URL}${item.media.file_path}` }}
+                    >
+                        <View style={styles.upperTextView}><Text style={styles.upperText}>{item.slug}</Text></View>
+                        <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} $</Text></View>
+                    </ImageBackground>
+                </View> : <View style={styles.image}><ImageBackground
+                    style={{ width: '100%', height: 200, borderRadius: 2 }}
+                    source={require('../assets/testinghall.png')}
+                >
+                    <View style={styles.upperTextView}><Text style={styles.upperText}>{item.slug}</Text></View>
+                    <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} $</Text></View>
+                </ImageBackground></View>}
+
+
+                {/* <View style={styles.date}>
+                <Text style={styles.dateText}>
+                    {moment(item.created_at).format('DD/MM/YY')}
+                </Text>
+            </View> */}
+
                 <View style={styles.title}>
                     <Text style={styles.titleText}>{item.title}</Text>
                 </View>
             </TouchableOpacity>
+
             <View style={{ flexDirection: 'row', marginLeft: 5 }}>
-                <Text style={{ fontSize: 16, fontWeight: 'bold', marginRight: 3, color: '#000' }}>{t("common:ExamDate")}:</Text><Text style={styles.examDateText}>{moment(item.exam_date).format('DD/MM/YY')}</Text>
-                <Text style={{ fontSize: 16, fontWeight: 'bold', marginRight: 3, color: '#000' }}>{t("common:RegDate")}:</Text><Text style={styles.regDateText}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text>
+                <Text style={{
+                    fontSize: RFPercentage(2.2),
+                    fontWeight: 'bold', marginRight: 3, color: '#000'
+                }}>{t("common:ExamDate")}:</Text><Text style={styles.examDateText}>{moment(item.exam_date).format('DD/MM/YY')}</Text>
+                <Text style={{
+                    fontSize: RFPercentage(2.2),
+                    fontWeight: 'bold', marginRight: 3, color: '#000'
+                }}>{t("common:RegDate")}:</Text><Text style={styles.regDateText}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text>
             </View>
             {location != null ?
                 <View View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 15 }}>
@@ -93,7 +103,7 @@ const ExamItem = ({ item }) => {
                 <Text style={styles.AvailableSeats}>{t("common:AvailableSeats")}</Text>
                 <Text style={{
                     marginLeft: '50%',
-                    fontSize: 16,
+                    fontSize: RFPercentage(2.5),
                     color: "#000",
                     fontWeight: '600',
                     marginRight: '3%',
@@ -101,7 +111,10 @@ const ExamItem = ({ item }) => {
                     marginBottom: '7%',
                 }}>
                     {/* {progress} */}
-                    <Progress.Circle thickness={4} progress={progress} size={40} animated={false} showsText={true} textStyle={{ fontWeight: 'bold', fontSize: 12, color: '#000' }} color={'green'} unfilledColor={'red'} />
+                    <Progress.Circle thickness={4} progress={progress} size={40} animated={false} showsText={true} textStyle={{
+                        fontWeight: 'bold', fontSize: RFPercentage(1.7),
+                        color: '#000'
+                    }} color={'green'} unfilledColor={'red'} />
 
                 </Text>
                 {/* {/* <Text style={styles.descriptionText}>{item.content}</Text>  */}
@@ -151,7 +164,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     dateText: {
-        fontSize: 14,
+        fontSize: RFPercentage(2.2),
         color: "#1a6997",
     },
     title: {
@@ -160,7 +173,7 @@ const styles = StyleSheet.create({
         marginLeft: 5,
     },
     titleText: {
-        fontSize: 15,
+        fontSize: RFPercentage(2.5),
         color: "#000",
         fontWeight: 'bold',
     },
@@ -170,7 +183,7 @@ const styles = StyleSheet.create({
         maxHeight: 82,
     },
     descriptionText: {
-        fontSize: 14,
+        fontSize: RFPercentage(2.1),
         color: "#000",
     },
     upperTextView: {
@@ -181,7 +194,7 @@ const styles = StyleSheet.create({
     },
     upperText: {
         color: '#fff',
-        fontSize: 20,
+        fontSize: RFPercentage(2.8),
         fontWeight: 'bold',
         textAlign: 'center',
         marginTop: '2%',
@@ -194,35 +207,34 @@ const styles = StyleSheet.create({
     },
     lowerText: {
         color: '#fff',
-        fontSize: 22,
+        fontSize: RFPercentage(3.4),
         fontWeight: '500',
         textAlign: 'center',
         marginTop: '2%',
     },
     examDateText: {
-        fontSize: 17,
+        fontSize: RFPercentage(2.3),
         color: "#1a6997",
         fontWeight: '600',
         marginRight: '4%',
     },
     regDateText: {
-        fontSize: 17,
+        fontSize: RFPercentage(2.3),
         color: "#ee4327",
         fontWeight: '600',
         marginRight: '4%',
     },
     locationText: {
-        fontSize: 15,
+        fontSize: RFPercentage(2.2),
         color: "#1a6997",
         width: '70%',
         fontWeight: '400',
         marginRight: '4%',
     },
     AvailableSeats: {
-        fontSize: 16,
+        fontSize: RFPercentage(2.2),
         color: "#000",
         fontWeight: '600',
-        marginRight: '4%',
         marginTop: '6%',
         marginBottom: '6%',
         marginLeft: 5,

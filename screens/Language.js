@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { useTranslation } from "react-i18next";
 import { useNavigation } from '@react-navigation/native';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const LANGUAGES = [
     { code: "en", label: "English" },
@@ -83,14 +84,14 @@ const styles = StyleSheet.create({
         height: 50,
     },
     text: {
-        fontSize: 18,
+        fontSize: RFPercentage(2.7),
         color: '#000',
         alignSelf: 'center',
 
 
     },
     selectedText: {
-        fontSize: 18,
+        fontSize: RFPercentage(2.7),
         color: '#fff',
         alignSelf: 'center',
     },

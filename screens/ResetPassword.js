@@ -16,6 +16,7 @@ import { t } from 'i18next';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 
 const validationSchema = Yup.object().shape({
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
     marginTop: '20%',
     width: '86%',
     textAlign: 'left',
-    fontSize: 15,
+    fontSize: RFPercentage(2.45),
     color: '#566573',
     marginBottom: '7%',
   },
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontSize: 15,
+    fontSize: RFPercentage(2.45),
     fontWeight: 'bold',
   },
   error: {

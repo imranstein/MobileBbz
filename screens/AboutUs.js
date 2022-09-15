@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import React from 'react';
 import { t } from 'i18next';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+
 
 const AboutUs = () => {
   return (
@@ -47,7 +49,8 @@ const styles = StyleSheet.create({
     height: 200,
   },
   h1: {
-    fontSize: 25,
+    // fontSize: 25,
+    fontSize: RFPercentage(4),
     color: '#fff',
     marginHorizontal: 20,
     paddingTop: 12,
@@ -65,7 +68,8 @@ const styles = StyleSheet.create({
     zindex: -2,
   },
   description: {
-    fontSize: 14,
+    // fontSize: 14,
+    fontSize: RFPercentage(2.4),
     fontWeight: 'bold',
     paddingVertical: 10,
     marginBottom: 50,
@@ -74,7 +78,8 @@ const styles = StyleSheet.create({
     color: '#444',
   },
   lastdescription: {
-    fontSize: 14,
+    // fontSize: 14,
+    fontSize: RFPercentage(2.4),
     fontWeight: 'bold',
     paddingVertical: 10,
     marginBottom: 20,

@@ -11,6 +11,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/EvilIcons';
 import Login from './Login';
 import { t } from 'i18next';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const Tab = createBottomTabNavigator();
 
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   welcome: {
-    fontSize: 18,
+    fontSize: RFPercentage(2.7),
     marginBottom: 8,
   },
 });

@@ -8,8 +8,9 @@ import {
 } from 'react-native';
 import React from 'react';
 import { t } from 'i18next';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
-const ResetSuccess = ({navigation}) => {
+const ResetSuccess = ({ navigation }) => {
   return (
     <ImageBackground
       source={require('../assets/background.png')}
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     marginTop: '20%',
     width: '86%',
     textAlign: 'left',
-    fontSize: 15,
+    fontSize: RFPercentage(2.45),
     color: '#566573',
     marginBottom: '7%',
   },
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontSize: 15,
+    fontSize: RFPercentage(2.45),
     fontWeight: 'bold',
   },
 });

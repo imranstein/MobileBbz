@@ -12,6 +12,7 @@ import { AuthContext } from '../context/AuthContext';
 import Login from './Login';
 import RegisterScreen from './RegisterScreen';
 import { useTranslation } from "react-i18next";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 
 const Welcome = ({ navigation }) => {
@@ -36,7 +37,9 @@ const Welcome = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.signup}>
-        <Text style={{ fontSize: 15, color: '#999' }}>{t('common:DoNotHaveAnAccount')} </Text>
+        <Text style={{
+          fontSize: RFPercentage(2.45), color: '#999'
+        }}>{t('common:DoNotHaveAnAccount')} </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.signupButton}>{t('common:SignUp')}
           </Text>
@@ -47,7 +50,7 @@ const Welcome = ({ navigation }) => {
         <Text
           style={{
             color: '#166795',
-            fontSize: 15,
+            fontSize: RFPercentage(2.45),
             textAlign: 'center',
             marginTop: '1%',
           }}>
@@ -63,7 +66,7 @@ export default Welcome;
 const styles = StyleSheet.create({
   welcome: {
     color: '#1570a5',
-    fontSize: 28,
+    fontSize: RFPercentage(3.8),
     fontWeight: 'normal',
     textAlign: 'center',
     marginTop: '15%',
@@ -80,7 +83,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: '5%',
     paddingHorizontal: '12%',
-    fontSize: 14,
+    fontSize: RFPercentage(2.4),
   },
   button: {
     backgroundColor: '#1570a5',
@@ -94,7 +97,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: RFPercentage(2.7),
     fontWeight: 'bold',
     marginTop: '5%',
   },
@@ -106,7 +109,7 @@ const styles = StyleSheet.create({
   },
   signupButton: {
     color: '#166795',
-    fontSize: 15,
+    fontSize: RFPercentage(2.45),
     marginLeft: '1%',
   },
 });

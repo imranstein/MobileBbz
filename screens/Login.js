@@ -17,12 +17,13 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import LoadingOverlay from '../components/ui/LoadingOverlay';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 
 const Login = ({ navigation }) => {
   // const [email, setEmail] = useState(null);
   // const [password, setPassword] = useState(null);
-  const { isLoading, isAuthenticating, login } = useContext(AuthContext);
+  const { isLoading, isAuthenticating, login, error } = useContext(AuthContext);
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -58,6 +59,7 @@ const Login = ({ navigation }) => {
             handleChange, handleBlur, handleSubmit, values, errors, touched, isValid
           }) => (
             <View style={styles.form}>
+
               <View style={styles.loginContent}>
                 <TextInput
                   style={styles.textInput}
@@ -84,6 +86,9 @@ const Login = ({ navigation }) => {
                 {touched.password && errors.password && (
                   <Text style={styles.error}>{errors.password}</Text>
                 )}
+              </View>
+              <View>
+                <Text style={[styles.error, { alignSelf: 'center' }]}>{error ? error : ''}</Text>
               </View>
               <TouchableOpacity
                 style={styles.button}
@@ -187,7 +192,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#166795',
-    fontSize: 12,
+    fontSize: RFPercentage(2.1),
   },
   loginButton: {
     marginTop: 10,
@@ -199,7 +204,7 @@ const styles = StyleSheet.create({
   },
   loginButtonText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: RFPercentage(2.7),
     textAlign: 'center',
   },
   signup: {
@@ -210,7 +215,7 @@ const styles = StyleSheet.create({
   },
   signupButton: {
     color: '#166795',
-    fontSize: 14,
+    fontSize: RFPercentage(2.4),
     marginLeft: 10,
   },
   error: {

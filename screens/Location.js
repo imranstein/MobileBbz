@@ -15,6 +15,8 @@ import Item from '../util/Item';
 import { BASE_URL } from '../config';
 import { t } from 'i18next';
 import { useTranslation } from "react-i18next";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+
 export default class Location extends React.Component {
     
   constructor() {
@@ -80,12 +82,12 @@ const styles = StyleSheet.create({
     },
   titleText: {
     color: '#166795',
-    fontSize: 20,
+    fontSize: RFPercentage(2.8),
     // fontWeight: 600,
     },
   textDescription: {
     marginTop: 10,
     color: '#333',
-    fontSize: 14,
+    fontSize: RFPercentage(2.1),
     }
 });

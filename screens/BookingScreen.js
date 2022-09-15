@@ -1,18 +1,22 @@
-import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
-import { IMAGE_URL } from '../config';
+import React, { useContext, useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import { BASE_URL, IMAGE_URL } from '../config';
 import moment from 'moment';
 import RenderHtml from 'react-native-render-html';
 import { useWindowDimensions } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import * as Progress from 'react-native-progress';
 import { t } from 'i18next';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import DateTimePicker from '@react-native-community/datetimepicker';
-
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
+import CountryPicker from 'react-native-country-picker-modal';
+import CheckBox from '@react-native-community/checkbox';
+import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
+import { useNavigation } from '@react-navigation/native';
 
 const validationSchema = Yup.object().shape({
     salutation: Yup.string()
@@ -34,9 +38,12 @@ const validationSchema = Yup.object().shape({
         .required(t('common:IdentificationNumberIsRequired'))
         .min(2, t('common:IdentificationNumberMustBeAtLeast2Characters'))
         .matches(/^[0-9]+$/, t('common:IdentificationNumberMustBeNumeric')),
-    birth_place: Yup.string()
+    country_of_birth: Yup.string()
         .required(t('common:BirthPlaceIsRequired'))
         .min(2, t('common:BirthPlaceMustBeAtLeast2Characters')),
+    mother_tongue: Yup.string()
+        .required(t('common:MotherTongueIsRequired'))
+        .min(2, t('common:MotherTongueMustBeAtLeast2Characters')),
     telephone: Yup.string()
         .required(t('common:PhoneIsRequired'))
         .min(9, t('common:PhoneMustBeAtLeast9Characters'))
@@ -63,9 +70,9 @@ const validationSchema = Yup.object().shape({
         .matches(/^[0-9]+$/, t('common:ZipCodeMustBeNumeric')),
     country: Yup.string()
         .required(t('common:CountryIsRequired')),
-    terms_conditions: Yup.bool()
+    term_conditions: Yup.bool()
         .oneOf([true], t('common:YouMustAcceptTermsAndConditions')),
-    terms_conditions_1: Yup.bool()
+    term_conditions_1: Yup.bool()
         .oneOf([true], t('common:YouMustAcceptTermsAndConditions')),
 
 
@@ -77,30 +84,80 @@ const validationSchema = Yup.object().shape({
 
 
 const BookingScreen = ({ route }) => {
+    const navigation = useNavigation();
+    const { userInfo } = useContext(AuthContext);
     const slug = route.params.slug;
     const location = route.params.location;
-    const city = route.params.city;
-    const country = route.params.country;
+    const city_name = route.params.city;
+    const country_name = route.params.country;
     const street_name = route.params.street_name;
     const name = route.params.name;
     const examDate = route.params.examDate;
     const examTime = route.params.examTime;
     const price = route.params.price;
     const event_id = route.params.id;
-    const [birth_date, setBirthdate] = React.useState('');
-    const [country_of_birth, setCountryOfBirth] = React.useState('');
-    const [mother_tongue, setMotherTongue] = React.useState('');
-    const [co, setCo] = React.useState('');
-    const [id_proof, setIdProof] = React.useState('');
-    const [payment_gateway, setPaymentGateway] = React.useState('');
-    const [terms_conditions_1, setTermsConditions1] = React.useState('');
-    const [terms_conditions, setTermsConditions] = React.useState('');
+    const [first_name, setFirstName] = useState('');
+    const [last_name, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [identification_number, setIdentificationNumber] = useState('');
+    const [country_of_birth, setCountryOfBirth] = useState('');
+    const [mother_tongue, setMotherTongue] = useState('');
+    const [telephone, setTelephone] = useState('');
+    const [phone, setPhone] = useState('');
+    const [street, setStreet] = useState('');
+    // const [city, setCity] = useState('');
+    const [zip_code, setZipCode] = useState('');
+    // const [country, setCountry] = useState('');
+    const [salutation, setSalutation] = useState('');
+    const [academic_title, setAcademicTitle] = useState('');
+    const [term_conditions, setTermsConditions] = useState(false);
+    const [term_conditions_1, setTermsConditions1] = useState(false);
+    const [birthday, setBirthday] = useState(new Date());
+    const [birth_place, setBirthPlace] = useState('');
+    const [address, setAddress] = useState('');
+    const [address2, setAddress2] = useState('');
+    const [co, setCo] = useState('');
+    const [city, setCity] = useState('');
+    const [country, setCountry] = useState('');
+    const [id_proof, setIdProof] = useState('');
+    const [payment_gateway, setPaymentGateway] = useState('');
+    const [result, setResult] = useState('');
 
-    //birthdate
+    const getData = async () => {
+        const { data } = await axios
+            .get(`${BASE_URL}/profile`, {
+                headers: {
+                    Authorization: 'Bearer ' + userInfo.token,
+                },
+            });
+        setResult(data);
+        setFirstName(data.first_name);
+        setLastName(data.last_name);
+        setEmail(data.email);
+        setTelephone(data.telephone);
+        setPhone(data.phone);
+        setAddress(data.address);
+        setCity(data.city);
+        setAddress2(data.address2);
+        setCountry(data.country);
+        setZipCode(data.zip_code);
+        setBirthday(data.birthday);
+
+    };
+
+    useEffect(() => {
+        getData();
+
+    }, [])
     const [show, setShow] = useState(false);
     const [mode, setMode] = useState('date');
     const [date, setDate] = useState(new Date());
-
+    //payment 
+    var payments = [
+        { label: 'None', value: 'none' },
+        { label: 'Paypal', value: 'paypal' },
+        { label: 'stripe', value: 'stripe' },
+    ]
 
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
@@ -108,11 +165,88 @@ const BookingScreen = ({ route }) => {
         setDate(currentDate);
         setBirthday(currentDate);
     }
-
     const showMode = (currentMode) => {
         setShow(true);
         setMode(currentMode);
     }
+
+    const book = (event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, price,) => {
+        console.log(event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, price);
+        axios.post(`${BASE_URL}/register-exam`, {
+            event_id: event_id,
+            salutation: salutation,
+            academic_title: academic_title,
+            first_name: first_name,
+            last_name: last_name,
+            identification_number: identification_number,
+            email: email,
+            birth_date: birthday,
+            birth_place: birth_place,
+            country_of_birth: country_of_birth,
+            mother_tongue: mother_tongue,
+            telephone: telephone,
+            phone: phone,
+            address_line_1: address_line_1,
+            street: street,
+            city: city,
+            zip_code: zip_code,
+            country: country,
+            id_proof: id_proof,
+            payment_gateway: payment_gateway,
+            term_conditions_1: term_conditions_1,
+            term_conditions: term_conditions,
+            price: price,
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                Authorization: 'Bearer ' + userInfo.token,
+            }
+        }).then((response) => {
+            if (response.data.status == 1) {
+                console.log(response.data);
+                alert(response.data.message);
+                // if (response.data.geteway == 'paypal') {
+                //     // Linking.openURL(response.data.paypal_url);
+                //     console.log(response.data.gateway);
+                // } else {
+                //     console.log(response.data.gateway);
+                //     navigation.navigate('StripePayment'
+                //         // , {
+                //         // amount: response.data.amount,
+                //         // code: response.data.code,
+                //         // event_id: response.data.event_id,
+                //         // }
+                //     );
+                //     // console.log(response.data.gateway);
+                // }
+                navigation.navigate('BookingSuccess'
+                    , {
+                        amount: response.data.amount,
+                        code: response.data.code,
+                        event_id: response.data.event_id,
+                        gateway: response.data.gateway,
+                        location: location,
+                        slug: slug,
+                        examDate: examDate,
+                        examTime: examTime,
+                        city_name: city_name,
+                    }
+                );
+            } else {
+                console.log(response.data);
+                alert(t('common:Error'), t('common:YourBookingHasNotBeenSuccessfullySubmitted'), [{
+                    text: t('common:OK'),
+                    onPress: () => {
+                        navigation.navigate('Home');
+                    }
+                }]);
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
 
     return (
         <View style={styles.container}>
@@ -131,9 +265,9 @@ const BookingScreen = ({ route }) => {
                                     />
                                 </Text>
                                 <Text style={styles.locationText}>
-                                    {location.name} - {city}/ {location.street_name}
+                                    {location.name} - {city_name}/ {location.street_name}
                                 </Text>
-                            </View> : <View View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 15 }}>
+                            </View> : <View View style={{ flexDirection: 'column', marginTop: 15, marginBottom: 15 }}>
                                 <Text style={{ marginRight: 5, marginLeft: 5, }}>
                                     <Entypo
                                         name="location-pin"
@@ -155,7 +289,7 @@ const BookingScreen = ({ route }) => {
                     <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
 
                         <Text style={styles.title}> {t('common:ExamDate')}:   </Text>
-                        <Text style={[styles.value]}> {examDate} </Text>
+                        <Text style={[styles.value]}> {moment(examDate).format('M/D/yyyy (ddd)')} </Text>
 
 
                     </View>
@@ -189,92 +323,122 @@ const BookingScreen = ({ route }) => {
 
                     </View>
                 </View>
-                <View style={{ marginTop: 50, marginBottom: 10, backgroundColor: '#fff', height: 400 }}>
+                <View style={{ marginTop: 50, marginBottom: 10, backgroundColor: '#fff', width: '90%', marginLeft: '5%' }}>
                     <Text style={styles.descriptionLabel}>{t('common:BookingSubmission')}</Text>
                     <Text style={styles.titleHeader}>{t('common:ContactInformation')}</Text>
 
-                    <Formik
-                        initialValues={{
-                            salutation: '',
-                            academic_title: '',
-                            first_name: '',
-                            last_name: '',
-                            email: '',
-                            identification_number: '',
-                            birth_place: '',
-                            telephone: '',
-                            phone: '',
-                            address_line_1: '',
-                            street: '',
-                            city: '',
-                            zip_code: '',
-                            country: '',
-                            terms_conditions: false,
-                            terms_conditions_1: false,
-                        }}
-                        onSubmit={(values, actions) => {
-                            actions.resetForm();
-                            console.log(values);
-                            setTimeout(() => {
-                                alert(JSON.stringify(values, null, 2));
-                            }, 400);
-                        }}
-                        validationSchema={validationSchema}
-                    >
-                        {({ handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue, setFieldTouched, isValid }) => (
-                            <View style={{ marginTop: 10, marginBottom: 10 }}>
-                                <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 2 }}>
-                                    <Text style={styles.title}> {t('common:FirstName')}:   </Text>
-                                    <TextInput
-                                        style={[styles.value, { flex: 1, marginRight: 10 }]}
-                                        onChangeText={handleChange('first_name')}
-                                        onBlur={handleBlur('first_name')}
-                                        value={values.first_name}
-                                    />
-                                    {errors.first_name && touched.first_name ? (
-                                        <Text style={styles.error}>{errors.first_name}</Text>
-                                    ) : null}
-                                </View>
-                                <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
-                                    <Text style={styles.title}> {t('common:LastName')}:   </Text>
-                                    <TextInput
-                                        style={[styles.value, { flex: 1, marginRight: 10 }]}
-                                        onChangeText={handleChange('last_name')}
-                                        onBlur={handleBlur('last_name')}
-                                        value={values.last_name}
-                                    />
-                                    {errors.last_name && touched.last_name ? (
-                                        <Text style={styles.error}>{errors.last_name}</Text>
-                                    ) : null}
-                                </View>
-                                <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
-                                    <Text style={styles.title}> {t('common:Email')}:   </Text>
-                                    <TextInput
-                                        style={[styles.value, { flex: 1, marginRight: 10 }]}
-                                        onChangeText={handleChange('email')}
-                                        onBlur={handleBlur('email')}
-                                        value={values.email}
-                                    />
-                                    {errors.email && touched.email ? (
-                                        <Text style={styles.error}>{errors.email}</Text>
-                                    ) : null}
-                                </View>
-                                <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
-                                    <Text style={styles.title}> {t('common:IdentificationNumber')}:   </Text>
-                                    <TextInput
-                                        style={[styles.value, { flex: 1, marginRight: 10 }]}
-                                        onChangeText={handleChange('identification_number')}
-                                        onBlur={handleBlur('identification_number')}
-                                        value={values.identification_number}
-                                    />
-                                    {errors.identification_number && touched.identification_number ? (
-                                        <Text style={styles.error}>{errors.identification_number}</Text>
-                                    ) : null}
-                                </View>
-                                <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
-                                    <Text style={styles.title}> {t('common:BirthDate')}:   </Text>
+                    <View style={styles.wrapper}>
+                        {/* <View style={styles.image}>
+            <Text>
+              <Icons
+                name="user"
+                size={110}
+                color="#1a6997"
+                IconStyle={styles.icon}
+              />
+            </Text>
+            <TouchableOpacity>
+              <Text style={styles.imageLabel}>{t('common:EditPicture')}</Text>
+            </TouchableOpacity>
+          </View> */}
+                        <View style={styles.inputs}>
+                            <View>
+                                <Text style={styles.label}>{t('common:Salutation')}</Text>
+                                <TextInput style={styles.input}
+                                    value={salutation}
+                                    onChangeText={setSalutation} />
+                            </View>
+                        </View>
+                        <View style={styles.inputs}>
+                            <View>
+                                <Text style={styles.label}>{t('common:AcademicTitle')}</Text>
+                                <TextInput style={styles.input}
+                                    value={academic_title}
+                                    onChangeText={setAcademicTitle} />
+                            </View>
+                        </View>
+
+                        <View style={styles.name}>
+                            <View>
+                                <Text style={styles.label}>{t('common:FirstName')}</Text>
+                                <TextInput style={{
+                                    flex: 1,
+                                    fontSize: RFPercentage(2.4),
+                                    marginTop: '5%',
+                                    marginBottom: '5%',
+                                    borderColor: '#cecece',
+                                    borderWidth: 0.5,
+                                    borderRadius: 5,
+                                    marginLeft: '2%',
+                                    // paddingHorizontal: '%',
+                                    width: 125,
+                                    height: 42,
+                                    color: '#000',
+                                }}
+                                    value={first_name}
+                                    onChangeText={setFirstName} />
+                            </View>
+                            <View>
+                                <Text style={styles.label}>{t('common:LastName')}</Text>
+                                <TextInput style={{
+                                    flex: 1,
+                                    fontSize: RFPercentage(2.4),
+                                    marginTop: '5%',
+                                    marginBottom: '5%',
+                                    marginLeft: '7%',
+                                    borderColor: '#cecece',
+                                    borderWidth: 0.5,
+                                    borderRadius: 5,
+                                    // paddingHorizontal: '%',
+                                    width: 125,
+                                    height: 42,
+                                    color: '#000',
+                                }}
+                                    value={last_name}
+                                    onChangeText={setLastName} />
+                            </View>
+                        </View>
+                        <View style={styles.inputs}>
+                            <View>
+                                <Text style={styles.label}>{t('common:Email')}</Text>
+                                <TextInput style={styles.input}
+                                    value={email}
+                                    onChangeText={setEmail} />
+                            </View>
+                        </View>
+                        <View style={styles.inputs}>
+                            <View>
+                                <Text style={styles.label}>{t('common:IdentificationNumber')}</Text>
+                                <TextInput style={styles.input}
+                                    value={identification_number}
+                                    onChangeText={setIdentificationNumber} />
+                            </View>
+                        </View>
+                        <View style={styles.inputs}>
+                            <View>
+                                <Text style={styles.label}>{t('common:BirthDate')}</Text>
+                                {/* <TextInput style={styles.input}
+                value={birthday}
+                onChangeText={setBirthday} /> */}
+                                <View style={{
+                                    flex: 1,
+                                    fontSize: RFPercentage(2.7),
+                                    marginTop: '5%',
+                                    marginBottom: '5%',
+                                    marginLeft: '2%',
+                                    borderColor: '#cecece',
+                                    borderWidth: 0.5,
+                                    borderRadius: 5,
+                                    // paddingHorizontal: '%',
+                                    width: '90%',
+                                    height: 42,
+                                    color: '#000',
+                                }}>
                                     <TouchableOpacity onPress={() => showMode('date')}>
-                                        <Text style={{ fontSize: 18, color: '#000', marginTop: 10 }}>{moment(birthday).format('DD/MM/YYYY')}</Text>
+                                        {birthday != null ?
+                                            <Text style={{ fontSize: RFPercentage(2.7), color: '#000', marginTop: 10 }}>{moment(birthday).format('DD/MM/YYYY')}</Text> :
+                                            <Text style={{ fontSize: RFPercentage(2.7), color: '#000', marginTop: 10 }}>{moment(date).format('DD/MM/YYYY')}</Text>
+                                        }
                                     </TouchableOpacity>
                                     {show && (
                                         <DateTimePicker
@@ -288,69 +452,222 @@ const BookingScreen = ({ route }) => {
                                         />
                                     )}
                                 </View>
-                                <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
-                                    <Text style={styles.title}> {t('common:BirthPlace')}:   </Text>
-                                    <TextInput
-                                        style={[styles.value, { flex: 1, marginRight: 10 }]}
-                                        onChangeText={handleChange('birth_place')}
-                                        onBlur={handleBlur('birth_place')}
-                                        value={values.birth_place}
-                                    />
-                                    {errors.birth_place && touched.birth_place ? (
-                                        <Text style={styles.error}>{errors.birth_place}</Text>
-                                    ) : null}
-                                </View>
-                                <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
-                                    <Text style={styles.title}> {t('common:Telephone')}:   </Text>
-                                    <TextInput
-                                        style={[styles.value, { flex: 1, marginRight: 10 }]}
-                                        onChangeText={handleChange('telephone')}
-                                        onBlur={handleBlur('telephone')}
-                                        value={values.telephone}
-                                    />
-                                    {errors.telephone && touched.telephone ? (
-                                        <Text style={styles.error}>{errors.telephone}</Text>
-                                    ) : null}
-                                </View>
-                                <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
-                                    <Text style={styles.title}> {t('common:Phone')}:   </Text>
-                                    <TextInput
-                                        style={[styles.value, { flex: 1, marginRight: 10 }]}
-                                        onChangeText={handleChange('phone')}
-                                        onBlur={handleBlur('phone')}
-                                        value={values.phone}
-                                    />
-                                    {errors.phone && touched.phone ? (
-                                        <Text style={styles.error}>{errors.phone}</Text>
-                                    ) : null}
-                                </View>
-                                <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
-                                    <Text style={styles.title}> {t('common:AddressLine1')}:   </Text>
-                                    <TextInput
-                                        style={[styles.value, { flex: 1, marginRight: 10 }]}
-                                        onChangeText={handleChange('address_line_1')}
-                                        onBlur={handleBlur('address_line_1')}
-                                        value={values.address_line_1}
-                                    />
-                                    {errors.address_line_1 && touched.address_line_1 ? (
-                                        <Text style={styles.error}>{errors.address_line_1}</Text>
-                                    ) : null}
-                                </View>
-                                <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
-                                    <Text style={styles.title}> {t('common:Street')}:   </Text>
-                                    <TextInput
-                                        style={[styles.value, { flex: 1, marginRight: 10 }]}
-                                        onChangeText={handleChange('street')}
-                                        onBlur={handleBlur('street')}
-                                        value={values.street}
-                                    />
-                                    {errors.street && touched.street ? (
-                                        <Text style={styles.error}>{errors.street}</Text>
-                                    ) : null}
-                                </View>
                             </View>
-                        )}
-                    </Formik>
+                        </View>
+                        {/* <View style={styles.inputs}>
+                            <View>
+                                <Text style={styles.label}>{t('common:CountryOfBirth')}</Text>
+                                <TextInput style={styles.input}
+                                    value={country_of_birth}
+                                    onChangeText={setCountryOfBirth} />
+                            </View>
+                        </View> */}
+                        <View style={styles.inputs}>
+                            <View>
+                                <Text style={styles.label}>{t('common:CountryOfBirth')}</Text>
+                                <View style={{
+                                    marginLeft: '4%',
+                                    borderColor: '#cecece',
+                                    borderBottomWidth: 0.5,
+                                }}
+                                >
+                                    <CountryPicker
+                                        withFilter
+                                        withFlag
+                                        preferredCountries={['DE', 'IN']}
+                                        onSelect={(country) => {
+                                            setCountryOfBirth(country.name);
+                                            console.log(country.name);
+                                        }
+                                        }
+                                    />
+                                </View>
+                                {country_of_birth !== null && (
+                                    <Text style={{
+                                        flex: 1,
+                                        fontSize: RFPercentage(2.7),
+                                        marginTop: '5%',
+                                        marginBottom: '5%',
+                                        marginLeft: '3%',
+                                        borderColor: '#cecece',
+                                        borderWidth: 0.5,
+                                        borderRadius: 5,
+                                        // paddingHorizontal: '%',
+                                        paddingTop: '3%',
+                                        paddingLeft: '2%',
+                                        width: '90%',
+                                        height: 42,
+                                        color: '#000',
+                                    }}>{country_of_birth}</Text>
+                                )}
+                            </View>
+                        </View>
+                        <View style={styles.inputs}>
+                            <View>
+                                <Text style={styles.label}>{t('common:BirthPlace')}</Text>
+                                <TextInput style={styles.input}
+                                    value={birth_place}
+                                    onChangeText={setBirthPlace} />
+                            </View>
+                        </View>
+                        <View style={styles.inputs}>
+                            <View>
+                                <Text style={styles.label}>{t('common:MotherTongue')}</Text>
+                                <TextInput style={styles.input}
+                                    value={mother_tongue}
+                                    onChangeText={setMotherTongue} />
+                            </View>
+                        </View>
+
+                        <View style={styles.inputs}>
+                            <View>
+                                <Text style={styles.label}>{t('common:TelePhone')}</Text>
+                                <TextInput style={styles.input}
+                                    keyboardType='phone-pad'
+                                    onChangeText={setTelephone} />
+                            </View>
+                        </View>
+                        <View style={styles.inputs}>
+                            <View>
+                                <Text style={styles.label}>{t('common:Mobile')}</Text>
+                                <TextInput style={styles.input}
+                                    keyboardType='phone-pad'
+                                    value={phone}
+                                    onChangeText={setPhone} />
+                            </View>
+                        </View>
+
+                        <View style={{ flex: 1, marginTop: '5%', marginBottom: '5%' }}>
+                            <Text style={{ marginLeft: '5%', fontSize: RFPercentage(2.5), fontWeight: 'bold', color: '#000' }}>{t('common:Address')}</Text>
+                        </View>
+                        <View style={styles.inputs}>
+                            <View>
+                                <Text style={styles.label}>C/o</Text>
+                                <TextInput style={styles.input}
+                                    value={address}
+                                    onChangeText={setAddress} />
+                            </View>
+                        </View>
+                        <View style={styles.inputs}>
+                            <View>
+                                <Text style={styles.label}>{t('common:Street')}</Text>
+                                <TextInput style={styles.input}
+                                    value={address2}
+                                    onChangeText={setAddress2} />
+                            </View>
+                        </View>
+                        <View style={styles.inputs}>
+                            <View>
+                                <Text style={styles.label}>{t('common:City')}</Text>
+                                <TextInput style={styles.input}
+                                    value={city}
+                                    onChangeText={setCity} />
+                            </View>
+                        </View>
+                        <View style={styles.inputs}>
+                            <View>
+                                <Text style={styles.label}>{t('common:PostalCode')}</Text>
+                                <TextInput style={styles.input}
+                                    keyboardType='phone-pad'
+                                    value={zip_code}
+                                    onChangeText={setZipCode} />
+                            </View>
+                        </View>
+                        <View style={styles.inputs}>
+                            <View>
+                                <Text style={styles.label}>{t('common:Country')}</Text>
+                                <View style={{
+                                    marginLeft: '4%',
+                                    borderColor: '#cecece',
+                                    borderBottomWidth: 0.5,
+                                }}
+                                >
+                                    <CountryPicker
+                                        withFilter
+                                        withFlag
+                                        preferredCountries={['DE', 'IN']}
+                                        onSelect={(country) => {
+                                            setCountry(country.name);
+                                            console.log(country.name);
+                                        }
+                                        }
+                                    />
+                                </View>
+                                {country !== null && (
+                                    <Text style={{
+                                        flex: 1,
+                                        fontSize: RFPercentage(2.7),
+                                        marginTop: '5%',
+                                        marginBottom: '5%',
+                                        marginLeft: '3%',
+                                        borderColor: '#cecece',
+                                        borderWidth: 0.5,
+                                        borderRadius: 5,
+                                        // paddingHorizontal: '%',
+                                        paddingTop: '3%',
+                                        paddingLeft: '2%',
+                                        width: '90%',
+                                        height: 42,
+                                        color: '#000',
+                                    }}>{country}</Text>
+                                )}
+                            </View>
+                        </View>
+                        <View style={{ flexDirection: 'row', marginBottom: 10, marginLeft: -7 }}>
+                            <CheckBox
+                                value={id_proof}
+                                onPress={() => setIdProof(!id_proof)}
+                                onValueChange={newValue => setIdProof(newValue)}
+                                tintColors={{ true: '#1570a5', false: '#000' }}
+                            />
+                            <Text style={{
+                                marginLeft: 10, fontSize: RFPercentage(2.45),
+                                color: '#999'
+                            }}>{t('common:IDProof')}</Text>
+                            {/* {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>} */}
+                        </View>
+                        <View style={{ flexDirection: 'row', marginBottom: 10, marginLeft: -7 }}>
+                            <RadioForm
+                                radio_props={payments}
+                                // initial={0}
+                                // formHorizontal={true}
+                                labelHorizontal={true}
+                                buttonColor={'#000'}
+                                selectedButtonColor={'#000'}
+                                animation={true}
+                                onPress={(value) => { setPaymentGateway(value) }}
+                            />
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginBottom: 10, marginLeft: -7 }}>
+                            <CheckBox
+                                value={term_conditions}
+                                onPress={() => setTermsConditions(!term_conditions)}
+                                onValueChange={newValue => setTermsConditions(newValue)}
+                                tintColors={{ true: '#1570a5', false: '#000' }}
+                            />
+                            <Text style={{
+                                marginLeft: 10, fontSize: RFPercentage(2.25),
+                                color: '#999',
+                                width: '80%'
+                            }}>{t('common:Terms')}</Text>
+                            {/* {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>} */}
+                        </View>
+                        <View style={{ flexDirection: 'row', marginBottom: 10, marginLeft: -7 }}>
+                            <CheckBox
+                                value={term_conditions_1}
+                                onPress={() => setTermsConditions1(!term_conditions_1)}
+                                onValueChange={newValue => setTermsConditions1(newValue)}
+                                tintColors={{ true: '#1570a5', false: '#000' }}
+                            />
+                            <Text style={{
+                                marginLeft: 10, fontSize: RFPercentage(2.25),
+                                color: '#999',
+                                width: '80%'
+                            }}>{t('common:Terms1')}</Text>
+                            {/* {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>} */}
+                        </View>
+                    </View>
 
                 </View>
 
@@ -362,11 +679,12 @@ const BookingScreen = ({ route }) => {
                     justifyContent: 'center',
                     alignSelf: 'center',
                     marginLeft: 30,
+                    color: '#000'
 
-                }}>{t('common:Fee')} </Text>
+                }}>{t('common:Total')} </Text>
                 <Text style={{
                     flex: 0.6,
-                    fontSize: 24,
+                    fontSize: RFPercentage(2.4),
                     fontWeight: 'bold',
                     justifyContent: 'center',
                     alignSelf: 'center',
@@ -375,11 +693,11 @@ const BookingScreen = ({ route }) => {
 
                 }}
                 >
-                    {/* {price} */}
-                    $ </Text>
+                    {price} $</Text>
                 <TouchableOpacity style={{ alignSelf: 'flex-end', justifyContent: 'flex-end', marginRight: 20 }}
                     onPress={() => {
-
+                        // console.log('here');
+                        book(event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, address, address2, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, price);
                     }
                     }>
                     <Text style={styles.submitLabel}>{t('common:PayNow')}</Text>
@@ -416,7 +734,7 @@ const styles = StyleSheet.create({
     },
     search: {
         width: '94%',
-        height: 220,
+        height: 240,
         // borderWidth: 0.5,
         borderRadius: 5,
         padding: 10,
@@ -510,7 +828,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     value: {
-        fontSize: 15,
+        fontSize: RFPercentage(2.45),
         fontWeight: '500',
         color: '#000',
         // marginHorizontal: 10,
@@ -534,4 +852,30 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         paddingBottom: 10,
     },
+    input: {
+        flex: 1,
+        fontSize: RFPercentage(2.7),
+        marginTop: '5%',
+        marginBottom: '5%',
+        marginLeft: '2%',
+        borderColor: '#cecece',
+        borderWidth: 0.5,
+        borderRadius: 5,
+        // paddingHorizontal: '%',
+        width: '90%',
+        height: 42,
+        color: '#000',
+    },
+    inputs: {
+        marginLeft: '5%',
+        marginTop: '2%',
+    },
+    name: {
+        flexDirection: 'row',
+        marginLeft: '5%',
+        marginTop: '2%',
+    }, label: {
+        color: '#000',
+        fontSize: RFPercentage(2.4),
+    }
 })

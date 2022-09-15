@@ -10,6 +10,8 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 // import CountryPicker from "@volkenomakers/react-native-country-picker";
 import CountryPicker from 'react-native-country-picker-modal';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+
 
 const MyProfileScreen = (props) => {
   const navigation = useNavigation();
@@ -22,7 +24,7 @@ const MyProfileScreen = (props) => {
   const [birthday, setBirthday] = useState(new Date());
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
-  const [zip_code, setZipCode] = useState('');
+  const [zipCode, setZipCode] = useState('');
   const [country, setCountry] = useState('');
   const [address2, setAddress2] = useState('');
 
@@ -45,10 +47,10 @@ const MyProfileScreen = (props) => {
 
   const UpdateProfile = async function (): Promise<boolena> {
 
-
+    console.log(birthday);
     return await axios
       .put(`${BASE_URL}/edit-profile/`,
-        { first_name, last_name, email, phone, birthday, address, city, zip_code, country, address2 },
+        { first_name, last_name, email, phone, birthday, address, city, zipCode, country, address2 },
         {
           headers: {
             Authorization: 'Bearer ' + userInfo.token,
@@ -99,7 +101,7 @@ const MyProfileScreen = (props) => {
   }, [])
 
   return (
-    console.log(data),
+    console.log(zipCode),
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.wrapper}>
@@ -121,7 +123,7 @@ const MyProfileScreen = (props) => {
               <Text style={styles.label}>{t('common:FirstName')}</Text>
               <TextInput style={{
                 flex: 1,
-                fontSize: 15,
+                fontSize: RFPercentage(2.4),
                 marginTop: '5%',
                 marginBottom: '5%',
                 borderColor: '#cecece',
@@ -140,7 +142,7 @@ const MyProfileScreen = (props) => {
               <Text style={styles.label}>{t('common:LastName')}</Text>
               <TextInput style={{
                 flex: 1,
-                fontSize: 15,
+                fontSize: RFPercentage(2.4),
                 marginTop: '5%',
                 marginBottom: '5%',
                 marginLeft: '7%',
@@ -181,7 +183,7 @@ const MyProfileScreen = (props) => {
                 onChangeText={setBirthday} /> */}
               <View style={{
                 flex: 1,
-                fontSize: 18,
+                fontSize: RFPercentage(2.7),
                 marginTop: '5%',
                 marginBottom: '5%',
                 marginLeft: '2%',
@@ -194,7 +196,7 @@ const MyProfileScreen = (props) => {
                 color: '#000',
               }}>
                 <TouchableOpacity onPress={() => showMode('date')}>
-                  <Text style={{ fontSize: 18, color: '#000', marginTop: 10 }}>{moment(birthday).format('DD/MM/YYYY')}</Text>
+                  <Text style={{ fontSize: RFPercentage(2.7), color: '#000', marginTop: 10 }}>{moment(birthday).format('DD/MM/YYYY')}</Text>
                 </TouchableOpacity>
                 {show && (
                   <DateTimePicker
@@ -211,7 +213,7 @@ const MyProfileScreen = (props) => {
             </View>
           </View>
           <View style={{ flex: 1, marginTop: '5%', marginBottom: '5%' }}>
-            <Text style={{ marginLeft: '5%', fontSize: 16, fontWeight: 'bold' }}>{t('common:Address')}</Text>
+            <Text style={{ marginLeft: '5%', fontSize: RFPercentage(2.5), fontWeight: 'bold' }}>{t('common:Address')}</Text>
           </View>
           <View style={styles.inputs}>
             <View>
@@ -241,7 +243,7 @@ const MyProfileScreen = (props) => {
             <View>
               <Text style={styles.label}>{t('common:PostalCode')}</Text>
               <TextInput style={styles.input}
-                value={zip_code}
+                value={zipCode}
                 keyboardType='phone-pad'
                 onChangeText={setZipCode} />
             </View>
@@ -269,7 +271,7 @@ const MyProfileScreen = (props) => {
               {country !== null && (
                 <Text style={{
                   flex: 1,
-                  fontSize: 18,
+                  fontSize: RFPercentage(2.7),
                   marginTop: '5%',
                   marginBottom: '5%',
                   marginLeft: '3%',
@@ -340,7 +342,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   imageLabel: {
-    fontSize: 18,
+    fontSize: RFPercentage(2.7),
     marginLeft: '10%',
     marginRight: '5%',
     marginTop: '10%',
@@ -357,7 +359,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   submitLabel: {
-    fontSize: 18,
+    fontSize: RFPercentage(2.7),
     marginTop: '10%',
     color: '#fff',
     borderColor: '#1a6997',
@@ -371,7 +373,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    fontSize: 18,
+    fontSize: RFPercentage(2.7),
     marginTop: '5%',
     marginBottom: '5%',
     marginLeft: '2%',
@@ -388,7 +390,7 @@ const styles = StyleSheet.create({
     marginTop: '2%',
   },
   changePassword: {
-    fontSize: 18,
+    fontSize: RFPercentage(2.7),
     marginTop: '10%',
     marginBottom: '10%',
     color: '#1a6997',
@@ -401,7 +403,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   label: {
-    fontSize: 18,
+    fontSize: RFPercentage(2.7),
     marginLeft: '2%',
     color: '#000',
   },

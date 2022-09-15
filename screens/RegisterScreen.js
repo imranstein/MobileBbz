@@ -14,19 +14,20 @@ import { t } from 'i18next';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const validationSchema = Yup.object().shape({
-    first_name: Yup.string()
-      .required(t('common:FirstNameIsRequired'))
-      .min(2, t('common:FirstNameMustBeAtLeast2Characters'))
-      .matches(/^[a-zA-Z]+$/, t('common:FirstNameMustBeAlphabetical')),
-    last_name: Yup.string()
-      .required(t('common:LastNameIsRequired'))
-      .min(2, t('common:LastNameMustBeAtLeast2Characters'))
-      .matches(/^[a-zA-Z]+$/, t('common:LastNameMustBeAlphabetical')),
-    email: Yup.string()
-      .required(t('common:EmailIsRequired'))
-      .email(t('common:EmailIsInvalid')),
+  first_name: Yup.string()
+    .required(t('common:FirstNameIsRequired'))
+    .min(2, t('common:FirstNameMustBeAtLeast2Characters'))
+    .matches(/^[a-zA-Z]+$/, t('common:FirstNameMustBeAlphabetical')),
+  last_name: Yup.string()
+    .required(t('common:LastNameIsRequired'))
+    .min(2, t('common:LastNameMustBeAtLeast2Characters'))
+    .matches(/^[a-zA-Z]+$/, t('common:LastNameMustBeAlphabetical')),
+  email: Yup.string()
+    .required(t('common:EmailIsRequired'))
+    .email(t('common:EmailIsInvalid')),
   password: Yup.string()
     .required(t('common:PasswordIsRequired'))
     .min(6, t('common:PasswordMustBeAtLeast6Characters')),
@@ -38,15 +39,15 @@ const validationSchema = Yup.object().shape({
   // confirmPassword: Yup.string()
   //   .required(t('common:confirm_password_required'))
   //   .oneOf([Yup.ref('password'), null], t('common:confirm_password_invalid')),
-  terms: Yup.boolean().oneOf([true], t('common:TermIsRequired'))
-    .required(t('common:TermIsRequired')),
+  // terms: Yup.boolean().oneOf([true], t('common:TermIsRequired'))
+  //   .required(t('common:TermIsRequired')),
 }).strict();
 
 const RegisterScreen = ({ navigation }) => {
   const [term, setTerm] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState(null);
 
-  const { isLoading, isAuthenticating, register } = useContext(AuthContext);
+  const { isLoading, isAuthenticating, register, error2 } = useContext(AuthContext);
 
   return (
     <ImageBackground
@@ -145,15 +146,21 @@ const RegisterScreen = ({ navigation }) => {
 
                 />
                 {touched.phone && errors.phone && <Text style={styles.error}>{errors.phone}</Text>}
-                <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+                <View style={{ flexDirection: 'row', marginBottom: 10, marginLeft: -7 }}>
                   <CheckBox
                     value={term}
                     onPress={() => setTerm(!term)}
                     onValueChange={newValue => setTerm(newValue)}
                     tintColors={{ true: '#1570a5', false: '#000' }}
                   />
-                  <Text style={{ marginLeft: 10, fontSize: 15, color: '#999' }}>{t('common:IHaveReadAndAcceptTheTermsAndConditions')}</Text>
-                  {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>}
+                  <Text style={{
+                    marginLeft: 10, fontSize: RFPercentage(2.45),
+                    color: '#999'
+                  }}>{t('common:IHaveReadAndAcceptTheTermsAndConditions')}</Text>
+                  {/* {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>} */}
+                </View>
+                <View>
+                  <Text style={[styles.error, { alignSelf: 'center' }]}>{error2 ? error2 : ''}</Text>
                 </View>
                 <TouchableOpacity onPress={handleSubmit}
                   disabled={!isValid}
@@ -222,7 +229,7 @@ const styles = StyleSheet.create({
   },
   loginButtonText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: RFPercentage(2.7),
     textAlign: 'center',
   },
   error: {
