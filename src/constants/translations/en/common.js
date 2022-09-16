@@ -143,5 +143,7 @@ export default {
     ExamFees: 'Exam Fees',
     BookingSuccess: 'Booking Success',
     BookingDetail: 'Booking Detail',
+    SearchResult: 'Search Results',
+    YourSearchedResult: 'Your Searched Result',
 
 }

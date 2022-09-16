@@ -13,6 +13,7 @@ import Login from './Login';
 import RegisterScreen from './RegisterScreen';
 import { useTranslation } from "react-i18next";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
 
 const Welcome = ({ navigation }) => {
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     fontSize: RFPercentage(3.8),
     fontWeight: 'normal',
     textAlign: 'center',
-    marginTop: '15%',
+    marginTop: scale(40),
   },
   container: {
     flex: 1,
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
   description: {
     color: 'gray',
     textAlign: 'center',
-    marginTop: '5%',
+    marginTop: scale(20),
     paddingHorizontal: '12%',
     fontSize: RFPercentage(2.4),
   },

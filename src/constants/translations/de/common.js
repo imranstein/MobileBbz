@@ -149,6 +149,6 @@ export default {
     ExamFees: 'Prüfungsgebühr',
     BookingSuccess: 'Buchung erfolgreich',
     BookingDetail: 'Buchungsdetail',
-
-
+    YourSearchedResult: 'Ihr gesuchtes Ergebnis',
+    SearchResult: 'Suchergebnis',
 }

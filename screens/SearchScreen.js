@@ -18,6 +18,8 @@ import { AuthContext } from '../context/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import ExamItem from '../util/ExamItem';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import SearchItem from '../util/SearchItem';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 
 
@@ -26,10 +28,38 @@ const SearchPage = () => {
   const navigation = useNavigation();
   const { userInfo } = useContext(AuthContext);
   const [data, setData] = useState([]);
+  const [data2, setData2] = useState([]);
+  const [search, setSearch] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [term, setTerm] = useState('');
+
   const { t } = useTranslation();
   useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested', 'TRenderHtml']);
   }, [])
+
+
+  const searchExam = (term) => {
+    console.log("searching for " + term);
+    setIsLoading(true);
+
+    axios
+      .post(`${BASE_URL}/search`, {
+        term
+      })
+      .then(res => {
+        setData2(res.data.data);
+        console.log(res.data);
+        setSearch(true);
+        setTerm('');
+        setIsLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+        setIsLoading(false);
+      });
+  };
+
   const getData = async () => {
     const { data } = await axios
       .get(`${BASE_URL}/exams`, {
@@ -43,9 +73,16 @@ const SearchPage = () => {
   const renderItem = ({ item }) => {
     return <ExamItem item={item} />;
   };
+  const renderItem2 = ({ item }) => {
+    return <SearchItem item={item} />;
+  };
+  // const clear = () => {
+  //   navigation.navigate('SearchPage');
+  // };
   return (
     <View style={styles.container}>
       <ScrollView>
+        <Spinner visible={isLoading} />
         <View style={styles.header}>
           <ImageBackground source={require('../assets/searchBackground.png')}>
             <Text style={styles.h1}>{t('common:BookYourExamNow')}</Text>
@@ -58,30 +95,76 @@ const SearchPage = () => {
           <View style={styles.label}>
             <Text style={styles.title}> {t('common:Location')} ,{t('common:Date')} Or {t('common:Level')}</Text>
             <View style={styles.titleHeader}>
-              <TextInput style={styles.titleHeader} placeholder={t('common:Search')} />
+              <TextInput
+                value={term}
+                onChangeText={setTerm}
+                style={styles.titleHeader}
+                placeholder={t('common:Search')} />
             </View>
           </View>
           <View style={styles.input} />
         </View>
-        <View style={styles.searchButton}>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>{t('common:Search')}</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.list}>
-          <Text style={styles.listTitle}>{t('common:UpcomingExams')}</Text>
-          <Text style={styles.listSubTitle}>{t('common:UpcomingExamsSubTitle')}</Text>
-          <FlatList
-            style={{ backgroundColor: '#f5f5f5', padding: 5 }}
-            data={data}
-            numColumns={1}
-            keyExtractor={item => item.id.toString()}
-            // keyExtractor={(item, id) => {
-            //   return id.toString();
-            // }}
-            renderItem={renderItem}
-          />
-        </View>
+
+        {search == true ?
+          <View style={styles.searchButton2}>
+            <TouchableOpacity
+              onPress={() => { searchExam(term) }}
+              style={styles.button2}>
+              <Text style={styles.buttonText}>{t('common:Search')}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={
+                () => {
+                  setSearch(false);
+                  setTerm('');
+                }
+              }
+              style={styles.button3}>
+              <Text style={styles.buttonText}>{t('common:Clear')}</Text>
+            </TouchableOpacity>
+          </View>
+          :
+          <View style={styles.searchButton}>
+            <TouchableOpacity
+              onPress={() => { searchExam(term) }}
+              style={styles.button}>
+              <Text style={styles.buttonText}>{t('common:Search')}</Text>
+            </TouchableOpacity>
+          </View>
+        }
+        {search == false ?
+          <View style={styles.list}>
+            <Text style={styles.listTitle}>{t('common:UpcomingExams')}</Text>
+            <Text style={styles.listSubTitle}>{t('common:UpcomingExamsSubTitle')}</Text>
+
+            <FlatList
+              style={{ backgroundColor: '#f5f5f5', padding: 5 }}
+              data={data}
+              numColumns={1}
+              keyExtractor={item => item.id.toString()}
+              // keyExtractor={(item, id) => {
+              //   return id.toString();
+              // }}
+              renderItem={renderItem}
+            />
+          </View>
+          :
+          <View style={styles.list}>
+            <Text style={styles.listTitle}>{t('common:SearchResult')}</Text>
+            <Text style={styles.listSubTitle}>{t('common:YourSearchedResult')}</Text>
+            <FlatList
+              style={{ backgroundColor: '#f5f5f5', padding: 5 }}
+              data={data2}
+              numColumns={1}
+              keyExtractor={item => item.id.toString()}
+              // keyExtractor={(item, id) => {
+              //   return id.toString();
+              // }}
+              renderItem={renderItem2}
+            />
+          </View>
+        }
+
 
       </ScrollView>
     </View>
@@ -158,6 +241,32 @@ const styles = StyleSheet.create({
     marginTop: -50,
     zindex: -1,
   },
+  button2: {
+    backgroundColor: '#1a6997',
+    padding: 10,
+    margin: 10,
+    borderRadius: 5,
+    elevation: 1,
+    width: 100,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: -50,
+    zindex: -1,
+  },
+  button3: {
+    backgroundColor: '#1a6997',
+    padding: 10,
+    margin: 10,
+    borderRadius: 5,
+    elevation: 1,
+    width: 100,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: -50,
+    zindex: -1,
+  },
   buttonText: {
     color: '#fff',
     // fontSize: 18,
@@ -169,6 +278,13 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  searchButton2: {
+    width: '100%',
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
   list: {
     width: '94%',
