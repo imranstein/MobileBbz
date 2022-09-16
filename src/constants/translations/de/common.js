@@ -142,7 +142,13 @@ export default {
     AdditionalService: 'Zusatzleistung: Postversand- Zertifikate / Ergebnisbogen',
     GetInvoice: 'Rechnung erhalten',
     PrintTicket: 'Ticket drucken',
-    BookingDetails: 'Buchungs details',
+    BookingDetails: 'Buchungsdetails',
+    BookingId: 'Buchungs ID',
+    BookingStatus: 'Buchungsstatus',
+    ExamType: 'Prüfungstyp',
+    ExamFees: 'Prüfungsgebühr',
+    BookingSuccess: 'Buchung erfolgreich',
+    BookingDetail: 'Buchungsdetail',
 
 
 }

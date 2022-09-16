@@ -74,7 +74,8 @@ const BookingDetailScreen = ({ route }) => {
                 setExamTime(res.data.booked_event.exam_time);
                 setExamFee(res.data.booked_event.price);
             }
-            ).catch(err => {
+        ).catch(err => {
+                throw err;
                 console.log(err);
             }
             );

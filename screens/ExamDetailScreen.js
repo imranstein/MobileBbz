@@ -54,9 +54,9 @@ const ExamDetailScreen = ({ route }) => {
     const getData = async () => {
         const { data } = await axios
             .get(`${BASE_URL}/exam-detail/${id}`, {
-                headers: {
-                    Authorization: 'Bearer ' + userInfo.token,
-                },
+                // headers: {
+                //     Authorization: 'Bearer ' + userInfo.token,
+                // },
             }).then(res => {
                 setData(res.data.data);
                 setTitle(res.data.data.title);
@@ -231,21 +231,22 @@ const ExamDetailScreen = ({ route }) => {
                 > {price} $ </Text>
                 <TouchableOpacity style={{ alignSelf: 'flex-end', justifyContent: 'flex-end', marginRight: 20 }}
                     onPress={() => {
-                        navigation.navigate('Booking', {
-                            id: id,
-                            slug: slug,
-                            price: price,
-                            examDate: examDate,
-                            examTime: examTime,
-                            regDate: regDate,
-                            location: location,
-                            name: location.name,
-                            street_name: location.street_name,
-                            city: city,
-                            total: total,
-                            remaining: remaining,
-                            content: content,
-                        })
+                        userInfo.token ?
+                            navigation.navigate('Booking', {
+                                id: id,
+                                slug: slug,
+                                price: price,
+                                examDate: examDate,
+                                examTime: examTime,
+                                regDate: regDate,
+                                location: location,
+                                name: location.name,
+                                street_name: location.street_name,
+                                city: city,
+                                total: total,
+                                remaining: remaining,
+                                content: content,
+                            }) : navigation.navigate('Login')
                         // navigation.navigate('BookingSuccess')
                     }
                     }>

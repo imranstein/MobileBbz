@@ -27,13 +27,20 @@ const ExamItem = ({ item }) => {
 
         <View style={styles.container}>
             <TouchableOpacity
+                // onPress={() => {
+                //     userInfo.token ?
+                //         navigation.navigate('ExamDetail', {
+                //             paramKey: item.id,
+                //         }) : navigation.navigate('Login')
+                // }
+                // }
                 onPress={() => {
-                    userInfo.token ?
-                        navigation.navigate('ExamDetail', {
-                            paramKey: item.id,
-                        }) : navigation.navigate('Login')
+                    navigation.navigate('ExamDetail', {
+                        paramKey: item.id,
+                    })
                 }
                 }
+
             >
                 {media != null ? <View style={styles.image}>
                     <ImageBackground

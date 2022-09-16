@@ -138,5 +138,10 @@ export default {
     PrintTicket: 'PRINT TICKET',
     GetInvoice: 'GET INVOICE',
     BookingDetails: 'Booking Details',
+    BookingId: 'Booking Id',
+    ExamType: 'Exam Type',
+    ExamFees: 'Exam Fees',
+    BookingSuccess: 'Booking Success',
+    BookingDetail: 'Booking Detail',
 
 }

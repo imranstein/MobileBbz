@@ -67,8 +67,12 @@ const Navigation = () => {
               options={{ title: t('common:BookingHistory'), headerTintColor: '#1a6997' }}
               component={BookingHistoryScreen} />
             <Stack.Screen name="StripePayment" component={StripePaymentScreen} />
-            <Stack.Screen name="BookingSuccess" component={BookingSuccessScreen} />
-            <Stack.Screen name="BookingDetail" component={BookingDetailScreen} />
+              <Stack.Screen name="BookingSuccess"
+                options={{ title: t('common:BookingSuccess'), headerTintColor: '#1a6997' }}
+                component={BookingSuccessScreen} />
+              <Stack.Screen name="BookingDetail"
+                options={{ title: t('common:BookingDetail'), headerTintColor: '#1a6997' }}
+                component={BookingDetailScreen} />
           </>
         ) : (
           <>
