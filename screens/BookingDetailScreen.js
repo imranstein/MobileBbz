@@ -32,9 +32,14 @@ const BookingDetailScreen = ({ route }) => {
     const [address2, setAddress2] = useState('');
     const [status, setStatus] = useState('');
     const [bookingDate, setBookingDate] = useState('');
-
+    const [bookingId, setBookingId] = useState('');
+    const [gateway, setGateway] = useState('');
+    const [examType, setExamType] = useState('');
+    const [examDate, setExamDate] = useState('');
+    const [examTime, setExamTime] = useState('');
+    const [examFee, setExamFee] = useState('');
     const getData = async () => {
-        const { result } = await axios
+        const { res } = await axios
             .get(`${BASE_URL}/booking-detail/${id}`, {
                 headers: {
                     Authorization: 'Bearer ' + userInfo.token,
@@ -61,6 +66,13 @@ const BookingDetailScreen = ({ route }) => {
                 setStatus(res.data.status);
                 // setId(res.data.id);
                 setBookingDate(res.data.start_date);
+                setBookingId(res.data.id);
+                setStatus(res.data.status);
+                setGateway(res.data.gateway);
+                setExamType(res.data.booked_event.slug);
+                setExamDate(res.data.booked_event.exam_date);
+                setExamTime(res.data.booked_event.exam_time);
+                setExamFee(res.data.booked_event.price);
             }
             ).catch(err => {
                 console.log(err);
@@ -75,17 +87,56 @@ const BookingDetailScreen = ({ route }) => {
     return (
         <ScrollView>
             <View style={styles.container}>
-                <View style={styles.header}>
-                    <Text style={styles.h1}>{t('common:BookingDetails')}</Text>
+                <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#fff' }}>
+                    <View style={styles.header}>
+                        <Text style={styles.h1}>{t('common:BookingDetails')}</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', marginTop: 20, marginBottom: 2 }}>
 
+                        <Text style={[styles.title, { color: '#1a6997' }]}> {t('common:BookingId')} </Text>
+                        <Text style={[styles.infovalue, { color: '#1a6997' }]}> {bookingId}{ } </Text>
+
+                    </View>
+                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                        <Text style={styles.title}> {t('common:BookingStatus')} </Text>
+                        <Text style={[styles.infovalue]}> {status} </Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                        <Text style={styles.title}> {t('common:PaymentMethod')} </Text>
+                        <Text style={[styles.infovalue]}> {gateway} </Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                        <Text style={styles.title}> {t('common:ExamType')} </Text>
+                        <Text style={[styles.infovalue]}> {examType} </Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                        <Text style={styles.title}> {t('common:ExamDate')} </Text>
+                        <Text style={[styles.infovalue]}> {moment(examDate).format('M/D/yyyy')} </Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                        <Text style={styles.title}> {t('common:ExamTime')} </Text>
+                        <Text style={[styles.infovalue]}> {examTime} </Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                        <Text style={styles.title}> {t('common:ExamFees')} </Text>
+                        <Text style={[styles.infovalue]}> {examFee} </Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                        <Text style={[styles.title, { color: '#1a6997' }]}> {t('common:Total')} </Text>
+                        <Text style={[styles.infovalue, { color: '1a6997' }]}> {examFee} </Text>
+                    </View>
                 </View>
 
-                <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#fff', marginLeft: '5%' }}>
-                    <Text style={styles.descriptionLabel}>{t('common:YourInformation')}</Text>
+                <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#cecece' }}>
+                    {/* <Text style={styles.descriptionLabel}>{t('common:YourInformation')}</Text> */}
+                    <View style={styles.header}>
+                        <Text style={styles.h1}>{t('common:YourInformation')}</Text>
+
+                    </View>
                     <View style={{ flexDirection: 'row', marginTop: 20, marginBottom: 2 }}>
 
                         <Text style={styles.title}> {t('common:FirstName')} </Text>
-                        <Text style={[styles.infovalue]}> {first_name} </Text>
+                        <Text style={[styles.infovalue]}> {first_name}{ } </Text>
 
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
@@ -161,7 +212,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '600',
         color: '#1a6997',
-        marginHorizontal: 20,
+        marginHorizontal: 10,
         paddingTop: 12,
     },
     infovalue: {

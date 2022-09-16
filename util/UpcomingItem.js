@@ -60,7 +60,7 @@ const UpcomingItem = ({ item }) => {
                 >
                 </ImageBackground>
                     <View style={styles.detailView}>
-                        <Text style={[styles.detail, { fontWeight: '600', width: '40%', fontSize: 14 }]}>
+                        <Text style={[styles.detail, { fontWeight: '600', width: '40%', fontSize: RFPercentage(2) }]}>
                             {t('common:AdditionalService')}
                         </Text>
                         <Text style={[styles.detail, { color: '#1a6997', fontWeight: 'bold' }]}>
