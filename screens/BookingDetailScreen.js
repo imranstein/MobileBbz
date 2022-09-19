@@ -38,6 +38,11 @@ const BookingDetailScreen = ({ route }) => {
     const [examDate, setExamDate] = useState('');
     const [examTime, setExamTime] = useState('');
     const [examFee, setExamFee] = useState('');
+
+    useEffect(() => {
+        LogBox.ignoreLogs(['VirtualizedLists should never be nested', 'TRenderEngineProvider', '']);
+    }, [])
+
     const getData = async () => {
         const { res } = await axios
             .get(`${BASE_URL}/booking-detail/${id}`, {
@@ -74,7 +79,7 @@ const BookingDetailScreen = ({ route }) => {
                 setExamTime(res.data.booked_event.exam_time);
                 setExamFee(res.data.booked_event.price);
             }
-        ).catch(err => {
+            ).catch(err => {
                 throw err;
                 console.log(err);
             }

@@ -192,6 +192,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   buttonText: {
+    marginTop: scale(-20),
     color: '#166795',
     fontSize: RFPercentage(2.1),
   },
