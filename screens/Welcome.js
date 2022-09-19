@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     width: '90%',
     marginLeft: '5%',
     height: '17%',
-    marginTop: '10%',
+    marginTop: scale(20),
   },
   buttonText: {
     color: '#fff',

@@ -18,6 +18,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import LoadingOverlay from '../components/ui/LoadingOverlay';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { scale } from 'react-native-size-matters';
 
 
 const Login = ({ navigation }) => {
@@ -187,7 +188,7 @@ const styles = StyleSheet.create({
     // marginTop: 50,
   },
   button: {
-    marginTop: 10,
+    marginTop: scale(10),
     justifyContent: 'flex-end',
   },
   buttonText: {

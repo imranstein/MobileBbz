@@ -20,6 +20,9 @@ import ExamItem from '../util/ExamItem';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import SearchItem from '../util/SearchItem';
 import Spinner from 'react-native-loading-spinner-overlay';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 
 
@@ -32,6 +35,33 @@ const SearchPage = () => {
   const [search, setSearch] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [term, setTerm] = useState('');
+  const [from_date, setFromDate] = useState(new Date());
+  const [to_date, setToDate] = useState(new Date());
+  //
+  const [show, setShow] = useState(false);
+  const [mode, setMode] = useState('date');
+  const [date1, setDate] = useState(new Date());
+  const [date2, setDate2] = useState(new Date());
+
+  const onChangeFrom = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+    setFromDate(moment(currentDate).format('YYYY-MM-DD'));
+  }
+  const onChangeTo = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate2(currentDate);
+    setToDate(moment(currentDate).format('YYYY-MM-DD'));
+  }
+
+
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  }
 
   const { t } = useTranslation();
   useEffect(() => {
@@ -39,13 +69,15 @@ const SearchPage = () => {
   }, [])
 
 
-  const searchExam = (term) => {
-    console.log("searching for " + term);
+  const searchExam = (term, from_date, to_date) => {
+    console.log("searching for " + to_date);
     setIsLoading(true);
 
     axios
       .post(`${BASE_URL}/search`, {
-        term
+        term,
+        from_date,
+        to_date
       })
       .then(res => {
         setData2(res.data.data);
@@ -102,13 +134,80 @@ const SearchPage = () => {
                 placeholder={t('common:Search')} />
             </View>
           </View>
-          <View style={styles.input} />
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={{ marginLeft: 5, marginTop: '5%' }}>
+              <Entypo
+                name="calendar"
+                size={22}
+                color="#1a6997"
+                style={styles.icon}
+              />
+            </Text>
+            <View style={{
+              flex: 1,
+              fontSize: RFPercentage(2.7),
+              marginTop: '2%',
+              marginBottom: '5%',
+              marginLeft: '2%',
+              borderColor: '#cecece',
+              borderWidth: 0.5,
+              borderRadius: 5,
+              // paddingHorizontal: '%',
+              width: '90%',
+              color: '#000',
+            }}>
+              <TouchableOpacity onPress={() => showMode('date')}>
+                <Text style={{ fontSize: RFPercentage(2.7), color: '#000', marginTop: 10 }}>{moment(from_date).format('DD/MM/YYYY')}</Text>
+              </TouchableOpacity>
+              {show && (
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  timeZoneOffsetInMinutes={0}
+                  value={date1}
+                  mode={mode}
+                  is24Hour={true}
+                  display="calendar"
+                  onChange={onChangeFrom}
+                />
+              )}
+            </View>
+            <View style={{
+              flex: 1,
+              fontSize: RFPercentage(2.7),
+              marginTop: '2%',
+              marginBottom: '5%',
+              marginLeft: '2%',
+              borderColor: '#cecece',
+              borderWidth: 0.5,
+              borderRadius: 5,
+              // paddingHorizontal: '%',
+              width: '90%',
+              color: '#000',
+            }}>
+              <TouchableOpacity onPress={() => showMode('date')}>
+                <Text style={{ fontSize: RFPercentage(2.7), color: '#000', marginTop: 10 }}>{moment(to_date).format('DD/MM/YYYY')}</Text>
+              </TouchableOpacity>
+              {show && (
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  timeZoneOffsetInMinutes={0}
+                  value={date2}
+                  mode={mode}
+                  is24Hour={true}
+                  display="calendar"
+                  onChange={onChangeTo}
+                />
+              )}
+            </View>
+          </View>
         </View>
+
+
 
         {search == true ?
           <View style={styles.searchButton2}>
             <TouchableOpacity
-              onPress={() => { searchExam(term) }}
+              onPress={() => { searchExam(term, from_date, to_date) }}
               style={styles.button2}>
               <Text style={styles.buttonText}>{t('common:Search')}</Text>
             </TouchableOpacity>
@@ -117,6 +216,8 @@ const SearchPage = () => {
                 () => {
                   setSearch(false);
                   setTerm('');
+                  setFromDate(new Date());
+                  setToDate(new Date());
                 }
               }
               style={styles.button3}>
@@ -126,7 +227,7 @@ const SearchPage = () => {
           :
           <View style={styles.searchButton}>
             <TouchableOpacity
-              onPress={() => { searchExam(term) }}
+              onPress={() => { searchExam(term, from_date, to_date) }}
               style={styles.button}>
               <Text style={styles.buttonText}>{t('common:Search')}</Text>
             </TouchableOpacity>
@@ -225,8 +326,8 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   label: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#999',
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#cecece',
   },
   button: {
     backgroundColor: '#1a6997',
