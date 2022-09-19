@@ -23,6 +23,12 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { Picker } from '@react-native-picker/picker';
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+
+
+
 
 
 
@@ -32,11 +38,16 @@ const SearchPage = () => {
   const { userInfo } = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [data2, setData2] = useState([]);
+  const [data3, setData3] = useState([]);
+  const [data4, setData4] = useState([]);
   const [search, setSearch] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [term, setTerm] = useState('');
-  const [from_date, setFromDate] = useState(new Date());
-  const [to_date, setToDate] = useState(new Date());
+  const [from_date, setFromDate] = useState(null);
+  const [to_date, setToDate] = useState(null);
+  const [location_id, setLocation] = useState('');
+  const [exam_level_id, setExamLevel] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState('');
   //
   const [show, setShow] = useState(false);
   const [mode, setMode] = useState('date');
@@ -69,15 +80,17 @@ const SearchPage = () => {
   }, [])
 
 
-  const searchExam = (term, from_date, to_date) => {
-    console.log("searching for " + to_date);
+  const searchExam = (term, from_date, to_date, location_id, exam_level_id) => {
+    console.log("searching for " + term, from_date, to_date, location_id, exam_level_id);
     setIsLoading(true);
 
     axios
       .post(`${BASE_URL}/search`, {
         term,
         from_date,
-        to_date
+        to_date,
+        location_id,
+        exam_level_id
       })
       .then(res => {
         setData2(res.data.data);
@@ -92,6 +105,17 @@ const SearchPage = () => {
       });
   };
 
+  const getSearchDetail = async () => {
+    const { data } = await axios
+      .get(`${BASE_URL}/exam-search-detail`, {
+      });
+    setData3(data.locations);
+    setData4(data.exam_level);
+    console.log(data3);
+  };
+  useEffect(() => {
+    getSearchDetail();
+  }, [])
   const getData = async () => {
     const { data } = await axios
       .get(`${BASE_URL}/exams`, {
@@ -131,11 +155,39 @@ const SearchPage = () => {
                 value={term}
                 onChangeText={setTerm}
                 style={styles.titleHeader}
-                placeholder={t('common:Search')} />
+                color="#B7D2E3"
+                placeholder={t('common:SearchEverything')}
+                placeholderTextColor="#B7D2E3"
+              />
             </View>
           </View>
           <View style={{ flexDirection: 'row' }}>
             <Text style={{ marginLeft: 5, marginTop: '5%' }}>
+              <Entypo
+                name="location-pin"
+                size={22}
+                color="#1a6997"
+                style={styles.icon}
+              />
+            </Text>
+            <Picker
+              itemStyle={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', borderColor: '#c9c9c9', borderWidth: 0.5, borderRadius: 5, }}
+              selectedValue={location_id}
+              style={{ height: 50, width: '90%', marginLeft: '2%', marginBottom: '2%', color: '#A8B0B5' }}
+              onValueChange={(itemValue, itemIndex) => setLocation(itemValue)}
+            >
+              <Picker.Item
+                color='#A8B0B5'
+                label={t('common:SelectLocation')} value="" />
+              {data3.map((item, index) => {
+                return (
+                  <Picker.Item label={item.name} value={item.id} key={index} />
+                )
+              })}
+            </Picker>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={{ marginLeft: 5 }}>
               <Entypo
                 name="calendar"
                 size={22}
@@ -146,8 +198,8 @@ const SearchPage = () => {
             <View style={{
               flex: 1,
               fontSize: RFPercentage(2.7),
-              marginTop: '2%',
-              marginBottom: '5%',
+              // marginTop: '2%',
+              marginBottom: '2%',
               marginLeft: '2%',
               borderColor: '#cecece',
               borderWidth: 0.5,
@@ -157,7 +209,10 @@ const SearchPage = () => {
               color: '#000',
             }}>
               <TouchableOpacity onPress={() => showMode('date')}>
-                <Text style={{ fontSize: RFPercentage(2.7), color: '#000', marginTop: 10 }}>{moment(from_date).format('DD/MM/YYYY')}</Text>
+                {from_date != null ?
+                  <Text style={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 3 }}>{moment(from_date).format('DD/MM/YYYY')}</Text> :
+                  <Text style={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 3 }}>{moment(date1).format('DD/MM/YYYY')}</Text>
+                }
               </TouchableOpacity>
               {show && (
                 <DateTimePicker
@@ -174,8 +229,7 @@ const SearchPage = () => {
             <View style={{
               flex: 1,
               fontSize: RFPercentage(2.7),
-              marginTop: '2%',
-              marginBottom: '5%',
+              marginBottom: '2%',
               marginLeft: '2%',
               borderColor: '#cecece',
               borderWidth: 0.5,
@@ -185,7 +239,10 @@ const SearchPage = () => {
               color: '#000',
             }}>
               <TouchableOpacity onPress={() => showMode('date')}>
-                <Text style={{ fontSize: RFPercentage(2.7), color: '#000', marginTop: 10 }}>{moment(to_date).format('DD/MM/YYYY')}</Text>
+                {to_date != null ?
+                  <Text style={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 3 }}>{moment(to_date).format('DD/MM/YYYY')}</Text> :
+                  <Text style={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 3 }}>{moment(date2).format('DD/MM/YYYY')}</Text>
+                }
               </TouchableOpacity>
               {show && (
                 <DateTimePicker
@@ -200,75 +257,105 @@ const SearchPage = () => {
               )}
             </View>
           </View>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={{ marginLeft: 5, marginTop: scale(10) }}>
+              <FontAwesome
+                name="language"
+                size={22}
+                color="#1a6997"
+                style={styles.icon}
+              />
+            </Text>
+            <Picker
+              itemStyle={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', borderColor: '#c9c9c9', borderWidth: 0.5, borderRadius: 5, }}
+              selectedValue={exam_level_id}
+              style={{ height: 50, width: '90%', marginLeft: '2%', marginBottom: '2%', color: '#A8B0B5' }}
+              onValueChange={(itemValue, itemIndex) => setExamLevel(itemValue)}
+            >
+              <Picker.Item
+                color='#A8B0B5'
+                label={t('common:SelectExam')} value="" />
+              {data4.map((item, index) => {
+                return (
+                  <Picker.Item label={item.name} value={item.id} key={index} />
+                )
+              })}
+            </Picker>
+          </View>
+
         </View>
 
 
 
-        {search == true ?
-          <View style={styles.searchButton2}>
-            <TouchableOpacity
-              onPress={() => { searchExam(term, from_date, to_date) }}
-              style={styles.button2}>
-              <Text style={styles.buttonText}>{t('common:Search')}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={
-                () => {
-                  setSearch(false);
-                  setTerm('');
-                  setFromDate(new Date());
-                  setToDate(new Date());
+        {
+          search == true ?
+            <View style={styles.searchButton2}>
+              <TouchableOpacity
+                onPress={() => { searchExam(term, from_date, to_date, location_id, exam_level_id) }}
+                style={styles.button2}>
+                <Text style={styles.buttonText}>{t('common:Search')}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={
+                  () => {
+                    setSearch(false);
+                    setTerm('');
+                    setFromDate(null);
+                    setToDate(null);
+                    setLocation('');
+                    setExamLevel('');
+                  }
                 }
-              }
-              style={styles.button3}>
-              <Text style={styles.buttonText}>{t('common:Clear')}</Text>
-            </TouchableOpacity>
-          </View>
-          :
-          <View style={styles.searchButton}>
-            <TouchableOpacity
-              onPress={() => { searchExam(term, from_date, to_date) }}
-              style={styles.button}>
-              <Text style={styles.buttonText}>{t('common:Search')}</Text>
-            </TouchableOpacity>
-          </View>
+                style={styles.button3}>
+                <Text style={styles.buttonText}>{t('common:Clear')}</Text>
+              </TouchableOpacity>
+            </View>
+            :
+            <View style={styles.searchButton}>
+              <TouchableOpacity
+                onPress={() => { searchExam(term, from_date, to_date, location_id, exam_level_id) }}
+                style={styles.button}>
+                <Text style={styles.buttonText}>{t('common:Search')}</Text>
+              </TouchableOpacity>
+            </View>
         }
-        {search == false ?
-          <View style={styles.list}>
-            <Text style={styles.listTitle}>{t('common:UpcomingExams')}</Text>
-            <Text style={styles.listSubTitle}>{t('common:UpcomingExamsSubTitle')}</Text>
+        {
+          search == false ?
+            <View style={styles.list}>
+              <Text style={styles.listTitle}>{t('common:UpcomingExams')}</Text>
+              <Text style={styles.listSubTitle}>{t('common:UpcomingExamsSubTitle')}</Text>
 
-            <FlatList
-              style={{ backgroundColor: '#f5f5f5', padding: 5 }}
-              data={data}
-              numColumns={1}
-              keyExtractor={item => item.id.toString()}
-              // keyExtractor={(item, id) => {
-              //   return id.toString();
-              // }}
-              renderItem={renderItem}
-            />
-          </View>
-          :
-          <View style={styles.list}>
-            <Text style={styles.listTitle}>{t('common:SearchResult')}</Text>
-            <Text style={styles.listSubTitle}>{t('common:YourSearchedResult')}</Text>
-            <FlatList
-              style={{ backgroundColor: '#f5f5f5', padding: 5 }}
-              data={data2}
-              numColumns={1}
-              keyExtractor={item => item.id.toString()}
-              // keyExtractor={(item, id) => {
-              //   return id.toString();
-              // }}
-              renderItem={renderItem2}
-            />
-          </View>
+              <FlatList
+                style={{ backgroundColor: '#f5f5f5', padding: 5 }}
+                data={data}
+                numColumns={1}
+                keyExtractor={item => item.id.toString()}
+                // keyExtractor={(item, id) => {
+                //   return id.toString();
+                // }}
+                renderItem={renderItem}
+              />
+            </View>
+            :
+            <View style={styles.list}>
+              <Text style={styles.listTitle}>{t('common:SearchResult')}</Text>
+              <Text style={styles.listSubTitle}>{t('common:YourSearchedResult')}</Text>
+              <FlatList
+                style={{ backgroundColor: '#f5f5f5', padding: 5 }}
+                data={data2}
+                numColumns={1}
+                keyExtractor={item => item.id.toString()}
+                // keyExtractor={(item, id) => {
+                //   return id.toString();
+                // }}
+                renderItem={renderItem2}
+              />
+            </View>
         }
 
 
-      </ScrollView>
-    </View>
+      </ScrollView >
+    </View >
   );
 };
 
@@ -282,7 +369,7 @@ const styles = StyleSheet.create({
   header: {
     flex: 1,
     backgroundColor: '#1a6997',
-    height: 240,
+    height: scale(220),
   },
   h1: {
     // fontSize: 25,
@@ -301,14 +388,14 @@ const styles = StyleSheet.create({
   },
   search: {
     width: '94%',
-    height: 200,
+    height: scale(260),
     // borderWidth: 0.5,
     borderRadius: 5,
     padding: 10,
     margin: 10,
     elevation: 1,
     backgroundColor: '#fff',
-    marginTop: -90,
+    marginTop: -110,
     zindex: -1,
   },
   title: {

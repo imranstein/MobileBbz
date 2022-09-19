@@ -151,4 +151,7 @@ export default {
     BookingDetail: 'Buchungsdetail',
     YourSearchedResult: 'Ihr gesuchtes Ergebnis',
     SearchResult: 'Suchergebnis',
+    SelectLocation: 'Wählen Sie Ihren Center-Standort aus',
+    SearchEverything: 'Suche hier alles...',
+    SelectExam: 'Wählen Sie Ihr Sprachniveau aus',
 }

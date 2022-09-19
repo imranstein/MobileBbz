@@ -145,5 +145,8 @@ export default {
     BookingDetail: 'Booking Detail',
     SearchResult: 'Search Results',
     YourSearchedResult: 'Your Searched Result',
+    SelectLocation: 'Select Your Center Location',
+    SearchEverything: 'Search everything here...',
+    SelectExam: 'Select Your Language Level',
 
 }
