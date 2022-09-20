@@ -40,19 +40,20 @@ const UpcomingItem = ({ item }) => {
                 }
                 }
             >
-                <View style={{ flexDirection: 'row', marginBottom: 20 }}>
-                    <Text style={{ marginLeft: 5, marginTop: 10, color: '#000' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, marginTop: 18 }}>
+                    <Text style={{ marginLeft: 10, color: '#000' }}>
                         <MaterialCommunityIcons
 
                             name="credit-card-check"
-                            size={30}
+                            size={28}
                             color="#1a6997"
                             style={styles.icon}
                         />
                     </Text>
 
-                    <Text style={{ marginLeft: 10, marginTop: 15, color: '#000', fontSize: RFPercentage(2), fontWeight: 'bold' }}>{t('common:FullAmount')}</Text>
-                    <Text style={{ marginLeft: 20, marginTop: 15, color: '#1a6997', fontSize: RFPercentage(2), fontWeight: '400' }}>{moment(paymentDate).format('DD/MM/YYYY | hh:mm a')}</Text>
+                    <Text style={{ marginLeft: 14, color: '#000', fontSize: RFPercentage(2), fontWeight: 'bold' }}>{t('common:FullAmount')}</Text>
+                    <Text style={{ marginLeft: 10, width: 6, height: 6, borderWidth: 1, borderRadius: 10, backgroundColor: '#A8B0B5', borderColor: '#A8B0B5' }}></Text>
+                    <Text style={{ marginLeft: 10, color: '#1a6997', fontSize: RFPercentage(2), fontWeight: '400' }}>{moment(paymentDate).format('DD/MM/YYYY | hh:mm a')}</Text>
                 </View>
                 <View style={styles.image}><ImageBackground
                     style={{ width: '60%', height: 90, borderRadius: 2 }}
@@ -60,13 +61,13 @@ const UpcomingItem = ({ item }) => {
                 >
                 </ImageBackground>
                     <View style={styles.detailView}>
-                        <Text style={[styles.detail, { fontWeight: '600', width: '40%', fontSize: RFPercentage(2) }]}>
+                        <Text style={[styles.detail, { width: '40%', fontSize: RFPercentage(2) }]}>
                             {t('common:AdditionalService')}
                         </Text>
-                        <Text style={[styles.detail, { color: '#1a6997', fontWeight: 'bold' }]}>
+                        <Text style={[styles.detail, { color: '#1a6997', fontWeight: '600' }]}>
                             {slug}
                         </Text>
-                        <Text style={[styles.detail, { fontWeight: 'bold' }]}>
+                        <Text style={[styles.detail, { fontWeight: '600' }]}>
                             {t('common:AmountPaid')} <Text style={[styles.detail, { color: '#4BA765' }]}>{amount} $</Text>
                         </Text>
                     </View>
@@ -97,17 +98,19 @@ const UpcomingItem = ({ item }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 5,
+        // padding: 5,
         // marginLeft: '2%',
-        marginVertical: '3%',
+        marginBottom: 30,
         backgroundColor: '#fff',
-        marginHorizontal: 5,
+        borderColor: '#DFDFDF',
+        borderWidth: 1,
+        // marginHorizontal: 5,
         elevation: 2,
     },
     image: {
         flex: 1,
         marginBottom: 20,
-        marginLeft: 5,
+        marginLeft: 10,
         flexDirection: 'row'
     },
     Text: {
@@ -200,8 +203,8 @@ const styles = StyleSheet.create({
     }, detail: {
         color: '#000',
         textAlign: 'left',
-        marginLeft: 10,
-        marginBottom: 10,
+        marginLeft: 13,
+        marginBottom: 2,
         marginRight: 110,
     }, detailView: {
         flexDirection: 'column',
@@ -214,14 +217,14 @@ const styles = StyleSheet.create({
     touchable1: {
         backgroundColor: '#1a6997',
         width: '50%',
-        height: 40,
+        height: 35,
         justifyContent: 'center',
         alignItems: 'center',
     },
     touchable: {
         backgroundColor: '#fff',
         width: '50%',
-        height: 40,
+        height: 35,
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: '#1a6997',
