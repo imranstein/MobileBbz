@@ -38,11 +38,6 @@ const BookingDetailScreen = ({ route }) => {
     const [examDate, setExamDate] = useState('');
     const [examTime, setExamTime] = useState('');
     const [examFee, setExamFee] = useState('');
-
-    useEffect(() => {
-        LogBox.ignoreLogs(['VirtualizedLists should never be nested', 'TRenderEngineProvider', '']);
-    }, [])
-
     const getData = async () => {
         const { res } = await axios
             .get(`${BASE_URL}/booking-detail/${id}`, {
@@ -93,103 +88,103 @@ const BookingDetailScreen = ({ route }) => {
     return (
         <ScrollView>
             <View style={styles.container}>
-                <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#fff' }}>
+                <View style={{ backgroundColor: '#fff' }}>
                     <View style={styles.header}>
                         <Text style={styles.h1}>{t('common:BookingDetails')}</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 20, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginTop: 25, marginBottom: 7 }}>
 
-                        <Text style={[styles.title, { color: '#1a6997' }]}> {t('common:BookingId')} </Text>
-                        <Text style={[styles.infovalue, { color: '#1a6997' }]}> {bookingId}{ } </Text>
+                        <Text style={[styles.title, { color: '#1570A5' }]}> {t('common:BookingId')} </Text>
+                        <Text style={[styles.infovalue, { color: '#1570A5' }]}> {bookingId}{ } </Text>
 
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginBottom: 7 }}>
                         <Text style={styles.title}> {t('common:BookingStatus')} </Text>
                         <Text style={[styles.infovalue]}> {status} </Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginBottom: 11 }}>
                         <Text style={styles.title}> {t('common:PaymentMethod')} </Text>
                         <Text style={[styles.infovalue]}> {gateway} </Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginBottom: 11 }}>
                         <Text style={styles.title}> {t('common:ExamType')} </Text>
                         <Text style={[styles.infovalue]}> {examType} </Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginBottom: 11 }}>
                         <Text style={styles.title}> {t('common:ExamDate')} </Text>
                         <Text style={[styles.infovalue]}> {moment(examDate).format('M/D/yyyy')} </Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginBottom: 12 }}>
                         <Text style={styles.title}> {t('common:ExamTime')} </Text>
                         <Text style={[styles.infovalue]}> {examTime} </Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginBottom: 12 }}>
                         <Text style={styles.title}> {t('common:ExamFees')} </Text>
                         <Text style={[styles.infovalue]}> {examFee} </Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
-                        <Text style={[styles.title, { color: '#1a6997' }]}> {t('common:Total')} </Text>
-                        <Text style={[styles.infovalue, { color: '1a6997' }]}> {examFee} </Text>
+                    <View style={{ flexDirection: 'row', marginBottom: 36 }}>
+                        <Text style={[styles.title, { color: '#1570A5' }]}> {t('common:Total')} </Text>
+                        <Text style={[styles.infovalue, { color: '#1570A5' }]}> {examFee} </Text>
                     </View>
                 </View>
 
-                <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#cecece' }}>
+                <View style={{ backgroundColor: '#F2F2F2' }}>
                     {/* <Text style={styles.descriptionLabel}>{t('common:YourInformation')}</Text> */}
                     <View style={styles.header}>
                         <Text style={styles.h1}>{t('common:YourInformation')}</Text>
 
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 20, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginTop: 36, marginBottom: 7 }}>
 
                         <Text style={styles.title}> {t('common:FirstName')} </Text>
                         <Text style={[styles.infovalue]}> {first_name}{ } </Text>
 
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginBottom: 11 }}>
                         <Text style={styles.title}> {t('common:LastName')} </Text>
                         <Text style={[styles.infovalue]}> {last_name} </Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginBottom: 11 }}>
                         <Text style={styles.title}> {t('common:IdentificationNumber')} </Text>
                         <Text style={[styles.infovalue]}> {identificationNumber} </Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginBottom: 11 }}>
                         <Text style={styles.title}> {t('common:Email')} </Text>
                         <Text style={[styles.infovalue]}> {email} </Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginBottom: 12 }}>
                         <Text style={styles.title}> {t('common:Salutation')} </Text>
                         <Text style={[styles.infovalue]}> {salutation} </Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginBottom: 12 }}>
                         <Text style={styles.title}> {t('common:AcademicTitle')} </Text>
                         <Text style={[styles.infovalue]}> {academicTitle} </Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginBottom: 10 }}>
                         <Text style={styles.title}> {t('common:BirthDate')} </Text>
                         <Text style={[styles.infovalue]}> {moment(birthday).format('M/D/yyyy')} </Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginBottom: 13 }}>
                         <Text style={styles.title}> {t('common:BirthPlace')} </Text>
                         <Text style={[styles.infovalue]}> {birthPlace} </Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginBottom: 14 }}>
                         <Text style={styles.title}> {t('common:CountryOfBirth')} </Text>
                         <Text style={[styles.infovalue]}> {country_of_birth} </Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginBottom: 15 }}>
                         <Text style={styles.title}> {t('common:MotherTongue')} </Text>
                         <Text style={[styles.infovalue]}> {motherTongue} </Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginBottom: 15 }}>
                         <Text style={styles.title}> {t('common:Telephone')} </Text>
                         <Text style={[styles.infovalue]}> {telephone} </Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginBottom: 11 }}>
                         <Text style={styles.title}> {t('common:Mobile')} </Text>
                         <Text style={[styles.infovalue]}> {phone} </Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginBottom: 40 }}>
                         <Text style={styles.title}> {t('common:Address')} </Text>
                         <Text style={[styles.infovalue]}>{city},{address},{zipCode} </Text>
                     </View>
@@ -215,28 +210,28 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
     },
     h1: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: '600',
-        color: '#1a6997',
+        color: '#1570A5',
         marginHorizontal: 10,
-        paddingTop: 12,
+        paddingTop: 36,
     },
     infovalue: {
-        fontSize: 15,
+        fontSize: 14,
         fontWeight: '400',
-        color: '#939393',
-        // marginHorizontal: 10,
+        color: '#A8B0B5',
+        marginHorizontal: 10,
         paddingTop: 5,
         textAlign: 'right',
         flex: 1,
-        marginRight: 7,
+        // marginRight: 7,
     },
     title: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: '500',
         color: '#000',
         marginHorizontal: 10,
-        paddingTop: 5,
+        // paddingTop: 5,
     },
     descriptionLabel: {
         fontSize: 22,

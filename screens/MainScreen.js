@@ -28,7 +28,7 @@ const MainScreen = () => {
       screenOptions={{
         drawerActiveBackgroundColor: '#166795',
         drawerActiveTintColor: '#fff',
-        drawerLabelStyle: { fontSize: RFPercentage(2.4), marginLeft: -20, fontFamily: 'Roboto-medium' }
+        drawerLabelStyle: { fontSize: RFPercentage(2.4), marginLeft: -16, fontFamily: 'Roboto-medium' }
       }}
       drawerContent={props => <CustomDrawer{...props} />} initialRouteName="Main">
       <Drawer.Screen name={t('common:Home')} component={HomeScreen} options={{

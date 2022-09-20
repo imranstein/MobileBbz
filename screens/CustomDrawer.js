@@ -15,7 +15,7 @@ const CustomDrawer = (props) => {
         <DrawerContentScrollView {...props}>
             <View style={styles.drawerContent}>
                 <View style={styles.userInfoSection}>
-                    <View style={{ flexDirection: 'row', marginTop: 15, borderBottomColor: '#cecece', borderBottomWidth: 1 }}>
+                    <View style={{ flexDirection: 'row', marginTop: 15, }}>
                         <View style={{ marginLeft: 5, flexDirection: 'row', marginRight: 15, marginBottom: 20 }}>
                             <Text>
                                 <Icons
@@ -44,16 +44,19 @@ export default CustomDrawer
 const styles = StyleSheet.create({
     drawerContent: {
         flex: 1,
+        borderBottomColor: '#DAE1E7',
+        borderBottomWidth: 2,
+        marginBottom: 20,
     },
     userInfoSection: {
-        paddingLeft: 20,
+        paddingLeft: 23,
     },
     title: {
         fontSize: RFPercentage(3.2),
         marginTop: 12,
         fontWeight: '800',
         color: '#1570a5',
-        marginLeft: 15,
+        marginLeft: 12,
         fontFamily: 'Roboto-Medium',
     },
 })

@@ -17,6 +17,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { scale } from 'react-native-size-matters';
 
 
 const validationSchema = Yup.object().shape({
@@ -83,24 +84,24 @@ const ResetPassword = () => {
           {({
             handleChange, handleBlur, handleSubmit, values, errors, touched,
           }) => (
-            <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-              <TextInput
-                style={styles.input}
-                placeholder={t('common:Email')}
-                placeholderTextColor='#9c9c9c'
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                keyboardType='email-address'
-              />
-              {touched.email && errors.email && <Text style={styles.error}>{errors.email}</Text>}
-              <TouchableOpacity
-                style={styles.button}
-                onPress={handleSubmit}>
-                <Text style={styles.buttonText}>{t('common:SendPassword')}</Text>
-              </TouchableOpacity>
-            </View>
-          )}
+              <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+                <TextInput
+                  style={styles.input}
+                  placeholder={t('common:Email')}
+                  placeholderTextColor='#9c9c9c'
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  value={values.email}
+                  keyboardType='email-address'
+                />
+                {touched.email && errors.email && <Text style={styles.error}>{errors.email}</Text>}
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={handleSubmit}>
+                  <Text style={styles.buttonText}>{t('common:SendPassword')}</Text>
+                </TouchableOpacity>
+              </View>
+            )}
         </Formik>
       </View>
     </ImageBackground>
@@ -118,45 +119,51 @@ const styles = StyleSheet.create({
     opacity: 1,
   },
   container: {
-    flex: 1,
+    // flex: 0.5,
     alignItems: 'center',
-    paddingBottom: 100,
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    marginVertical: scale(30),
+    marginHorizontal: scale(10),
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#fff',
+    borderRadius: 10,
+    paddingHorizontal: scale(13),
   },
   text: {
-    marginTop: '20%',
-    width: '86%',
+    marginTop: '10%',
+    width: '100%',
     textAlign: 'left',
     fontSize: RFPercentage(2.45),
-    color: '#566573',
+    color: '#5E6D77',
     marginBottom: '7%',
   },
   input: {
-    width: '86%',
-    height: 50,
-    borderColor: '#999',
-    borderWidth: 0.5,
+    width: '100%',
+    height: 45,
+    borderColor: '#DAE1E7',
+    borderWidth: 1,
     marginBottom: '7%',
-    borderRadius: 3,
-    paddingLeft: 10,
+    borderRadius: 4,
+    paddingLeft: 14,
     color: '#566573',
   },
   button: {
-    width: '86%',
-    height: 50,
-    backgroundColor: '#166795',
-    borderRadius: 3,
+    width: '100%',
+    height: 45,
+    backgroundColor: '#1570A5',
+    borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: '7%',
+    marginBottom: '10%',
   },
   buttonText: {
     color: '#fff',
     fontSize: RFPercentage(2.45),
     fontWeight: 'bold',
+    textTransform: 'uppercase',
   },
   error: {
     color: 'red',
-    marginBottom: 10,
+    marginBottom: 15,
   },
 });

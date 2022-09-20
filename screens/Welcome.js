@@ -39,7 +39,7 @@ const Welcome = ({ navigation }) => {
       </View>
       <View style={styles.signup}>
         <Text style={{
-          fontSize: RFPercentage(2.45), color: '#999'
+          fontSize: RFPercentage(2.45), color: '#000000'
         }}>{t('common:DoNotHaveAnAccount')} </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.signupButton}>{t('common:SignUp')}
@@ -50,7 +50,7 @@ const Welcome = ({ navigation }) => {
         onPress={() => navigation.navigate('Main')}>
         <Text
           style={{
-            color: '#166795',
+            color: '#1570A5',
             fontSize: RFPercentage(2.45),
             textAlign: 'center',
             marginTop: '1%',
@@ -70,19 +70,19 @@ const styles = StyleSheet.create({
     fontSize: RFPercentage(3.8),
     fontWeight: 'normal',
     textAlign: 'center',
-    marginTop: scale(40),
+    marginTop: scale(32),
   },
   container: {
     flex: 1,
     backgroundColor: '#fff',
   },
   ImageBackground: {
-    opacity: 0.8,
+    opacity: 1,
   },
   description: {
     color: 'gray',
     textAlign: 'center',
-    marginTop: scale(20),
+    marginTop: scale(9),
     paddingHorizontal: '12%',
     fontSize: RFPercentage(2.4),
   },
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     width: '90%',
     marginLeft: '5%',
     height: '17%',
-    marginTop: scale(20),
+    marginTop: '10%',
   },
   buttonText: {
     color: '#fff',
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     marginTop: '-10%',
   },
   signupButton: {
-    color: '#166795',
+    color: '#1570A5',
     fontSize: RFPercentage(2.45),
     marginLeft: '1%',
   },

@@ -59,57 +59,57 @@ const Login = ({ navigation }) => {
           {({
             handleChange, handleBlur, handleSubmit, values, errors, touched, isValid
           }) => (
-            <View style={styles.form}>
+              <View style={styles.form}>
 
-              <View style={styles.loginContent}>
-                <TextInput
-                  style={styles.textInput}
-                  placeholder={t('common:Email')}
-                  placeholderTextColor='#9c9c9c'
-                  onChangeText={handleChange('email')}
-                  onBlur={handleBlur('email')}
-                  value={values.email}
-                />
-                {touched.email && errors.email && (
-                  <Text style={styles.error}>{errors.email}</Text>
-                )}
-              </View>
-              <View style={styles.loginContent}>
-                <TextInput
-                  style={styles.textInput}
-                  onChangeText={handleChange('password')}
-                  onBlur={handleBlur('password')}
-                  value={values.password}
-                  placeholder={t('common:Password')}
-                  placeholderTextColor='#9c9c9c'
-                  secureTextEntry={true}
-                />
-                {touched.password && errors.password && (
-                  <Text style={styles.error}>{errors.password}</Text>
-                )}
-              </View>
-              <View>
-                <Text style={[styles.error, { alignSelf: 'center' }]}>{error ? error : ''}</Text>
-              </View>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate('Reset Your Password')}>
-                <Text style={styles.buttonText}>{t('common:ForgotPassword')}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={[styles.loginButton, {
-                backgroundColor: isValid ? '#1a6997' : '#9c9c9c',
-              }]}
-                disabled={!isValid} onPress={handleSubmit}>
-                <Text style={styles.loginButtonText}>{t('common:Login')}</Text>
-              </TouchableOpacity>
-              <View style={styles.signup}>
-                <Text style={{ color: '#999' }}>{t('common:DoNotHaveAnAccount')} </Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-                  <Text style={styles.signupButton}>{t('common:SignUp')}</Text>
+                <View style={styles.loginContent}>
+                  <TextInput
+                    style={styles.textInput}
+                    placeholder={t('common:Email')}
+                    placeholderTextColor='#9c9c9c'
+                    onChangeText={handleChange('email')}
+                    onBlur={handleBlur('email')}
+                    value={values.email}
+                  />
+                  {touched.email && errors.email && (
+                    <Text style={styles.error}>{errors.email}</Text>
+                  )}
+                </View>
+                <View style={styles.loginContent}>
+                  <TextInput
+                    style={styles.textInput}
+                    onChangeText={handleChange('password')}
+                    onBlur={handleBlur('password')}
+                    value={values.password}
+                    placeholder={t('common:Password')}
+                    placeholderTextColor='#9c9c9c'
+                    secureTextEntry={true}
+                  />
+                  {touched.password && errors.password && (
+                    <Text style={styles.error}>{errors.password}</Text>
+                  )}
+                </View>
+                <View>
+                  <Text style={[styles.error, { alignSelf: 'center' }]}>{error ? error : ''}</Text>
+                </View>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => navigation.navigate('Reset Your Password')}>
+                  <Text style={styles.buttonText}>{t('common:ForgotPassword')}</Text>
                 </TouchableOpacity>
+                <TouchableOpacity style={[styles.loginButton, {
+                  backgroundColor: isValid ? '#1a6997' : '#9c9c9c',
+                }]}
+                  disabled={!isValid} onPress={handleSubmit}>
+                  <Text style={styles.loginButtonText}>{t('common:Login')}</Text>
+                </TouchableOpacity>
+                <View style={styles.signup}>
+                  <Text style={{ color: '#000000' }}>{t('common:DoNotHaveAnAccount')} </Text>
+                  <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+                    <Text style={styles.signupButton}>{t('common:SignUp')}</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          )}
+            )}
         </Formik>
         {/* <View style={styles.loginContent}>
         <TextInput
@@ -157,15 +157,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    padding: 10,
   },
   ImageBackground: {
-    opacity: 0.3,
+    opacity: 1,
   },
   login: {
-    flex: 0.6,
+    // flex: 0.6,
     backgroundColor: '#fff',
-    padding: 20,
-    marginTop: 10,
+    paddingHorizontal: 15,
+    paddingTop: 30,
+    paddingBottom: 26,
+    marginTop: 32,
     borderWidth: 1,
     borderColor: '#fff',
     borderRadius: 10,
@@ -178,47 +181,53 @@ const styles = StyleSheet.create({
   },
   textInput: {
     borderWidth: 1,
-    borderColor: '#999',
-    marginVertical: 10,
+    borderColor: '#DAE1E7',
+    borderRadius: 4,
+    marginBottom: 20,
     justifyContent: 'flex-start',
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 12,
     color: '#000',
   },
-  loginContent: {
-    // marginTop: 50,
-  },
-  button: {
-    marginTop: scale(10),
-    justifyContent: 'flex-end',
-  },
+  // loginContent: {
+  //   // marginTop: 50,
+  // },
+  // button: {
+  //   // marginTop: 10,
+  //   justifyContent: 'flex-end',
+  // },
   buttonText: {
-    marginTop: scale(-20),
-    color: '#166795',
+    color: '#1570A5',
     fontSize: RFPercentage(2.1),
+    marginBottom: 29,
+    textAlign: 'right',
+    marginTop:scale(-10),
   },
   loginButton: {
-    marginTop: 10,
+    // marginTop: 10,
     // backgroundColor: '#1570a5',
-    padding: 10,
-    borderRadius: 2,
+    paddingVertical: 12,
+    borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
   loginButtonText: {
     color: '#fff',
+    fontWeight: 'bold',
     fontSize: RFPercentage(2.7),
     textAlign: 'center',
   },
   signup: {
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
     padding: 10,
     marginTop: 10,
   },
   signupButton: {
     color: '#166795',
-    fontSize: RFPercentage(2.4),
-    marginLeft: 10,
+    fontSize: RFPercentage(2.1),
+    marginLeft: 4,
   },
   error: {
     color: 'red',
