@@ -21,6 +21,7 @@ import moment from 'moment';
 import { useWindowDimensions } from 'react-native';
 import RenderHtml from 'react-native-render-html';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { scale } from 'react-native-size-matters';
 
 
 const ExamDetailScreen = ({ route }) => {
@@ -212,10 +213,11 @@ const ExamDetailScreen = ({ route }) => {
             <View style={styles.submit}>
                 <Text style={{
                     flex: 0.4,
-                    fontSize: RFPercentage(2.5),
+                    fontSize: scale(20),
                     justifyContent: 'center',
                     alignSelf: 'center',
                     marginLeft: 20,
+                    color: '#000',
 
                 }}>{t('common:Fee')} </Text>
                 <Text style={{

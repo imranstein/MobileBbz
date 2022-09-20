@@ -154,4 +154,5 @@ export default {
     SelectLocation: 'Wählen Sie Ihren Center-Standort aus',
     SearchEverything: 'Suche hier alles...',
     SelectExam: 'Wählen Sie Ihr Sprachniveau aus',
+    UploadId: 'Ausweisnachweis hochladen',
 }

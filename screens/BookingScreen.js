@@ -17,6 +17,9 @@ import CountryPicker from 'react-native-country-picker-modal';
 import CheckBox from '@react-native-community/checkbox';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import { useNavigation } from '@react-navigation/native';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { scale } from 'react-native-size-matters';
+
 
 const validationSchema = Yup.object().shape({
     salutation: Yup.string()
@@ -122,6 +125,30 @@ const BookingScreen = ({ route }) => {
     const [id_proof, setIdProof] = useState('');
     const [payment_gateway, setPaymentGateway] = useState('');
     const [result, setResult] = useState('');
+    //images id
+    const data = new FormData();
+
+    const options = {
+        title: 'Select Image',
+        type: 'library',
+        options: {
+            maxHright: 200,
+            maxWidth: 200,
+            selectionLimit: 1,
+            mediaType: 'photo',
+            includeBase64: true,
+        }
+    }
+    const openGallery = async () => {
+        const result = await launchImageLibrary(options);
+        console.log(result.assets[0]);
+        data.append('id_proof', {
+            uri: result.assets[0].uri,
+            type: result.assets[0].type,
+            name: result.assets[0].fileName,
+        });
+        setIdProof(result.assets[0].uri);
+    }
 
     const getData = async () => {
         const { data } = await axios
@@ -198,7 +225,7 @@ const BookingScreen = ({ route }) => {
             price: price,
         }, {
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'multipart/form-data',
                 'Accept': 'application/json',
                 Authorization: 'Bearer ' + userInfo.token,
             }
@@ -536,6 +563,25 @@ const BookingScreen = ({ route }) => {
                                     onChangeText={setPhone} />
                             </View>
                         </View>
+                        <View style={styles.inputs}>
+                            <View>
+                                <TouchableOpacity
+                                    onPress={() => { openGallery() }}
+                                >
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: scale(10) }}>
+                                        <Text style={styles.icon}>
+                                            <Entypo
+                                                name="plus"
+                                                size={25}
+                                                color="#1a6997"
+                                                style={styles.icon}
+                                            />
+                                        </Text>
+                                        <Text style={{ marginRight: scale(20), marginLeft: scale(10), color: "#1a6997", fontWeight: 'bold', fontSize: scale(20) }}>{t('common:UploadId')}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
 
                         <View style={{ flex: 1, marginTop: '5%', marginBottom: '5%' }}>
                             <Text style={{ marginLeft: '5%', fontSize: RFPercentage(2.5), fontWeight: 'bold', color: '#000' }}>{t('common:Address')}</Text>
@@ -613,7 +659,7 @@ const BookingScreen = ({ route }) => {
                                 )}
                             </View>
                         </View>
-                        <View style={{ flexDirection: 'row', marginBottom: 10, marginLeft: -7 }}>
+                        {/* <View style={{ flexDirection: 'row', marginBottom: 10, marginLeft: -7 }}>
                             <CheckBox
                                 value={id_proof}
                                 onPress={() => setIdProof(!id_proof)}
@@ -624,8 +670,8 @@ const BookingScreen = ({ route }) => {
                                 marginLeft: 10, fontSize: RFPercentage(2.45),
                                 color: '#999'
                             }}>{t('common:IDProof')}</Text>
-                            {/* {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>} */}
-                        </View>
+                            {/* {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>} }
+                        </View> */}
                         <View style={{ flexDirection: 'row', marginBottom: 10, marginLeft: -7 }}>
                             <RadioForm
                                 radio_props={payments}
@@ -671,7 +717,7 @@ const BookingScreen = ({ route }) => {
 
                 </View>
 
-            </ScrollView>
+            </ScrollView >
             <View style={styles.submit}>
                 <Text style={{
                     flex: 0.4,
@@ -703,7 +749,7 @@ const BookingScreen = ({ route }) => {
                     <Text style={styles.submitLabel}>{t('common:PayNow')}</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </View >
     )
 }
 

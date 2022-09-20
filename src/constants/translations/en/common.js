@@ -148,5 +148,6 @@ export default {
     SelectLocation: 'Select Your Center Location',
     SearchEverything: 'Search everything here...',
     SelectExam: 'Select Your Language Level',
+    UploadId: 'Upload ID Proof',
 
 }
