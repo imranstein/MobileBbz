@@ -155,4 +155,8 @@ export default {
     SearchEverything: 'Suche hier alles...',
     SelectExam: 'Wählen Sie Ihr Sprachniveau aus',
     UploadId: 'Ausweisnachweis hochladen',
+    WeWork: 'Wie wir arbeiten',
+    KnowWhoWeAre: 'Wer wir sind',
+    BillingAddress: 'Rechnungs adresse',
+
 }

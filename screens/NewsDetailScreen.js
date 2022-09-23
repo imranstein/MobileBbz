@@ -46,19 +46,19 @@ const NewsDetailScreen = React.memo(({ route }) => {
             <ScrollView>
                 {image != null ? <View style={styles.image}>
                     <Image
-                        style={{ width: '96%', height: 230, borderRadius: 2 }}
+                        style={{ width: '100%', height: 260 }}
                         source={{ uri: `${IMAGE_URL}${image}` }}
                     />
                 </View> : <View style={styles.image}><Image
-                    style={{ width: '96%', height: 200, borderRadius: 2 }}
+                    style={{ width: '100%', height: 260 }}
                     source={require('../assets/searchBackground.png')}
                 /></View>}
                 <View style={styles.date}>
                     {date != null ? <Text style={styles.dateText}>
                         {moment(date).format('DD/MM/YY')}
                     </Text> : <Text style={styles.dateText}>
-                        {moment(date).format('DD/MM/YY')}
-                    </Text>}
+                            {moment(date).format('DD/MM/YY')}
+                        </Text>}
                 </View>
                 <View style={styles.description}>
                     {/* <Text style={styles.descriptionText}>{item.content}</Text> */}
@@ -67,11 +67,11 @@ const NewsDetailScreen = React.memo(({ route }) => {
                         source={{ html: description || '' }}
                         enableExperimentalMarginCollapsing={true}
                         baseStyle={{
-                            color: '#15181E',
+                            color: '#5E6D77',
                             textAlign: 'justify',
-                            fontSize: '16px',
-                            marginRight: '5%',
-                            marginLeft: '2%',
+                            fontSize: '13px',
+                            // marginRight: '5%',
+                            // marginLeft: '2%',
                         }}
                     />
                 </View>
@@ -86,13 +86,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        marginLeft: '2%',
+        // marginLeft: '2%',
     },
     title: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: '1%',
-        marginBottom: '5%',
+        marginVertical: '5%',
     },
     titleText: {
         fontSize: RFPercentage(2.5),
@@ -101,24 +100,25 @@ const styles = StyleSheet.create({
     },
     image: {
         // flex: 1,
-        marginBottom: 20,
+        marginBottom: 13,
     },
     date: {
-
-        marginBottom: 10,
+        // marginBottom: 12,
+        marginLeft: 10,
         flexDirection: 'row',
     },
     dateText: {
-        fontSize: RFPercentage(2.5),
+        fontSize: RFPercentage(2.2),
         color: "#1a6997",
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
     },
     description: {
-        marginBottom: 20,
+        // marginBottom: 20,
+        marginHorizontal: 12,
         flexDirection: 'row',
     },
     descriptionText: {
         fontSize: RFPercentage(2.3),
-        color: "#000",
+        color: '#5E6D77',
     },
 })

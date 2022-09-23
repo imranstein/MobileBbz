@@ -51,7 +51,7 @@ export default class News extends React.Component {
       <SafeAreaView>
         <View
           style={{
-            padding: 20,
+            // padding: 20,
             justifyContent: 'center',
           }}
         >
@@ -59,7 +59,7 @@ export default class News extends React.Component {
           <Text style={styles.textDescription}>{t('common:FindUsHere')}</Text> */}
         </View>
         <FlatList
-          style={{ backgroundColor: '#f5f5f5', padding: 5 }}
+          style={{ backgroundColor: '#fff' }}
           data={data}
           numColumns={1}
           keyExtractor={item => item.id.toString()}
@@ -89,6 +89,5 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: '#333',
     fontSize: RFPercentage(2.3),
-
   }
 });

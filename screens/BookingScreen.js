@@ -19,6 +19,7 @@ import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'reac
 import { useNavigation } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { scale } from 'react-native-size-matters';
+import { Picker } from '@react-native-picker/picker';
 
 
 const validationSchema = Yup.object().shape({
@@ -125,6 +126,7 @@ const BookingScreen = ({ route }) => {
     const [id_proof, setIdProof] = useState('');
     const [payment_gateway, setPaymentGateway] = useState('');
     const [result, setResult] = useState('');
+    const [motherTongueData, setMotherTongueData] = useState([]);
     //images id
     const data = new FormData();
 
@@ -147,8 +149,34 @@ const BookingScreen = ({ route }) => {
             type: result.assets[0].type,
             name: result.assets[0].fileName,
         });
-        setIdProof(result.assets[0].uri);
+        setIdProof(result.assets[0].fileName);
+        axios.post(`${BASE_URL}/bookingImage`, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + userInfo.token,
+            }
+        }).then((response) => {
+            if (response.data.status == 1) {
+                console.log(response.data);
+                // alert(response.data.message);
+            } else {
+                console.log(response.data);
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
     }
+    //motherTongue
+    const getMotherTongue = async () => {
+        const { data } = await axios
+            .get(`${BASE_URL}/motherTongue`, {
+            });
+        console.log(data);
+        setMotherTongueData(data);
+    };
+    useEffect(() => {
+        getMotherTongue();
+    }, [])
 
     const getData = async () => {
         const { data } = await axios
@@ -167,9 +195,8 @@ const BookingScreen = ({ route }) => {
         setCity(data.city);
         setAddress2(data.address2);
         setCountry(data.country);
-        setZipCode(data.zip_code);
+        setZipCode((data.zip_code).toString());
         setBirthday(data.birthday);
-
     };
 
     useEffect(() => {
@@ -199,6 +226,7 @@ const BookingScreen = ({ route }) => {
 
     const book = (event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, price,) => {
         console.log(event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, price);
+
         axios.post(`${BASE_URL}/register-exam`, {
             event_id: event_id,
             salutation: salutation,
@@ -233,36 +261,42 @@ const BookingScreen = ({ route }) => {
             if (response.data.status == 1) {
                 console.log(response.data);
                 alert(response.data.message);
-                // if (response.data.geteway == 'paypal') {
-                //     // Linking.openURL(response.data.paypal_url);
-                //     console.log(response.data.gateway);
-                // } else {
-                //     console.log(response.data.gateway);
-                //     navigation.navigate('StripePayment'
-                //         // , {
-                //         // amount: response.data.amount,
-                //         // code: response.data.code,
-                //         // event_id: response.data.event_id,
-                //         // }
-                //     );
-                //     // console.log(response.data.gateway);
-                // }
-                navigation.navigate('BookingSuccess'
-                    , {
-                        amount: response.data.amount,
-                        code: response.data.code,
-                        event_id: response.data.event_id,
-                        gateway: response.data.gateway,
-                        location: location,
-                        slug: slug,
-                        examDate: examDate,
-                        examTime: examTime,
-                        city_name: city_name,
-                    }
-                );
+                if (response.data.geteway == 'paypal') {
+                    // Linking.openURL(response.data.paypal_url);
+                    console.log(response.data.gateway);
+                } else {
+                    // console.log(response.data.gateway);
+                    navigation.navigate('StripePayment'
+                        , {
+                            amount: response.data.amount,
+                            code: response.data.code,
+                            event_id: response.data.event_id,
+                            gateway: response.data.gateway,
+                            location: location,
+                            slug: slug,
+                            examDate: examDate,
+                            examTime: examTime,
+                            city_name: city_name,
+                        }
+                    );
+                    // console.log(response.data.gateway);
+                }
+                // navigation.navigate('BookingSuccess'
+                //     , {
+                //         amount: response.data.amount,
+                //         code: response.data.code,
+                //         event_id: response.data.event_id,
+                //         gateway: response.data.gateway,
+                //         location: location,
+                //         slug: slug,
+                //         examDate: examDate,
+                //         examTime: examTime,
+                //         city_name: city_name,
+                //     }
+                // );
             } else {
                 console.log(response.data);
-                alert(t('common:Error'), t('common:YourBookingHasNotBeenSuccessfullySubmitted'), [{
+                alert(response.data.message, [{
                     text: t('common:OK'),
                     onPress: () => {
                         navigation.navigate('Home');
@@ -540,9 +574,39 @@ const BookingScreen = ({ route }) => {
                         <View style={styles.inputs}>
                             <View>
                                 <Text style={styles.label}>{t('common:MotherTongue')}</Text>
-                                <TextInput style={styles.input}
+                                {/* <TextInput style={styles.input}
                                     value={mother_tongue}
-                                    onChangeText={setMotherTongue} />
+                                    onChangeText={setMotherTongue} /> */}
+                                <View style={{
+                                    flex: 1,
+                                    fontSize: RFPercentage(2.7),
+                                    // marginTop: '5%',
+                                    // marginBottom: '5%',
+                                    // marginLeft: '2%',
+                                    borderColor: '#cecece',
+                                    borderWidth: 0.5,
+                                    borderRadius: 5,
+                                    // paddingHorizontal: '%',
+                                    width: '90%',
+                                    height: 42,
+                                    color: '#000',
+                                }}>
+                                    <Picker
+                                        itemStyle={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', borderColor: '#c9c9c9', borderWidth: 0.5, borderRadius: 5, }}
+                                        selectedValue={mother_tongue}
+                                        style={{ height: 50, width: '90%', marginLeft: '2%', marginBottom: '4%', color: '#000' }}
+                                        onValueChange={(itemValue, itemIndex) => setMotherTongue(itemValue)}
+                                    >
+                                        <Picker.Item
+                                            color='#A8B0B5'
+                                            label={t('common:SelectMotherTongue')} value="" />
+                                        {motherTongueData.map((item, index) => {
+                                            return (
+                                                <Picker.Item label={item.language} value={item.language} key={index} />
+                                            )
+                                        })}
+                                    </Picker>
+                                </View>
                             </View>
                         </View>
 

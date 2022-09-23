@@ -83,9 +83,9 @@ const ContactUs = () => {
         <Spinner visible={isLoading} />
         {/* <ActivityIndicator animating={isLoading} size="large" color="#0000ff" /> */}
         <View style={styles.header}>
-          <ImageBackground source={require('../assets/searchBackground.png')}>
-            <Text style={styles.h1}>{t('common:LoveToHear')}</Text>
-            <Text style={styles.h5}>
+          <ImageBackground style={styles.image} source={require('../assets/searchBackground.png')}>
+            <Text style={styles.h1} numberOfLines={1} ellipsizeMode='tail'>{t('common:LoveToHear')}</Text>
+            <Text style={styles.h5} numberOfLines={2} ellipsizeMode='tail'>
               {t('common:SendUsAMessage')}
             </Text>
           </ImageBackground>
@@ -106,13 +106,13 @@ const ContactUs = () => {
             <View style={styles.form}>
               <View style={styles.search}>
                 <View style={styles.label}>
-                  <TextInpu
+                  <TextInput
                     style={styles.textInput}
                     placeholder={t('common:Name')}
                     // onChangeText={text => setName(text)}
                     onChangeText={handleChange('name')}
                     onBlur={handleBlur('name')}
-                    placeholderTextColor="#000"
+                    placeholderTextColor="#DAE1E7"
                     value={values.name}
                   />
                   {touched.name && errors.name && (
@@ -123,7 +123,7 @@ const ContactUs = () => {
                     placeholder={t('common:Email')}
                     onChangeText={handleChange('email')}
                     onBlur={handleBlur('email')}
-                    placeholderTextColor="#000"
+                    placeholderTextColor="#DAE1E7"
                     value={values.email}
                   />
                   {touched.email && errors.email && (
@@ -134,7 +134,7 @@ const ContactUs = () => {
                     placeholder={t('common:Message')}
                     onChangeText={handleChange('message')}
                     onBlur={handleBlur('message')}
-                    placeholderTextColor="#000"
+                    placeholderTextColor="#DAE1E7"
                     multiline={true}
                     numberOfLines={8}
                     value={values.message}
@@ -146,7 +146,7 @@ const ContactUs = () => {
               </View>
               <View style={styles.searchButton}>
                 <TouchableOpacity style={[styles.button, {
-                  backgroundColor: isValid ? '#1a6997' : '#cacfd2',
+                  backgroundColor: isValid ? '#1a6997' : '#1570A5',
                 }]}
                   disabled={!isValid}
                   onPress={handleSubmit}>
@@ -157,7 +157,7 @@ const ContactUs = () => {
           )}
         </Formik>
       </View>
-    </ScrollView>
+    </ScrollView >
   );
 };
 
@@ -166,35 +166,40 @@ export default ContactUs;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#F3F3F3',
   },
   header: {
-    backgroundColor: '#1a6997',
-    height: '29%',
-
+    // backgroundColor: '#1a6997',
+    // height: '29%',
+  },
+  image: {
+    height: 164,
   },
   h1: {
     fontSize: RFPercentage(3.5),
     color: '#fff',
-    marginHorizontal: 20,
-    paddingTop: 12,
+    marginHorizontal: 10,
+    paddingTop: 16,
   },
   h5: {
     fontSize: RFPercentage(2.2),
     color: '#fff',
-    marginHorizontal: 20,
+    marginHorizontal: 10,
     paddingTop: 5,
     lineHeight: 20,
   },
   search: {
-    width: '94%',
-    // borderWidth: 0.5,
-    borderRadius: 5,
-    padding: 10,
-    margin: 10,
+    backgroundColor: '#fff',
+    marginHorizontal: 10,
+    borderRadius: 4,
+    paddingHorizontal: 15,
+    paddingVertical: 20,
+    borderRadius: 4,
     elevation: 1,
     backgroundColor: '#fff',
-    marginTop: '-10%',
-    zindex: -1,
+    marginTop: -45,
+    marginBottom: 20,
+    zindex: -2,
   },
   title: {
     fontSize: RFPercentage(2.2),
@@ -211,12 +216,13 @@ const styles = StyleSheet.create({
   },
   button: {
     // backgroundColor: '#1a6997',
-    padding: 10,
-    margin: 10,
-    borderRadius: 5,
+    paddingVertical: 8,
+    paddingHorizontal: 26,
+    marginTop: 20,
+    borderRadius: 4,
     elevation: 1,
-    width: 150,
-    height: 40,
+    // width: 150,
+    // height: 40,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '-10%',
@@ -224,41 +230,39 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontSize: RFPercentage(2.6),
-    fontWeight: 'bold',
+    fontSize: RFPercentage(2.4),
+    textTransform: 'uppercase',
+    // fontWeight: 'bold',
   },
   searchButton: {
-    width: '94%',
-    height: 30,
+    width: '100%',
+    // height: 30,
     alignItems: 'center',
     justifyContent: 'center',
   },
   textInput: {
-    borderWidth: 0.5,
-    borderRadius: 5,
-    borderColor: '#cecece',
-    marginVertical: 10,
+    borderWidth: 1,
+    borderRadius: 4,
+    borderColor: '#DAE1E7',
+    marginBottom: 16,
     justifyContent: 'flex-start',
-    paddingHorizontal: 10,
+    paddingHorizontal: 14,
     color: '#000',
     fontSize: RFPercentage(2.1),
   },
   message: {
-    borderWidth: 0.5,
-    borderRadius: 5,
-    borderColor: '#cecece',
-    marginVertical: 10,
-    justifyContent: 'flex-start',
-    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderRadius: 4,
+    borderColor: '#DAE1E7',
+    paddingHorizontal: 14,
     color: '#000',
-    // height: 200,
-    marginBottom: 20,
-    alignItems: 'flex-start',
+    marginBottom: 16,
     fontSize: RFPercentage(2.1),
+    textAlignVertical: 'top',
   },
   error: {
     color: 'red',
-    marginBottom: 10,
+    marginBottom: 16,
     fontSize: RFPercentage(2.1),
   },
 });

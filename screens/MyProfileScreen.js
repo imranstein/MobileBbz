@@ -24,7 +24,7 @@ const MyProfileScreen = (props) => {
   const [birthday, setBirthday] = useState(new Date());
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
-  const [zipCode, setZipCode] = useState('');
+  const [zipCode, setZipCode] = useState();
   const [country, setCountry] = useState('');
   const [address2, setAddress2] = useState('');
 
@@ -90,7 +90,7 @@ const MyProfileScreen = (props) => {
     setBirthday(data.birthday);
     setAddress(data.address);
     setCity(data.city);
-    setZipCode(data.zip_code);
+    setZipCode((data.zip_code).toString());
     setCountry(data.country);
     setAddress2(data.address2);
 
@@ -105,7 +105,7 @@ const MyProfileScreen = (props) => {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.wrapper}>
-          {/* <View style={styles.image}>
+          <View style={styles.image}>
             <Text>
               <Icons
                 name="user"
@@ -117,7 +117,7 @@ const MyProfileScreen = (props) => {
             <TouchableOpacity>
               <Text style={styles.imageLabel}>{t('common:EditPicture')}</Text>
             </TouchableOpacity>
-          </View> */}
+          </View>
           <View style={styles.name}>
             <View>
               <Text style={styles.label}>{t('common:FirstName')}</Text>
@@ -213,7 +213,7 @@ const MyProfileScreen = (props) => {
             </View>
           </View>
           <View style={{ flex: 1, marginTop: '5%', marginBottom: '5%' }}>
-            <Text style={{ marginLeft: '5%', fontSize: RFPercentage(2.5), fontWeight: 'bold' }}>{t('common:Address')}</Text>
+            <Text style={{ marginLeft: '5%', fontSize: RFPercentage(2.5), fontWeight: 'bold', color: '#000' }}>{t('common:Address')}</Text>
           </View>
           <View style={styles.inputs}>
             <View>
@@ -260,10 +260,11 @@ const MyProfileScreen = (props) => {
                 <CountryPicker
                   withFilter
                   withFlag
+                  withCountryNameButton
                   preferredCountries={['DE', 'IN']}
                   onSelect={(country) => {
-                    setCountry(country.name);
-                    console.log(country.name);
+                    setCountry(country.cca2);
+                    console.log(country.cca2);
                   }
                   }
                 />

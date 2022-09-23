@@ -11,12 +11,14 @@ import { t } from 'i18next';
 import { useTranslation } from "react-i18next";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Icons from 'react-native-vector-icons/EvilIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import CustomDrawer from './CustomDrawer';
 import Language from './Language';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import WeWorkScreen from './WeWorkScreen';
 
 const Drawer = createDrawerNavigator();
 // const { t } = useTranslation();
@@ -48,6 +50,17 @@ const MainScreen = () => {
           drawerIcon: ({ focused, size }) => (
             <Ionicons
               name="people"
+              size={size}
+              color={focused ? '#fff' : '#1a6997'}
+            />
+          ), headerTintColor: '#1a6997'
+        }} />
+      <Drawer.Screen name={t('common:WeWork')} component={WeWorkScreen}
+        options={{
+          // title: '.{t('common: AboutUs')}.',
+          drawerIcon: ({ focused, size }) => (
+            <FontAwesome
+              name="gear"
               size={size}
               color={focused ? '#fff' : '#1a6997'}
             />

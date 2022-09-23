@@ -58,7 +58,7 @@ const RegisterScreen = ({ navigation }) => {
       imageStyle={styles.ImageBackground}>
       <View style={styles.container}>
         <Spinner visible={isLoading} />
-        <View style={{ backgroundColor: '#fff', borderRadius: 10, padding: 10, opacity: 0.7, paddingBottom: 80 }}>
+        <View style={{ opacity: 1 }}>
           <View style={styles.wrapper}>
             <Formik initialValues={{ first_name: '', last_name: '', email: '', password: '', phone: '' }}
               validateOnMount={true}
@@ -79,11 +79,11 @@ const RegisterScreen = ({ navigation }) => {
                   <View style={styles.name}>
                     <TextInput
                       style={{
-                        marginBottom: 12,
+                        marginBottom: 20,
                         borderWidth: 1,
-                        borderColor: '#bbb',
-                        borderRadius: 5,
-                        paddingVertical: 10,
+                        borderColor: '#DAE1E7',
+                        borderRadius: 4,
+                        paddingVertical: 12,
                         paddingHorizontal: 14,
                         width: '47%',
                         color: '#000',
@@ -97,11 +97,11 @@ const RegisterScreen = ({ navigation }) => {
                     <TextInput
                       style={{
                         marginLeft: '6%',
-                        marginBottom: 12,
+                        marginBottom: 20,
                         borderWidth: 1,
-                        borderColor: '#bbb',
-                        borderRadius: 5,
-                        paddingVertical: 10,
+                        borderColor: '#DAE1E7',
+                        borderRadius: 4,
+                        paddingVertical: 12,
                         paddingHorizontal: 14,
                         width: '47%',
                         color: '#000',
@@ -148,16 +148,16 @@ const RegisterScreen = ({ navigation }) => {
 
                   />
                   {touched.phone && errors.phone && <Text style={styles.error}>{errors.phone}</Text>}
-                  <View style={{ flexDirection: 'row', marginBottom: 10, marginLeft: -7 }}>
+                  <View style={{ flexDirection: 'row', marginLeft: -7 }}>
                     <CheckBox
                       value={term}
                       onPress={() => setTerm(!term)}
                       onValueChange={newValue => setTerm(newValue)}
-                      tintColors={{ true: '#1570a5', false: '#000' }}
+                      tintColors={{ true: '#1570a5', false: '#B4B9BE', borderWidth: 1, }}
                     />
                     <Text style={{
-                      marginLeft: 10, fontSize: RFPercentage(2.45),
-                      color: '#999'
+                      marginLeft: 8, fontSize: RFPercentage(2),
+                      color: '#999', textAlignVertical: 'center', maxWidth: '80%'
                     }}>{t('common:IHaveReadAndAcceptTheTermsAndConditions')}</Text>
                     {/* {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>} */}
                   </View>
@@ -176,10 +176,10 @@ const RegisterScreen = ({ navigation }) => {
             <View
               style={{
                 flexDirection: 'row',
-                marginTop: 20,
+                marginTop: 17,
                 justifyContent: 'center',
               }}>
-              <Text style={{ color: '#999' }}>{t('common:AlreadyHaveAnAccount')} </Text>
+              <Text style={{ color: '#000', fontSize: scale(12), }}>{t('common:AlreadyHaveAnAccount')} </Text>
               <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.link}>{t('common:Login')}</Text>
               </TouchableOpacity>
@@ -189,9 +189,9 @@ const RegisterScreen = ({ navigation }) => {
               <Text
                 style={{
                   color: '#166795',
-                  fontSize: scale(15),
+                  fontSize: scale(14),
                   textAlign: 'center',
-                  marginTop: '1%',
+                  marginTop: 14,
                 }}>
                 {t('common:ContinueAsAGuest')}
               </Text>
@@ -207,17 +207,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
   },
   wrapper: {
-    width: '80%',
+    backgroundColor: '#fff',
+    borderRadius: 4,
+    paddingVertical: 30,
+    paddingHorizontal: 15,
+    marginTop: 32,
+    marginHorizontal: 10,
   },
   input: {
-    marginBottom: 12,
+    marginBottom: 20,
     borderWidth: 1,
-    borderColor: '#bbb',
-    borderRadius: 5,
-    paddingVertical: 10,
+    borderColor: '#DAE1E7',
+    borderRadius: 4,
+    paddingVertical: 12,
     paddingHorizontal: 14,
     color: '#000',
   },
@@ -232,24 +237,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   ImageBackground: {
-    opacity: 0.3,
+    opacity: 1,
   },
   loginButton: {
-    marginTop: scale(-20),
+    // marginTop: scale(-20),
     // backgroundColor: '#1570a5',
-    padding: 10,
-    borderRadius: 2,
+    paddingVertical: 12,
+    borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
   loginButtonText: {
     color: '#fff',
-    fontSize: RFPercentage(2.7),
+    fontSize: RFPercentage(2.4),
+    fontWeight: 'bold',
     textAlign: 'center',
+    textTransform: 'uppercase',
   },
   error: {
     color: 'red',
-    marginBottom: 10,
+    marginBottom: 20,
   },
 });
 

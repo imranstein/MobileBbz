@@ -149,5 +149,8 @@ export default {
     SearchEverything: 'Search everything here...',
     SelectExam: 'Select Your Language Level',
     UploadId: 'Upload ID Proof',
+    WeWork: 'How We Work',
+    KnowWhoWeAre: 'Know Who We Are',
+    BillingAddress: 'Billing Address',
 
 }

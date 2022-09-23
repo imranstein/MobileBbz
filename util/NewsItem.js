@@ -24,11 +24,11 @@ const NewsItem = ({ item }) => {
                 })}>
                 {media != null ? <View style={styles.image}>
                     <Image
-                        style={{ width: '96%', height: 230, borderRadius: 2 }}
+                        style={{ width: '100%', height: 245 }}
                         source={{ uri: `${IMAGE_URL}${item.media.file_path}` }}
                     />
                 </View> : <View style={styles.image}><Image
-                    style={{ width: '96%', height: 200, borderRadius: 2 }}
+                    style={{ width: '100%', height: 245 }}
                     source={require('../assets/searchBackground.png')}
                 /></View>}
 
@@ -50,17 +50,14 @@ const NewsItem = ({ item }) => {
                         enableExperimentalMarginCollapsing={true}
                         enableExperimentalGhostLinesPrevention={true}
                         baseStyle={{
-                            color: '#15181E',
+                            color: '#5E6D77',
                             textAlign: 'justify',
-                            fontSize: '16px',
-                            marginRight: '4%',
+                            fontSize: '13px',
+                            // marginRight: '4%',
                         }}
                     />
                 </View>
             </TouchableOpacity>
-
-
-
 
         </View>
     );
@@ -69,15 +66,14 @@ const NewsItem = ({ item }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // padding: 10,
-        marginLeft: '2%',
-        marginBottom: '5%',
-        elevation: 1,
+        // elevation: 1,
         backgroundColor: '#fff',
+        paddingHorizontal: 10,
+        marginTop: 32,
     },
     image: {
         flex: 1,
-        marginBottom: 20,
+        marginBottom: 25,
     },
     Text: {
         flex: 1,
@@ -88,33 +84,33 @@ const styles = StyleSheet.create({
         opacity: 0.3,
     },
     date: {
-        marginBottom: 10,
-        marginLeft: '2%',
+        marginBottom: 7,
+        // marginLeft: '2%',
         flexDirection: 'row',
     },
     dateText: {
-        fontSize: RFPercentage(2.4),
-        color: "#1a6997",
+        fontSize: RFPercentage(2.2),
+        color: '#1a6997',
     },
     title: {
-        marginBottom: 10,
+        // marginBottom: 10,
         flexDirection: 'row',
-        marginLeft: '2%',
+        // marginLeft: '2%',
     },
     titleText: {
-        fontSize: RFPercentage(2.5),
-        color: "#000",
+        fontSize: RFPercentage(2.4),
+        color: '#000',
         fontWeight: 'bold',
     },
     description: {
-        marginBottom: 20,
+        // marginBottom: 20,
         flexDirection: 'row',
         maxHeight: 80,
-        marginLeft: '2%',
+        // marginLeft: '2%',
     },
     descriptionText: {
         fontSize: RFPercentage(2.4),
-        color: "#000",
+        color: '#5E6D77',
     },
 });
 

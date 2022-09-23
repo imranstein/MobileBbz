@@ -44,14 +44,14 @@ const ExamItem = ({ item }) => {
             >
                 {media != null ? <View style={styles.image}>
                     <ImageBackground
-                        style={{ width: '100%', height: 230, borderRadius: 2 }}
+                        style={{ width: '100%', height: 250, borderRadius: 2 }}
                         source={{ uri: `${IMAGE_URL}${item.media.file_path}` }}
                     >
                         <View style={styles.upperTextView}><Text style={styles.upperText}>{item.slug}</Text></View>
                         <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} $</Text></View>
                     </ImageBackground>
                 </View> : <View style={styles.image}><ImageBackground
-                    style={{ width: '100%', height: 200, borderRadius: 2 }}
+                    style={{ width: '100%', height: 250, borderRadius: 2 }}
                     source={require('../assets/testinghall.png')}
                 >
                     <View style={styles.upperTextView}><Text style={styles.upperText}>{item.slug}</Text></View>
@@ -70,19 +70,22 @@ const ExamItem = ({ item }) => {
                 </View>
             </TouchableOpacity>
 
-            <View style={{ flexDirection: 'row', marginLeft: 5 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 15 }}>
                 <Text style={{
-                    fontSize: RFPercentage(2.2),
-                    fontWeight: 'bold', marginRight: 3, color: '#000'
-                }}>{t("common:ExamDate")}:</Text><Text style={styles.examDateText}>{moment(item.exam_date).format('DD/MM/YY')}</Text>
+                    fontSize: RFPercentage(2.4),
+                    fontWeight: '600', color: '#000'
+                }}>{t("common:ExamDate")}: </Text><Text style={styles.examDateText}>{moment(item.exam_date).format('DD/MM/YY')}</Text>
                 <Text style={{
-                    fontSize: RFPercentage(2.2),
-                    fontWeight: 'bold', marginRight: 3, color: '#000'
-                }}>{t("common:RegDate")}:</Text><Text style={styles.regDateText}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text>
+                    fontSize: RFPercentage(2.4),
+                    fontWeight: '600', color: '#000'
+                }}>{t("common:RegDate")}: </Text><Text style={styles.regDateText}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text>
             </View>
             {location != null ?
-                <View View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 15 }}>
-                    <Text style={{ marginRight: 10, marginLeft: 5, }}>
+                <View View style={{
+                    flexDirection: 'row', marginTop: 27, paddingBottom: 17, marginHorizontal: 15, borderBottomWidth: 1,
+                    borderBottomColor: '#EBEBEB'
+                }}>
+                    <Text style={{ marginRight: 14 }}>
                         <Entypo
                             name="location-pin"
                             size={18}
@@ -93,7 +96,7 @@ const ExamItem = ({ item }) => {
                     <Text style={styles.locationText}>
                         {location.name} - {location.city}/ {location.street_name}
                     </Text>
-                </View> : <View View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 15 }}>
+                </View> : <View View style={{ flexDirection: 'row' }}>
                     <Text style={{ marginRight: 5, marginLeft: 5, }}>
                         <Entypo
                             name="location-pin"
@@ -114,13 +117,12 @@ const ExamItem = ({ item }) => {
                     color: "#000",
                     fontWeight: '600',
                     marginRight: '3%',
-                    marginTop: '5%',
-                    marginBottom: '7%',
+                    // marginTop: '5%',
+                    // marginBottom: '7%',
                 }}>
                     {/* {progress} */}
                     <Progress.Circle thickness={4} progress={progress} size={40} animated={false} showsText={true} textStyle={{
-                        fontWeight: 'bold', fontSize: RFPercentage(1.7),
-                        color: '#000'
+                        fontWeight: 'bold', fontSize: RFPercentage(1.7), color: '#000'
                     }} color={'green'} unfilledColor={'red'} />
 
                 </Text>
@@ -150,8 +152,10 @@ const styles = StyleSheet.create({
         flex: 1,
         // padding: 10,
         // marginLeft: '2%',
-        marginBottom: '5%',
-        elevation: 1,
+        marginBottom: 40,
+        // elevation: 1,
+        borderWidth: 1,
+        borderColor: '#DFDFDF',
         backgroundColor: '#fff',
     },
     image: {
@@ -177,15 +181,16 @@ const styles = StyleSheet.create({
     title: {
         marginBottom: 10,
         flexDirection: 'row',
-        marginLeft: 5,
+        marginLeft: 15,
     },
     titleText: {
         fontSize: RFPercentage(2.5),
         color: "#000",
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
     },
     description: {
-        marginBottom: 20,
+        // marginBottom: 20,
+        alignItems: 'center',
         flexDirection: 'row',
         maxHeight: 82,
     },
@@ -195,38 +200,38 @@ const styles = StyleSheet.create({
     },
     upperTextView: {
         backgroundColor: '#ee4327',
-        height: '15%',
-        width: '25%',
-        marginTop: '3%',
+        height: '12%',
+        width: '20%',
+        marginTop: '5%',
     },
     upperText: {
         color: '#fff',
-        fontSize: RFPercentage(2.8),
-        fontWeight: 'bold',
+        fontSize: RFPercentage(2.4),
+        fontWeight: '600',
         textAlign: 'center',
-        marginTop: '2%',
+        // marginTop: '2%',
     },
     lowerTextView: {
         // backgroundColor: '#fff',
-        height: '15%',
+        height: '12%',
         width: '20%',
-        marginTop: '32%',
+        marginTop: '40%',
     },
     lowerText: {
         color: '#fff',
         fontSize: RFPercentage(3.4),
         fontWeight: '500',
         textAlign: 'center',
-        marginTop: '2%',
+        // marginTop: '2%',
     },
     examDateText: {
-        fontSize: RFPercentage(2.3),
+        fontSize: RFPercentage(2.4),
         color: "#1a6997",
         fontWeight: '600',
         marginRight: '4%',
     },
     regDateText: {
-        fontSize: RFPercentage(2.3),
+        fontSize: RFPercentage(2.4),
         color: "#ee4327",
         fontWeight: '600',
         marginRight: '4%',
@@ -234,17 +239,17 @@ const styles = StyleSheet.create({
     locationText: {
         fontSize: RFPercentage(2.2),
         color: "#1a6997",
-        width: '70%',
+        width: '100%',
         fontWeight: '400',
-        marginRight: '4%',
+        // marginRight: '4%',
     },
     AvailableSeats: {
         fontSize: RFPercentage(2.2),
         color: "#000",
         fontWeight: '600',
-        marginTop: '6%',
-        marginBottom: '6%',
-        marginLeft: 5,
+        marginTop: 22,
+        marginBottom: 22,
+        marginLeft: 15,
     }
 });
 

@@ -23,12 +23,12 @@ const Item = ({ item }) => {
         </Text>
       </View>
       <View style={styles.Text}>
-        <Text style={{ marginLeft: -8, fontSize: RFPercentage(2.4), fontWeight: '700', color: '#166795' }}>
+        <Text style={{ marginLeft: 14, fontSize: RFPercentage(2.4), fontWeight: '700', color: '#166795' }}>
           {item.name}
         </Text>
 
         <View style={{ flexDirection: 'row' }}>
-          <Text style={{ marginLeft: -8, marginTop: 10, color: '#000' }}>
+          <Text style={{ marginLeft: 14, marginTop: 10, color: '#000' }}>
             <Entypo
               name="location-pin"
               size={18}
@@ -37,11 +37,11 @@ const Item = ({ item }) => {
             />
           </Text>
 
-          <Text style={{ marginLeft: 5, marginTop: 10, color: '#000', fontSize: RFPercentage(2) }}>{item.city},{item.street_name}</Text>
+          <Text style={{ marginLeft: 14, marginTop: 10, color: '#000', fontSize: RFPercentage(2) }}>{item.city},{item.street_name}</Text>
         </View>
         <View style={{ flexDirection: 'row' }}>
 
-          <Text style={{ marginLeft: -8, marginTop: 10, color: '#000' }}>
+          <Text style={{ marginLeft: 14, marginTop: 10, color: '#000' }}>
             <Entypo
               name="mail"
               size={18}
@@ -49,7 +49,7 @@ const Item = ({ item }) => {
               style={{ marginRight: 18 }}
             />
           </Text>
-          <Text style={{ marginLeft: 5, marginTop: 10, color: '#000', fontSize: RFPercentage(2) }}> {item.email}</Text>
+          <Text style={{ marginLeft: 14, marginTop: 10, color: '#000', fontSize: RFPercentage(2) }}> {item.email}</Text>
         </View>
       </View>
     </View>
@@ -59,20 +59,27 @@ const Item = ({ item }) => {
 const styles = StyleSheet.create({
   Image_view: {
     flex: 1,
-    padding: 10,
-    paddingHorizontal: 15,
-    marginTop: 5,
-    backgroundColor: 'white',
+    paddingTop: 9,
+    // paddingHorizontal: 14,
+    paddingBottom: 15,
+    marginBottom: 20,
+    marginHorizontal: 10,
+    backgroundColor: '#fff',
     flexDirection: 'row',
     borderLeftColor: '#166795',
-    borderLeftWidth: 7,
-    borderBottomLeftRadius: 8,
-    borderTopLeftRadius: 8,
-    marginLeft: 5,
-    marginRight: 5,
+    borderLeftWidth: 5,
+    borderBottomLeftRadius: 5,
+    borderTopLeftRadius: 5,
+    shadowcolor: '#000',
+    shadowOffset: { height: 10, width: 10 },
+    shadowOpacity: 0.8,
+    shadowRadius: 5,
+    elevation: 4,
+
+
   },
   Text: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'column',
     color: '#000',
   },
