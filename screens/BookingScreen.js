@@ -23,9 +23,9 @@ import { Picker } from '@react-native-picker/picker';
 
 
 const validationSchema = Yup.object().shape({
-    salutation: Yup.string().required('Salutation is required'),
+    salutation: Yup.string().required('SalutationIsRequired'),
     academic_title: Yup.string()
-        .required('Required'),
+        .required('AcademicRequired'),
     first_name: Yup.string()
         .required(t('common:FirstNameIsRequired'))
         .min(2, t('common:FirstNameMustBeAtLeast2Characters'))
@@ -39,7 +39,7 @@ const validationSchema = Yup.object().shape({
         .email(t('common:EmailIsInvalid')),
     identification_number: Yup.string()
         .required(t('common:IdentificationNumberIsRequired'))
-        .min(2, t('common:IdentificationNumberMustBeAtLeast2Characters'))
+        .min(5, t('common:IdentificationNumberMustBeAtLeast5Characters'))
         .matches(/^[0-9]+$/, t('common:IdentificationNumberMustBeNumeric')),
     // birthday: Yup.string()
     //     .required(t('common:BirthdayIsRequired'))
@@ -183,9 +183,9 @@ const BookingScreen = ({ route }) => {
                 },
             });
         setResult(data);
-        setFirstName(data.first_name);
-        setLastName(data.last_name);
-        setEmail(data.email);
+        setFirstName(userInfo.first_name);
+        setLastName(userInfo.last_name);
+        setEmail(userInfo.email);
         setTelephone(data.telephone);
         setPhone(data.phone);
         setAddress(data.address);
@@ -194,6 +194,7 @@ const BookingScreen = ({ route }) => {
         setCountry(data.country);
         setZipCode((data.zip_code).toString());
         setBirthday(data.birthday);
+        console.log(first_name);
     };
 
     useEffect(() => {
@@ -270,6 +271,12 @@ const BookingScreen = ({ route }) => {
                             examDate: examDate,
                             examTime: examTime,
                             city_name: city_name,
+                            email: email,
+                            phone: phone,
+                            city: city,
+                            address: address_line_1,
+                            zip_code: zip_code,
+                            country: country,
                         }
                     );
                     console.log(response.data.gateway);
@@ -305,6 +312,97 @@ const BookingScreen = ({ route }) => {
             console.log(error);
         });
     }
+    const authBook = (event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, price,) => {
+        console.log(event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, price);
+
+        axios.post(`${BASE_URL}/auth-register-exam`, {
+            event_id: event_id,
+            salutation: salutation,
+            academic_title: academic_title,
+            first_name: first_name,
+            last_name: last_name,
+            identification_number: identification_number,
+            email: email,
+            birth_date: birthday,
+            birth_place: birth_place,
+            country_of_birth: country_of_birth,
+            mother_tongue: mother_tongue,
+            telephone: telephone,
+            phone: phone,
+            address_line_1: address_line_1,
+            street: street,
+            city: city,
+            zip_code: zip_code,
+            country: country,
+            id_proof: id_proof,
+            payment_gateway: payment_gateway,
+            term_conditions_1: term_conditions_1,
+            term_conditions: term_conditions,
+            price: price,
+        }, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Accept': 'application/json',
+                Authorization: 'Bearer ' + userInfo.token,
+            }
+        }).then((response) => {
+            if (response.data.status == 1) {
+                console.log(response.data);
+                alert(response.data.message);
+                if (response.data.gateway == 'stripe') {
+                    navigation.navigate('StripePayment'
+                        , {
+                            amount: response.data.amount,
+                            code: response.data.code,
+                            event_id: response.data.event_id,
+                            gateway: response.data.gateway,
+                            location: location,
+                            slug: slug,
+                            examDate: examDate,
+                            examTime: examTime,
+                            city_name: city_name,
+                            email: email,
+                            phone: phone,
+                            city: city,
+                            address: address_line_1,
+                            zip_code: zip_code,
+                            country: country,
+                        }
+                    );
+                    console.log(response.data.gateway);
+                } else {
+                    // console.log(response.data.gateway);
+                    navigation.navigate('BookingSuccess'
+                        , {
+                            amount: response.data.amount,
+                            code: response.data.code,
+                            event_id: response.data.event_id,
+                            gateway: response.data.gateway,
+                            location: location,
+                            slug: slug,
+                            examDate: examDate,
+                            examTime: examTime,
+                            city_name: city_name,
+                        }
+                    );
+                    // console.log(response.data.gateway);
+                    // }
+
+                }
+            } else {
+                console.log(response.data);
+                alert(response.data.message, [{
+                    text: t('common:OK'),
+                    onPress: () => {
+                        navigation.navigate('Home');
+                    }
+                }]);
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+    console.log(email);
 
     return (
         <View style={styles.container}>
@@ -386,33 +484,59 @@ const BookingScreen = ({ route }) => {
                     <Text style={styles.titleHeader}>{t('common:ContactInformation')}</Text>
 
                     <View style={styles.wrapper}>
-                        <Formik initialValues={{ salutation: '', academic_title: '', first_name: '', last_name: '', identification_number: '', email: '', birth_place: '', telephone: '', phone: '', address: '', address2: '', city: '', zip_code: '' }}
+                        <Formik initialValues={{ salutation: '', academic_title: '', first_name: first_name, last_name: last_name, identification_number: '', email: email, birth_place: '', telephone: '', phone: phone, address: address, address2: address2, city: city, zip_code: zip_code }}
+                            enableReinitialize={true}
                             onSubmit={(values) => {
-                                book(
-                                    event_id,
-                                    values.salutation,
-                                    values.academic_title,
-                                    values.first_name,
-                                    values.last_name,
-                                    values.identification_number,
-                                    values.email,
-                                    birthday,
-                                    values.birth_place,
-                                    country_of_birth,
-                                    mother_tongue,
-                                    values.telephone,
-                                    values.phone,
-                                    values.address,
-                                    values.address2,
-                                    values.city,
-                                    values.zip_code,
-                                    country,
-                                    id_proof,
-                                    payment_gateway,
-                                    term_conditions,
-                                    term_conditions_1,
-                                    price,
-                                );
+                                userInfo.token ?
+                                    book(
+                                        event_id,
+                                        values.salutation,
+                                        values.academic_title,
+                                        values.first_name,
+                                        values.last_name,
+                                        values.identification_number,
+                                        values.email,
+                                        birthday,
+                                        values.birth_place,
+                                        country_of_birth,
+                                        mother_tongue,
+                                        values.telephone,
+                                        values.phone,
+                                        values.address,
+                                        values.address2,
+                                        values.city,
+                                        values.zip_code,
+                                        country,
+                                        id_proof,
+                                        payment_gateway,
+                                        term_conditions,
+                                        term_conditions_1,
+                                        price,
+                                    ) : authBook(
+                                        event_id,
+                                        values.salutation,
+                                        values.academic_title,
+                                        values.first_name,
+                                        values.last_name,
+                                        values.identification_number,
+                                        values.email,
+                                        birthday,
+                                        values.birth_place,
+                                        country_of_birth,
+                                        mother_tongue,
+                                        values.telephone,
+                                        values.phone,
+                                        values.address,
+                                        values.address2,
+                                        values.city,
+                                        values.zip_code,
+                                        country,
+                                        id_proof,
+                                        payment_gateway,
+                                        term_conditions,
+                                        term_conditions_1,
+                                        price,
+                                    );
                             }
                             }
                             validationSchema={validationSchema}

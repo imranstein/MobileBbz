@@ -23,15 +23,21 @@ const StripePaymentScreen = ({ route }) => {
   const examDate = route.params.examDate;
   const examTime = route.params.examTime;
   const city_name = route.params.city_name;
+  const email = route.params.email;
+  const city = route.params.city;
+  const country = route.params.country;
+  const phone = route.params.phone;
+  const address = route.params.address;
+  const zip_code = (route.params.zip_code).toString();
 
   const { userInfo } = useContext(AuthContext);
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [phone, setPhone] = useState('');
   const [line1, setLine1] = useState('');
-  const [city, setCity] = useState('');
+  // const [city, setCity] = useState('');
   const [postal_code, setPostalCode] = useState('');
-  const [country, setCountry] = useState('');
+  // const [country, setCountry] = useState('');
   const [isLoading, setLoading] = useState(false);
 
   // console.log(userInfo);
@@ -44,12 +50,12 @@ const StripePaymentScreen = ({ route }) => {
       });
     setResult(data);
     setName(data.name);
-    setEmail(data.email);
-    setPhone(data.phone);
-    setLine1(data.address);
-    setCity(data.city);
-    setCountry(data.country);
-    setPostalCode((data.zip_code).toString());
+    // setEmail(data.email);
+    // setPhone(data.phone);
+    // setLine1(data.address);
+    // setCity(data.city);
+    // setCountry(data.country);
+    // setPostalCode((data.zip_code).toString());
   };
 
   useEffect(() => {
