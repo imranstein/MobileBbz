@@ -68,7 +68,7 @@ const UpcomingItem = ({ item }) => {
                             {slug}
                         </Text>
                         <Text style={[styles.detail, { fontWeight: '600' }]}>
-                            {t('common:AmountPaid')} <Text style={[styles.detail, { color: '#4BA765' }]}>{amount} $</Text>
+                            {t('common:AmountPaid')} <Text style={[styles.detail, { color: '#4BA765' }]}>{amount} €</Text>
                         </Text>
                     </View>
                 </View>

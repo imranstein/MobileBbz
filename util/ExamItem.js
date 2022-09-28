@@ -11,6 +11,7 @@ import * as Progress from 'react-native-progress';
 import { t } from 'i18next';
 import { AuthContext } from '../context/AuthContext';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { scale } from 'react-native-size-matters';
 
 
 
@@ -48,14 +49,14 @@ const ExamItem = ({ item }) => {
                         source={{ uri: `${IMAGE_URL}${item.media.file_path}` }}
                     >
                         <View style={styles.upperTextView}><Text style={styles.upperText}>{item.slug}</Text></View>
-                        <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} $</Text></View>
+                        <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} €</Text></View>
                     </ImageBackground>
                 </View> : <View style={styles.image}><ImageBackground
                     style={{ width: '100%', height: 250, borderRadius: 2 }}
                     source={require('../assets/testinghall.png')}
                 >
-                    <View style={styles.upperTextView}><Text style={styles.upperText}>{item.slug}</Text></View>
-                    <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} $</Text></View>
+                    <View style={styles.upperTextView}><Text style={styles.upperText} >{item.slug}</Text></View>
+                    <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} €</Text></View>
                 </ImageBackground></View>}
 
 
@@ -198,18 +199,22 @@ const styles = StyleSheet.create({
         fontSize: RFPercentage(2.1),
         color: "#000",
     },
+    //create a diagonalborder for upperTextView
+
     upperTextView: {
         backgroundColor: '#ee4327',
         height: '12%',
-        width: '20%',
+        width: '25%',
         marginTop: '5%',
+
     },
     upperText: {
         color: '#fff',
-        fontSize: RFPercentage(2.4),
+        fontSize: scale(16),
         fontWeight: '600',
-        textAlign: 'center',
-        // marginTop: '2%',
+        textAlign: 'left',
+        marginLeft: '10%',
+        marginTop: '6%',
     },
     lowerTextView: {
         // backgroundColor: '#fff',
@@ -250,6 +255,20 @@ const styles = StyleSheet.create({
         marginTop: 22,
         marginBottom: 22,
         marginLeft: 15,
+    }, triangleCorner: {
+        // position: 'absolute',
+        top: '5%',
+        left: 0,
+        width: '40%',
+        height: '21%',
+        backgroundColor: 'transparent',
+        borderStyle: 'solid',
+        borderRightWidth: 20,
+        // borderTopWidth: 30,
+        borderBottomColor: 'red',
+        // borderBottomWidth: 30,
+        borderRightColor: 'transparent',
+        borderTopColor: 'red'
     }
 });
 

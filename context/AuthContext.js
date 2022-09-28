@@ -159,6 +159,7 @@ export const AuthProvider = ({ children }) => {
         reset,
         isLoggedIn,
         error,
+        error2,
       }}>
       {children}
     </AuthContext.Provider>

@@ -7,6 +7,7 @@ import {
   View,
   ImageBackground,
   StyleSheet,
+  ScrollView,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import { AuthContext } from '../context/AuthContext';
@@ -58,146 +59,148 @@ const RegisterScreen = ({ navigation }) => {
       imageStyle={styles.ImageBackground}>
       <View style={styles.container}>
         <Spinner visible={isLoading} />
-        <View style={{ opacity: 1 }}>
-          <View style={styles.wrapper}>
-            <Formik initialValues={{ first_name: '', last_name: '', email: '', password: '', phone: '' }}
-              validateOnMount={true}
-              onSubmit={(values) => {
-                register(
-                  values.first_name,
-                  values.last_name,
-                  values.email,
-                  values.password,
-                  values.phone,
-                  term,
-                );
-              }
-              }
-              validationSchema={validationSchema}>
-              {({ handleChange, handleBlur, handleSubmit, values, errors, touched, isValid }) => (
-                <View style={styles.form}>
-                  <View style={styles.name}>
+        <ScrollView>
+          <View style={{ opacity: 1 }}>
+            <View style={styles.wrapper}>
+              <Formik initialValues={{ first_name: '', last_name: '', email: '', password: '', phone: '' }}
+                validateOnMount={true}
+                onSubmit={(values) => {
+                  register(
+                    values.first_name,
+                    values.last_name,
+                    values.email,
+                    values.password,
+                    values.phone,
+                    term,
+                  );
+                }
+                }
+                validationSchema={validationSchema}>
+                {({ handleChange, handleBlur, handleSubmit, values, errors, touched, isValid }) => (
+                  <View style={styles.form}>
+                    <View style={styles.name}>
+                      <TextInput
+                        style={{
+                          marginBottom: 20,
+                          borderWidth: 1,
+                          borderColor: '#DAE1E7',
+                          borderRadius: 4,
+                          paddingVertical: 12,
+                          paddingHorizontal: 14,
+                          width: '47%',
+                          color: '#000',
+                        }}
+                        placeholder={t('common:FirstName')}
+                        placeholderTextColor='#9c9c9c'
+                        onChangeText={handleChange('first_name')}
+                        onBlur={handleBlur('first_name')}
+                        value={values.first_name}
+                      />
+                      <TextInput
+                        style={{
+                          marginLeft: '6%',
+                          marginBottom: 20,
+                          borderWidth: 1,
+                          borderColor: '#DAE1E7',
+                          borderRadius: 4,
+                          paddingVertical: 12,
+                          paddingHorizontal: 14,
+                          width: '47%',
+                          color: '#000',
+                        }}
+                        placeholder={t('common:LastName')}
+                        placeholderTextColor='#9c9c9c'
+                        onChangeText={handleChange('last_name')}
+                        onBlur={handleBlur('last_name')}
+                        value={values.last_name}
+                      />
+
+                    </View>
+                    {touched.first_name && errors.first_name && <Text style={styles.error}>{errors.first_name}</Text>}
+                    {touched.last_name && errors.last_name && <Text style={styles.error}>{errors.last_name}</Text>}
+
                     <TextInput
-                      style={{
-                        marginBottom: 20,
-                        borderWidth: 1,
-                        borderColor: '#DAE1E7',
-                        borderRadius: 4,
-                        paddingVertical: 12,
-                        paddingHorizontal: 14,
-                        width: '47%',
-                        color: '#000',
-                      }}
-                      placeholder={t('common:FirstName')}
+                      style={styles.input}
+                      placeholder={t('common:Email')}
                       placeholderTextColor='#9c9c9c'
-                      onChangeText={handleChange('first_name')}
-                      onBlur={handleBlur('first_name')}
-                      value={values.first_name}
+                      onChangeText={handleChange('email')}
+                      onBlur={handleBlur('email')}
+                      value={values.email}
+                      keyboardType='email-address'
                     />
+                    {touched.email && errors.email && <Text style={styles.error}>{errors.email}</Text>}
                     <TextInput
-                      style={{
-                        marginLeft: '6%',
-                        marginBottom: 20,
-                        borderWidth: 1,
-                        borderColor: '#DAE1E7',
-                        borderRadius: 4,
-                        paddingVertical: 12,
-                        paddingHorizontal: 14,
-                        width: '47%',
-                        color: '#000',
-                      }}
-                      placeholder={t('common:LastName')}
+                      style={styles.input}
+                      placeholder={t('common:Password')}
                       placeholderTextColor='#9c9c9c'
-                      onChangeText={handleChange('last_name')}
-                      onBlur={handleBlur('last_name')}
-                      value={values.last_name}
+                      onChangeText={handleChange('password')}
+                      onBlur={handleBlur('password')}
+                      value={values.password}
+                      secureTextEntry={true}
                     />
+                    {touched.password && errors.password && <Text style={styles.error}>{errors.password}</Text>}
+                    <TextInput
+                      style={styles.input}
+                      placeholder={t('common:Phone')}
+                      placeholderTextColor='#9c9c9c'
+                      onChangeText={handleChange('phone')}
+                      onBlur={handleBlur('phone')}
+                      value={values.phone}
+                      keyboardType='phone-pad'
 
-                  </View>
-                  {touched.first_name && errors.first_name && <Text style={styles.error}>{errors.first_name}</Text>}
-                  {touched.last_name && errors.last_name && <Text style={styles.error}>{errors.last_name}</Text>}
-
-                  <TextInput
-                    style={styles.input}
-                    placeholder={t('common:Email')}
-                    placeholderTextColor='#9c9c9c'
-                    onChangeText={handleChange('email')}
-                    onBlur={handleBlur('email')}
-                    value={values.email}
-                    keyboardType='email-address'
-                  />
-                  {touched.email && errors.email && <Text style={styles.error}>{errors.email}</Text>}
-                  <TextInput
-                    style={styles.input}
-                    placeholder={t('common:Password')}
-                    placeholderTextColor='#9c9c9c'
-                    onChangeText={handleChange('password')}
-                    onBlur={handleBlur('password')}
-                    value={values.password}
-                    secureTextEntry={true}
-                  />
-                  {touched.password && errors.password && <Text style={styles.error}>{errors.password}</Text>}
-                  <TextInput
-                    style={styles.input}
-                    placeholder={t('common:Phone')}
-                    placeholderTextColor='#9c9c9c'
-                    onChangeText={handleChange('phone')}
-                    onBlur={handleBlur('phone')}
-                    value={values.phone}
-                    keyboardType='phone-pad'
-
-                  />
-                  {touched.phone && errors.phone && <Text style={styles.error}>{errors.phone}</Text>}
-                  <View style={{ flexDirection: 'row', marginLeft: -7 }}>
-                    <CheckBox
-                      value={term}
-                      onPress={() => setTerm(!term)}
-                      onValueChange={newValue => setTerm(newValue)}
-                      tintColors={{ true: '#1570a5', false: '#B4B9BE', borderWidth: 1, }}
                     />
-                    <Text style={{
-                      marginLeft: 8, fontSize: RFPercentage(2),
-                      color: '#999', textAlignVertical: 'center', maxWidth: '80%'
-                    }}>{t('common:IHaveReadAndAcceptTheTermsAndConditions')}</Text>
-                    {/* {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>} */}
-                  </View>
-                  <View>
-                    <Text style={[styles.error, { alignSelf: 'center' }]}>{error2 ? error2 : ''}</Text>
-                  </View>
-                  <TouchableOpacity onPress={handleSubmit}
-                    disabled={!isValid}
-                    style={[styles.loginButton, { backgroundColor: isValid ? '#1570a5' : '#cacfd2' }]}>
-                    <Text style={styles.loginButtonText}>{t('common:SignUp')}</Text>
-                  </TouchableOpacity>
+                    {touched.phone && errors.phone && <Text style={styles.error}>{errors.phone}</Text>}
+                    <View style={{ flexDirection: 'row', marginLeft: -7 }}>
+                      <CheckBox
+                        value={term}
+                        onPress={() => setTerm(!term)}
+                        onValueChange={newValue => setTerm(newValue)}
+                        tintColors={{ true: '#1570a5', false: '#B4B9BE', borderWidth: 1, }}
+                      />
+                      <Text style={{
+                        marginLeft: 8, fontSize: RFPercentage(2),
+                        color: '#999', textAlignVertical: 'center', maxWidth: '80%'
+                      }}>{t('common:IHaveReadAndAcceptTheTermsAndConditions')}</Text>
+                      {/* {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>} */}
+                    </View>
+                    <View>
+                      <Text style={[styles.error, { alignSelf: 'center' }]}>{error2 ? error2 : ''}</Text>
+                    </View>
+                    <TouchableOpacity onPress={handleSubmit}
+                      disabled={!isValid}
+                      style={[styles.loginButton, { backgroundColor: isValid ? '#1570a5' : '#cacfd2' }]}>
+                      <Text style={styles.loginButtonText}>{t('common:SignUp')}</Text>
+                    </TouchableOpacity>
 
-                </View>
-              )}
-            </Formik>
-            <View
-              style={{
-                flexDirection: 'row',
-                marginTop: 17,
-                justifyContent: 'center',
-              }}>
-              <Text style={{ color: '#000', fontSize: scale(12), }}>{t('common:AlreadyHaveAnAccount')} </Text>
-              <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.link}>{t('common:Login')}</Text>
+                  </View>
+                )}
+              </Formik>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginTop: 17,
+                  justifyContent: 'center',
+                }}>
+                <Text style={{ color: '#000', fontSize: scale(12), }}>{t('common:AlreadyHaveAnAccount')} </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                  <Text style={styles.link}>{t('common:Login')}</Text>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Main')}>
+                <Text
+                  style={{
+                    color: '#166795',
+                    fontSize: scale(14),
+                    textAlign: 'center',
+                    marginTop: 14,
+                  }}>
+                  {t('common:ContinueAsAGuest')}
+                </Text>
               </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Main')}>
-              <Text
-                style={{
-                  color: '#166795',
-                  fontSize: scale(14),
-                  textAlign: 'center',
-                  marginTop: 14,
-                }}>
-                {t('common:ContinueAsAGuest')}
-              </Text>
-            </TouchableOpacity>
           </View>
-        </View>
+        </ScrollView>
       </View>
     </ImageBackground>
   );

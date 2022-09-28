@@ -1,6 +1,7 @@
 import {
   ActivityIndicator,
   ImageBackground,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -46,19 +47,20 @@ const Login = ({ navigation }) => {
       imageStyle={styles.ImageBackground}>
       <View style={styles.login}>
         <Spinner visible={isLoading} />
-        {/* <ActivityIndicator animating={isLoading} size="large" color="#0000ff" /> */}
-        <Formik
-          initialValues={{ email: '', password: '' }}
-          validateOnMount={true}
-          onSubmit={(values) => {
-            login(values.email, values.password);
-          }
-          }
-          validationSchema={validationSchema}
-        >
-          {({
-            handleChange, handleBlur, handleSubmit, values, errors, touched, isValid
-          }) => (
+        <ScrollView>
+          {/* <ActivityIndicator animating={isLoading} size="large" color="#0000ff" /> */}
+          <Formik
+            initialValues={{ email: '', password: '' }}
+            validateOnMount={true}
+            onSubmit={(values) => {
+              login(values.email, values.password);
+            }
+            }
+            validationSchema={validationSchema}
+          >
+            {({
+              handleChange, handleBlur, handleSubmit, values, errors, touched, isValid
+            }) => (
               <View style={styles.form}>
 
                 <View style={styles.loginContent}>
@@ -110,7 +112,8 @@ const Login = ({ navigation }) => {
                 </View>
               </View>
             )}
-        </Formik>
+          </Formik>
+        </ScrollView>
         {/* <View style={styles.loginContent}>
         <TextInput
           style={styles.textInput}
@@ -201,7 +204,7 @@ const styles = StyleSheet.create({
     fontSize: RFPercentage(2.1),
     marginBottom: 29,
     textAlign: 'right',
-    marginTop:scale(-10),
+    marginTop: scale(-10),
   },
   loginButton: {
     // marginTop: 10,

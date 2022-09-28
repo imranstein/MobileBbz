@@ -11,6 +11,7 @@ import moment from 'moment';
 // import CountryPicker from "@volkenomakers/react-native-country-picker";
 import CountryPicker from 'react-native-country-picker-modal';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { scale } from 'react-native-size-matters';
 
 
 const MyProfileScreen = (props) => {
@@ -105,7 +106,7 @@ const MyProfileScreen = (props) => {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.wrapper}>
-          <View style={styles.image}>
+          <View style={styles.image} >
             <Text>
               <Icons
                 name="user"
@@ -120,18 +121,16 @@ const MyProfileScreen = (props) => {
           </View>
           <View style={styles.name}>
             <View>
-              <Text style={styles.label}>{t('common:FirstName')}</Text>
+              <Text style={styles.label} >{t('common:FirstName')}</Text>
               <TextInput style={{
                 flex: 1,
-                fontSize: RFPercentage(2.4),
-                marginTop: '5%',
-                marginBottom: '5%',
-                borderColor: '#cecece',
-                borderWidth: 0.5,
-                borderRadius: 5,
-                marginLeft: '2%',
-                // paddingHorizontal: '%',
-                width: 132,
+                // marginBottom: 20,
+                borderWidth: 1,
+                borderColor: '#DAE1E7',
+                borderRadius: 4,
+                // paddingVertical: 12,
+                paddingHorizontal: 14,
+                width: 162,
                 height: 42,
                 color: '#000',
               }}
@@ -139,18 +138,17 @@ const MyProfileScreen = (props) => {
                 onChangeText={setFirstName} />
             </View>
             <View>
-              <Text style={styles.label}>{t('common:LastName')}</Text>
+              <Text style={styles.label} >{t('common:LastName')}</Text>
               <TextInput style={{
                 flex: 1,
-                fontSize: RFPercentage(2.4),
-                marginTop: '5%',
-                marginBottom: '5%',
-                marginLeft: '7%',
-                borderColor: '#cecece',
-                borderWidth: 0.5,
-                borderRadius: 5,
-                // paddingHorizontal: '%',
-                width: 132,
+                // marginBottom: 20,
+                marginLeft: 20,
+                borderWidth: 1,
+                borderColor: '#DAE1E7',
+                borderRadius: 4,
+                // paddingVertical: 12,
+                paddingHorizontal: 14,
+                width: 162,
                 height: 42,
                 color: '#000',
               }}
@@ -162,7 +160,7 @@ const MyProfileScreen = (props) => {
             <View>
               <Text style={styles.label}>{t('common:Email')}</Text>
               <TextInput style={styles.input}
-                value={email}
+                value={email.trim()}
                 onChangeText={setEmail} />
             </View>
           </View>
@@ -182,21 +180,20 @@ const MyProfileScreen = (props) => {
                 value={birthday}
                 onChangeText={setBirthday} /> */}
               <View style={{
-                flex: 1,
-                fontSize: RFPercentage(2.7),
-                marginTop: '5%',
-                marginBottom: '5%',
-                marginLeft: '2%',
-                borderColor: '#cecece',
-                borderWidth: 0.5,
-                borderRadius: 5,
-                // paddingHorizontal: '%',
-                width: '90%',
-                height: 42,
+                borderWidth: 1,
+                borderColor: '#DAE1E7',
+                // marginVertical: 10,
+                borderRadius: 4,
+                // marginBottom: 20,
+                justifyContent: 'flex-start',
+                paddingHorizontal: 14,
+                // paddingVertical: 12,
                 color: '#000',
+                width: '100%',
+                height: 42,
               }}>
                 <TouchableOpacity onPress={() => showMode('date')}>
-                  <Text style={{ fontSize: RFPercentage(2.7), color: '#000', marginTop: 10 }}>{moment(birthday).format('DD/MM/YYYY')}</Text>
+                  <Text style={{ fontSize: scale(14), color: '#000', marginTop: 10 }}>{moment(birthday).format('DD/MM/YYYY')}</Text>
                 </TouchableOpacity>
                 {show && (
                   <DateTimePicker
@@ -212,8 +209,15 @@ const MyProfileScreen = (props) => {
               </View>
             </View>
           </View>
-          <View style={{ flex: 1, marginTop: '5%', marginBottom: '5%' }}>
-            <Text style={{ marginLeft: '5%', fontSize: RFPercentage(2.5), fontWeight: 'bold', color: '#000' }}>{t('common:Address')}</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={{
+              fontSize: RFPercentage(2.6),
+              fontWeight: '500',
+              color: '#000',
+              // marginHorizontal: 10,
+              paddingTop: 20,
+              paddingBottom: 5
+            }}>{t('common:Address')}</Text>
           </View>
           <View style={styles.inputs}>
             <View>
@@ -252,19 +256,18 @@ const MyProfileScreen = (props) => {
             <View>
               <Text style={styles.label}>{t('common:Country')}</Text>
               <View style={{
-                marginLeft: '4%',
-                borderColor: '#cecece',
-                borderBottomWidth: 0.5,
+                // marginLeft: '4%',
+                // borderColor: '#cecece',
+                // borderBottomWidth: 0.5,
               }}
               >
                 <CountryPicker
                   withFilter
                   withFlag
-                  withCountryNameButton
                   preferredCountries={['DE', 'IN']}
                   onSelect={(country) => {
-                    setCountry(country.cca2);
-                    console.log(country.cca2);
+                    setCountry(country.name);
+                    console.log(country.name);
                   }
                   }
                 />
@@ -272,17 +275,14 @@ const MyProfileScreen = (props) => {
               {country !== null && (
                 <Text style={{
                   flex: 1,
-                  fontSize: RFPercentage(2.7),
-                  marginTop: '5%',
-                  marginBottom: '5%',
-                  marginLeft: '3%',
-                  borderColor: '#cecece',
-                  borderWidth: 0.5,
-                  borderRadius: 5,
-                  // paddingHorizontal: '%',
-                  paddingTop: '3%',
-                  paddingLeft: '2%',
-                  width: '90%',
+                  marginBottom: 20,
+                  borderWidth: 1,
+                  borderColor: '#DAE1E7',
+                  borderRadius: 4,
+                  paddingVertical: 12,
+                  paddingHorizontal: 14,
+                  color: '#000',
+                  width: '100%',
                   height: 42,
                   color: '#000',
                 }}>{country}</Text>
@@ -319,26 +319,30 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     backgroundColor: '#fff',
-    width: '90%',
-    alignSelf: 'center',
-    marginHorizontal: '5%',
-    marginVertical: '5%',
+    marginTop: 32,
+    marginHorizontal: 10,
+    borderRadius: 4,
+    paddingHorizontal: 15,
+    paddingTop: 16,
+    paddingBottom: 7,
   },
   name: {
     flexDirection: 'row',
-    marginLeft: '6%',
-    marginTop: '2%',
+    // marginLeft: '6%',
+    // marginTop: '2%',
   },
   image: {
-    width: '90%',
+    width: '100%',
     borderColor: '#F0EFEF',
     borderWidth: 1,
     borderRadius: 10,
     alignSelf: 'center',
-    marginVertical: '5%',
-    marginHorizontal: '5%',
-    padding: '5%',
+    marginTop: 20,
+    // marginHorizontal: '5%',
+    paddingVertical: 12,
+    paddingHorizontal: 15,
     justifyContent: 'center',
+    alignItems: 'center',
     flex: 1,
     flexDirection: 'row',
   },
@@ -346,66 +350,67 @@ const styles = StyleSheet.create({
     fontSize: RFPercentage(2.7),
     marginLeft: '10%',
     marginRight: '5%',
-    marginTop: '10%',
     color: '#1a6997',
     borderColor: '#1a6997',
     borderWidth: 2,
-    paddingHorizontal: '15%',
+    paddingHorizontal: '12%',
     paddingVertical: '2%',
     borderRadius: 4,
+    textAlign: 'center',
     alignSelf: 'center',
     justifyContent: 'center',
+    textTransform: 'uppercase',
   },
   submit: {
-    alignSelf: 'center',
+    width: '100%'
   },
   submitLabel: {
     fontSize: RFPercentage(2.7),
-    marginTop: '10%',
+    marginVertical: 20,
+    marginHorizontal: 20,
     color: '#fff',
     borderColor: '#1a6997',
     backgroundColor: '#1a6997',
     borderWidth: 2,
-    paddingHorizontal: '15%',
-    paddingVertical: '2%',
+    paddingVertical: 8,
     borderRadius: 4,
-    alignSelf: 'center',
-    justifyContent: 'center',
+    textAlign: 'center',
+    textTransform: 'uppercase',
   },
   input: {
-    flex: 1,
-    fontSize: RFPercentage(2.7),
-    marginTop: '5%',
-    marginBottom: '5%',
-    marginLeft: '2%',
-    borderColor: '#cecece',
-    borderWidth: 0.5,
-    borderRadius: 5,
-    // paddingHorizontal: '%',
-    width: '90%',
-    height: 42,
+    fontSize: scale(14),
+    borderWidth: 1,
+    borderColor: '#DAE1E7',
+    // marginVertical: 10,
+    borderRadius: 4,
+    // marginBottom: 20,
+    justifyContent: 'flex-start',
+    paddingHorizontal: 14,
+    // paddingVertical: 12,
     color: '#000',
+    width: '100%',
+    height: 44,
   },
   inputs: {
-    marginLeft: '5%',
-    marginTop: '2%',
+    // marginLeft: '5%',
+    // marginTop: '2%',
   },
   changePassword: {
     fontSize: RFPercentage(2.7),
-    marginTop: '10%',
-    marginBottom: '10%',
+    marginTop: 40,
+    marginBottom: 40,
     color: '#1a6997',
     borderColor: '#1a6997',
     borderWidth: 2,
-    paddingVertical: '2%',
-    paddingHorizontal: '25%',
+    paddingVertical: 8,
+    width: '100%',
     borderRadius: 4,
-    alignSelf: 'center',
-    justifyContent: 'center',
+    textAlign: 'center',
+    textTransform: 'uppercase'
   },
   label: {
-    fontSize: RFPercentage(2.7),
-    marginLeft: '2%',
+    fontSize: RFPercentage(2.1),
     color: '#000',
+    marginVertical: 15,
   },
 });

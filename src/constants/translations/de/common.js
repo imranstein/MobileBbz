@@ -29,7 +29,7 @@ export default {
     Name: 'Name',
     Password: 'Passwort',
     ConfirmPassword: 'Passwort bestätigen',
-    ForgotPassword: 'Passwort vergessen',
+    ForgotPassword: 'Passwort vergessen ?',
     FirstName: 'Vorname',
     LastName: 'Nachname',
     Phone: 'Telefon',
@@ -158,5 +158,9 @@ export default {
     WeWork: 'Wie wir arbeiten',
     KnowWhoWeAre: 'Wer wir sind',
     BillingAddress: 'Rechnungs adresse',
+    StripePayment: 'Stripe Zahlung',
+    PaypalPayment: 'Paypal Zahlung',
+    SelectMotherTongue: 'Muttersprache auswählen',
+    Welcome: 'Willkommen',
 
 }

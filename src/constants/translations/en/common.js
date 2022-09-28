@@ -26,7 +26,7 @@ export default {
     Email: 'E-mail',
     Password: 'Password',
     ConfirmPassword: 'Confirm Password',
-    ForgotPassword: 'Forgot Password',
+    ForgotPassword: 'Forgot Password ?',
     FirstName: 'First Name',
     LastName: 'Last Name',
     Phone: 'Phone',
@@ -152,5 +152,8 @@ export default {
     WeWork: 'How We Work',
     KnowWhoWeAre: 'Know Who We Are',
     BillingAddress: 'Billing Address',
+    StripePayment: 'Stripe Payment',
+    PaypalPayment: 'Paypal Payment',
+    SelectMotherTongue: 'Select Mother Tongue',
 
 }

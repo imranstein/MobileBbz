@@ -224,7 +224,7 @@ const BookingScreen = ({ route }) => {
                     </View>
                     <View style={{ flexDirection: 'column', marginTop: 10, marginBottom: 2 }}>
                         <Text style={styles.title}> {t('common:ExaminationFee')}:   </Text>
-                        <Text style={[styles.value]}> {price} $ </Text>
+                        <Text style={[styles.value]}> {price} € </Text>
 
                     </View>
                     <View style={{ flexDirection: 'column', marginTop: 20, marginBottom: 2 }}>
@@ -243,7 +243,7 @@ const BookingScreen = ({ route }) => {
                             textAlign: 'right',
                             flex: 1,
                             marginRight: 7,
-                        }}> {price} $ </Text>
+                        }}> {price} € </Text>
 
                     </View>
                 </View>
@@ -467,7 +467,7 @@ const BookingScreen = ({ route }) => {
                 }}
                 >
                     {/* {price} */}
-                    $ </Text>
+                    € </Text>
                 <TouchableOpacity style={{ alignSelf: 'flex-end', justifyContent: 'flex-end', marginRight: 20 }}
                     onPress={() => {
 
@@ -639,3 +639,435 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     }
 })
+///
+
+import { StyleSheet, Text, View } from 'react-native';
+import axios from 'axios';
+import React, { useEffect, useState, useContext } from 'react';
+import { BASE_URL } from '../config';
+import { AuthContext } from '../context/AuthContext';
+import { decode as atob, encode as btoa } from 'base-64';
+
+
+const PaypalScreen = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [accessToken, setAccessToken] = useState('');
+    const { userInfo } = useContext(AuthContext);
+    const token = 'A21AAImprcpogIAcaBbtcw3v5rrFy8-yC7pB64QgD6GW6x-ygJTqDdppTtP3iWojMt9f6-KBgN8xc_rQX8PDU-R6OhM44oc6w';
+    const getData = async () => {
+        const { data } = await axios
+            .get(`${BASE_URL}/paypalKeys`, {
+                headers: {
+                    Authorization: 'Bearer ' + userInfo.token,
+                },
+            });
+        setUsername(data.clientId);
+        setPassword(data.clientSecret);
+        console.log(data);
+    };
+    useEffect(() => {
+        getData();
+    }, [])
+
+    // const getAccessToken = async () => {
+    //     const { data } = await axios
+    //         .post('https://api.sandbox.paypal.com/v1/oauth2/token', {
+    //             grant_type: 'client_credentials',
+    //         }, {
+    //             headers: {
+    //                 'Content-Type': 'application/x-www-form-urlencoded',
+    //                 Authorization: 'Bearer ' + token,
+    //             },
+    //         }).then((response) => {
+    //             console.log(response.data.access_token);
+    //             setAccessToken(response.data.access_token);
+    //         }).catch((error) => {
+    //             console.log(error);
+    //         }
+    //         );
+
+    // };
+    // useEffect(() => {
+    //     getAccessToken();
+    // }, [token])
+
+    const getPayment = async () => {
+        const { data } = await axios
+            .post('https://api.sandbox.paypal.com/v1/payments/payment/', {
+                intent: 'sale',
+                payer: {
+                    payment_method: 'paypal',
+                },
+                transactions: [
+                    {
+                        amount: {
+                            total: '7.47',
+                            currency: 'USD',
+                            details: {
+                                subtotal: '7.41',
+                                tax: '0.03',
+                                shipping: '0.03',
+                            },
+                        },
+                        description: 'This is the payment transaction description.',
+                        custom: 'EBAY_EMS_90048630024435',
+                        invoice_number: '48787589673',
+                        payment_options: {
+                            allowed_payment_method: 'INSTANT_FUNDING_SOURCE',
+                        },
+                        soft_descriptor: 'ECHI5786786',
+                        item_list: {
+                            items: [
+                                {
+                                    name: 'hat',
+                                    description: 'Brown hat.',
+                                    quantity: '5',
+                                    price: '3',
+                                    tax: '0.01',
+                                    sku: '1',
+                                    currency: 'USD',
+                                },
+                                {
+                                    name: 'handbag',
+                                    description: 'Black handbag.',
+                                    quantity: '1',
+                                    price: '15',
+                                    tax: '0.02',
+                                    sku: 'product34',
+                                    currency: 'USD',
+                                },
+                            ],
+                            shipping_address: {
+                                recipient_name: 'Brian Robinson',
+                                line1: '4th Floor',
+                                line2: 'Unit #34',
+                                city: 'San Jose',
+                                country_code: 'US',
+                                postal_code: '95131',
+                                phone: '011862212345678',
+                                state: 'CA',
+                            },
+                        },
+                    },
+                ],
+                note_to_payer: 'Contact us for any questions on your order.',
+                redirect_urls: {
+                    return_url: 'http://www.example.com/your_redirect_url.html',
+                    cancel_url: 'http://www.example.com/your_cancel_url.html',
+                },
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token,
+                },
+            }).then((response) => {
+                console.log(response.data);
+            }).catch((error) => {
+                console.log('here', error);
+            }
+            );
+
+    }
+    useEffect(() => {
+        getPayment();
+    }, [token])
+
+    return (
+        <View>
+            <Text>PaypalScreen</Text>
+        </View>
+    )
+}
+
+export default PaypalScreen
+
+const styles = StyleSheet.create({})
+// import React, { Component } from 'react'
+// import {
+//     View,
+//     WebView,
+//     ActivityIndicator
+// } from 'react-native'
+// import axios from 'axios'
+// import { BASE_URL } from '../config';
+// import { AuthContext } from '../context/AuthContext';
+// import { decode as atob, encode as btoa } from 'base-64'
+
+// export default class PaypalScreen extends Component {
+
+//     state = {
+//         username: null,
+//         password: null,
+//         accessToken: null,
+//         approvalUrl: null,
+//         paymentId: null,
+//         token: 'A21AAImprcpogIAcaBbtcw3v5rrFy8-yC7pB64QgD6GW6x-ygJTqDdppTtP3iWojMt9f6-KBgN8xc_rQX8PDU-R6OhM44oc6w'
+//     }
+
+//     componentDidMount() {
+
+//         axios.get
+//             (`${BASE_URL}/paypalKeys`, {
+//             })
+//             .then(res => {
+//                 this.setState({
+//                     username: res.data.clientId,
+//                     password: res.data.clientSecret
+//                 })
+//                 console.log(res.data)
+//             })
+//         let currency = '100 USD'
+//         currency.replace(" USD", "")
+
+//         const dataDetail = {
+//             "intent": "sale",
+//             "payer": {
+//                 "payment_method": "paypal"
+//             },
+//             "transactions": [{
+//                 "amount": {
+//                     "total": currency,
+//                     "currency": "THB",
+//                     "details": {
+//                         "subtotal": currency,
+//                         "tax": "0",
+//                         "shipping": "0",
+//                         "handling_fee": "0",
+//                         "shipping_discount": "0",
+//                         "insurance": "0"
+//                     }
+//                 }
+
+//             }],
+//             "redirect_urls": {
+//                 "return_url": "https://example.com",
+//                 "cancel_url": "https://example.com"
+//             }
+//         }
+
+//         axios.post('https://api.sandbox.paypal.com/v1/oauth2/token', {
+//             grant_type: 'client_credentials'
+//         },
+//             {
+//                 headers: {
+//                     'Content-Type': 'application/x-www-form-urlencoded',
+//                     Authorization: 'Bearer ' + this.state.token
+//                 }
+//             }
+//         )
+//             .then(response => {
+//                 this.setState({
+//                     accessToken: response.data.access_token
+//                 })
+//                 console.log(response.data.access_token)
+
+//                 axios.post('https://api.sandbox.paypal.com/v1/payments/payment', dataDetail,
+//                     {
+//                         headers: {
+//                             'Content-Type': 'application/json',
+//                             Authorization: 'Bearer ' + this.state.token
+//                         }
+//                     }
+//                 )
+//                     .then(response => {
+
+//                         const { id, links } = response.data
+//                         const approvalUrl = links.find(data => data.rel == "approval_url")
+
+//                         this.setState({
+//                             paymentId: id,
+//                             approvalUrl: approvalUrl.href
+//                         })
+//                     }).catch(err => {
+//                         console.log(err)
+//                     })
+//             })
+//             .catch(err => {
+//                 console.log(err)
+//             })
+
+//     }
+
+//     _onNavigationStateChange = (webViewState) => {
+
+//         if (webViewState.url.includes('https://example.com/')) {
+
+//             this.setState({
+//                 approvalUrl: null
+//             })
+
+//             const { PayerID, paymentId } = webViewState.url
+
+//             axios.post(`https://api.sandbox.paypal.com/v1/payments/payment/${paymentId}/execute`, { payer_id: PayerID },
+//                 {
+//                     headers: {
+//                         'Content-Type': 'application/json',
+//                         'Authorization': `Bearer ${this.state.accessToken}`
+//                     }
+//                 }
+//             )
+//                 .then(response => {
+//                     console.log(response)
+
+//                 }).catch(err => {
+//                     console.log({ ...err })
+//                 })
+
+//         }
+//     }
+
+//     render() {
+
+//         const { approvalUrl } = this.state
+//         return (
+//             <View style={{ flex: 1 }}>
+//                 {
+//                     approvalUrl ? <WebView
+//                         style={{ height: 400, width: 300 }}
+//                         source={{ uri: approvalUrl }}
+//                         onNavigationStateChange={this._onNavigationStateChange}
+//                         javaScriptEnabled={true}
+//                         domStorageEnabled={true}
+//                         startInLoadingState={false}
+//                         style={{ marginTop: 20 }}
+//                     /> : <ActivityIndicator />
+//                 }
+//             </View>
+//         )
+//     }
+// }
+
+import React, { Component } from 'react'
+import {
+    View,
+    ActivityIndicator
+} from 'react-native'
+import axios from 'axios';
+import { BASE_URL } from '../config';
+import { WebView } from 'react-native-webview';
+
+export default class Paypal extends Component {
+
+    state = {
+        accessToken: null,
+        approvalUrl: null,
+        paymentId: null
+    }
+
+    componentDidMount() {
+        let currency = '100 USD'
+        currency.replace(" USD", "")
+
+        const dataDetail = {
+            "intent": "sale",
+            "payer": {
+                "payment_method": "paypal"
+            },
+            "transactions": [{
+                "amount": {
+                    "total": 100,
+                    "currency": "USD"
+                }
+
+            }],
+            "redirect_urls": {
+                "return_url": "https://example.com",
+                "cancel_url": "https://example.com"
+            }
+        }
+        axios.get(`${BASE_URL}accessToken`)
+            .then(res => {
+                console.log(res.data)
+                this.setState({ accessToken: res.data })
+            }).catch(err => {
+                console.log(err)
+            })
+
+        // axios.post("https://api.sandbox.paypal.com/v1/oauth2/token", { grant_type: 'client_credentials' },
+        //     {
+        //         headers: {
+        //             'Content-Type': 'application/x-www-form-urlencoded',
+        //             Authorization: `Bearer A21AAKStCWBt5Igl5L9I0Dyc_OGLbJM5MeRPGTSBojFETKLhpH1UqWQzoTTIcStpp2Zz-HsUZt8MV_oQOYjFex4OZt1p7Waow`
+        //         }
+        //     }
+        // )
+        //     .then(response => {
+        //         this.setState({
+        //             accessToken: response.data.access_token
+        //         })
+
+        axios.post('https://api.sandbox.paypal.com/v1/payments/payment', dataDetail,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer A21AAKStCWBt5Igl5L9I0Dyc_OGLbJM5MeRPGTSBojFETKLhpH1UqWQzoTTIcStpp2Zz-HsUZt8MV_oQOYjFex4OZt1p7Waow`
+                }
+            }
+        )
+            .then(response => {
+
+                const { id, links } = response.data
+                const approvalUrl = links.find(data => data.rel == "approval_url")
+
+                this.setState({
+                    paymentId: id,
+                    approvalUrl: approvalUrl.href
+                })
+            }).catch(err => {
+                console.log('there', err.response)
+            })
+        // }).catch(err => {
+        //     console.log('here', err)
+        // })
+
+    }
+
+    _onNavigationStateChange = (webViewState) => {
+
+        if (webViewState.url.includes('https://example.com/')) {
+
+            this.setState({
+                approvalUrl: null
+            })
+
+            const { PayerID, paymentId } = webViewState.url
+
+            axios.post(`https://api.sandbox.paypal.com/v1/payments/payment/${paymentId}/execute`, { payer_id: PayerID },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer A21AAKStCWBt5Igl5L9I0Dyc_OGLbJM5MeRPGTSBojFETKLhpH1UqWQzoTTIcStpp2Zz-HsUZt8MV_oQOYjFex4OZt1p7Waow`
+                    }
+                }
+            )
+                .then(response => {
+                    console.log(response)
+
+                }).catch(err => {
+                    console.log(err)
+                })
+
+        }
+    }
+
+    render() {
+
+        const { approvalUrl } = this.state
+        return (
+            <View style={{ flex: 1 }}>
+                {
+                    approvalUrl ? <WebView
+                        style={{ height: 400, width: 300 }}
+                        source={{ uri: approvalUrl }}
+                        onNavigationStateChange={this._onNavigationStateChange}
+                        javaScriptEnabled={true}
+                        domStorageEnabled={true}
+                        startInLoadingState={false}
+                        style={{ marginTop: 20 }}
+                    /> : <ActivityIndicator />
+                }
+            </View>
+        )
+    }
+}

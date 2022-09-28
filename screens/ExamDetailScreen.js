@@ -196,8 +196,8 @@ const ExamDetailScreen = ({ route }) => {
                             color: '#000',
                             textAlign: 'justify',
                             fontSize: RFPercentage(2.4),
-                            marginHorizontal: 10,
-                            width: '100%',
+                            marginHorizontal: '3%',
+                            width: '94%',
                             // alignContent: 'center',
                             // alignSelf: 'center',
                             // alignItems: 'center',
@@ -228,34 +228,40 @@ const ExamDetailScreen = ({ route }) => {
                     color: '#1a6997'
 
                 }}
-                > {price} $ </Text>
+                > {price} € </Text>
                 <TouchableOpacity style={{ alignSelf: 'flex-end', justifyContent: 'flex-end', marginRight: 20 }}
                     onPress={() => {
                         // userInfo.token ?
-                        //     navigation.navigate('Booking', {
-                        //         id: id,
-                        //         slug: slug,
-                        //         price: price,
-                        //         examDate: examDate,
-                        //         examTime: examTime,
-                        //         regDate: regDate,
-                        //         location: location,
-                        //         name: location.name,
-                        //         street_name: location.street_name,
-                        //         city: city,
-                        //         total: total,
-                        //         remaining: remaining,
-                        //         content: content,
-                        //     }) : navigation.navigate('Login')
-                        navigation.navigate('StripePayment', {
-                            amount: price,
+                        navigation.navigate('Booking', {
+                            id: id,
+                            slug: slug,
+                            price: price,
+                            examDate: examDate,
+                            examTime: examTime,
+                            regDate: regDate,
+                            location: location,
+                            name: location.name,
+                            street_name: location.street_name,
+                            city: city,
+                            total: total,
+                            remaining: remaining,
+                            content: content,
                         })
+                        //  : navigation.navigate('Login')
+                        // navigation.navigate('StripePayment', {
+                        //     amount: price,
+
+                        // })
+                        // navigation.navigate('PaypalPayment', {
+                        //     amount: price,
+                        //     slug: slug,
+                        // })
                     }
                     }>
                     <Text style={styles.submitLabel}>{t('common:BookNow')}</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </View >
         // <View>
         //     <Text>{route.params.paramKey}</Text>
         // </View>

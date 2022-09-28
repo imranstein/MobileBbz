@@ -224,7 +224,7 @@ const BookingSuccessScreen = ({ route }) => {
             <Text style={styles.title}> {t('common:ExaminationFee')}:   </Text>
             <Text style={[styles.value]}>
               {amount}
-              $ </Text>
+              € </Text>
 
           </View>
           <View style={{ flexDirection: 'row', marginTop: 20, marginBottom: 2 }}>
@@ -245,7 +245,7 @@ const BookingSuccessScreen = ({ route }) => {
               marginRight: 7,
             }}>
               {amount}
-              $ </Text>
+              € </Text>
 
           </View>
         </View>

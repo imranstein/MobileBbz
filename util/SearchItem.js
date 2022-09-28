@@ -11,6 +11,7 @@ import * as Progress from 'react-native-progress';
 import { t } from 'i18next';
 import { AuthContext } from '../context/AuthContext';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { scale } from 'react-native-size-matters';
 
 
 
@@ -48,14 +49,14 @@ const SearchItem = ({ item }) => {
                         source={{ uri: `${IMAGE_URL}${item.media.file_path}` }}
                     >
                         <View style={styles.upperTextView}><Text style={styles.upperText}>{item.slug}</Text></View>
-                        <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} $</Text></View>
+                        <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} €</Text></View>
                     </ImageBackground>
                 </View> : <View style={styles.image}><ImageBackground
                     style={{ width: '100%', height: 200, borderRadius: 2 }}
                     source={require('../assets/testinghall.png')}
                 >
                     <View style={styles.upperTextView}><Text style={styles.upperText}>{item.slug}</Text></View>
-                    <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} $</Text></View>
+                    <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} €</Text></View>
                 </ImageBackground></View>}
 
 
@@ -201,10 +202,11 @@ const styles = StyleSheet.create({
     },
     upperText: {
         color: '#fff',
-        fontSize: RFPercentage(2.8),
+        fontSize: scale(16),
         fontWeight: 'bold',
-        textAlign: 'center',
-        marginTop: '2%',
+        textAlign: 'left',
+        marginTop: '6%',
+        marginLeft: '10%',
     },
     lowerTextView: {
         // backgroundColor: '#fff',
