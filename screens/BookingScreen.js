@@ -23,17 +23,18 @@ import { Picker } from '@react-native-picker/picker';
 
 
 const validationSchema = Yup.object().shape({
-    salutation: Yup.string().required('SalutationIsRequired'),
+    salutation: Yup.string()
+        .required('SalutationIsRequired'),
     academic_title: Yup.string()
         .required('AcademicRequired'),
     first_name: Yup.string()
         .required(t('common:FirstNameIsRequired'))
         .min(2, t('common:FirstNameMustBeAtLeast2Characters'))
-        .matches(/^[a-zA-Z]+$/, t('common:FirstNameMustBeAlphabetical')),
+        .matches(/^[a-zA-Z ]+$/, t('common:FirstNameMustBeAlphabetical')),
     last_name: Yup.string()
         .required(t('common:LastNameIsRequired'))
         .min(2, t('common:LastNameMustBeAtLeast2Characters'))
-        .matches(/^[a-zA-Z]+$/, t('common:LastNameMustBeAlphabetical')),
+        .matches(/^[a-zA-Z ]+$/, t('common:LastNameMustBeAlphabetical')),
     email: Yup.string()
         .required(t('common:EmailIsRequired'))
         .email(t('common:EmailIsInvalid')),
@@ -49,11 +50,12 @@ const validationSchema = Yup.object().shape({
     //     .test('is-valid-age', t('common:BirthdayIsInvalid'), function (value) {
     //         return moment().diff(moment(value, 'DD/MM/YYYY'), 'years') >= 18;
     //     }),
+    mother_tongue: Yup.string()
+        .required(t('common:MotherTongueIsRequired')),
     birth_place: Yup.string()
         .required(t('common:BirthPlaceIsRequired'))
         .min(2, t('common:BirthPlaceMustBeAtLeast2Characters')),
     telephone: Yup.string()
-        .required(t('common:PhoneIsRequired'))
         .min(9, t('common:PhoneMustBeAtLeast9Characters'))
         .max(15, t('common:PhoneMustBeAtMost15Characters'))
         .matches(/^[0-9]+$/, t('common:PhoneMustBeNumeric')),
@@ -71,7 +73,7 @@ const validationSchema = Yup.object().shape({
     city: Yup.string()
         .required(t('common:CityIsRequired'))
         .min(2, t('common:CityMustBeAtLeast2Characters'))
-        .matches(/^[a-zA-Z]+$/, t('common:CityMustBeAlphabetical')),
+        .matches(/^[a-zA-Z ]+$/, t('common:CityMustBeAlphabetical')),
     zip_code: Yup.string()
         .required(t('common:ZipCodeIsRequired'))
         .min(2, t('common:ZipCodeMustBeAtLeast2Characters'))
@@ -224,7 +226,7 @@ const BookingScreen = ({ route }) => {
 
     const book = (event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, price,) => {
         console.log(event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, price);
-
+        console.log('here');
         axios.post(`${BASE_URL}/register-exam`, {
             event_id: event_id,
             salutation: salutation,
@@ -277,12 +279,13 @@ const BookingScreen = ({ route }) => {
                             address: address_line_1,
                             zip_code: zip_code,
                             country: country,
+                            name: first_name + ' ' + last_name,
                         }
                     );
                     console.log(response.data.gateway);
                 } else {
                     // console.log(response.data.gateway);
-                    navigation.navigate('BookingSuccess'
+                    navigation.navigate('PaypalPayment'
                         , {
                             amount: response.data.amount,
                             code: response.data.code,
@@ -314,7 +317,7 @@ const BookingScreen = ({ route }) => {
     }
     const authBook = (event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, price,) => {
         console.log(event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, price);
-
+        console.log('there');
         axios.post(`${BASE_URL}/auth-register-exam`, {
             event_id: event_id,
             salutation: salutation,
@@ -367,12 +370,13 @@ const BookingScreen = ({ route }) => {
                             address: address_line_1,
                             zip_code: zip_code,
                             country: country,
+                            name: first_name + ' ' + last_name,
                         }
                     );
                     console.log(response.data.gateway);
                 } else {
                     // console.log(response.data.gateway);
-                    navigation.navigate('BookingSuccess'
+                    navigation.navigate('PaypalPayment'
                         , {
                             amount: response.data.amount,
                             code: response.data.code,
@@ -484,11 +488,12 @@ const BookingScreen = ({ route }) => {
                     <Text style={styles.titleHeader}>{t('common:ContactInformation')}</Text>
 
                     <View style={styles.wrapper}>
-                        <Formik initialValues={{ salutation: '', academic_title: '', first_name: first_name, last_name: last_name, identification_number: '', email: email, birth_place: '', telephone: '', phone: phone, address: address, address2: address2, city: city, zip_code: zip_code }}
+                        <Formik initialValues={{ salutation: '', academic_title: '', first_name: first_name, last_name: last_name, identification_number: '', email: email, birth_place: '', mother_tongue: '', telephone: '', phone: phone, address: address, address2: address2, city: city, zip_code: zip_code }}
                             enableReinitialize={true}
                             onSubmit={(values) => {
                                 userInfo.token ?
-                                    book(
+
+                                    authBook(
                                         event_id,
                                         values.salutation,
                                         values.academic_title,
@@ -499,7 +504,7 @@ const BookingScreen = ({ route }) => {
                                         birthday,
                                         values.birth_place,
                                         country_of_birth,
-                                        mother_tongue,
+                                        values.mother_tongue,
                                         values.telephone,
                                         values.phone,
                                         values.address,
@@ -512,7 +517,7 @@ const BookingScreen = ({ route }) => {
                                         term_conditions,
                                         term_conditions_1,
                                         price,
-                                    ) : authBook(
+                                    ) : book(
                                         event_id,
                                         values.salutation,
                                         values.academic_title,
@@ -613,7 +618,7 @@ const BookingScreen = ({ route }) => {
                                                 borderRadius: 5,
                                                 marginLeft: '2%',
                                                 // paddingHorizontal: '%',
-                                                width: 125,
+                                                width: 134,
                                                 height: 42,
                                                 color: '#000',
                                             }}
@@ -635,9 +640,9 @@ const BookingScreen = ({ route }) => {
                                                 marginLeft: '7%',
                                                 borderColor: '#cecece',
                                                 borderWidth: 0.5,
-                                                borderRadius: 5,
+                                                borderRadius: 4,
                                                 // paddingHorizontal: '%',
-                                                width: 125,
+                                                width: 134,
                                                 height: 42,
                                                 color: '#000',
                                             }}
@@ -802,7 +807,11 @@ const BookingScreen = ({ route }) => {
                                                     itemStyle={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', borderColor: '#c9c9c9', borderWidth: 0.5, borderRadius: 5, marginTop: 4 }}
                                                     selectedValue={mother_tongue}
                                                     style={{ height: 50, width: '90%', marginLeft: '-4.5%', marginBottom: '16%', color: '#000', marginTop: '-2%', fontSize: scale(1) }}
-                                                    onValueChange={(itemValue, itemIndex) => setMotherTongue(itemValue)}
+                                                    onValueChange={(itemValue, itemIndex) => {
+                                                        setMotherTongue(itemValue);
+                                                        handleChange('mother_tongue')(itemValue);
+                                                    }}
+                                                    onBlur={handleBlur('mother_tongue')}
                                                 >
                                                     <Picker.Item
                                                         color='#A8B0B5'
@@ -815,6 +824,9 @@ const BookingScreen = ({ route }) => {
                                                 </Picker>
                                             </View>
                                         </View>
+                                        {errors.mother_tongue && touched.mother_tongue ? (
+                                            <Text style={styles.error}>{errors.mother_tongue}</Text>
+                                        ) : null}
                                     </View>
 
                                     <View style={styles.inputs}>
@@ -954,8 +966,8 @@ const BookingScreen = ({ route }) => {
                                                     withFlag
                                                     preferredCountries={['DE', 'IN']}
                                                     onSelect={(country) => {
-                                                        setCountry(country.name);
-                                                        console.log(country.name);
+                                                        setCountry(country.cca2);
+                                                        console.log(country.cca2);
                                                     }
                                                     }
                                                 />
@@ -980,7 +992,7 @@ const BookingScreen = ({ route }) => {
                                             )}
                                         </View>
                                     </View>
-                                    <View style={{ flexDirection: 'row', marginBottom: 10, marginLeft: 20 }}>
+                                    <View style={{ flexDirection: 'row', marginBottom: 10, marginLeft: 20, marginTop: 10 }}>
                                         <RadioForm
                                             radio_props={payments}
                                             buttonSize={12}

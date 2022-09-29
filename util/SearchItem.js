@@ -73,11 +73,11 @@ const SearchItem = ({ item }) => {
 
             <View style={{ flexDirection: 'row', marginLeft: 5 }}>
                 <Text style={{
-                    fontSize: RFPercentage(2.2),
+                    fontSize: scale(15),
                     fontWeight: 'bold', marginRight: 3, color: '#000'
                 }}>{t("common:ExamDate")}:</Text><Text style={styles.examDateText}>{moment(item.exam_date).format('DD/MM/YY')}</Text>
                 <Text style={{
-                    fontSize: RFPercentage(2.2),
+                    fontSize: scale(15),
                     fontWeight: 'bold', marginRight: 3, color: '#000'
                 }}>{t("common:RegDate")}:</Text><Text style={styles.regDateText}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text>
             </View>
@@ -111,7 +111,7 @@ const SearchItem = ({ item }) => {
                 <Text style={styles.AvailableSeats}>{t("common:AvailableSeats")}</Text>
                 <Text style={{
                     marginLeft: '50%',
-                    fontSize: RFPercentage(2.5),
+                    fontSize: scale(15),
                     color: "#000",
                     fontWeight: '600',
                     marginRight: '3%',
@@ -120,7 +120,7 @@ const SearchItem = ({ item }) => {
                 }}>
                     {/* {progress} */}
                     <Progress.Circle thickness={4} progress={progress} size={40} animated={false} showsText={true} textStyle={{
-                        fontWeight: 'bold', fontSize: RFPercentage(1.7),
+                        fontWeight: 'bold', fontSize: scale(10),
                         color: '#000'
                     }} color={'green'} unfilledColor={'red'} />
 
@@ -151,8 +151,10 @@ const styles = StyleSheet.create({
         flex: 1,
         // padding: 10,
         // marginLeft: '2%',
-        marginBottom: '5%',
-        elevation: 1,
+        marginBottom: 40,
+        // elevation: 1,
+        borderWidth: 1,
+        borderColor: '#DFDFDF',
         backgroundColor: '#fff',
     },
     image: {
@@ -172,81 +174,99 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     dateText: {
-        fontSize: RFPercentage(2.2),
+        fontSize: scale(12),
         color: "#1a6997",
     },
     title: {
         marginBottom: 10,
         flexDirection: 'row',
-        marginLeft: 5,
+        marginLeft: 15,
     },
     titleText: {
-        fontSize: RFPercentage(2.5),
+        fontSize: scale(15),
         color: "#000",
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
     },
     description: {
-        marginBottom: 20,
+        // marginBottom: 20,
+        alignItems: 'center',
         flexDirection: 'row',
         maxHeight: 82,
     },
     descriptionText: {
-        fontSize: RFPercentage(2.1),
+        fontSize: scale(11),
         color: "#000",
     },
+    //create a diagonalborder for upperTextView
+
     upperTextView: {
         backgroundColor: '#ee4327',
-        height: '15%',
+        height: '12%',
         width: '25%',
-        marginTop: '3%',
+        marginTop: '5%',
+
     },
     upperText: {
         color: '#fff',
         fontSize: scale(16),
-        fontWeight: 'bold',
+        fontWeight: '600',
         textAlign: 'left',
-        marginTop: '6%',
         marginLeft: '10%',
+        marginTop: '6%',
     },
     lowerTextView: {
         // backgroundColor: '#fff',
-        height: '15%',
+        height: '12%',
         width: '20%',
-        marginTop: '32%',
+        marginTop: '50%',
     },
     lowerText: {
         color: '#fff',
-        fontSize: RFPercentage(3.4),
+        fontSize: scale(18),
         fontWeight: '500',
         textAlign: 'center',
-        marginTop: '2%',
+        // marginTop: '2%',
     },
     examDateText: {
-        fontSize: RFPercentage(2.3),
+        fontSize: scale(15),
         color: "#1a6997",
         fontWeight: '600',
         marginRight: '4%',
     },
     regDateText: {
-        fontSize: RFPercentage(2.3),
+        fontSize: scale(15),
         color: "#ee4327",
         fontWeight: '600',
         marginRight: '4%',
     },
     locationText: {
-        fontSize: RFPercentage(2.2),
+        fontSize: scale(14),
         color: "#1a6997",
-        width: '70%',
+        width: '90%',
         fontWeight: '400',
-        marginRight: '4%',
+        // marginRight: '4%',
     },
     AvailableSeats: {
-        fontSize: RFPercentage(2.2),
+        fontSize: scale(14),
         color: "#000",
         fontWeight: '600',
-        marginTop: '6%',
-        marginBottom: '6%',
-        marginLeft: 5,
+        marginTop: 22,
+        marginBottom: 22,
+        marginLeft: 15,
+    }, triangleCorner: {
+        // position: 'absolute',
+        top: '5%',
+        left: 0,
+        width: '40%',
+        height: '21%',
+        backgroundColor: 'transparent',
+        borderStyle: 'solid',
+        borderRightWidth: 20,
+        // borderTopWidth: 30,
+        borderBottomColor: 'red',
+        // borderBottomWidth: 30,
+        borderRightColor: 'transparent',
+        borderTopColor: 'red'
     }
 });
 

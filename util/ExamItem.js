@@ -73,11 +73,11 @@ const ExamItem = ({ item }) => {
 
             <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 15 }}>
                 <Text style={{
-                    fontSize: RFPercentage(2.4),
+                    fontSize: scale(15),
                     fontWeight: '600', color: '#000'
                 }}>{t("common:ExamDate")}: </Text><Text style={styles.examDateText}>{moment(item.exam_date).format('DD/MM/YY')}</Text>
                 <Text style={{
-                    fontSize: RFPercentage(2.4),
+                    fontSize: scale(15),
                     fontWeight: '600', color: '#000'
                 }}>{t("common:RegDate")}: </Text><Text style={styles.regDateText}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text>
             </View>
@@ -114,7 +114,7 @@ const ExamItem = ({ item }) => {
                 <Text style={styles.AvailableSeats}>{t("common:AvailableSeats")}</Text>
                 <Text style={{
                     marginLeft: '50%',
-                    fontSize: RFPercentage(2.5),
+                    fontSize: scale(15),
                     color: "#000",
                     fontWeight: '600',
                     marginRight: '3%',
@@ -123,7 +123,7 @@ const ExamItem = ({ item }) => {
                 }}>
                     {/* {progress} */}
                     <Progress.Circle thickness={4} progress={progress} size={40} animated={false} showsText={true} textStyle={{
-                        fontWeight: 'bold', fontSize: RFPercentage(1.7), color: '#000'
+                        fontWeight: 'bold', fontSize: scale(10), color: '#000'
                     }} color={'green'} unfilledColor={'red'} />
 
                 </Text>
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     dateText: {
-        fontSize: RFPercentage(2.2),
+        fontSize: scale(12),
         color: "#1a6997",
     },
     title: {
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
         marginLeft: 15,
     },
     titleText: {
-        fontSize: RFPercentage(2.5),
+        fontSize: scale(15),
         color: "#000",
         // fontWeight: 'bold',
     },
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
         maxHeight: 82,
     },
     descriptionText: {
-        fontSize: RFPercentage(2.1),
+        fontSize: scale(11),
         color: "#000",
     },
     //create a diagonalborder for upperTextView
@@ -220,36 +220,36 @@ const styles = StyleSheet.create({
         // backgroundColor: '#fff',
         height: '12%',
         width: '20%',
-        marginTop: '40%',
+        marginTop: '50%',
     },
     lowerText: {
         color: '#fff',
-        fontSize: RFPercentage(3.4),
+        fontSize: scale(18),
         fontWeight: '500',
         textAlign: 'center',
         // marginTop: '2%',
     },
     examDateText: {
-        fontSize: RFPercentage(2.4),
+        fontSize: scale(15),
         color: "#1a6997",
         fontWeight: '600',
         marginRight: '4%',
     },
     regDateText: {
-        fontSize: RFPercentage(2.4),
+        fontSize: scale(15),
         color: "#ee4327",
         fontWeight: '600',
         marginRight: '4%',
     },
     locationText: {
-        fontSize: RFPercentage(2.2),
+        fontSize: scale(14),
         color: "#1a6997",
-        width: '100%',
+        width: '90%',
         fontWeight: '400',
         // marginRight: '4%',
     },
     AvailableSeats: {
-        fontSize: RFPercentage(2.2),
+        fontSize: scale(14),
         color: "#000",
         fontWeight: '600',
         marginTop: 22,

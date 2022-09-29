@@ -29,9 +29,10 @@ const StripePaymentScreen = ({ route }) => {
   const phone = route.params.phone;
   const address = route.params.address;
   const zip_code = (route.params.zip_code).toString();
+  const name = route.params.name;
 
   const { userInfo } = useContext(AuthContext);
-  const [name, setName] = useState('');
+  // const [name, setName] = useState('');
   // const [email, setEmail] = useState('');
   // const [phone, setPhone] = useState('');
   const [line1, setLine1] = useState('');
@@ -101,9 +102,9 @@ const StripePaymentScreen = ({ route }) => {
           name: name,
           phone: phone,
           address: {
-            line1: line1,
+            line1: address,
             city: city,
-            postal_code: postal_code,
+            postal_code: zip_code,
             country: country,
           },
 
@@ -119,6 +120,7 @@ const StripePaymentScreen = ({ route }) => {
 
     if (error) {
       console.log('Payment confirmation error', error);
+      alert(`Payment confirmation error ${error.message}`);
     } else if (paymentIntent) {
 
       console.log('Success from promise', paymentIntent);
@@ -196,7 +198,7 @@ const StripePaymentScreen = ({ route }) => {
             paddingHorizontal: scale(10),
             fontSize: scale(16),
           }}
-          value={line1}
+          value={address}
           onChangeText={(text) => setLine1(text)}
         />
         <TextInput
@@ -212,7 +214,7 @@ const StripePaymentScreen = ({ route }) => {
             paddingHorizontal: scale(10),
             fontSize: scale(16),
           }}
-          value={postal_code}
+          value={zip_code}
           onChangeText={(text) => setPostalCode(text)}
         />
         <TextInput

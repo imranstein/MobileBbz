@@ -39,10 +39,18 @@ const PaypalScreen = ({ route }) => {
 
 
     const getAccessToken = async () => {
-        const { data } = await axios.post(`${BASE_URL}/accessToken`);
-        setAccessToken(data.accessToken);
-        console.log(data.accessToken);
+        const { data } = await axios.post(`${BASE_URL}/accessToken`)
+            .then((response) => {
+                setAccessToken(response.data.accessToken);
+                console.log(response.accessToken);
+
+            }).catch((error) => {
+                console.log(error);
+            });
     };
+    //     setAccessToken(data.accessToken);
+    //     console.log(data.accessToken);
+    // };
     useEffect(() => {
         getAccessToken();
     }, [])
@@ -96,6 +104,7 @@ const PaypalScreen = ({ route }) => {
     const onNavigationStateChange = (webViewState) => {
         if (webViewState.url.includes('success=true')) {
             console.log('Payment Successful');
+            console.log('1');
             if (webViewState.url.includes('https://example.com/')) {
 
                 this.setState({
@@ -113,6 +122,7 @@ const PaypalScreen = ({ route }) => {
                     }
                 ).then(res => res.json())
                     .then(response => {
+                        console.log('2');
                         console.log("res", response);
                         if (response.state === 'approved') {
                             console.log('Payment Successful');
@@ -136,8 +146,10 @@ const PaypalScreen = ({ route }) => {
                             setApprovalUrl(null);
                             navigation.navigate('BookingScreen');
                         }
-                        console.log('success', response.data)
-                        console.log(response)
+                        console.log('success', response.data);
+                        console.log(response);
+                        console.log('3');
+
 
                     }).catch(err => {
                         console.log('there', err)

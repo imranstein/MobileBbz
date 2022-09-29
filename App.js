@@ -19,7 +19,7 @@ const App = () => {
     }).then((response) => {
       console.log(response.data);
       setPublishableKey(response.data);
-      console.log('publishableKey ', publishableKey);
+      console.log('publishableKey', publishableKey);
     }).catch((error) => {
       console.log(error);
     });
@@ -29,6 +29,7 @@ const App = () => {
   }, [])
 
   return (
+    // <StripeProvider publishableKey="pk_test_51Ll82qSE1zKryg0yM2lHHw01sYprPfkQMJPMVWwq1oVEyEHhcdpQ5TCXCVirLyrvqQtdqX0v8uvfhzdAAX5Sevc5004SMzN7Fh">
     <StripeProvider publishableKey={publishableKey}>
       <AuthProvider>
         <Navigation />

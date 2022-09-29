@@ -176,5 +176,11 @@ export default {
     ZipCodeIsRequired: 'Postleitzahl ist erforderlich',
     ZipCodeMustBeAtLeast2Characters: 'Postleitzahl muss mindestens 2 Zeichen lang sein',
     ZipCodeMustBeNumeric: 'Postleitzahl muss numerisch sein',
+    CityMustBeAlphabetical: 'Stadt muss alphabetisch sein',
+    CityIsRequired: 'Stadt ist erforderlich',
+    CityMustBeAtLeast2Characters: 'Stadt muss mindestens 2 Zeichen lang sein',
+    FirstNameMustBeAlphabetical: 'Vorname muss alphabetisch sein',
+    LastNameMustBeAlphabetical: 'Nachname muss alphabetisch sein',
+    MotherTongueIsRequired: 'Muttersprache ist erforderlich',
 
 }

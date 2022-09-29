@@ -169,5 +169,11 @@ export default {
     ZipCodeIsRequired: 'Zip Code is required',
     ZipCodeMustBeAtLeast2Characters: 'Zip Code must be at least 2 characters',
     ZipCodeMustBeNumeric: 'Zip Code must be numeric',
+    CityMustBeAlphabetical: 'City must be alphabetical',
+    CityIsRequired: 'City is required',
+    CityMustBeAtLeast2Characters: 'City must be at least 2 characters',
+    FirstNameMustBeAlphabetical: 'First Name must be alphabetical',
+    LastNameMustBeAlphabetical: 'Last Name must be alphabetical',
+    MotherTongueIsRequired: 'Mother Tongue is required',
 
 }

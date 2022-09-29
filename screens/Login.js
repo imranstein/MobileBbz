@@ -99,9 +99,11 @@ const Login = ({ navigation }) => {
                   <Text style={styles.buttonText}>{t('common:ForgotPassword')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.loginButton, {
-                  backgroundColor: isValid ? '#1a6997' : '#9c9c9c',
+                  // backgroundColor: isValid ? '#1a6997' : '#9c9c9c',
+                  backgroundColor: '#1a6997',
                 }]}
-                  disabled={!isValid} onPress={handleSubmit}>
+                  // disabled={!isValid}
+                  onPress={handleSubmit}>
                   <Text style={styles.loginButtonText}>{t('common:Login')}</Text>
                 </TouchableOpacity>
                 <View style={styles.signup}>

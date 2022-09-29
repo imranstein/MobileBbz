@@ -11,7 +11,7 @@ import { t } from 'i18next';
 import { useTranslation } from "react-i18next";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icons from 'react-native-vector-icons/EvilIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -59,8 +59,8 @@ const MainScreen = () => {
         options={{
           // title: '.{t('common: AboutUs')}.',
           drawerIcon: ({ focused, size }) => (
-            <FontAwesome
-              name="gear"
+            <MaterialCommunityIcons
+              name="handshake"
               size={size}
               color={focused ? '#fff' : '#1a6997'}
             />

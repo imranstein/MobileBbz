@@ -167,8 +167,8 @@ const RegisterScreen = ({ navigation }) => {
                       <Text style={[styles.error, { alignSelf: 'center' }]}>{error2 ? error2 : ''}</Text>
                     </View>
                     <TouchableOpacity onPress={handleSubmit}
-                      disabled={!isValid}
-                      style={[styles.loginButton, { backgroundColor: isValid ? '#1570a5' : '#cacfd2' }]}>
+                      // disabled={!isValid}
+                      style={[styles.loginButton, { backgroundColor: '#1570a5' }]}>
                       <Text style={styles.loginButtonText}>{t('common:SignUp')}</Text>
                     </TouchableOpacity>
 
