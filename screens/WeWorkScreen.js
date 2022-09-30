@@ -13,8 +13,11 @@ import { t } from 'i18next';
 import { useTranslation } from "react-i18next";
 import { useNavigation } from '@react-navigation/native';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { scale } from 'react-native-size-matters';
 
 
@@ -33,8 +36,8 @@ const WeWorkScreen = () => {
                 <View style={styles.search}>
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={styles.icon}>
-                            <MaterialIcons
-                                name="book-online"
+                            <AntDesign
+                                name="form"
                                 size={55}
                                 color="#1570A5"
                                 style={styles.icon}
@@ -42,17 +45,17 @@ const WeWorkScreen = () => {
                         </Text>
                         <View style={{ flexDirection: 'column', width: '75%', marginBottom: scale(20) }}>
                             <Text style={styles.title}>
-                                something
+                                {t('common:Registration')}
                             </Text>
                             <Text style={styles.content}>
-                                something intersting going on here but i dont know wat is is yet
+                                {/* something intersting going on here but i dont know wat is is yet */}
                             </Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={styles.icon}>
-                            <Entypo
-                                name="laptop"
+                            <MaterialCommunityIcons
+                                name="list-status"
                                 size={55}
                                 color="#1570A5"
                                 style={styles.icon}
@@ -60,17 +63,17 @@ const WeWorkScreen = () => {
                         </Text>
                         <View style={{ flexDirection: 'column', width: '75%', marginBottom: scale(20) }}>
                             <Text style={styles.title}>
-                                something
+                                {t('common:GradingTest')}
                             </Text>
                             <Text style={styles.content}>
-                                something intersting going on here but i dont know wat is is yet
+                                {/* something intersting going on here but i dont know wat is is yet */}
                             </Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={styles.icon}>
-                            <MaterialIcons
-                                name="book-online"
+                            <FontAwesome5
+                                name="book-reader"
                                 size={55}
                                 color="#1570A5"
                                 style={styles.icon}
@@ -78,17 +81,17 @@ const WeWorkScreen = () => {
                         </Text>
                         <View style={{ flexDirection: 'column', width: '75%', marginBottom: scale(20) }}>
                             <Text style={styles.title}>
-                                something
+                                {t('common:Education')}
                             </Text>
                             <Text style={styles.content}>
-                                something intersting going on here but i dont know wat is is yet
+                                {/* something intersting going on here but i dont know wat is is yet */}
                             </Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={styles.icon}>
-                            <Entypo
-                                name="laptop"
+                            <FontAwesome
+                                name="institution"
                                 size={55}
                                 color="#1570A5"
                                 style={styles.icon}
@@ -96,17 +99,17 @@ const WeWorkScreen = () => {
                         </Text>
                         <View style={{ flexDirection: 'column', width: '75%', marginBottom: scale(20) }}>
                             <Text style={styles.title}>
-                                something
+                                {t('common:ExamTraining')}
                             </Text>
                             <Text style={styles.content}>
-                                something intersting going on here but i dont know wat is is yet
+                                {/* something intersting going on here but i dont know wat is is yet */}
                             </Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={styles.icon}>
-                            <MaterialIcons
-                                name="book-online"
+                            <SimpleLineIcons
+                                name="book-open"
                                 size={55}
                                 color="#1570A5"
                                 style={styles.icon}
@@ -114,32 +117,13 @@ const WeWorkScreen = () => {
                         </Text>
                         <View style={{ flexDirection: 'column', width: '75%', marginBottom: scale(20), }}>
                             <Text style={styles.title}>
-                                something
+                                {t('common:Exam')}
                             </Text>
                             <Text style={styles.content}>
-                                something intersting going on here but i dont know wat is is yet
+                                {/* something intersting going on here but i dont know wat is is yet */}
                             </Text>
                         </View>
                     </View>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.icon}>
-                            <Entypo
-                                name="laptop"
-                                size={55}
-                                color="#1570A5"
-                                style={styles.icon}
-                            />
-                        </Text>
-                        <View style={{ flexDirection: 'column', width: '75%', marginBottom: scale(20) }}>
-                            <Text style={styles.title}>
-                                something
-                            </Text>
-                            <Text style={styles.content}>
-                                something intersting going on here but i dont know wat is is yet
-                            </Text>
-                        </View>
-                    </View>
-
 
                 </View>
 
@@ -198,7 +182,7 @@ const styles = StyleSheet.create({
         color: '#1570A5',
         fontSize: scale(16),
         fontWeight: '700',
-        marginTop: scale(20),
+        marginTop: scale(35),
         marginLeft: scale(20),
     },
     content: {

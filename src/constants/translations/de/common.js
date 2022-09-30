@@ -182,5 +182,10 @@ export default {
     FirstNameMustBeAlphabetical: 'Vorname muss alphabetisch sein',
     LastNameMustBeAlphabetical: 'Nachname muss alphabetisch sein',
     MotherTongueIsRequired: 'Muttersprache ist erforderlich',
+    Registration: 'Registrierung',
+    GradingTest: 'Bewertungs test',
+    Education: 'Bildung',
+    ExamTraining: 'Prüfungs training',
+    Exam: 'Prüfung',
 
 }
