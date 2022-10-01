@@ -159,7 +159,7 @@ export default {
     AcademicRequired: 'Academic Title is required',
     IdentificationNumberIsRequired: 'Identification Number is required',
     IdentificationNumberMustBeAtLeast5Characters: 'Identification Number must be at least 5 characters',
-    IdentificationNumberMustBeNumeric: 'Identification Number must be numeric',
+    IdentificationNumberMustBeNumeric: 'Identification Number must be AlphaNumeric',
     BirthPlaceIsRequired: 'Birth Place is required',
     BirthPlaceMustBeAtLeast2Characters: 'Birth Place must be at least 2 characters',
     AddressLine1IsRequired: 'Address Line 1 is required',

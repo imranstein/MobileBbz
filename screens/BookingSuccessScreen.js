@@ -95,6 +95,22 @@ const BookingSuccessScreen = ({ route }) => {
   return (
     <View style={styles.container}>
       <ScrollView>
+        <View style={{
+          backgroundColor: '#fff',
+          width: '100%',
+          height: scale(80),
+        }}>
+          <Image source={require('../assets/2.png')} style={{
+            alignSelf: 'center',
+            justifyContent: 'center',
+            alignItems: 'center',
+            alignContent: 'center',
+            marginTop: scale(25),
+            // width: scale(200),
+            // height: scale(20),
+          }} />
+
+        </View>
         <View style={styles.header}>
           <ImageBackground source={require('../assets/searchBackground.png')}>
 

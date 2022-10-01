@@ -24,6 +24,7 @@ import StripePaymentScreen from '../screens/StripePaymentScreen';
 import BookingSuccessScreen from '../screens/BookingSuccessScreen';
 import BookingDetailScreen from '../screens/BookingDetailScreen';
 import PaypalScreen from '../screens/PaypalScreen';
+import LanguageWelcome from '../screens/LanguageWelcome';
 
 
 const Stack = createNativeStackNavigator();
@@ -79,6 +80,9 @@ const Navigation = () => {
             <Stack.Screen name="BookingDetail"
               options={{ title: t('common:BookingDetail'), headerTintColor: '#1a6997' }}
               component={BookingDetailScreen} />
+            <Stack.Screen name="Language"
+              options={{ title: t('common:language'), headerTintColor: '#1a6997' }}
+              component={LanguageWelcome} />
           </>
         ) : (
           <>
@@ -123,6 +127,9 @@ const Navigation = () => {
               component={MainScreen}
               options={{ headerShown: false }}
             />
+            <Stack.Screen name="Language"
+              options={{ title: t('common:language'), headerTintColor: '#1a6997' }}
+              component={LanguageWelcome} />
 
           </>
         )}

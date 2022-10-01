@@ -4,6 +4,7 @@ import {
   View,
   ImageBackground,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
@@ -14,18 +15,42 @@ import RegisterScreen from './RegisterScreen';
 import { useTranslation } from "react-i18next";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+import Entypo from 'react-native-vector-icons/Entypo';
 
+const height = Dimensions.get('window').height;
+const width = Dimensions.get('window').width;
 
 const Welcome = ({ navigation }) => {
   const { t, } = useTranslation();
-
   return (
     <ImageBackground
       source={require('../assets/background.png')}
       resizeMode="cover"
       style={styles.container}
       imageStyle={styles.ImageBackground}>
+
       <View>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Language')}>
+          <View style={{ alignContent: 'flex-end', justifyContent: 'flex-end', alignSelf: 'flex-end', alignItems: 'flex-end', marginTop: scale(10), marginBottom: scale(30), marginRight: scale(10), borderColor: '#cecece', borderWidth: scale(1), padding: scale(5), borderRadius: scale(5) }}>
+            <View style={{ flexDirection: 'row' }}>
+              <Entypo
+                name="language"
+                size={30}
+                color="#1570A5"
+                style={styles.icon}
+              />
+              {/* <Text style={{
+              color: '#000',
+              marginLeft: scale(5),
+              fontSize: scale(16)
+            }}>
+              {t('common:Language')}</Text> */}
+
+
+            </View>
+          </View>
+        </TouchableOpacity>
         <Text style={styles.welcome}>{t('common:WelcomeTo')} BBZ!</Text>
         <Text style={styles.description}>
           {t('common:Login')}/{t('common:SignUp')} {t('common:ToGetYourProfileAndStayUpdatedWithTheUpcomingExamsAndNews')}
@@ -62,7 +87,6 @@ const Welcome = ({ navigation }) => {
   );
 };
 
-export default Welcome;
 
 const styles = StyleSheet.create({
   welcome: {
@@ -93,12 +117,12 @@ const styles = StyleSheet.create({
     width: '90%',
     marginLeft: '5%',
     height: '17%',
-    marginTop: '10%',
+    marginTop: height * 0.04,
   },
   buttonText: {
     color: '#fff',
     textAlign: 'center',
-    fontSize: RFPercentage(2.7),
+    fontSize: height * 0.027,
     fontWeight: 'bold',
     marginTop: '5%',
   },
@@ -114,3 +138,4 @@ const styles = StyleSheet.create({
     marginLeft: '1%',
   },
 });
+export default Welcome;

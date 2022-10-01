@@ -25,8 +25,8 @@ import { Picker } from '@react-native-picker/picker';
 const validationSchema = Yup.object().shape({
     salutation: Yup.string()
         .required('SalutationIsRequired'),
-    academic_title: Yup.string()
-        .required('AcademicRequired'),
+    // academic_title: Yup.string()
+    //     .required('AcademicRequired'),
     first_name: Yup.string()
         .required(t('common:FirstNameIsRequired'))
         .min(2, t('common:FirstNameMustBeAtLeast2Characters'))
@@ -41,7 +41,7 @@ const validationSchema = Yup.object().shape({
     identification_number: Yup.string()
         .required(t('common:IdentificationNumberIsRequired'))
         .min(5, t('common:IdentificationNumberMustBeAtLeast5Characters'))
-        .matches(/^[0-9]+$/, t('common:IdentificationNumberMustBeNumeric')),
+        .matches(/^[a-zA-Z0-9 ]+$/, t('common:IdentificationNumberMustBeNumeric')),
     // birthday: Yup.string()
     //     .required(t('common:BirthdayIsRequired'))
     //     .test('is-valid-date', t('common:BirthdayIsInvalid'), function (value) {
@@ -411,6 +411,22 @@ const BookingScreen = ({ route }) => {
     return (
         <View style={styles.container}>
             <ScrollView>
+                <View style={{
+                    backgroundColor: '#fff',
+                    width: '100%',
+                    height: scale(80),
+                }}>
+                    <Image source={require('../assets/1.png')} style={{
+                        alignSelf: 'center',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        alignContent: 'center',
+                        marginTop: scale(25),
+                        // width: scale(200),
+                        // height: scale(20),
+                    }} />
+
+                </View>
                 <View style={styles.header}>
                     <ImageBackground source={require('../assets/searchBackground.png')}>
                         <Text style={styles.h1}>{slug} {t('common:Level')}</Text>
