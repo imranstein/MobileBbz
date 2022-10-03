@@ -19,7 +19,8 @@ import Entypo from 'react-native-vector-icons/Entypo';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
-
+console.log('height', height);
+console.log('width', width)
 const Welcome = ({ navigation }) => {
   const { t, } = useTranslation();
   return (
@@ -91,7 +92,7 @@ const Welcome = ({ navigation }) => {
 const styles = StyleSheet.create({
   welcome: {
     color: '#1570a5',
-    fontSize: RFPercentage(3.8),
+    fontSize: scale(21),
     fontWeight: 'normal',
     textAlign: 'center',
     marginTop: scale(32),
@@ -106,9 +107,9 @@ const styles = StyleSheet.create({
   description: {
     color: 'gray',
     textAlign: 'center',
-    marginTop: scale(9),
-    paddingHorizontal: '12%',
-    fontSize: RFPercentage(2.4),
+    marginTop: height / 35,
+    paddingHorizontal: width * 0.042,
+    fontSize: RFValue(17),
   },
   button: {
     backgroundColor: '#1570a5',
@@ -122,9 +123,9 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     textAlign: 'center',
-    fontSize: height * 0.027,
+    fontSize: width * 0.05,
     fontWeight: 'bold',
-    marginTop: '5%',
+    marginTop: height * 0.025,
   },
   signup: {
     flexDirection: 'row',
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
   },
   signupButton: {
     color: '#1570A5',
-    fontSize: RFPercentage(2.45),
+    fontSize: RFValue(14),
     marginLeft: '1%',
   },
 });

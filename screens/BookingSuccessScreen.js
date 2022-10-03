@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, ImageBackground, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, ImageBackground, TouchableOpacity, Image } from 'react-native'
 import React, { useContext, useState, useEffect } from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -10,6 +10,7 @@ import axios from 'axios';
 import { BASE_URL } from '../config';
 import Entypo from 'react-native-vector-icons/Entypo';
 import moment from 'moment';
+import { scale } from 'react-native-size-matters';
 
 
 const BookingSuccessScreen = ({ route }) => {

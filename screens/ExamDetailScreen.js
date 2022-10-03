@@ -21,7 +21,7 @@ import moment from 'moment';
 import { useWindowDimensions } from 'react-native';
 import RenderHtml from 'react-native-render-html';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const ExamDetailScreen = ({ route }) => {
 
@@ -210,21 +210,21 @@ const ExamDetailScreen = ({ route }) => {
             </ScrollView>
             <View style={styles.submit}>
                 <Text style={{
-                    flex: 0.3,
+                    flex: 0.38,
                     fontSize: RFPercentage(2.4),
                     color: '#5E6D77',
                     justifyContent: 'center',
                     alignSelf: 'center',
-                    marginLeft: 20,
+                    marginLeft: 15,
 
                 }}>{t('common:Fee')} </Text>
                 <Text style={{
-                    flex: 0.7,
+                    flex: 0.62,
                     fontSize: RFPercentage(3.2),
                     fontWeight: '500',
                     justifyContent: 'center',
                     alignSelf: 'center',
-                    // marginRight: 10,
+                    marginRight: 5,
                     color: '#1a6997'
 
                 }}
@@ -424,15 +424,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     submitLabel: {
-        fontSize: RFPercentage(2.6),
-        fontWeight: '500',
+        fontSize: RFValue(15),
+        fontWeight: '450',
         marginTop: 10,
         marginBottom: 10,
         color: '#fff',
         borderColor: '#1a6997',
         backgroundColor: '#1a6997',
         borderWidth: 2,
-        paddingHorizontal: 43,
+        paddingHorizontal: 40,
         paddingVertical: 8,
         borderRadius: 4,
         alignSelf: 'center',

@@ -26,8 +26,8 @@ const PaypalScreen = ({ route }) => {
             "payment_method": "paypal"
         },
         "redirect_urls": {
-            "return_url": "https://www.example.com/",
-            "cancel_url": "https://www.example.com/your_cancel_url.html"
+            "return_url": `${BASE_URL}/success`,
+            "cancel_url": `${BASE_URL}/cancel`
         },
         "transactions": [{
             "amount": {
@@ -102,9 +102,22 @@ const PaypalScreen = ({ route }) => {
     //     }, [approvalUrl])
 
     const onNavigationStateChange = (webViewState) => {
-        if (webViewState.url.includes('success=true')) {
+        if (webViewState.url.includes(`${BASE_URL}/success`)) {
             console.log('Payment Successful');
-            console.log('1');
+            alert('Payment Successful');
+            navigation.navigate('BookingSuccess'
+                , {
+                    amount: amount,
+                    code: code,
+                    event_id: event_id,
+                    gateway: gateway,
+                    location: location,
+                    slug: slug,
+                    examDate: examDate,
+                    examTime: examTime,
+                    city_name: city_name,
+                }
+            );
             if (webViewState.url.includes('https://example.com/')) {
 
                 this.setState({
@@ -156,6 +169,11 @@ const PaypalScreen = ({ route }) => {
                     })
 
             }
+        }
+        else if (webViewState.url.includes(`${BASE_URL}/cancel`)) {
+            console.log('Payment Cancelled');
+            alert('Payment Cancelled');
+            navigation.navigate('BookingScreen');
         }
     }
 

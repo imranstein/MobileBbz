@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   ImageBackground,
   FlatList,
-  ScrollView
+  ScrollView,
+  Dimensions
 } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { LogBox } from 'react-native';
@@ -26,11 +27,14 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Picker } from '@react-native-picker/picker';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 
 
 
+const height = Dimensions.get('window').height;
+const width = Dimensions.get('window').width;
 
 const SearchPage = () => {
 
@@ -53,6 +57,7 @@ const SearchPage = () => {
   const [mode, setMode] = useState('date');
   const [date1, setDate] = useState(new Date());
   const [date2, setDate2] = useState(new Date());
+
 
   const onChangeFrom = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -369,44 +374,44 @@ const styles = StyleSheet.create({
   header: {
     flex: 1,
     backgroundColor: '#1a6997',
-    height: scale(220),
+    height: height * 0.3,
   },
   h1: {
     // fontSize: 25,
-    fontSize: RFPercentage(4),
+    fontSize: wp('7%'),
     color: '#fff',
-    marginHorizontal: 20,
-    paddingTop: 12,
+    marginHorizontal: wp('4.2%'),
+    paddingTop: wp('4.2%')
   },
   h5: {
     // fontSize: 16,
-    fontSize: RFPercentage(2.5),
+    fontSize: RFValue(16),
     color: '#fff',
-    marginHorizontal: 20,
-    paddingTop: 5,
-    lineHeight: 20,
+    marginHorizontal: wp('4%'),
+    paddingTop: hp('1%'),
+    lineHeight: wp('5%'),
   },
   search: {
-    width: '94%',
-    height: scale(260),
+    width: width * 0.94,
+    height: height * 0.36,
     // borderWidth: 0.5,
     borderRadius: 5,
-    padding: 10,
-    margin: 10,
+    padding: height * 0.02,
+    margin: height * 0.01,
     elevation: 1,
     backgroundColor: '#fff',
-    marginTop: -110,
+    marginTop: height * -0.15,
     zindex: -1,
   },
   title: {
-    fontSize: RFPercentage(2.5),
+    fontSize: height * 0.025,
     color: '#000',
-    marginHorizontal: 10,
+    marginHorizontal: width * 0.01,
     paddingTop: 5,
   },
   titleHeader: {
     // fontSize: 13,
-    fontSize: RFPercentage(2.3),
+    fontSize: height * 0.023,
     color: '#1a6997',
     marginHorizontal: 10,
     paddingTop: 5,
@@ -458,7 +463,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     // fontSize: 18,
-    fontSize: RFPercentage(2.7),
+    fontSize: height * 0.026,
     fontWeight: 'bold',
   },
   searchButton: {
@@ -486,7 +491,7 @@ const styles = StyleSheet.create({
   },
   listTitle: {
     // fontSize: 20,
-    fontSize: RFPercentage(2.9),
+    fontSize: height * 0.028,
     fontWeight: 'bold',
     color: '#1a6997',
     marginHorizontal: 10,
@@ -494,7 +499,7 @@ const styles = StyleSheet.create({
   },
   listSubTitle: {
     // fontSize: 16,
-    fontSize: RFPercentage(2.5),
+    fontSize: height * 0.024,
     color: '#000',
     marginHorizontal: 10,
     paddingTop: 5,

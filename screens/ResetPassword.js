@@ -84,24 +84,24 @@ const ResetPassword = () => {
           {({
             handleChange, handleBlur, handleSubmit, values, errors, touched,
           }) => (
-              <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                <TextInput
-                  style={styles.input}
-                  placeholder={t('common:Email')}
-                  placeholderTextColor='#9c9c9c'
-                  onChangeText={handleChange('email')}
-                  onBlur={handleBlur('email')}
-                  value={values.email}
-                  keyboardType='email-address'
-                />
-                {touched.email && errors.email && <Text style={styles.error}>{errors.email}</Text>}
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={handleSubmit}>
-                  <Text style={styles.buttonText}>{t('common:SendPassword')}</Text>
-                </TouchableOpacity>
-              </View>
-            )}
+            <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+              <TextInput
+                style={styles.input}
+                placeholder={t('common:Email')}
+                placeholderTextColor='#9c9c9c'
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+                value={values.email}
+                keyboardType='email-address'
+              />
+              {touched.email && errors.email && <Text style={styles.error}>{errors.email}</Text>}
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleSubmit}>
+                <Text style={styles.buttonText}>{t('common:SendPassword')}</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </Formik>
       </View>
     </ImageBackground>
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontSize: RFPercentage(2.45),
+    fontSize: RFValue(15),
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },

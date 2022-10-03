@@ -24,12 +24,25 @@ const StripePaymentScreen = ({ route }) => {
   const examTime = route.params.examTime;
   const city_name = route.params.city_name;
   const email = route.params.email;
-  const city = route.params.city;
-  const country = route.params.country;
-  const phone = route.params.phone;
-  const address = route.params.address;
-  const zip_code = (route.params.zip_code).toString();
-  const name = route.params.name;
+  // const city = route.params.city;
+  // const country = route.params.country;
+  // const phone = route.params.phone;
+  // const address = route.params.address;
+  // const zip_code = (route.params.zip_code).toString();
+  // const name = route.params.name;
+  const [country, setCountry] = useState('DE');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [zip_code, setZipCode] = useState('');
+  const [name, setName] = useState('');
+  const [city, setCity] = useState('');
+
+  country = setCountry(route.params.country);
+  phone = setPhone(route.params.phone);
+  address = setAddress(route.params.address);
+  zip_code = setZipCode(route.params.zip_code);
+  name = setName(route.params.name);
+  city = setCity(route.params.city);
 
   const { userInfo } = useContext(AuthContext);
   // const [name, setName] = useState('');

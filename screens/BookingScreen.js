@@ -20,13 +20,13 @@ import { useNavigation } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { scale } from 'react-native-size-matters';
 import { Picker } from '@react-native-picker/picker';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
 
 
 const validationSchema = Yup.object().shape({
     salutation: Yup.string()
-        .required('SalutationIsRequired'),
-    // academic_title: Yup.string()
-    //     .required('AcademicRequired'),
+        .required(t('common:SaluteIsRequired')),
     first_name: Yup.string()
         .required(t('common:FirstNameIsRequired'))
         .min(2, t('common:FirstNameMustBeAtLeast2Characters'))
@@ -37,19 +37,12 @@ const validationSchema = Yup.object().shape({
         .matches(/^[a-zA-Z ]+$/, t('common:LastNameMustBeAlphabetical')),
     email: Yup.string()
         .required(t('common:EmailIsRequired'))
-        .email(t('common:EmailIsInvalid')),
+        .email(t('common:EmailIsInvalid'))
+        .max(40, t('common:EmailMustBeAtMost40Characters')),
     identification_number: Yup.string()
         .required(t('common:IdentificationNumberIsRequired'))
         .min(5, t('common:IdentificationNumberMustBeAtLeast5Characters'))
-        .matches(/^[a-zA-Z0-9 ]+$/, t('common:IdentificationNumberMustBeNumeric')),
-    // birthday: Yup.string()
-    //     .required(t('common:BirthdayIsRequired'))
-    //     .test('is-valid-date', t('common:BirthdayIsInvalid'), function (value) {
-    //         return moment(value, 'DD/MM/YYYY', true).isValid();
-    //     })
-    //     .test('is-valid-age', t('common:BirthdayIsInvalid'), function (value) {
-    //         return moment().diff(moment(value, 'DD/MM/YYYY'), 'years') >= 18;
-    //     }),
+        .matches(/^[a-zA-Z0-9 ]+$/, t('common:IdentificationNumberMustBeAlphaNumeric')),
     mother_tongue: Yup.string()
         .required(t('common:MotherTongueIsRequired')),
     birth_place: Yup.string()
@@ -76,14 +69,10 @@ const validationSchema = Yup.object().shape({
         .matches(/^[a-zA-Z ]+$/, t('common:CityMustBeAlphabetical')),
     zip_code: Yup.string()
         .required(t('common:ZipCodeIsRequired'))
-        .min(2, t('common:ZipCodeMustBeAtLeast2Characters'))
+        .min(4, t('common:ZipCodeMustBeAtLeast4Characters'))
         .matches(/^[0-9]+$/, t('common:ZipCodeMustBeNumeric')),
 
 }).strict();
-
-
-
-
 
 
 const BookingScreen = ({ route }) => {
@@ -893,13 +882,15 @@ const BookingScreen = ({ route }) => {
                                                             style={styles.icon}
                                                         />
                                                     </Text>
-                                                    <Text style={{ marginRight: scale(20), marginLeft: scale(10), color: "#1a6997", fontWeight: 'bold', fontSize: scale(20) }}>{t('common:UploadId')}</Text>
+                                                    <Text style={{ marginRight: scale(20), marginLeft: scale(10), color: "#1a6997", fontWeight: 'bold', fontSize: scale(17) }}>{t('common:UploadId')}</Text>
                                                 </View>
                                             </TouchableOpacity>
                                         </View>
                                         <TextInput style={styles.input}
                                             value={id_proof}
                                             readOnly={true}
+                                            placeholder={t('common:UploadId')}
+                                            placeholderTextColor="#A8B0B5"
                                         />
                                     </View>
                                     <View style={{ flex: 1, marginTop: '5%', marginBottom: '5%' }}>
@@ -1055,8 +1046,8 @@ const BookingScreen = ({ route }) => {
                                         {/* {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>} */}
                                     </View>
                                     <TouchableOpacity onPress={handleSubmit}
-                                        disabled={!isValid}
-                                        style={[styles.submitLabel, { backgroundColor: isValid ? '#1570a5' : '#cacfd2' }]}>
+                                        // disabled={!isValid}
+                                        style={[styles.submitLabel, { backgroundColor: '#1570a5' }]}>
                                         <Text style={{ color: isValid ? '#fff' : '#1570a5' }}>{t('common:PayNow')}</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -1114,7 +1105,7 @@ const styles = StyleSheet.create({
         height: 200,
     },
     h1: {
-        fontSize: 25,
+        fontSize: wp('5%'),
         color: '#fff',
         marginHorizontal: 10,
         paddingTop: 12,
@@ -1128,7 +1119,7 @@ const styles = StyleSheet.create({
     },
     search: {
         width: '94%',
-        height: 240,
+        height: hp('32%'),
         // borderWidth: 0.5,
         borderRadius: 5,
         padding: 10,

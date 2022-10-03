@@ -29,7 +29,8 @@ const validationSchema = Yup.object().shape({
     .matches(/^[a-zA-Z]+$/, t('common:LastNameMustBeAlphabetical')),
   email: Yup.string()
     .required(t('common:EmailIsRequired'))
-    .email(t('common:EmailIsInvalid')),
+    .email(t('common:EmailIsInvalid'))
+    .max(40, t('common:EmailMustBeAtMost40Characters')),
   password: Yup.string()
     .required(t('common:PasswordIsRequired'))
     .min(6, t('common:PasswordMustBeAtLeast6Characters')),
@@ -187,7 +188,7 @@ const RegisterScreen = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Main')}>
+                onPress={() => navigation.navigate('Home')}>
                 <Text
                   style={{
                     color: '#166795',

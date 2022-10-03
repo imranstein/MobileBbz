@@ -3,7 +3,6 @@ import { Text, View } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from '../screens/HomeScreen';
 import Login from '../screens/Login';
 import RegisterScreen from '../screens/RegisterScreen';
 import { AuthContext } from '../context/AuthContext';
@@ -25,6 +24,7 @@ import BookingSuccessScreen from '../screens/BookingSuccessScreen';
 import BookingDetailScreen from '../screens/BookingDetailScreen';
 import PaypalScreen from '../screens/PaypalScreen';
 import LanguageWelcome from '../screens/LanguageWelcome';
+import HomeScreen from '../screens/HomeScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -89,6 +89,7 @@ const Navigation = () => {
             <Stack.Screen name="Login/Signup"
               options={{ title: t('common:Welcome'), headerTintColor: '#1a6997' }}
               component={Welcome} />
+            <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen
               name="Login"
               component={Login}

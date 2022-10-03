@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         paddingLeft: 23,
     },
     title: {
-        fontSize: RFPercentage(3.2),
+        fontSize: RFValue(20),
         marginTop: 12,
         fontWeight: '800',
         color: '#1570a5',

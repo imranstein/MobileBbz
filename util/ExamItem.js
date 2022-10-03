@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Image, Dimensions } from 'react-native';
 import { IMAGE_URL } from '../config';
 import moment from 'moment';
 import RenderHtml from 'react-native-render-html';
@@ -12,8 +12,12 @@ import { t } from 'i18next';
 import { AuthContext } from '../context/AuthContext';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { scale } from 'react-native-size-matters';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
+
+const height = Dimensions.get('window').height;
+const width = Dimensions.get('window').width;
 
 const ExamItem = ({ item }) => {
     const navigation = useNavigation();
@@ -23,6 +27,7 @@ const ExamItem = ({ item }) => {
     const progress = item.available_seats / item.total_seat;
     // const source = { html: item.content };
     // const { width } = useWindowDimensions();
+
 
     return (
 
@@ -45,14 +50,14 @@ const ExamItem = ({ item }) => {
             >
                 {media != null ? <View style={styles.image}>
                     <ImageBackground
-                        style={{ width: '100%', height: 250, borderRadius: 2 }}
+                        style={{ width: width * 1, height: height * 0.37, borderRadius: 2 }}
                         source={{ uri: `${IMAGE_URL}${item.media.file_path}` }}
                     >
                         <View style={styles.upperTextView}><Text style={styles.upperText}>{item.slug}</Text></View>
                         <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} €</Text></View>
                     </ImageBackground>
                 </View> : <View style={styles.image}><ImageBackground
-                    style={{ width: '100%', height: 250, borderRadius: 2 }}
+                    style={{ width: width * 1, height: height * 0.37, borderRadius: 2 }}
                     source={require('../assets/testinghall.png')}
                 >
                     <View style={styles.upperTextView}><Text style={styles.upperText} >{item.slug}</Text></View>
@@ -73,20 +78,20 @@ const ExamItem = ({ item }) => {
 
             <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 15 }}>
                 <Text style={{
-                    fontSize: scale(15),
+                    fontSize: RFValue(13),
                     fontWeight: '600', color: '#000'
                 }}>{t("common:ExamDate")}: </Text><Text style={styles.examDateText}>{moment(item.exam_date).format('DD/MM/YY')}</Text>
                 <Text style={{
-                    fontSize: scale(15),
+                    fontSize: RFValue(13),
                     fontWeight: '600', color: '#000'
                 }}>{t("common:RegDate")}: </Text><Text style={styles.regDateText}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text>
             </View>
             {location != null ?
                 <View View style={{
-                    flexDirection: 'row', marginTop: 27, paddingBottom: 17, marginHorizontal: 15, borderBottomWidth: 1,
+                    flexDirection: 'row', marginTop: 23, paddingBottom: 17, marginHorizontal: 10, borderBottomWidth: 1,
                     borderBottomColor: '#EBEBEB'
                 }}>
-                    <Text style={{ marginRight: 14 }}>
+                    <Text style={{ marginRight: 10 }}>
                         <Entypo
                             name="location-pin"
                             size={18}
@@ -113,8 +118,8 @@ const ExamItem = ({ item }) => {
             <View style={styles.description}>
                 <Text style={styles.AvailableSeats}>{t("common:AvailableSeats")}</Text>
                 <Text style={{
-                    marginLeft: '50%',
-                    fontSize: scale(15),
+                    marginLeft: wp('40%'),
+                    fontSize: RFValue(13),
                     color: "#000",
                     fontWeight: '600',
                     marginRight: '3%',
@@ -123,7 +128,7 @@ const ExamItem = ({ item }) => {
                 }}>
                     {/* {progress} */}
                     <Progress.Circle thickness={4} progress={progress} size={40} animated={false} showsText={true} textStyle={{
-                        fontWeight: 'bold', fontSize: scale(10), color: '#000'
+                        fontWeight: 'bold', fontSize: height * 0.011, color: '#000'
                     }} color={'green'} unfilledColor={'red'} />
 
                 </Text>
@@ -176,7 +181,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     dateText: {
-        fontSize: scale(12),
+        fontSize: height * 0.016,
         color: "#1a6997",
     },
     title: {
@@ -185,7 +190,7 @@ const styles = StyleSheet.create({
         marginLeft: 15,
     },
     titleText: {
-        fontSize: scale(15),
+        fontSize: RFValue(14),
         color: "#000",
         // fontWeight: 'bold',
     },
@@ -196,21 +201,21 @@ const styles = StyleSheet.create({
         maxHeight: 82,
     },
     descriptionText: {
-        fontSize: scale(11),
+        fontSize: height * 0.015,
         color: "#000",
     },
     //create a diagonalborder for upperTextView
 
     upperTextView: {
         backgroundColor: '#ee4327',
-        height: '12%',
-        width: '25%',
+        height: height * 0.05,
+        width: width * 0.25,
         marginTop: '5%',
 
     },
     upperText: {
         color: '#fff',
-        fontSize: scale(16),
+        fontSize: RFValue(15),
         fontWeight: '600',
         textAlign: 'left',
         marginLeft: '10%',
@@ -220,36 +225,36 @@ const styles = StyleSheet.create({
         // backgroundColor: '#fff',
         height: '12%',
         width: '20%',
-        marginTop: '50%',
+        marginTop: height * 0.24,
     },
     lowerText: {
         color: '#fff',
-        fontSize: scale(18),
+        fontSize: RFValue(16),
         fontWeight: '500',
         textAlign: 'center',
         // marginTop: '2%',
     },
     examDateText: {
-        fontSize: scale(15),
+        fontSize: RFValue(13),
         color: "#1a6997",
         fontWeight: '600',
         marginRight: '4%',
     },
     regDateText: {
-        fontSize: scale(15),
+        fontSize: RFValue(13),
         color: "#ee4327",
         fontWeight: '600',
         marginRight: '4%',
     },
     locationText: {
-        fontSize: scale(14),
+        fontSize: RFValue(14),
         color: "#1a6997",
         width: '90%',
         fontWeight: '400',
         // marginRight: '4%',
     },
     AvailableSeats: {
-        fontSize: scale(14),
+        fontSize: RFValue(14),
         color: "#000",
         fontWeight: '600',
         marginTop: 22,
