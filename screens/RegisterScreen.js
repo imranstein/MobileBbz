@@ -18,35 +18,37 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { scale } from 'react-native-size-matters';
 
-const validationSchema = Yup.object().shape({
-  first_name: Yup.string()
-    .required(t('common:FirstNameIsRequired'))
-    .min(2, t('common:FirstNameMustBeAtLeast2Characters'))
-    .matches(/^[a-zA-Z]+$/, t('common:FirstNameMustBeAlphabetical')),
-  last_name: Yup.string()
-    .required(t('common:LastNameIsRequired'))
-    .min(2, t('common:LastNameMustBeAtLeast2Characters'))
-    .matches(/^[a-zA-Z]+$/, t('common:LastNameMustBeAlphabetical')),
-  email: Yup.string()
-    .required(t('common:EmailIsRequired'))
-    .email(t('common:EmailIsInvalid'))
-    .max(40, t('common:EmailMustBeAtMost40Characters')),
-  password: Yup.string()
-    .required(t('common:PasswordIsRequired'))
-    .min(6, t('common:PasswordMustBeAtLeast6Characters')),
-  phone: Yup.string()
-    .required(t('common:PhoneIsRequired'))
-    .min(9, t('common:PhoneMustBeAtLeast9Characters'))
-    .max(15, t('common:PhoneMustBeAtMost15Characters'))
-    .matches(/^[0-9]+$/, t('common:PhoneMustBeNumeric')),
-  // confirmPassword: Yup.string()
-  //   .required(t('common:confirm_password_required'))
-  //   .oneOf([Yup.ref('password'), null], t('common:confirm_password_invalid')),
-  // terms: Yup.boolean().oneOf([true], t('common:TermIsRequired'))
-  //   .required(t('common:TermIsRequired')),
-}).strict();
 
 const RegisterScreen = ({ navigation }) => {
+
+  const validationSchema = Yup.object().shape({
+    first_name: Yup.string()
+      .required(t('common:FirstNameIsRequired'))
+      .min(2, t('common:FirstNameMustBeAtLeast2Characters'))
+      .matches(/^[a-zA-Z ]+$/, t('common:FirstNameMustBeAlphabetical')),
+    last_name: Yup.string()
+      .required(t('common:LastNameIsRequired'))
+      .min(2, t('common:LastNameMustBeAtLeast2Characters'))
+      .matches(/^[a-zA-Z ]+$/, t('common:LastNameMustBeAlphabetical')),
+    email: Yup.string()
+      .required(t('common:EmailIsRequired'))
+      .email(t('common:EmailIsInvalid'))
+      .max(40, t('common:EmailMustBeAtMost40Characters')),
+    password: Yup.string()
+      .required(t('common:PasswordIsRequired'))
+      .min(6, t('common:PasswordMustBeAtLeast6Characters')),
+    phone: Yup.string()
+      .required(t('common:PhoneIsRequired'))
+      .min(9, t('common:PhoneMustBeAtLeast9Characters'))
+      .max(15, t('common:PhoneMustBeAtMost15Characters'))
+      .matches(/^[0-9]+$/, t('common:PhoneMustBeNumeric')),
+    // confirmPassword: Yup.string()
+    //   .required(t('common:confirm_password_required'))
+    //   .oneOf([Yup.ref('password'), null], t('common:confirm_password_invalid')),
+    // terms: Yup.boolean().oneOf([true], t('common:TermIsRequired'))
+    //   .required(t('common:TermIsRequired')),
+  });
+
   const [term, setTerm] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState(null);
 

@@ -11,9 +11,20 @@ import { BASE_URL } from '../config';
 import Entypo from 'react-native-vector-icons/Entypo';
 import moment from 'moment';
 import { scale } from 'react-native-size-matters';
+import { useNavigation } from '@react-navigation/native';
 
 
 const BookingSuccessScreen = ({ route }) => {
+
+  const navigation = useNavigation;
+  useEffect(() => {
+    navigation.addListener('beforeRemove', (e) => {
+      e.preventDefault();
+      navigation.navigate('ExamDetail', {
+        paramKey: eventId,
+      });
+    });
+  }, [navigation]);
   const { userInfo } = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [first_name, setFirstName] = useState('');
@@ -37,7 +48,7 @@ const BookingSuccessScreen = ({ route }) => {
   const [id, setId] = useState('');
   const [bookingDate, setBookingDate] = useState('');
   const code = route.params.code;
-
+  const eventId = route.params.event_id;
 
   const gateway = route.params.gateway;
   const amount = route.params.amount;
@@ -136,7 +147,7 @@ const BookingSuccessScreen = ({ route }) => {
                   {t("common:BookingDetailHasBeenSentTo")}:
                 </Text>
                 <Text style={styles.locationDescription}>
-                  {userInfo.email}
+                  {email}
                 </Text>
               </View>
             </View>

@@ -153,7 +153,7 @@ export default {
     SearchResult: 'Suchergebnis',
     SelectLocation: 'Wählen Sie Ihren Center-Standort aus',
     SearchEverything: 'Suche hier alles...',
-    SelectExam: 'Wählen Sie Ihr Sprachniveau aus',
+    SelectExam: 'Wählen Sie den Prüfungstyp aus',
     UploadId: 'Ausweisnachweis hochladen',
     WeWork: 'Wie wir arbeiten',
     KnowWhoWeAre: 'Wer wir sind',
@@ -186,6 +186,7 @@ export default {
     ExamTraining: 'Prüfungs training',
     Exam: 'Prüfung',
     Select: 'Wählen',
-
+    BirthdayIsRequired: 'Geburtstag ist erforderlich',
+    BillingTo: 'Rechnung an',
 
 }

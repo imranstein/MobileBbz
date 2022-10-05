@@ -12,7 +12,7 @@ import { t } from 'i18next';
 import { AuthContext } from '../context/AuthContext';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { scale } from 'react-native-size-matters';
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 const height = Dimensions.get('window').height;

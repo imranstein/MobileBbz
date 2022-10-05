@@ -25,6 +25,7 @@ import BookingDetailScreen from '../screens/BookingDetailScreen';
 import PaypalScreen from '../screens/PaypalScreen';
 import LanguageWelcome from '../screens/LanguageWelcome';
 import HomeScreen from '../screens/HomeScreen';
+import InvoiceScreen from '../screens/InvoiceScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -80,6 +81,9 @@ const Navigation = () => {
             <Stack.Screen name="BookingDetail"
               options={{ title: t('common:BookingDetail'), headerTintColor: '#1a6997' }}
               component={BookingDetailScreen} />
+            <Stack.Screen name="InvoiceScreen"
+              options={{ title: t('common:InvoiceScreen'), headerTintColor: '#1a6997' }}
+              component={InvoiceScreen} />
             <Stack.Screen name="Language"
               options={{ title: t('common:language'), headerTintColor: '#1a6997' }}
               component={LanguageWelcome} />
@@ -105,6 +109,7 @@ const Navigation = () => {
               component={ResetPassword}
             />
             <Stack.Screen name="Success" component={ResetSuccess} />
+            <Stack.Screen name="Exams" component={SearchPage} />
             <Stack.Screen name="NewsDetail"
               options={{ title: t('common:NewsDetail'), headerTintColor: '#1a6997' }}
               component={NewsDetailScreen} />

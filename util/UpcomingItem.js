@@ -84,7 +84,14 @@ const UpcomingItem = ({ item }) => {
 
             </TouchableOpacity >
             <View style={styles.buttons}>
-                <TouchableOpacity style={styles.touchable}>
+                <TouchableOpacity style={styles.touchable}
+                    onPress={() => {
+                        
+                        navigation.navigate('InvoiceScreen', {
+                            paramKey: item.code,
+                        })
+                    }
+                    }>
                     <Text style={styles.button}>{t('common:GetInvoice')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.touchable1}>

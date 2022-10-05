@@ -9,7 +9,6 @@ import {
   ScrollView,
 } from 'react-native';
 import React, { useState, useContext } from 'react';
-import { t } from 'i18next';
 import { useTranslation } from "react-i18next";
 import axios from 'axios';
 import { BASE_URL } from '../config';
@@ -19,33 +18,38 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { t } from 'i18next';
 
 
-const validationSchema = Yup.object().shape({
-  name: Yup.string()
-    .required(t('common:NameIsRequired'))
-    .min(4, t('common:NameMustBeAtLeast4Characters')),
-  email: Yup.string()
-    .required(t('common:EmailIsRequired'))
-    .email(t('common:EmailIsInvalid')),
-  message: Yup.string()
-    .required(t('common:MessageIsRequired')),
-});
+
 
 
 const ContactUs = () => {
+  const { t } = useTranslation();
+
+  const validationSchema = Yup.object().shape({
+    full_name: Yup.string()
+      .required(t('common:NameIsRequired'))
+      .min(4, t('common:NameMustBeAtLeast4Characters')),
+    email: Yup.string()
+      .required(t('common:EmailIsRequired'))
+      .email(t('common:EmailIsInvalid')),
+    message: Yup.string()
+      .required(t('common:MessageIsRequired')),
+  });
+
   const navigation = useNavigation();
   const { userInfo, logout } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
-  const { t } = useTranslation();
 
 
-  const SendMessage = (name, email, message) => {
+  const SendMessage = (full_name, email, message) => {
     setIsLoading(true);
+    console.log(full_name, email, message);
 
     axios
       .post(`${BASE_URL}/contact-us`, {
-        name,
+        full_name,
         email,
         message,
       })
@@ -59,7 +63,7 @@ const ContactUs = () => {
         return true;
       })
       .catch(e => {
-        console.log(e);
+        console.log('error', e);
         if (e.response.status === 400) {
           alert(e.response.data.errors, 'Error');
         } else if (e.response.status === 401) {
@@ -67,13 +71,10 @@ const ContactUs = () => {
         } else if (e.response.status === 500) {
           alert(e.response.data.error, 'Error');
         } else if (e.response.status === 422) {
-          alert(e.response.data.errors.name, 'Error');
-        } else if (e.response.status === 422) {
-          alert(e.response.data.errors.email, 'Error');
-        } else if (e.response.status === 422) {
-          alert(e.response.data.errors.message, 'Error');
+          alert('Name Or Message Can not Be Empty', 'Error');
         }
-        return false;
+        setIsLoading(false);
+        return true;
       });
   };
 
@@ -91,12 +92,12 @@ const ContactUs = () => {
           </ImageBackground>
         </View>
         <Formik
-          initialValues={{ name: '', email: '', message: '' }}
+          initialValues={{ full_name: '', email: '', message: '' }}
           validateOnMount={true}
           onSubmit={(values) => {
             console.log(values);
             SendMessage(
-              fullname = values.name,
+              full_name = values.full_name,
               email = values.email,
               message = values.message,
             );
@@ -110,13 +111,13 @@ const ContactUs = () => {
                     style={styles.textInput}
                     placeholder={t('common:Name')}
                     // onChangeText={text => setName(text)}
-                    onChangeText={handleChange('name')}
-                    onBlur={handleBlur('name')}
+                    onChangeText={handleChange('full_name')}
+                    onBlur={handleBlur('full_name')}
                     placeholderTextColor="#DAE1E7"
-                    value={values.name}
+                    value={values.full_name}
                   />
-                  {touched.name && errors.name && (
-                    <Text style={styles.error}>{errors.name}</Text>
+                  {touched.full_name && errors.full_name && (
+                    <Text style={styles.error}>{errors.full_name}</Text>
                   )}
                   <TextInput
                     style={styles.textInput}
@@ -148,7 +149,7 @@ const ContactUs = () => {
                 <TouchableOpacity style={[styles.button, {
                   backgroundColor: isValid ? '#1a6997' : '#1570A5',
                 }]}
-                  disabled={!isValid}
+                  // disabled={!isValid}
                   onPress={handleSubmit}>
                   <Text style={styles.buttonText}>{t('common:SendMessage')}</Text>
                 </TouchableOpacity>

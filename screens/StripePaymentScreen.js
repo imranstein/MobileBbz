@@ -30,19 +30,19 @@ const StripePaymentScreen = ({ route }) => {
   // const address = route.params.address;
   // const zip_code = (route.params.zip_code).toString();
   // const name = route.params.name;
-  const [country, setCountry] = useState('DE');
+  const [country, setCountry] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [zip_code, setZipCode] = useState('');
   const [name, setName] = useState('');
   const [city, setCity] = useState('');
 
-  country = setCountry(route.params.country);
-  phone = setPhone(route.params.phone);
-  address = setAddress(route.params.address);
-  zip_code = setZipCode(route.params.zip_code);
-  name = setName(route.params.name);
-  city = setCity(route.params.city);
+  // country = setCountry(route.params.country);
+  // phone = setPhone(route.params.phone);
+  // address = setAddress(route.params.address);
+  // zip_code = setZipCode(route.params.zip_code);
+  // name = setName(route.params.name);
+  // city = setCity(route.params.city);
 
   const { userInfo } = useContext(AuthContext);
   // const [name, setName] = useState('');
@@ -212,7 +212,7 @@ const StripePaymentScreen = ({ route }) => {
             fontSize: scale(16),
           }}
           value={address}
-          onChangeText={(text) => setLine1(text)}
+          onChangeText={(text) => setAddress(text)}
         />
         <TextInput
           placeholder="Zip Code"
@@ -228,7 +228,7 @@ const StripePaymentScreen = ({ route }) => {
             fontSize: scale(16),
           }}
           value={zip_code}
-          onChangeText={(text) => setPostalCode(text)}
+          onChangeText={(text) => setZipCode(text)}
         />
         <TextInput
           placeholder="City"

@@ -24,58 +24,61 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 
 
-const validationSchema = Yup.object().shape({
-    salutation: Yup.string()
-        .required(t('common:SaluteIsRequired')),
-    first_name: Yup.string()
-        .required(t('common:FirstNameIsRequired'))
-        .min(2, t('common:FirstNameMustBeAtLeast2Characters'))
-        .matches(/^[a-zA-Z ]+$/, t('common:FirstNameMustBeAlphabetical')),
-    last_name: Yup.string()
-        .required(t('common:LastNameIsRequired'))
-        .min(2, t('common:LastNameMustBeAtLeast2Characters'))
-        .matches(/^[a-zA-Z ]+$/, t('common:LastNameMustBeAlphabetical')),
-    email: Yup.string()
-        .required(t('common:EmailIsRequired'))
-        .email(t('common:EmailIsInvalid'))
-        .max(40, t('common:EmailMustBeAtMost40Characters')),
-    identification_number: Yup.string()
-        .required(t('common:IdentificationNumberIsRequired'))
-        .min(5, t('common:IdentificationNumberMustBeAtLeast5Characters'))
-        .matches(/^[a-zA-Z0-9 ]+$/, t('common:IdentificationNumberMustBeAlphaNumeric')),
-    mother_tongue: Yup.string()
-        .required(t('common:MotherTongueIsRequired')),
-    birth_place: Yup.string()
-        .required(t('common:BirthPlaceIsRequired'))
-        .min(2, t('common:BirthPlaceMustBeAtLeast2Characters')),
-    telephone: Yup.string()
-        .min(9, t('common:PhoneMustBeAtLeast9Characters'))
-        .max(15, t('common:PhoneMustBeAtMost15Characters'))
-        .matches(/^[0-9]+$/, t('common:PhoneMustBeNumeric')),
-    phone: Yup.string()
-        .required(t('common:PhoneIsRequired'))
-        .min(9, t('common:PhoneMustBeAtLeast9Characters'))
-        .max(15, t('common:PhoneMustBeAtMost15Characters'))
-        .matches(/^[0-9]+$/, t('common:PhoneMustBeNumeric')),
-    address: Yup.string()
-        .required(t('common:AddressLine1IsRequired'))
-        .min(2, t('common:AddressLine1MustBeAtLeast2Characters')),
-    address2: Yup.string()
-        .required(t('common:StreetIsRequired'))
-        .min(2, t('common:StreetMustBeAtLeast2Characters')),
-    city: Yup.string()
-        .required(t('common:CityIsRequired'))
-        .min(2, t('common:CityMustBeAtLeast2Characters'))
-        .matches(/^[a-zA-Z ]+$/, t('common:CityMustBeAlphabetical')),
-    zip_code: Yup.string()
-        .required(t('common:ZipCodeIsRequired'))
-        .min(4, t('common:ZipCodeMustBeAtLeast4Characters'))
-        .matches(/^[0-9]+$/, t('common:ZipCodeMustBeNumeric')),
 
-}).strict();
 
 
 const BookingScreen = ({ route }) => {
+
+    const validationSchema = Yup.object().shape({
+        salutation: Yup.string()
+            .required(t('common:SaluteIsRequired')),
+        first_name: Yup.string()
+            .required(t('common:FirstNameIsRequired'))
+            .min(2, t('common:FirstNameMustBeAtLeast2Characters'))
+            .matches(/^[a-zA-Z ]+$/, t('common:FirstNameMustBeAlphabetical')),
+        last_name: Yup.string()
+            .required(t('common:LastNameIsRequired'))
+            .min(2, t('common:LastNameMustBeAtLeast2Characters'))
+            .matches(/^[a-zA-Z ]+$/, t('common:LastNameMustBeAlphabetical')),
+        email: Yup.string()
+            .required(t('common:EmailIsRequired'))
+            .email(t('common:EmailIsInvalid'))
+            .max(40, t('common:EmailMustBeAtMost40Characters')),
+        identification_number: Yup.string()
+            .required(t('common:IdentificationNumberIsRequired'))
+            .min(5, t('common:IdentificationNumberMustBeAtLeast5Characters'))
+            .matches(/^[a-zA-Z0-9 ]+$/, t('common:IdentificationNumberMustBeAlphaNumeric')),
+        mother_tongue: Yup.string()
+            .required(t('common:MotherTongueIsRequired')),
+        birth_place: Yup.string()
+            .required(t('common:BirthPlaceIsRequired'))
+            .min(2, t('common:BirthPlaceMustBeAtLeast2Characters')),
+        telephone: Yup.string()
+            .min(9, t('common:PhoneMustBeAtLeast9Characters'))
+            .max(15, t('common:PhoneMustBeAtMost15Characters'))
+            .matches(/^[0-9]+$/, t('common:PhoneMustBeNumeric')),
+        phone: Yup.string()
+            .required(t('common:PhoneIsRequired'))
+            .min(9, t('common:PhoneMustBeAtLeast9Characters'))
+            .max(15, t('common:PhoneMustBeAtMost15Characters'))
+            .matches(/^[0-9]+$/, t('common:PhoneMustBeNumeric')),
+        address: Yup.string()
+            .required(t('common:AddressLine1IsRequired'))
+            .min(2, t('common:AddressLine1MustBeAtLeast2Characters')),
+        address2: Yup.string()
+            .required(t('common:StreetIsRequired'))
+            .min(2, t('common:StreetMustBeAtLeast2Characters')),
+        city: Yup.string()
+            .required(t('common:CityIsRequired'))
+            .min(2, t('common:CityMustBeAtLeast2Characters'))
+            .matches(/^[a-zA-Z ]+$/, t('common:CityMustBeAlphabetical')),
+        zip_code: Yup.string()
+            .required(t('common:ZipCodeIsRequired'))
+            .min(4, t('common:ZipCodeMustBeAtLeast4Characters'))
+            .matches(/^[0-9]+$/, t('common:ZipCodeMustBeNumeric')),
+
+    }).strict();
+
     const navigation = useNavigation();
     const { userInfo } = useContext(AuthContext);
     const slug = route.params.slug;
@@ -293,12 +296,37 @@ const BookingScreen = ({ route }) => {
                 }
             } else {
                 console.log(response.data);
-                alert(response.data.message, [{
-                    text: t('common:OK'),
-                    onPress: () => {
-                        navigation.navigate('Home');
-                    }
-                }]);
+                if (country_of_birth == '') {
+                    alert('Please Choose Country of birth', [{
+                        text: t('common:OK'),
+                        onPress: () => {
+                            navigation.navigate('Home');
+                        }
+                    }]);
+                } else if (birthday == '') {
+                    alert('Please Choose Birthday', [{
+                        text: t('common:OK'),
+                        onPress: () => {
+                            navigation.navigate('Home');
+                        }
+                    }]);
+                }
+                else if (id_proof == '') {
+                    alert('Please Choose Id Proof', [{
+                        text: t('common:OK'),
+                        onPress: () => {
+                            navigation.navigate('Home');
+                        }
+                    }]);
+                }
+                else {
+                    alert('Please Make sure you insert all data', [{
+                        text: t('common:OK'),
+                        onPress: () => {
+                            navigation.navigate('Home');
+                        }
+                    }]);
+                }
             }
         }).catch((error) => {
             console.log(error);
@@ -384,12 +412,37 @@ const BookingScreen = ({ route }) => {
                 }
             } else {
                 console.log(response.data);
-                alert(response.data.message, [{
-                    text: t('common:OK'),
-                    onPress: () => {
-                        navigation.navigate('Home');
-                    }
-                }]);
+                if (country_of_birth == '') {
+                    alert('Please Choose Country of birth', [{
+                        text: t('common:OK'),
+                        onPress: () => {
+                            navigation.navigate('Home');
+                        }
+                    }]);
+                } else if (birthday == '') {
+                    alert('Please Choose Birthday', [{
+                        text: t('common:OK'),
+                        onPress: () => {
+                            navigation.navigate('Home');
+                        }
+                    }]);
+                }
+                else if (id_proof == '') {
+                    alert('Please Choose Id Proof', [{
+                        text: t('common:OK'),
+                        onPress: () => {
+                            navigation.navigate('Home');
+                        }
+                    }]);
+                }
+                else {
+                    alert('Please Make sure you insert all data', [{
+                        text: t('common:OK'),
+                        onPress: () => {
+                            navigation.navigate('Home');
+                        }
+                    }]);
+                }
             }
         }).catch((error) => {
             console.log(error);
@@ -725,6 +778,8 @@ const BookingScreen = ({ route }) => {
                                                         timeZoneOffsetInMinutes={0}
                                                         value={date}
                                                         mode={mode}
+                                                        maximumDate={new Date(2007, 0, 1)}
+                                                        minimumDate={new Date(1970, 0, 1)}
                                                         is24Hour={true}
                                                         display="calendar"
                                                         onChange={onChange}
@@ -886,10 +941,10 @@ const BookingScreen = ({ route }) => {
                                                 </View>
                                             </TouchableOpacity>
                                         </View>
-                                        <TextInput style={styles.input}
+                                        <TextInput style={[styles.input, { color: '#1a6997' }]}
                                             value={id_proof}
                                             readOnly={true}
-                                            placeholder={t('common:UploadId')}
+                                            // placeholder={t('common:UploadId')}
                                             placeholderTextColor="#A8B0B5"
                                         />
                                     </View>
@@ -1048,7 +1103,7 @@ const BookingScreen = ({ route }) => {
                                     <TouchableOpacity onPress={handleSubmit}
                                         // disabled={!isValid}
                                         style={[styles.submitLabel, { backgroundColor: '#1570a5' }]}>
-                                        <Text style={{ color: isValid ? '#fff' : '#1570a5' }}>{t('common:PayNow')}</Text>
+                                        <Text style={{ color: '#fff' }}>{t('common:PayNow')}</Text>
                                     </TouchableOpacity>
                                 </View>
                             )}
@@ -1259,5 +1314,7 @@ const styles = StyleSheet.create({
     error: {
         color: 'red',
         marginBottom: 20,
+        marginLeft: '1%',
+        marginTop: '2%'
     },
 })

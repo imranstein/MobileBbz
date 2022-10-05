@@ -201,6 +201,8 @@ const MyProfileScreen = (props) => {
                     timeZoneOffsetInMinutes={0}
                     value={date}
                     mode={mode}
+                    maximumDate={new Date(2007, 0, 1)}
+                    minimumDate={new Date(1970, 0, 1)}
                     is24Hour={true}
                     display="calendar"
                     onChange={onChange}

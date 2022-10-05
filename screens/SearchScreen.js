@@ -60,16 +60,19 @@ const SearchPage = () => {
 
 
   const onChangeFrom = (event, selectedDate) => {
+    console.log(selectedDate);
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
     setFromDate(moment(currentDate).format('YYYY-MM-DD'));
+    console.log('fromDate', from_date);
   }
-  const onChangeTo = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
+  const onChangeTo = (event2, selectedDate2) => {
+    const currentDate2 = selectedDate2 || date2;
     setShow(Platform.OS === 'ios');
-    setDate2(currentDate);
-    setToDate(moment(currentDate).format('YYYY-MM-DD'));
+    setDate2(currentDate2);
+    setToDate(moment(currentDate2).format('YYYY-MM-DD'));
+    console.log('toDate', to_date);
   }
 
 
@@ -160,7 +163,7 @@ const SearchPage = () => {
                 value={term}
                 onChangeText={setTerm}
                 style={styles.titleHeader}
-                color="#B7D2E3"
+                color="#000"
                 placeholder={t('common:SearchEverything')}
                 placeholderTextColor="#B7D2E3"
               />
@@ -178,7 +181,7 @@ const SearchPage = () => {
             <Picker
               itemStyle={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', borderColor: '#c9c9c9', borderWidth: 0.5, borderRadius: 5, }}
               selectedValue={location_id}
-              style={{ height: 50, width: '90%', marginLeft: '2%', marginBottom: '2%', color: '#A8B0B5' }}
+              style={{ height: 50, width: '96%', marginLeft: '2%', marginBottom: '2%', color: '#A8B0B5' }}
               onValueChange={(itemValue, itemIndex) => setLocation(itemValue)}
             >
               <Picker.Item
@@ -224,6 +227,8 @@ const SearchPage = () => {
                   testID="dateTimePicker"
                   timeZoneOffsetInMinutes={0}
                   value={date1}
+                  maximumDate={new Date(2023, 6, 1)}
+                  minimumDate={new Date(2022, 1, 1)}
                   mode={mode}
                   is24Hour={true}
                   display="calendar"
@@ -255,6 +260,8 @@ const SearchPage = () => {
                   timeZoneOffsetInMinutes={0}
                   value={date2}
                   mode={mode}
+                  maximumDate={new Date(2023, 6, 1)}
+                  minimumDate={new Date(2022, 1, 1)}
                   is24Hour={true}
                   display="calendar"
                   onChange={onChangeTo}
@@ -274,7 +281,7 @@ const SearchPage = () => {
             <Picker
               itemStyle={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', borderColor: '#c9c9c9', borderWidth: 0.5, borderRadius: 5, }}
               selectedValue={exam_level_id}
-              style={{ height: 50, width: '90%', marginLeft: '2%', marginBottom: '2%', color: '#A8B0B5' }}
+              style={{ height: 50, width: '96%', marginLeft: '2%', marginBottom: '2%', color: '#A8B0B5' }}
               onValueChange={(itemValue, itemIndex) => setExamLevel(itemValue)}
             >
               <Picker.Item
@@ -467,7 +474,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   searchButton: {
-    width: '94%',
+    width: '100%',
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',

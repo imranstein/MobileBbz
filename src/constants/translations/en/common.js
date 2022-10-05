@@ -146,7 +146,7 @@ export default {
     YourSearchedResult: 'Your Searched Result',
     SelectLocation: 'Select Your Center Location',
     SearchEverything: 'Search everything here...',
-    SelectExam: 'Select Your Language Level',
+    SelectExam: 'Select Exam Type',
     UploadId: 'Upload ID Proof',
     WeWork: 'How We Work',
     KnowWhoWeAre: 'Know Who We Are',
@@ -173,5 +173,7 @@ export default {
     CityMustBeAtLeast2Characters: 'City must be at least 2 characters',
     LastNameMustBeAlphabetical: 'Last Name must be alphabetical',
     MotherTongueIsRequired: 'Mother Tongue is required',
+    BirthdayIsRequired: 'Birthday is required',
+    BillingTo: 'Billing To',
 
 }
