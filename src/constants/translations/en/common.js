@@ -175,5 +175,9 @@ export default {
     MotherTongueIsRequired: 'Mother Tongue is required',
     BirthdayIsRequired: 'Birthday is required',
     BillingTo: 'Billing To',
+    InvoiceScreen: 'Invoice Screen',
+    TicketScreen: 'Ticket Screen',
+    ExamName: 'Exam Name',
+    ExamTimeAndDate: 'Exam Time And Date',
 
 }

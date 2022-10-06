@@ -137,7 +137,7 @@ export default {
     MotherTongue: 'Muttersprache',
     TelePhone: 'Telefon',
     Mobile: 'Mobil',
-    FullAmount: 'Vollständiger Betrag bezahlt',
+    FullAmount: 'Gesamtbetrag',
     AmountPaid: 'Bezahlter Betrag :',
     AdditionalService: 'Zusatzleistung: Postversand- Zertifikate / Ergebnisbogen',
     GetInvoice: 'Rechnung erhalten',
@@ -188,5 +188,9 @@ export default {
     Select: 'Wählen',
     BirthdayIsRequired: 'Geburtstag ist erforderlich',
     BillingTo: 'Rechnung an',
+    InvoiceScreen: 'Rechnungsbildschirm',
+    TicketScreen: 'Ticketbildschirm',
+    ExamName: 'Prüfungsname',
+    ExamTimeAndDate: 'Prüfungszeit und Datum',
 
 }

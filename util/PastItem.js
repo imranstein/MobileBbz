@@ -5,8 +5,8 @@ import moment from 'moment';
 import RenderHtml from 'react-native-render-html';
 import { useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import MaterialCommunityIcons
-    from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import * as Progress from 'react-native-progress';
 import { t } from 'i18next';
 import { AuthContext } from '../context/AuthContext';
@@ -61,14 +61,24 @@ const PastItem = ({ item }) => {
                 >
                 </ImageBackground>
                     <View style={styles.detailView}>
-                        <Text style={[styles.detail, { width: '40%', fontSize: RFPercentage(2) }]}>
-                            {t('common:AdditionalService')}
+                        <Text style={[styles.detail, { width: '35%', fontSize: RFPercentage(2) }]}>
+                            {title}
                         </Text>
                         <Text style={[styles.detail, { color: '#1a6997', fontWeight: '600' }]}>
                             {slug}
                         </Text>
                         <Text style={[styles.detail, { fontWeight: '600' }]}>
                             {t('common:AmountPaid')} <Text style={[styles.detail, { color: '#4BA765' }]}>{amount} €</Text>
+                        </Text>
+                    </View>
+                    <View>
+                        <Text style={{ color: 'black', marginLeft: widthPercentageToDP(-20), marginTop: heightPercentageToDP(4) }}>
+                            <FontAwesome5
+                                name="greater-than"
+                                size={20}
+                                color="#999"
+                                style={styles.icon}
+                            />
                         </Text>
                     </View>
                 </View>
@@ -84,10 +94,24 @@ const PastItem = ({ item }) => {
 
             </TouchableOpacity >
             <View style={styles.buttons}>
-                <TouchableOpacity style={styles.touchable}>
+                <TouchableOpacity style={styles.touchable}
+                    onPress={() => {
+
+                        navigation.navigate('InvoiceScreen', {
+                            paramKey: item.code,
+                        })
+                    }
+                    }>
                     <Text style={styles.button}>{t('common:GetInvoice')}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.touchable1}>
+                <TouchableOpacity style={styles.touchable1}
+                    onPress={() => {
+
+                        navigation.navigate('TicketScreen', {
+                            paramKey: item.code,
+                        })
+                    }
+                    }>
                     <Text style={styles.button1}>{t('common:PrintTicket')}</Text>
                 </TouchableOpacity>
             </View>

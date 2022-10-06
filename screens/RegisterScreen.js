@@ -234,6 +234,7 @@ const styles = StyleSheet.create({
   },
   link: {
     color: '#1570a5',
+    marginTop: '1%',
   },
   name: {
     flexDirection: 'row',

@@ -131,12 +131,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     paddingHorizontal: 10,
-    marginTop: '-10%',
+    marginTop: '-5%',
   },
   signupButton: {
     color: '#1570A5',
     fontSize: RFValue(14),
     marginLeft: '1%',
+    marginTop: '4%',
   },
 });
 export default Welcome;

@@ -79,7 +79,7 @@ const ContactUs = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={{ height: 610 }}>
+    <ScrollView contentContainerStyle={{ height: 650 }}>
       <View style={styles.container}>
         <Spinner visible={isLoading} />
         {/* <ActivityIndicator animating={isLoading} size="large" color="#0000ff" /> */}

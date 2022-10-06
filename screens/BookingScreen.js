@@ -548,6 +548,7 @@ const BookingScreen = ({ route }) => {
                     <View style={styles.wrapper}>
                         <Formik initialValues={{ salutation: '', academic_title: '', first_name: first_name, last_name: last_name, identification_number: '', email: email, birth_place: '', mother_tongue: '', telephone: '', phone: phone, address: address, address2: address2, city: city, zip_code: zip_code }}
                             enableReinitialize={true}
+                            validateOnMount={true}
                             onSubmit={(values) => {
                                 userInfo.token ?
 
@@ -624,7 +625,7 @@ const BookingScreen = ({ route }) => {
                                                 color: '#000',
                                             }}>
                                                 <Picker
-                                                    itemStyle={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', borderColor: '#c9c9c9', borderWidth: 0.5, borderRadius: 5, marginTop: 4 }}
+                                                    itemStyle={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', borderColor: '#c9c9c9', borderWidth: 0.5, borderRadius: 5, marginTop: 4, marginRight: '42.5%' }}
                                                     selectedValue={salutation}
                                                     style={{ height: 50, width: '90%', marginLeft: '-4.5%', marginBottom: '16%', color: '#000', marginTop: '-2%', fontSize: scale(1) }}
                                                     // onValueChange={(itemValue, itemIndex) => setSalutation(itemValue)}
@@ -633,6 +634,10 @@ const BookingScreen = ({ route }) => {
                                                         handleChange('salutation')(itemValue);
                                                     }}
                                                     onBlur={handleBlur('salutation')}
+                                                    mode="dialog"
+                                                    dropdownIconColor="#000"
+                                                    dropdownIconRippleColor="#000"
+                                                //dropdown icon position
 
 
                                                 >
@@ -657,6 +662,7 @@ const BookingScreen = ({ route }) => {
                                                 value={values.academic_title}
                                                 placeholder={t('common:AcademicTitle')}
                                                 placeholderTextColor="#A8B0B5"
+
                                             />
                                         </View>
                                         {errors.academic_title && touched.academic_title ? (
@@ -872,6 +878,8 @@ const BookingScreen = ({ route }) => {
                                                         handleChange('mother_tongue')(itemValue);
                                                     }}
                                                     onBlur={handleBlur('mother_tongue')}
+                                                    dropdownIconColor="#000"
+                                                    dropdownIconRippleColor="#000"
                                                 >
                                                     <Picker.Item
                                                         color='#A8B0B5'
@@ -1296,7 +1304,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         // paddingHorizontal: '%',
         width: '90%',
-        height: 42,
+        height: '100%',
         color: '#000',
     },
     inputs: {

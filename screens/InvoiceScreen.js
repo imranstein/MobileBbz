@@ -93,9 +93,10 @@ const InvoiceScreen = ({ route }) => {
             fileName: `invoice_${bookingId}`,
             directory: 'Documents',
         };
+        console.log('create pdf');
         let file = await RNHTMLtoPDF.convert(options)
         console.log(file.filePath);
-        alert(file.filePath);
+        alert('PDF created successfully');
     }
 
     return (
@@ -129,50 +130,51 @@ const InvoiceScreen = ({ route }) => {
 
             </View>
             <View style={{ marginTop: heightPercentageToDP(5), borderColor: '#cecece', borderWidth: 1, padding: 5, borderRadius: 3, margin: 5 }}>
-                <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1) }}>
+                <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1), justifyContent: 'space-between' }}>
                     <Text style={styles.title}>
                         {t('common:BookingNumber')}
                     </Text><Text style={styles.content}>{bookingId}</Text>
                 </View>
-                <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1) }}>
+                <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1), justifyContent: 'space-between' }}>
                     <Text style={styles.title}>
                         {t('common:BookingStatus')}
                     </Text><Text style={styles.content}>Paid</Text>
                 </View>
-                <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1) }}>
+                <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1), justifyContent: 'space-between' }}>
                     <Text style={styles.title}>
                         {t('common:PaymentMethod')}
                     </Text><Text style={styles.content}>{gateway}</Text>
                 </View>
-                <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1) }}>
+                <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1), justifyContent: 'space-between' }}>
                     <Text style={styles.title}>
                         {t('common:ExamName')}
                     </Text><Text style={styles.content}>{title}</Text>
                 </View>
-                <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1) }}>
+                <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1), justifyContent: 'space-between' }}>
                     <Text style={styles.title}>
                         {t('common:ExamType')}
                     </Text><Text style={styles.content}>{title}</Text>
                 </View>
-                <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1) }}>
+                <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1), justifyContent: 'space-between' }}>
                     <Text style={styles.title}>
                         {t('common:ExamTimeAndDate')}
                     </Text><Text style={styles.content}>{examDate}({examTime})</Text>
                 </View>
-                <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1) }}>
+                <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1), justifyContent: 'space-between' }}>
                     <Text style={styles.title}>
                         {t('common:Fee')}
                     </Text>
                 </View>
-                <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1) }}>
+                <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1), justifyContent: 'space-between' }}>
                     <Text style={[styles.title, { fontSize: 20, fontWeight: 'bold' }]}>
                         {t('common:Total')}
                     </Text><Text style={[styles.content, { fontSize: 20, fontWeight: 'bold', color: 'red' }]}>{price}</Text>
                 </View>
-                <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1) }}>
+                <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1), justifyContent: 'space-between' }}>
                     <Text style={[styles.title, { fontSize: 20, fontWeight: 'bold' }]}>
                         {t('common:Paid')}
-                    </Text><Text style={[styles.content, { fontSize: 20, fontWeight: 'bold', alignSelf: 'flex-end', color: 'red' }]}>{price}</Text>
+                    </Text>
+                    <Text style={[styles.content, { fontSize: 20, fontWeight: 'bold', alignSelf: 'flex-end', color: 'red' }]}>{price}</Text>
                 </View>
             </View>
         </View >
@@ -181,16 +183,16 @@ const InvoiceScreen = ({ route }) => {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: RFValue(16),
+        fontSize: RFValue(14),
         fontWeight: '500',
         color: '#000',
         marginStart: widthPercentageToDP(5)
     },
     content: {
-        fontSize: RFValue(16),
+        fontSize: RFValue(13),
         fontWeight: '500',
         color: '#000',
-        marginLeft: widthPercentageToDP(15),
+        // marginLeft: widthPercentageToDP(15),
         alignSelf: 'flex-end'
     }
 

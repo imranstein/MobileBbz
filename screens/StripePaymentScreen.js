@@ -24,18 +24,18 @@ const StripePaymentScreen = ({ route }) => {
   const examTime = route.params.examTime;
   const city_name = route.params.city_name;
   const email = route.params.email;
-  // const city = route.params.city;
-  // const country = route.params.country;
-  // const phone = route.params.phone;
-  // const address = route.params.address;
-  // const zip_code = (route.params.zip_code).toString();
-  // const name = route.params.name;
-  const [country, setCountry] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [zip_code, setZipCode] = useState('');
-  const [name, setName] = useState('');
-  const [city, setCity] = useState('');
+  const city = route.params.city;
+  const country = route.params.country;
+  const phone = route.params.phone;
+  const address = route.params.address;
+  const zip_code = (route.params.zip_code).toString();
+  const name = route.params.name;
+  // const [country, setCountry] = useState('');
+  // const [phone, setPhone] = useState('');
+  // const [address, setAddress] = useState('');
+  // const [zip_code, setZipCode] = useState('');
+  // const [name, setName] = useState('');
+  // const [city, setCity] = useState('');
 
   // country = setCountry(route.params.country);
   // phone = setPhone(route.params.phone);
@@ -55,27 +55,41 @@ const StripePaymentScreen = ({ route }) => {
   const [isLoading, setLoading] = useState(false);
 
   // console.log(userInfo);
-  const getData = async () => {
-    const { data } = await axios
-      .get(`${BASE_URL}/profile`, {
-        headers: {
-          Authorization: 'Bearer ' + userInfo.token,
-        },
-      });
-    setResult(data);
-    setName(data.name);
-    // setEmail(data.email);
-    // setPhone(data.phone);
-    // setLine1(data.address);
-    // setCity(data.city);
-    // setCountry(data.country);
-    // setPostalCode((data.zip_code).toString());
-  };
+  // const getData = async () => {
+  //   const { data } = await axios
+  //     .get(`${BASE_URL}/profile`, {
+  //       headers: {
+  //         Authorization: 'Bearer ' + userInfo.token,
+  //       },
+  //     }).then(res => {
+  //       console.log(res.data);
+  //       setName(res.data.name);
+  //       setPhone(res.data.phone);
+  //       setAddress(res.data.address);
+  //       setCity(res.data.city);
+  //       setZipCode((res.data.zip_code).toString());
+  //       setCountry(res.data.country);
+  //       console.log(name);
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // };
+  //   setResult(data);
+  //   setName(data.name);
+  //   setEmail(data.email);
+  //   setPhone(data.phone);
+  //   setLine1(data.address);
+  //   setCity(data.city);
+  //   setCountry(data.country);
+  //   setPostalCode((data.zip_code).toString());
+  //   console.log(name);
+  // };
 
-  useEffect(() => {
-    getData();
+  // useEffect(() => {
+  //   getData();
 
-  }, [])
+  // }, [])
   const fetchPaymentIntentClientSecret = async () => {
     const response = await fetch(`${BASE_URL}/paymentIntent`, {
       method: 'POST',

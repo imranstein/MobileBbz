@@ -16,7 +16,8 @@ import { useNavigation } from '@react-navigation/native';
 
 const BookingSuccessScreen = ({ route }) => {
 
-  const navigation = useNavigation;
+  const navigation = useNavigation();
+
   useEffect(() => {
     navigation.addListener('beforeRemove', (e) => {
       e.preventDefault();

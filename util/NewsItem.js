@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     description: {
         // marginBottom: 20,
         flexDirection: 'row',
-        maxHeight: 80,
+        maxHeight: 85,
         // marginLeft: '2%',
     },
     descriptionText: {

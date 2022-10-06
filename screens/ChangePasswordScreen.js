@@ -8,20 +8,23 @@ import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-const validationSchema = Yup.object().shape({
-  old_password: Yup.string()
-    .required(t('common:OldPasswordIsRequired'))
-    .min(6, t('common:OldPasswordMustBeAtLeast6Characters')),
-  new_password: Yup.string()
-    .required(t('common:NewPasswordIsRequired'))
-    .min(6, t('common:NewPasswordMustBeAtLeast6Characters')),
-  new_password_confirmation: Yup.string()
-    .required(t('common:NewPasswordConfirmationIsRequired'))
-    .min(6, t('common:NewPasswordMustBeAtLeast6Characters'))
-    .oneOf([Yup.ref('new_password'), null], t('common:PasswordsMustMatch')),
-}).defined();
+
 
 const ChangePasswordScreen = () => {
+
+  const validationSchema = Yup.object().shape({
+    old_password: Yup.string()
+      .required(t('common:OldPasswordIsRequired'))
+      .min(6, t('common:OldPasswordMustBeAtLeast6Characters')),
+    new_password: Yup.string()
+      .required(t('common:NewPasswordIsRequired'))
+      .min(6, t('common:NewPasswordMustBeAtLeast6Characters')),
+    new_password_confirmation: Yup.string()
+      .required(t('common:NewPasswordConfirmationIsRequired'))
+      .min(6, t('common:NewPasswordMustBeAtLeast6Characters'))
+      .oneOf([Yup.ref('new_password'), null], t('common:PasswordsMustMatch')),
+  }).defined();
+
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -157,12 +160,15 @@ const ChangePasswordScreen = () => {
                     </View>
 
                   </View>
+                  <View>
+                    <Text style={[styles.error, { alignSelf: 'center' }]}>{error ? error : ''}</Text>
+                  </View>
                 </View>
+
               </View>
+
             </ScrollView>
-            <View>
-              <Text style={[styles.error, { alignSelf: 'center' }]}>{error ? error : ''}</Text>
-            </View>
+
             <View style={styles.submit}>
               <TouchableOpacity
                 onPress={handleSubmit}

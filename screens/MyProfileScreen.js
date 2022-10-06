@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TextInput, TouchableOpacity, Image } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { t } from 'i18next';
 import Icons from 'react-native-vector-icons/EvilIcons';
 import axios from 'axios';
-import { BASE_URL } from '../config';
+import { BASE_URL, IMAGE_URL } from '../config';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -12,9 +12,53 @@ import moment from 'moment';
 import CountryPicker from 'react-native-country-picker-modal';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { scale } from 'react-native-size-matters';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
 
 const MyProfileScreen = (props) => {
+
+  const formData = new FormData();
+
+  const options = {
+    title: 'Select Image',
+    type: 'library',
+    options: {
+      maxHeight: 200,
+      maxWidth: 200,
+      selectionLimit: 1,
+      mediaType: 'photo',
+      includeBase64: true,
+    }
+  }
+  const openGallery = async () => {
+    const result = await launchImageLibrary(options);
+    // console.log(result.assets[0]);
+    formData.append('avatar', {
+      uri: result.assets[0].uri,
+      type: result.assets[0].type,
+      name: result.assets[0].fileName,
+    });
+    // setIdProof(result.assets[0].fileName);
+    axios.post(`${BASE_URL}/profileImage`, formData, {
+      headers: {
+        Authorization: 'Bearer ' + userInfo.token,
+        'Content-Type': 'multipart/form-data',
+        // Authorization: 'Bearer ' + userInfo.token,
+      }
+    }).then((response) => {
+      if (response.data.status == 1) {
+        console.log('here', response.data);
+        alert('Profile Image Updated Successfully');
+        navigation.navigate('Main');
+        // alert(response.data.message);
+      } else {
+        console.log('there', response.data);
+      }
+    }).catch((error) => {
+      console.log('here', error);
+    });
+  }
+
   const navigation = useNavigation();
   const { userInfo } = useContext(AuthContext);
   const [data, setData] = useState([]);
@@ -28,6 +72,7 @@ const MyProfileScreen = (props) => {
   const [zipCode, setZipCode] = useState();
   const [country, setCountry] = useState('');
   const [address2, setAddress2] = useState('');
+  const [image, setImage] = useState('');
 
   const [show, setShow] = useState(false);
   const [mode, setMode] = useState('date');
@@ -94,7 +139,8 @@ const MyProfileScreen = (props) => {
     setZipCode((data.zip_code).toString());
     setCountry(data.country);
     setAddress2(data.address2);
-
+    setImage(data.media.file_name);
+    console.log(image);
 
   };
   useEffect(() => {
@@ -108,14 +154,24 @@ const MyProfileScreen = (props) => {
         <View style={styles.wrapper}>
           <View style={styles.image} >
             <Text>
-              <Icons
-                name="user"
-                size={110}
-                color="#1a6997"
-                IconStyle={styles.icon}
-              />
+              {image != null ? <View style={styles.image1}>
+                <Image
+                  style={{ width: 80, height: 80, borderRadius: 40 }}
+                  source={{ uri: `http://192.168.0.16:8000/uploads/${image}` }}
+                />
+              </View> :
+
+                <View style={styles.image1}>
+                  <Image
+                    style={{ width: 80, height: 80, borderRadius: 40, }}
+                    source={require('../assets/searchBackground.png')}
+                  />
+                </View>
+              }
             </Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => { openGallery() }}
+            >
               <Text style={styles.imageLabel}>{t('common:EditPicture')}</Text>
             </TouchableOpacity>
           </View>
@@ -297,7 +353,7 @@ const MyProfileScreen = (props) => {
               <Text style={styles.changePassword}>{t('common:ChangePassword')}</Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </View >
       </ScrollView >
       <View style={styles.submit}>
         <TouchableOpacity
@@ -414,5 +470,9 @@ const styles = StyleSheet.create({
     fontSize: RFPercentage(2.1),
     color: '#000',
     marginVertical: 15,
+  },
+  image1: {
+    flex: 1,
+    marginBottom: 25,
   },
 });

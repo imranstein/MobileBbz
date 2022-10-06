@@ -26,6 +26,7 @@ import PaypalScreen from '../screens/PaypalScreen';
 import LanguageWelcome from '../screens/LanguageWelcome';
 import HomeScreen from '../screens/HomeScreen';
 import InvoiceScreen from '../screens/InvoiceScreen';
+import TicketScreen from '../screens/TicketScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -84,6 +85,9 @@ const Navigation = () => {
             <Stack.Screen name="InvoiceScreen"
               options={{ title: t('common:InvoiceScreen'), headerTintColor: '#1a6997' }}
               component={InvoiceScreen} />
+            <Stack.Screen name="TicketScreen"
+              options={{ title: t('common:TicketScreen'), headerTintColor: '#1a6997' }}
+              component={TicketScreen} />
             <Stack.Screen name="Language"
               options={{ title: t('common:language'), headerTintColor: '#1a6997' }}
               component={LanguageWelcome} />

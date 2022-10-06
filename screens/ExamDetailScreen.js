@@ -210,8 +210,8 @@ const ExamDetailScreen = ({ route }) => {
             </ScrollView>
             <View style={styles.submit}>
                 <Text style={{
-                    flex: 0.38,
-                    fontSize: RFPercentage(2.4),
+                    flex: 0.41,
+                    fontSize: RFValue(16),
                     color: '#5E6D77',
                     justifyContent: 'center',
                     alignSelf: 'center',
@@ -219,17 +219,16 @@ const ExamDetailScreen = ({ route }) => {
 
                 }}>{t('common:Fee')} </Text>
                 <Text style={{
-                    flex: 0.62,
-                    fontSize: RFPercentage(3.2),
+                    flex: 0.59,
+                    fontSize: RFValue(18),
                     fontWeight: '500',
                     justifyContent: 'center',
                     alignSelf: 'center',
-                    marginRight: 5,
                     color: '#1a6997'
 
                 }}
                 > {price} € </Text>
-                <TouchableOpacity style={{ alignSelf: 'flex-end', justifyContent: 'flex-end', marginRight: 20 }}
+                <TouchableOpacity style={{ alignSelf: 'flex-end', justifyContent: 'flex-end', marginRight: 15 }}
                     onPress={() => {
                         // userInfo.token ?
                         navigation.navigate('Booking', {
@@ -432,7 +431,7 @@ const styles = StyleSheet.create({
         borderColor: '#1a6997',
         backgroundColor: '#1a6997',
         borderWidth: 2,
-        paddingHorizontal: 40,
+        paddingHorizontal: 30,
         paddingVertical: 8,
         borderRadius: 4,
         alignSelf: 'center',

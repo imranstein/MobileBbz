@@ -61,7 +61,7 @@ const SearchPage = () => {
 
   const onChangeFrom = (event, selectedDate) => {
     console.log(selectedDate);
-    const currentDate = selectedDate || date;
+    const currentDate = selectedDate || date1;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
     setFromDate(moment(currentDate).format('YYYY-MM-DD'));
