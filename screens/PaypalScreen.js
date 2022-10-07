@@ -37,6 +37,20 @@ const PaypalScreen = ({ route }) => {
         }]
     }
 
+    const finalize = async () => {
+        const { data } = await axios.post(`${BASE_URL}/confirm/${gateway}`, {
+            code: code,
+            amount: amount,
+            event_id: event_id,
+        }).then((res) => {
+            console.log(res.data);
+            console.log('success');
+        }).catch((err) => {
+            console.log(err);
+            console.log('error');
+        })
+    }
+
 
     const getAccessToken = async () => {
         const { data } = await axios.post(`${BASE_URL}/accessToken`)
@@ -105,6 +119,7 @@ const PaypalScreen = ({ route }) => {
         if (webViewState.url.includes(`${BASE_URL}/success`)) {
             console.log('Payment Successful');
             alert('Payment Successful');
+            finalize();
             navigation.navigate('BookingSuccess'
                 , {
                     amount: amount,
@@ -138,6 +153,7 @@ const PaypalScreen = ({ route }) => {
                         console.log('2');
                         console.log("res", response);
                         if (response.state === 'approved') {
+
                             console.log('Payment Successful');
                             navigation.navigate('BookingSuccess'
                                 , {

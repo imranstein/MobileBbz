@@ -96,9 +96,9 @@ const TicketScreen = ({ route }) => {
                     />
                 </Text>
             </TouchableOpacity > */}
-            <View style={styles.header}>
+            {/* <View style={styles.header}>
                 <Text style={styles.headerText}>{t('common:Ticket')}</Text>
-            </View>
+            </View> */}
             <View style={styles.body}>
 
                 <View style={styles.ticket}>
@@ -132,7 +132,7 @@ const TicketScreen = ({ route }) => {
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: heightPercentageToDP(2), marginLeft: widthPercentageToDP(5), marginRight: widthPercentageToDP(35) }}>
                         <Text style={{ color: '#000', marginLeft: widthPercentageToDP(2), fontWeight: '700' }}>
-                            {price}
+                            {price} €
                         </Text>
                     </View>
                 </View>
@@ -143,7 +143,7 @@ const TicketScreen = ({ route }) => {
                             {t('common:ExamTime')}
                         </Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: heightPercentageToDP(2), marginLeft: widthPercentageToDP(5), marginRight: widthPercentageToDP(25) }}>
+                    <View style={{ flexDirection: 'row', marginTop: heightPercentageToDP(2), marginLeft: widthPercentageToDP(5), marginRight: widthPercentageToDP(23) }}>
                         <Ionicons name="person" size={20} color="#1a6997" />
                         <Text style={{ color: '#000', marginLeft: widthPercentageToDP(2) }}>
                             {t('common:Student')}

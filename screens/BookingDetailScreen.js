@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react';
 import { LogBox } from 'react-native';
 import { t } from 'i18next';
@@ -9,8 +9,10 @@ import axios from 'axios';
 import { BASE_URL } from '../config';
 import moment from 'moment';
 
+
 const BookingDetailScreen = ({ route }) => {
     const id = route.params.paramKey;
+    const navigation = useNavigation();
     const { userInfo } = useContext(AuthContext);
     const [data, setData] = useState([]);
     const [first_name, setFirstName] = useState('');
@@ -38,6 +40,44 @@ const BookingDetailScreen = ({ route }) => {
     const [examDate, setExamDate] = useState('');
     const [examTime, setExamTime] = useState('');
     const [examFee, setExamFee] = useState('');
+    const [code, setCode] = useState('');
+    const [eventID, setEventID] = useState('');
+
+    const finalize = () => {
+        if (gateway == 'paypal') {
+            navigation.navigate('PaypalPayment', {
+                amount: examFee,
+                code: code,
+                event_id: eventID,
+                gateway: gateway,
+                // location: location,
+                slug: examType,
+                examDate: examDate,
+                examTime: examTime,
+                city_name: city,
+            });
+        }
+        else if (gateway == 'stripe') {
+            navigation.navigate('StripePayment', {
+                amount: examFee,
+                code: code,
+                event_id: eventID,
+                gateway: gateway,
+                location: location,
+                slug: examType,
+                examDate: examDate,
+                examTime: examTime,
+                city_name: city,
+                email: email,
+                phone: phone,
+                city: city,
+                address: address,
+                zip_code: zipCode,
+                country: country,
+                name: first_name + ' ' + last_name,
+            });
+        }
+    }
     const getData = async () => {
         const { res } = await axios
             .get(`${BASE_URL}/booking-detail/${id}`, {
@@ -73,6 +113,8 @@ const BookingDetailScreen = ({ route }) => {
                 setExamDate(res.data.booked_event.exam_date);
                 setExamTime(res.data.booked_event.exam_time);
                 setExamFee(res.data.booked_event.price);
+                setCode(res.data.code);
+                setEventID(res.data.object_id);
             }
             ).catch(err => {
                 throw err;
@@ -120,11 +162,11 @@ const BookingDetailScreen = ({ route }) => {
                     </View>
                     <View style={{ flexDirection: 'row', marginBottom: 12 }}>
                         <Text style={styles.title}> {t('common:ExamFees')} </Text>
-                        <Text style={[styles.infovalue]}> {examFee} </Text>
+                        <Text style={[styles.infovalue]}> {examFee} €</Text>
                     </View>
                     <View style={{ flexDirection: 'row', marginBottom: 36 }}>
                         <Text style={[styles.title, { color: '#1570A5' }]}> {t('common:Total')} </Text>
-                        <Text style={[styles.infovalue, { color: '#1570A5' }]}> {examFee} </Text>
+                        <Text style={[styles.infovalue, { color: '#1570A5' }]}> {examFee} €</Text>
                     </View>
                 </View>
 
@@ -188,9 +230,25 @@ const BookingDetailScreen = ({ route }) => {
                         <Text style={styles.title}> {t('common:Address')} </Text>
                         <Text style={[styles.infovalue]}>{city},{address},{zipCode} </Text>
                     </View>
+                    {status === 'unpaid' ?
+                        <View style={{ flexDirection: 'row', marginBottom: 40, alignItems: 'center', justifyContent: 'center', alignContent: 'center' }}>
+                            <TouchableOpacity style={{
+                                backgroundColor: '#1570A5',
+                                height: 40,
+                                width: 150,
+                                borderRadius: 5,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginBottom: 20
 
+                            }}
+                                onPress={finalize}>
+                                <Text style={[styles.title, { color: '#fff', justifyContent: 'center', alignContent: 'center', alignItems: 'center' }]} > {t('common:PayNow')} </Text>
+                            </TouchableOpacity>
+
+
+                        </View> : null}
                 </View>
-
             </View>
         </ScrollView>
     )

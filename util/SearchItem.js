@@ -26,112 +26,122 @@ const SearchItem = ({ item }) => {
     const progress = item.available_seats / item.total_seat;
     // const source = { html: item.content };
     // const { width } = useWindowDimensions();
+    const daysleft = moment(item.reg_until_date).diff(moment(), 'days');
 
     return (
 
         <View style={styles.container}>
-            <TouchableOpacity
-                // onPress={() => {
-                //     userInfo.token ?
-                //         navigation.navigate('ExamDetail', {
-                //             paramKey: item.id,
-                //         }) : navigation.navigate('Login')
-                // }
-                // }
-                onPress={() => {
-                    navigation.navigate('ExamDetail', {
-                        paramKey: item.id,
-                    })
-                }
-                }
+            {item.slug == null ?
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={{ fontSize: RFPercentage(2.5), color: '#000', fontWeight: 'bold' }}>{t('no_result')}</Text>
+                </View>
+                :
+                <View>
+                    <TouchableOpacity
+                        // onPress={() => {
+                        //     userInfo.token ?
+                        //         navigation.navigate('ExamDetail', {
+                        //             paramKey: item.id,
+                        //         }) : navigation.navigate('Login')
+                        // }
+                        // }
+                        onPress={() => {
+                            navigation.navigate('ExamDetail', {
+                                paramKey: item.id,
+                            })
+                        }
+                        }
 
-            >
-                {media != null ? <View style={styles.image}>
-                    <ImageBackground
-                        style={{ width: width * 1, height: height * 0.37, borderRadius: 2 }}
-                        source={{ uri: `${IMAGE_URL}${item.media.file_path}` }}
                     >
-                        <View style={styles.upperTextView}><Text style={styles.upperText}>{item.slug}</Text></View>
-                        <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} €</Text></View>
-                    </ImageBackground>
-                </View> : <View style={styles.image}><ImageBackground
-                    style={{ width: width * 1, height: height * 0.37, borderRadius: 2 }}
-                    source={require('../assets/testinghall.png')}
-                >
-                    <View style={styles.upperTextView}><Text style={styles.upperText} >{item.slug}</Text></View>
-                    <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} €</Text></View>
-                </ImageBackground></View>}
+                        {media != null ? <View style={styles.image}>
+                            <ImageBackground
+                                style={{ width: width * 1, height: height * 0.37, borderRadius: 2 }}
+                                source={{ uri: `${IMAGE_URL}${item.media.file_path}` }}
+                            >
+                                <View style={styles.upperTextView}><Text style={styles.upperText}>{item.slug}</Text></View>
+                                <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} €</Text></View>
+                            </ImageBackground>
+                        </View> : <View style={styles.image}><ImageBackground
+                            style={{ width: width * 1, height: height * 0.37, borderRadius: 2 }}
+                            source={require('../assets/testinghall.png')}
+                        >
+                            <View style={styles.upperTextView}><Text style={styles.upperText} >{item.slug}</Text></View>
+                            <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} €</Text></View>
+                        </ImageBackground></View>}
 
 
-                {/* <View style={styles.date}>
+                        {/* <View style={styles.date}>
                 <Text style={styles.dateText}>
                     {moment(item.created_at).format('DD/MM/YY')}
                 </Text>
             </View> */}
 
-                <View style={styles.title}>
-                    <Text style={styles.titleText}>{item.title}</Text>
-                </View>
-            </TouchableOpacity>
+                        <View style={styles.title}>
+                            <Text style={styles.titleText}>{item.title}</Text>
+                        </View>
+                    </TouchableOpacity>
 
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 15 }}>
-                <Text style={{
-                    fontSize: RFValue(13),
-                    fontWeight: '600', color: '#000'
-                }}>{t("common:ExamDate")}: </Text><Text style={styles.examDateText}>{moment(item.exam_date).format('DD/MM/YY')}</Text>
-                <Text style={{
-                    fontSize: RFValue(13),
-                    fontWeight: '600', color: '#000'
-                }}>{t("common:RegDate")}: </Text><Text style={styles.regDateText}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text>
-            </View>
-            {location != null ?
-                <View View style={{
-                    flexDirection: 'row', marginTop: 23, paddingBottom: 17, marginHorizontal: 10, borderBottomWidth: 1,
-                    borderBottomColor: '#EBEBEB'
-                }}>
-                    <Text style={{ marginRight: 10 }}>
-                        <Entypo
-                            name="location-pin"
-                            size={18}
-                            color="#000"
-                            style={styles.icon}
-                        />
-                    </Text>
-                    <Text style={styles.locationText}>
-                        {location.name} - {location.city}/ {location.street_name}
-                    </Text>
-                </View> : <View View style={{ flexDirection: 'row' }}>
-                    <Text style={{ marginRight: 5, marginLeft: 5, }}>
-                        <Entypo
-                            name="location-pin"
-                            size={18}
-                            color="#000"
-                            style={styles.icon}
-                        />
-                    </Text>
-                    {/* <Text style={style.LocationText}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 15 }}>
+                        <Text style={{
+                            fontSize: RFValue(13),
+                            fontWeight: '600', color: '#000'
+                        }}>{t("common:ExamDate")}: </Text><Text style={styles.examDateText}>{moment(item.exam_date).format('DD/MM/YY')}</Text>
+                        <Text style={{
+                            fontSize: RFValue(13),
+                            fontWeight: '600', color: '#000'
+                        }}>{t("common:RegDate")}: </Text>
+                        {daysleft < 5 ? <Text style={styles.regDateText}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text> :
+                            <Text style={[styles.regDateText, { color: '#008428' }]}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text>
+                        }
+                    </View>
+                    {location != null ?
+                        <View View style={{
+                            flexDirection: 'row', marginTop: 23, paddingBottom: 17, marginHorizontal: 10, borderBottomWidth: 1,
+                            borderBottomColor: '#EBEBEB'
+                        }}>
+                            <Text style={{ marginRight: 10 }}>
+                                <Entypo
+                                    name="location-pin"
+                                    size={18}
+                                    color="#000"
+                                    style={styles.icon}
+                                />
+                            </Text>
+                            <Text style={styles.locationText}>
+                                {location.name} - {location.city}/ {location.street_name}
+                            </Text>
+                        </View> : <View View style={{ flexDirection: 'row' }}>
+                            <Text style={{ marginRight: 5, marginLeft: 5, }}>
+                                <Entypo
+                                    name="location-pin"
+                                    size={18}
+                                    color="#000"
+                                    style={styles.icon}
+                                />
+                            </Text>
+                            {/* <Text style={style.LocationText}>
                         NO LOCATION
                     </Text> */}
-                </View>}
-            <View style={styles.description}>
-                <Text style={styles.AvailableSeats}>{t("common:AvailableSeats")}</Text>
-                <Text style={{
-                    marginLeft: wp('40%'),
-                    fontSize: RFValue(13),
-                    color: "#000",
-                    fontWeight: '600',
-                    marginRight: '3%',
-                    // marginTop: '5%',
-                    // marginBottom: '7%',
-                }}>
-                    {/* {progress} */}
-                    <Progress.Circle thickness={4} progress={progress} size={40} animated={false} showsText={true} textStyle={{
-                        fontWeight: 'bold', fontSize: height * 0.011, color: '#000'
-                    }} color={'green'} unfilledColor={'red'} />
+                        </View>}
+                    <View style={styles.description}>
+                        <Text style={styles.AvailableSeats}>{t("common:AvailableSeats")}</Text>
+                        <Text style={{
+                            marginLeft: wp('40%'),
+                            fontSize: RFValue(13),
+                            color: "#000",
+                            fontWeight: '600',
+                            marginRight: '3%',
+                            // marginTop: '5%',
+                            // marginBottom: '7%',
+                        }}>
+                            {/* {progress} */}
+                            <Progress.Circle thickness={4} progress={progress} size={40} animated={false} showsText={true} textStyle={{
+                                fontWeight: 'bold', fontSize: height * 0.011, color: '#000'
+                            }} color={'green'} unfilledColor={'red'} />
 
-                </Text>
-                {/* {/* <Text style={styles.descriptionText}>{item.content}</Text>  */}
-                {/* <RenderHtml
+                        </Text>
+                        {/* {/* <Text style={styles.descriptionText}>{item.content}</Text>  */}
+                        {/* <RenderHtml
                     contentWidth={width}
                     source={{ html: item.content || '' }}
                     enableExperimentalMarginCollapsing={true}
@@ -143,9 +153,9 @@ const SearchItem = ({ item }) => {
                         marginRight: '4%',
                     }}
                 /> */}
-            </View>
+                    </View>
 
-
+                </View>}
 
         </View >
     );
@@ -240,7 +250,7 @@ const styles = StyleSheet.create({
     },
     regDateText: {
         fontSize: RFValue(13),
-        color: "#ee4327",
+        color: "#C16D00",
         fontWeight: '600',
         marginRight: '4%',
     },

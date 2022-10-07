@@ -13,9 +13,11 @@ import CountryPicker from 'react-native-country-picker-modal';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { scale } from 'react-native-size-matters';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 
 const MyProfileScreen = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
 
   const formData = new FormData();
 
@@ -31,6 +33,7 @@ const MyProfileScreen = (props) => {
     }
   }
   const openGallery = async () => {
+    setIsLoading(true);
     const result = await launchImageLibrary(options);
     // console.log(result.assets[0]);
     formData.append('avatar', {
@@ -48,8 +51,9 @@ const MyProfileScreen = (props) => {
     }).then((response) => {
       if (response.data.status == 1) {
         console.log('here', response.data);
+        setIsLoading(false);
         alert('Profile Image Updated Successfully');
-        navigation.navigate('Main');
+        // navigation.navigate('Main');
         // alert(response.data.message);
       } else {
         console.log('there', response.data);
@@ -103,7 +107,7 @@ const MyProfileScreen = (props) => {
           },
         })
       .then(res => {
-        console.log(res);
+        console.log(res.data);
         alert(res.data.message, 'Success');
         navigation.navigate('Main');
         return true;
@@ -157,7 +161,7 @@ const MyProfileScreen = (props) => {
               {image != null ? <View style={styles.image1}>
                 <Image
                   style={{ width: 80, height: 80, borderRadius: 40 }}
-                  source={{ uri: `http://192.168.0.16:8000/uploads/${image}` }}
+                  source={{ uri: `https://bbzstage.addwebprojects.com/uploads/${image}` }}
                 />
               </View> :
 
@@ -174,10 +178,12 @@ const MyProfileScreen = (props) => {
             >
               <Text style={styles.imageLabel}>{t('common:EditPicture')}</Text>
             </TouchableOpacity>
+            <Spinner visible={isLoading} />
+
           </View>
           <View style={styles.name}>
             <View>
-              <Text style={styles.label} >{t('common:FirstName')}</Text>
+              <Text style={styles.label} >{t('common:FirstName')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
               <TextInput style={{
                 flex: 1,
                 // marginBottom: 20,
@@ -194,7 +200,7 @@ const MyProfileScreen = (props) => {
                 onChangeText={setFirstName} />
             </View>
             <View>
-              <Text style={styles.label} >{t('common:LastName')}</Text>
+              <Text style={styles.label} >{t('common:LastName')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
               <TextInput style={{
                 flex: 1,
                 // marginBottom: 20,
@@ -214,7 +220,7 @@ const MyProfileScreen = (props) => {
           </View>
           <View style={styles.inputs}>
             <View>
-              <Text style={styles.label}>{t('common:Email')}</Text>
+              <Text style={styles.label}>{t('common:Email')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
               <TextInput style={styles.input}
                 value={email.trim()}
                 onChangeText={setEmail} />
@@ -222,7 +228,7 @@ const MyProfileScreen = (props) => {
           </View>
           <View style={styles.inputs}>
             <View>
-              <Text style={styles.label}>{t('common:Phone')}</Text>
+              <Text style={styles.label}>{t('common:Phone')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
               <TextInput style={styles.input}
                 value={phone}
                 keyboardType='phone-pad'
@@ -231,7 +237,7 @@ const MyProfileScreen = (props) => {
           </View>
           <View style={styles.inputs}>
             <View>
-              <Text style={styles.label}>{t('common:Birthdate')}</Text>
+              <Text style={styles.label}>{t('common:Birthdate')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
               {/* <TextInput style={styles.input}
                 value={birthday}
                 onChangeText={setBirthday} /> */}
@@ -287,7 +293,7 @@ const MyProfileScreen = (props) => {
           </View>
           <View style={styles.inputs}>
             <View>
-              <Text style={styles.label}>{t('common:Street')}</Text>
+              <Text style={styles.label}>{t('common:Street')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
               <TextInput style={styles.input}
                 value={address2}
                 onChangeText={setAddress2} />
@@ -295,7 +301,7 @@ const MyProfileScreen = (props) => {
           </View>
           <View style={styles.inputs}>
             <View>
-              <Text style={styles.label}>{t('common:City')}</Text>
+              <Text style={styles.label}>{t('common:City')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
               <TextInput style={styles.input}
                 value={city}
                 onChangeText={setCity} />
@@ -303,7 +309,7 @@ const MyProfileScreen = (props) => {
           </View>
           <View style={styles.inputs}>
             <View>
-              <Text style={styles.label}>{t('common:PostalCode')}</Text>
+              <Text style={styles.label}>{t('common:PostalCode')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
               <TextInput style={styles.input}
                 value={zipCode}
                 keyboardType='phone-pad'
@@ -312,7 +318,7 @@ const MyProfileScreen = (props) => {
           </View>
           <View style={styles.inputs}>
             <View>
-              <Text style={styles.label}>{t('common:Country')}</Text>
+              <Text style={styles.label}>{t('common:Country')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
               <View style={{
                 // marginLeft: '4%',
                 // borderColor: '#cecece',
@@ -398,20 +404,20 @@ const styles = StyleSheet.create({
     marginTop: 20,
     // marginHorizontal: '5%',
     paddingVertical: 12,
-    paddingHorizontal: 15,
+    paddingHorizontal: 20,
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
     flexDirection: 'row',
   },
   imageLabel: {
-    fontSize: RFValue(18),
-    marginLeft: '3%',
+    fontSize: RFValue(16),
+    marginLeft: '5%',
     marginRight: '10%',
     color: '#1a6997',
     borderColor: '#1a6997',
     borderWidth: 2,
-    paddingHorizontal: '10%',
+    paddingHorizontal: '8%',
     paddingVertical: '2%',
     borderRadius: 4,
     textAlign: 'center',

@@ -27,7 +27,7 @@ const ExamItem = ({ item }) => {
     const progress = item.available_seats / item.total_seat;
     // const source = { html: item.content };
     // const { width } = useWindowDimensions();
-
+    const daysleft = moment(item.reg_until_date).diff(moment(), 'days');
 
     return (
 
@@ -53,14 +53,14 @@ const ExamItem = ({ item }) => {
                         style={{ width: width * 1, height: height * 0.37, borderRadius: 2 }}
                         source={{ uri: `${IMAGE_URL}${item.media.file_path}` }}
                     >
-                        <View style={styles.upperTextView}><Text style={styles.upperText}>{item.slug}</Text></View>
+                        <View style={styles.upperTextView}><Text style={styles.upperText}>{item.term_name}</Text></View>
                         <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} €</Text></View>
                     </ImageBackground>
                 </View> : <View style={styles.image}><ImageBackground
                     style={{ width: width * 1, height: height * 0.37, borderRadius: 2 }}
                     source={require('../assets/testinghall.png')}
                 >
-                    <View style={styles.upperTextView}><Text style={styles.upperText} >{item.slug}</Text></View>
+                    <View style={styles.upperTextView}><Text style={styles.upperText} >{item.term_name}</Text></View>
                     <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} €</Text></View>
                 </ImageBackground></View>}
 
@@ -84,7 +84,10 @@ const ExamItem = ({ item }) => {
                 <Text style={{
                     fontSize: RFValue(13),
                     fontWeight: '600', color: '#000'
-                }}>{t("common:RegDate")}: </Text><Text style={styles.regDateText}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text>
+                }}>{t("common:RegDate")}: </Text>
+                {daysleft < 5 ? <Text style={styles.regDateText}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text> :
+                    <Text style={[styles.regDateText, { color: '#008428' }]}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text>
+                }
             </View>
             {location != null ?
                 <View View style={{
@@ -218,7 +221,7 @@ const styles = StyleSheet.create({
         fontSize: RFValue(15),
         fontWeight: '600',
         textAlign: 'left',
-        marginLeft: '10%',
+        marginLeft: '15%',
         marginTop: '6%',
     },
     lowerTextView: {
@@ -242,7 +245,7 @@ const styles = StyleSheet.create({
     },
     regDateText: {
         fontSize: RFValue(13),
-        color: "#ee4327",
+        color: "#C16D00",
         fontWeight: '600',
         marginRight: '4%',
     },

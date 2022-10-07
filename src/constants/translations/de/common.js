@@ -192,5 +192,6 @@ export default {
     TicketScreen: 'Ticketbildschirm',
     ExamName: 'Prüfungsname',
     ExamTimeAndDate: 'Prüfungszeit und Datum',
+    NoResultFound: 'Prüfung nicht gefunden',
 
 }

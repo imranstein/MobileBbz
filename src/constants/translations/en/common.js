@@ -179,5 +179,6 @@ export default {
     TicketScreen: 'Ticket Screen',
     ExamName: 'Exam Name',
     ExamTimeAndDate: 'Exam Time And Date',
+    NoResultFound: 'Exam not found',
 
 }

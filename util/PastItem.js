@@ -53,7 +53,7 @@ const PastItem = ({ item }) => {
 
                     <Text style={{ marginLeft: 14, color: '#000', fontSize: RFPercentage(2), fontWeight: 'bold' }}>{t('common:FullAmount')}</Text>
                     <Text style={{ marginLeft: 10, width: 6, height: 6, borderWidth: 1, borderRadius: 10, backgroundColor: '#A8B0B5', borderColor: '#A8B0B5' }}></Text>
-                    <Text style={{ marginLeft: 10, color: '#1a6997', fontSize: RFPercentage(2), fontWeight: '400' }}>{moment(paymentDate).format('DD/MM/YYYY | hh:mm a')}</Text>
+                    <Text style={{ marginLeft: 6, color: '#1a6997', fontSize: RFPercentage(2), fontWeight: '400' }}>{moment(paymentDate).format('DD/MM/YYYY | hh:mm a')}</Text>
                 </View>
                 <View style={styles.image}><ImageBackground
                     style={{ width: '60%', height: 90, borderRadius: 2 }}

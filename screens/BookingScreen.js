@@ -107,7 +107,7 @@ const BookingScreen = ({ route }) => {
     const [academic_title, setAcademicTitle] = useState('');
     const [term_conditions, setTermsConditions] = useState(false);
     const [term_conditions_1, setTermsConditions1] = useState(false);
-    const [birthday, setBirthday] = useState(new Date());
+    const [birthday, setBirthday] = useState();
     const [birth_place, setBirthPlace] = useState('');
     const [address, setAddress] = useState('');
     const [address2, setAddress2] = useState('');
@@ -318,9 +318,16 @@ const BookingScreen = ({ route }) => {
                             navigation.navigate('Home');
                         }
                     }]);
+                } else if (country == '') {
+                    alert('Please Choose Country', [{
+                        text: t('common:OK'),
+                        onPress: () => {
+                            navigation.navigate('Home');
+                        }
+                    }]);
                 }
                 else {
-                    alert('Please Make sure you insert all data', [{
+                    alert('You Have Already Registered For this Event', [{
                         text: t('common:OK'),
                         onPress: () => {
                             navigation.navigate('Home');
@@ -436,7 +443,7 @@ const BookingScreen = ({ route }) => {
                     }]);
                 }
                 else {
-                    alert('Please Make sure you insert all data', [{
+                    alert('You Have Already Registered For this Event', [{
                         text: t('common:OK'),
                         onPress: () => {
                             navigation.navigate('Home');
@@ -609,13 +616,14 @@ const BookingScreen = ({ route }) => {
                                 <View>
                                     <View style={styles.inputs}>
                                         <View style={styles.inputContainer}>
-                                            <Text style={styles.label}>{t('common:Salutation')}:</Text>
+                                            <Text style={styles.label}>{t('common:Salutation')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+
                                             <View style={{
                                                 flex: 1,
                                                 fontSize: scale(16),
-                                                marginTop: '3%',
-                                                // marginBottom: '5%',
-                                                marginLeft: '1%',
+                                                marginTop: '5%',
+                                                marginBottom: '5%',
+                                                marginLeft: '2%',
                                                 borderColor: '#cecece',
                                                 borderWidth: 0.5,
                                                 borderRadius: 5,
@@ -627,7 +635,7 @@ const BookingScreen = ({ route }) => {
                                                 <Picker
                                                     itemStyle={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', borderColor: '#c9c9c9', borderWidth: 0.5, borderRadius: 5, marginTop: 4, marginRight: '42.5%' }}
                                                     selectedValue={salutation}
-                                                    style={{ height: 50, width: '90%', marginLeft: '-4.5%', marginBottom: '16%', color: '#000', marginTop: '-2%', fontSize: scale(1) }}
+                                                    style={{ height: 60, width: '100%', marginLeft: '-4.5%', marginBottom: '16%', color: '#000', marginTop: '-4%', fontSize: scale(1) }}
                                                     // onValueChange={(itemValue, itemIndex) => setSalutation(itemValue)}
                                                     onValueChange={(itemValue, itemIndex) => {
                                                         setSalutation(itemValue);
@@ -671,7 +679,7 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.name}>
                                         <View style={styles.inputContainer}>
-                                            <Text style={styles.label}>{t('common:FirstName')}:</Text>
+                                            <Text style={styles.label}>{t('common:FirstName')}:<Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <TextInput style={{
                                                 flex: 1,
                                                 fontSize: RFPercentage(2.4),
@@ -695,7 +703,7 @@ const BookingScreen = ({ route }) => {
                                         </View>
 
                                         <View style={styles.inputContainer}>
-                                            <Text style={styles.label}>{t('common:LastName')}:</Text>
+                                            <Text style={styles.label}>{t('common:LastName')}:<Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <TextInput style={{
                                                 flex: 1,
                                                 fontSize: RFPercentage(2.4),
@@ -727,7 +735,7 @@ const BookingScreen = ({ route }) => {
                                     ) : null}
                                     <View style={styles.inputs}>
                                         <View style={styles.inputContainer}>
-                                            <Text style={styles.label}>{t('common:Email')}:</Text>
+                                            <Text style={styles.label}>{t('common:Email')}:<Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <TextInput style={styles.input}
                                                 onChangeText={handleChange('email')}
                                                 onBlur={handleBlur('email')}
@@ -742,7 +750,7 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View style={styles.inputContainer}>
-                                            <Text style={styles.label}>{t('common:IdentificationNumber')}:</Text>
+                                            <Text style={styles.label}>{t('common:IdentificationNumber')}:<Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <TextInput style={styles.input}
                                                 onChangeText={handleChange('identification_number')}
                                                 onBlur={handleBlur('identification_number')}
@@ -757,7 +765,7 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>{t('common:BirthDate')}</Text>
+                                            <Text style={styles.label}>{t('common:BirthDate')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <View style={{
                                                 flex: 1,
                                                 fontSize: RFPercentage(2.7),
@@ -775,7 +783,7 @@ const BookingScreen = ({ route }) => {
                                                 <TouchableOpacity onPress={() => showMode('date')}>
                                                     {birthday != null ?
                                                         <Text style={{ fontSize: RFPercentage(2.7), color: '#000', marginTop: 10 }}>{moment(birthday).format('DD/MM/YYYY')}</Text> :
-                                                        <Text style={{ fontSize: RFPercentage(2.7), color: '#000', marginTop: 10 }}>{moment(date).format('DD/MM/YYYY')}</Text>
+                                                        <Text style={{ fontSize: RFPercentage(2.7), color: '#9e9e9e', marginTop: 10 }}>{t('common:Birthday')}</Text>
                                                     }
                                                 </TouchableOpacity>
                                                 {show && (
@@ -796,7 +804,7 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>{t('common:CountryOfBirth')}</Text>
+                                            <Text style={styles.label}>{t('common:CountryOfBirth')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <View style={{
                                                 marginLeft: '4%',
                                                 borderColor: '#cecece',
@@ -836,7 +844,7 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>{t('common:BirthPlace')}</Text>
+                                            <Text style={styles.label}>{t('common:BirthPlace')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <TextInput style={styles.input}
                                                 onChangeText={handleChange('birth_place')}
                                                 onBlur={handleBlur('birth_place')}
@@ -851,16 +859,16 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>{t('common:MotherTongue')}</Text>
+                                            <Text style={styles.label}>{t('common:MotherTongue')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             {/* <TextInput style={styles.input}
                                     value={mother_tongue}
                                     onChangeText={setMotherTongue} /> */}
                                             <View style={{
                                                 flex: 1,
                                                 fontSize: scale(16),
-                                                marginTop: '3%',
-                                                // marginBottom: '5%',
-                                                marginLeft: '1%',
+                                                marginTop: '5%',
+                                                marginBottom: '5%',
+                                                marginLeft: '2%',
                                                 borderColor: '#cecece',
                                                 borderWidth: 0.5,
                                                 borderRadius: 5,
@@ -870,9 +878,9 @@ const BookingScreen = ({ route }) => {
                                                 color: '#000',
                                             }}>
                                                 <Picker
-                                                    itemStyle={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', borderColor: '#c9c9c9', borderWidth: 0.5, borderRadius: 5, marginTop: 4 }}
+                                                    itemStyle={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', borderColor: '#c9c9c9', borderWidth: 0.5, borderRadius: 5, marginTop: 5 }}
                                                     selectedValue={mother_tongue}
-                                                    style={{ height: 50, width: '90%', marginLeft: '-4.5%', marginBottom: '16%', color: '#000', marginTop: '-2%', fontSize: scale(1) }}
+                                                    style={{ height: 60, width: '100%', marginLeft: '-4.5%', marginBottom: '16%', color: '#000', marginTop: '-4%', fontSize: scale(1) }}
                                                     onValueChange={(itemValue, itemIndex) => {
                                                         setMotherTongue(itemValue);
                                                         handleChange('mother_tongue')(itemValue);
@@ -899,7 +907,7 @@ const BookingScreen = ({ route }) => {
 
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>{t('common:TelePhone')}</Text>
+                                            <Text style={styles.label}>{t('common:TelePhone')}:</Text>
                                             <TextInput style={styles.input}
                                                 onChangeText={handleChange('telephone')}
                                                 onBlur={handleBlur('telephone')}
@@ -916,7 +924,7 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>{t('common:Mobile')}</Text>
+                                            <Text style={styles.label}>{t('common:Mobile')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <TextInput style={styles.input}
                                                 onChangeText={handleChange('phone')}
                                                 onBlur={handleBlur('phone')}
@@ -962,7 +970,7 @@ const BookingScreen = ({ route }) => {
 
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>C/o</Text>
+                                            <Text style={styles.label}>C/o: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <TextInput style={styles.input}
                                                 onChangeText={handleChange('address')}
                                                 onBlur={handleBlur('address')}
@@ -977,7 +985,7 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>{t('common:Street')}</Text>
+                                            <Text style={styles.label}>{t('common:Street')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <TextInput style={styles.input}
                                                 onChangeText={handleChange('address2')}
                                                 onBlur={handleBlur('address2')}
@@ -992,7 +1000,7 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>{t('common:City')}</Text>
+                                            <Text style={styles.label}>{t('common:City')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <TextInput style={styles.input}
                                                 onChangeText={handleChange('city')}
                                                 onBlur={handleBlur('city')}
@@ -1007,7 +1015,7 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>{t('common:PostalCode')}</Text>
+                                            <Text style={styles.label}>{t('common:PostalCode')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <TextInput style={styles.input}
                                                 onChangeText={handleChange('zip_code')}
                                                 onBlur={handleBlur('zip_code')}
@@ -1024,7 +1032,7 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>{t('common:Country')}</Text>
+                                            <Text style={styles.label}>{t('common:Country')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <View style={{
                                                 marginLeft: '4%',
                                                 borderColor: '#cecece',
@@ -1318,11 +1326,12 @@ const styles = StyleSheet.create({
     }, label: {
         color: '#000',
         fontSize: RFPercentage(2.4),
+        marginLeft: '2%',
     },
     error: {
         color: 'red',
         marginBottom: 20,
-        marginLeft: '1%',
-        marginTop: '2%'
+        marginLeft: '2%',
+        marginTop: '1.5%'
     },
 })

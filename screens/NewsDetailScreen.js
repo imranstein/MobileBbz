@@ -37,7 +37,7 @@ const NewsDetailScreen = React.memo(({ route }) => {
     }, [])
 
     return (
-        console.log(image),
+        console.log(description),
 
         <View style={styles.container}>
             <View style={styles.title}>

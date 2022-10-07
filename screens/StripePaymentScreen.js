@@ -105,6 +105,19 @@ const StripePaymentScreen = ({ route }) => {
 
     return clientSecret;
   };
+  const finalize = async () => {
+    const { data } = await axios.post(`${BASE_URL}/confirm/${gateway}`, {
+      code: code,
+      amount: amount,
+      event_id: event_id,
+    }).then((res) => {
+      console.log(res.data);
+      console.log('success');
+    }).catch((err) => {
+      console.log(err);
+      console.log('error');
+    })
+  }
   const handlePayPress = async () => {
     setLoading(true);
     // Gather the customer's billing information (for example, email)
@@ -151,6 +164,7 @@ const StripePaymentScreen = ({ route }) => {
     } else if (paymentIntent) {
 
       console.log('Success from promise', paymentIntent);
+      finalize();
       navigation.navigate('BookingSuccess'
         , {
           amount: amount,

@@ -84,6 +84,7 @@ const ExamDetailScreen = ({ route }) => {
         getData();
     }, [])
     // console.log(city);
+    const daysleft = moment(regDate).diff(moment(), 'days');
 
 
     return (
@@ -130,7 +131,10 @@ const ExamDetailScreen = ({ route }) => {
                                 style={styles.icon}
                             />
                         </Text>
-                        <Text style={styles.title}> {t('common:AvailableSeats')} | {remaining}/{total} </Text>
+                        {remaining < 3 ?
+                            <Text style={styles.title}> {t('common:AvailableSeats')} | <Text style={[styles.title, { color: 'red' }]}>{remaining}</Text>/{total} </Text> :
+                            <Text style={styles.title}> {t('common:AvailableSeats')} | {remaining}/{total} </Text>
+                        }
 
                     </View>
                     <View style={{ flexDirection: 'row', marginBottom: 27, alignItems: 'center' }}>
@@ -154,7 +158,8 @@ const ExamDetailScreen = ({ route }) => {
                                 style={styles.icon}
                             />
                         </Text>
-                        <Text style={styles.regTitle}> {t('common:RegUntil')} | {moment(regDate).format('DD/MM/YY')} </Text>
+                        {daysleft < 5 ? <Text style={styles.regTitle}> {t('common:RegUntil')} | <Text style={{ color: '#C16D00' }}>{moment(regDate).format('DD/MM/YY')}</Text> </Text> :
+                            <Text style={styles.regTitle}> {t('common:RegUntil')} | <Text style={{ color: '#008428' }}>{moment(regDate).format('DD/MM/YY')}</Text> </Text>}
 
                     </View>
                     <View style={{ flexDirection: 'row', marginBottom: 15, alignItems: 'center' }}>

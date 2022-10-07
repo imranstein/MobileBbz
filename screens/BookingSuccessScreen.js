@@ -12,20 +12,21 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import moment from 'moment';
 import { scale } from 'react-native-size-matters';
 import { useNavigation } from '@react-navigation/native';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 
 const BookingSuccessScreen = ({ route }) => {
 
   const navigation = useNavigation();
 
-  useEffect(() => {
-    navigation.addListener('beforeRemove', (e) => {
-      e.preventDefault();
-      navigation.navigate('ExamDetail', {
-        paramKey: eventId,
-      });
-    });
-  }, [navigation]);
+  // useEffect(() => {
+  //   navigation.addListener('beforeRemove', (e) => {
+  //     e.preventDefault();
+  //     navigation.navigate('ExamDetail', {
+  //       paramKey: eventId,
+  //     });
+  //   });
+  // }, [navigation]);
   const { userInfo } = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [first_name, setFirstName] = useState('');
@@ -218,7 +219,7 @@ const BookingSuccessScreen = ({ route }) => {
                 {location.name} - {city_name}/ {location.street_name}
               </Text>
             </View> : <View View style={{ flexDirection: 'column', marginTop: 15, marginBottom: 15 }}>
-              <Text style={{ marginRight: 5, marginLeft: 5, }}>
+              <Text style={{ marginRight: 5, marginLeft: 10, }}>
                 <Entypo
                   name="location-pin"
                   size={18}
@@ -336,7 +337,7 @@ const BookingSuccessScreen = ({ route }) => {
           </View>
 
         </View>
-        <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#D9E8F1', width: '90%', marginLeft: '5%', height: 300, borderTopColor: '#1570A5', borderTopWidth: 4, borderTopLeftRadius: 5, borderTopRightRadius: 5, marginBottom: 20 }}>
+        <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#D9E8F1', width: '90%', marginLeft: '5%', height: heightPercentageToDP(45), borderTopColor: '#1570A5', borderTopWidth: 4, borderTopLeftRadius: 5, borderTopRightRadius: 5, marginBottom: 20 }}>
           <View style={{ flexDirection: 'row', marginTop: 20, marginBottom: 15, width: '90%' }}>
             <Text style={{ marginRight: 10, marginLeft: 20, }}>
               <Ionicons
@@ -417,7 +418,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: '#000',
     marginHorizontal: 10,
-    paddingTop: 12,
+    paddingTop: 10,
   },
   h5: {
     fontSize: 16,

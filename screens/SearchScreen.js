@@ -28,6 +28,9 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Picker } from '@react-native-picker/picker';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { date } from 'yup';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+
 
 
 
@@ -47,33 +50,49 @@ const SearchPage = () => {
   const [search, setSearch] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [term, setTerm] = useState('');
-  const [from_date, setFromDate] = useState(null);
-  const [to_date, setToDate] = useState(null);
+  const [from_date, setFromDate] = useState(new Date());
+  const [to_date, setToDate] = useState(new Date());
   const [location_id, setLocation] = useState('');
   const [exam_level_id, setExamLevel] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
   //
-  const [show, setShow] = useState(false);
-  const [mode, setMode] = useState('date');
-  const [date1, setDate] = useState(new Date());
-  const [date2, setDate2] = useState(new Date());
+
+  const [isFromDatePickerVisible, setFromDatePickerVisibility] = useState(false);
+  const [isToDatePickerVisible, setToDatePickerVisibility] = useState(false);
+
+  const showFromDatePicker = () => {
+    console.log("clicked here");
+    setFromDatePickerVisibility(true);
+  };
+
+  const hideFromDatePicker = () => {
+    setFromDatePickerVisibility(false);
+  };
+
+  const fromHandleConfirm = (date) => {
+    // const date1 = moment(date).format('YYYY-MM-DD');
+    setFromDate(date);
+    console.log("A date has been picked: ", from_date);
+    hideFromDatePicker();
+  };
+  const showToDatePicker = () => {
+    console.log("clicked");
+    setToDatePickerVisibility(true);
+  };
+
+  const hideToDatePicker = () => {
+    setToDatePickerVisibility(false);
+  };
+
+  const toHandleConfirm = (date) => {
+    // date = moment(date).format('YYYY-MM-DD');
+    setToDate(date);
+    console.log("A date has been picked: ", to_date);
+
+    hideToDatePicker();
+  };
 
 
-  const onChangeFrom = (event, selectedDate) => {
-    console.log(selectedDate);
-    const currentDate = selectedDate || date1;
-    setShow(Platform.OS === 'ios');
-    setDate(currentDate);
-    setFromDate(moment(currentDate).format('YYYY-MM-DD'));
-    console.log('fromDate', from_date);
-  }
-  const onChangeTo = (event2, selectedDate2) => {
-    const currentDate2 = selectedDate2 || date2;
-    setShow(Platform.OS === 'ios');
-    setDate2(currentDate2);
-    setToDate(moment(currentDate2).format('YYYY-MM-DD'));
-    console.log('toDate', to_date);
-  }
 
 
 
@@ -216,25 +235,18 @@ const SearchPage = () => {
               width: '90%',
               color: '#000',
             }}>
-              <TouchableOpacity onPress={() => showMode('date')}>
-                {from_date != null ?
-                  <Text style={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 3 }}>{moment(from_date).format('DD/MM/YYYY')}</Text> :
-                  <Text style={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 3 }}>{moment(date1).format('DD/MM/YYYY')}</Text>
-                }
+              <TouchableOpacity onPress={showFromDatePicker}>
+                <Text style={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 3 }}>{moment(from_date).format('DD/MM/YYYY')}</Text>
               </TouchableOpacity>
-              {show && (
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  timeZoneOffsetInMinutes={0}
-                  value={date1}
-                  maximumDate={new Date(2023, 6, 1)}
-                  minimumDate={new Date(2022, 1, 1)}
-                  mode={mode}
-                  is24Hour={true}
-                  display="calendar"
-                  onChange={onChangeFrom}
-                />
-              )}
+              <DateTimePickerModal
+                isVisible={isFromDatePickerVisible}
+                mode="date"
+                maximumDate={new Date(2023, 12, 31)}
+                minimumDate={new Date(2021, 1, 1)}
+                onConfirm={fromHandleConfirm}
+                onCancel={hideFromDatePicker}
+              />
+
             </View>
             <View style={{
               flex: 1,
@@ -248,25 +260,18 @@ const SearchPage = () => {
               width: '90%',
               color: '#000',
             }}>
-              <TouchableOpacity onPress={() => showMode('date')}>
-                {to_date != null ?
-                  <Text style={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 3 }}>{moment(to_date).format('DD/MM/YYYY')}</Text> :
-                  <Text style={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 3 }}>{moment(date2).format('DD/MM/YYYY')}</Text>
-                }
+              <TouchableOpacity onPress={showToDatePicker}>
+                <Text style={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 3 }}>{moment(to_date).format('DD/MM/YYYY')}</Text>
               </TouchableOpacity>
-              {show && (
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  timeZoneOffsetInMinutes={0}
-                  value={date2}
-                  mode={mode}
-                  maximumDate={new Date(2023, 6, 1)}
-                  minimumDate={new Date(2022, 1, 1)}
-                  is24Hour={true}
-                  display="calendar"
-                  onChange={onChangeTo}
-                />
-              )}
+              <DateTimePickerModal
+                isVisible={isToDatePickerVisible}
+                mode="date"
+                maximumDate={new Date(2023, 12, 31)}
+                minimumDate={new Date(2021, 1, 1)}
+                onConfirm={toHandleConfirm}
+                onCancel={hideToDatePicker}
+              />
+
             </View>
           </View>
           <View style={{ flexDirection: 'row' }}>
@@ -312,8 +317,8 @@ const SearchPage = () => {
                   () => {
                     setSearch(false);
                     setTerm('');
-                    setFromDate(null);
-                    setToDate(null);
+                    setFromDate(new Date());
+                    setToDate(new Date());
                     setLocation('');
                     setExamLevel('');
                   }
@@ -352,16 +357,22 @@ const SearchPage = () => {
             <View style={styles.list}>
               <Text style={styles.listTitle}>{t('common:SearchResult')}</Text>
               <Text style={styles.listSubTitle}>{t('common:YourSearchedResult')}</Text>
-              <FlatList
-                style={{ backgroundColor: '#f5f5f5', padding: 5 }}
-                data={data2}
-                numColumns={1}
-                keyExtractor={item => item.id.toString()}
-                // keyExtractor={(item, id) => {
-                //   return id.toString();
-                // }}
-                renderItem={renderItem2}
-              />
+              {data2 == '' ?
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                  <Text style={{ fontSize: RFPercentage(2.7), color: '#666', marginTop: hp(10), marginBottom: hp(5) }}>{t('common:NoResultFound')}</Text>
+                </View>
+                :
+                <FlatList
+                  style={{ backgroundColor: '#f5f5f5', padding: 5 }}
+                  data={data2}
+                  numColumns={1}
+                  keyExtractor={item => item.id.toString()}
+                  // keyExtractor={(item, id) => {
+                  //   return id.toString();
+                  // }}
+                  renderItem={renderItem2}
+                />
+              }
             </View>
         }
 
