@@ -96,8 +96,8 @@ const ExamDetailScreen = ({ route }) => {
                     <ImageBackground style={styles.image} source={require('../assets/searchBackground.png')}>
                         <Text style={styles.h1} numberOfLines={1} ellipsizeMode='tail'>{examLevel} {t('common:Level')}</Text>
                         {location != null ?
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Text style={{ marginLeft: 10, paddingTop: 2, lineHeight: 22 }} numberOfLines={2} ellipsizeMode='tail'>
+                            <View style={{ flexDirection: 'row'}}>
+                                <Text style={{ marginLeft: 10, paddingTop: 5, lineHeight: 22 }} numberOfLines={2} ellipsizeMode='tail'>
                                     <Entypo
                                         name="location-pin"
                                         size={18}
