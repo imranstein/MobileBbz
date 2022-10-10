@@ -101,7 +101,7 @@ const InvoiceScreen = ({ route }) => {
     return (
         <View>
             <TouchableOpacity onPress={createPdf}>
-                <Text style={{ alignSelf: 'flex-end', marginEnd: widthPercentageToDP(5), marginVertical: heightPercentageToDP(3) }}>
+                <Text style={{ alignSelf: 'flex-end', marginEnd: widthPercentageToDP(10), marginVertical: heightPercentageToDP(3) }}>
                     <Entypo
                         name="print"
                         size={30}
@@ -110,7 +110,7 @@ const InvoiceScreen = ({ route }) => {
                 </Text>
             </TouchableOpacity >
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Text style={{ alignSelf: 'flex-start', fontSize: 20, fontWeight: 'bold', color: '#000', marginStart: widthPercentageToDP(5) }}>{t('common:BillingTo')}</Text>
+                <Text style={{ alignSelf: 'flex-start', fontSize: 20, fontWeight: 'bold', color: '#1a6997', marginStart: widthPercentageToDP(5) }}>{t('common:BillingTo')}</Text>
                 <Image source={require('../assets/logo.png')} style={{ width: widthPercentageToDP(20), height: heightPercentageToDP(10), resizeMode: 'contain', marginEnd: widthPercentageToDP(5), marginTop: heightPercentageToDP(-4) }} />
 
             </View>
@@ -186,12 +186,12 @@ const InvoiceScreen = ({ route }) => {
                     </Text>
                 </View>
                 <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1), justifyContent: 'space-between' }}>
-                    <Text style={[styles.title, { fontSize: 17, fontWeight: 'bold' }]}>
+                    <Text style={[styles.title, { fontSize: 17, fontWeight: 'bold', color: '#1a6997' }]}>
                         {t('common:Total')}
                     </Text><Text style={[styles.content, { fontSize: 17, fontWeight: 'bold', color: 'red' }]}>{price} €</Text>
                 </View>
                 {/* <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1), justifyContent: 'space-between' }}>
-                    <Text style={[styles.title, { fontSize: 17, fontWeight: 'bold' }]}>
+                    <Text style={[styles.title, { fontSize: 17, fontWeight: 'bold', color: '#1a6997' }]}>
                         {t('common:Paid')}
                     </Text>
                     <Text style={[styles.content, { fontSize: 17, fontWeight: 'bold', alignSelf: 'flex-end', color: 'red' }]}>{price} €</Text>

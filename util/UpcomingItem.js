@@ -53,9 +53,9 @@ const UpcomingItem = ({ item }) => {
                         />
                     </Text>
 
-                    <Text style={{ marginLeft: 14, color: '#000', fontSize: RFPercentage(2), fontWeight: 'bold' }}>{t('common:FullAmount')}</Text>
-                    <Text style={{ marginLeft: 10, width: 6, height: 6, borderWidth: 1, borderRadius: 10, backgroundColor: '#A8B0B5', borderColor: '#A8B0B5' }}></Text>
-                    <Text style={{ marginLeft: 6, color: '#1a6997', fontSize: RFPercentage(2), fontWeight: '400' }}>{moment(paymentDate).format('DD/MM/YYYY | hh:mm a')}</Text>
+                    <Text style={{ marginLeft: 8, color: '#000', fontSize: RFPercentage(2), fontWeight: 'bold' }}>{t('common:FullAmount')}</Text>
+                    <Text style={{ marginLeft: 8, width: 6, height: 6, borderWidth: 1, borderRadius: 10, backgroundColor: '#A8B0B5', borderColor: '#A8B0B5' }}></Text>
+                    <Text style={{ marginLeft: 8, color: '#1a6997', fontSize: RFPercentage(2), fontWeight: '400' }}>{moment(paymentDate).format('DD/MM/YYYY | hh:mm a')}</Text>
                 </View>
                 <View style={styles.image}>
                     <ImageBackground
@@ -75,7 +75,7 @@ const UpcomingItem = ({ item }) => {
                         </Text>
                     </View>
                     <View>
-                        <Text style={{ color: 'black', marginLeft: widthPercentageToDP(-20), marginTop: heightPercentageToDP(4) }}>
+                        <Text style={{ color: 'black', marginLeft: widthPercentageToDP(-12), marginTop: heightPercentageToDP(4) }}>
                             <FontAwesome5
                                 name="greater-than"
                                 size={20}
@@ -236,6 +236,7 @@ const styles = StyleSheet.create({
     }, detailView: {
         flexDirection: 'column',
         marginLeft: '-22%',
+        flex: 1,
     },
     buttons: {
         flexDirection: 'row',
@@ -247,6 +248,8 @@ const styles = StyleSheet.create({
         height: 35,
         justifyContent: 'center',
         alignItems: 'center',
+        borderColor: '#1a6997',
+        borderWidth: 1,
     },
     touchable: {
         backgroundColor: '#fff',

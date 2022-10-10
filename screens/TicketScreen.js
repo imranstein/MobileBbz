@@ -113,7 +113,7 @@ const TicketScreen = ({ route }) => {
                 <View style={{ flexDirection: 'row', marginTop: heightPercentageToDP(2), marginRight: widthPercentageToDP(5), justifyContent: 'space-between' }}>
                     <View style={{ flexDirection: 'row', marginTop: heightPercentageToDP(2), marginLeft: widthPercentageToDP(5), marginRight: widthPercentageToDP(5) }}>
                         <Entypo name="calendar" size={20} color="#1a6997" />
-                        <Text style={{ color: '#000', marginLeft: widthPercentageToDP(1) }}>
+                        <Text style={{ color: '#000', marginLeft: widthPercentageToDP(2) }}>
                             {t('common:Date')}
                         </Text>
                     </View>
@@ -130,8 +130,8 @@ const TicketScreen = ({ route }) => {
                             {examDate}
                         </Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: heightPercentageToDP(2), marginLeft: widthPercentageToDP(5), marginRight: widthPercentageToDP(35) }}>
-                        <Text style={{ color: '#000', marginLeft: widthPercentageToDP(2), fontWeight: '700' }}>
+                    <View style={{ flexDirection: 'row', marginTop: heightPercentageToDP(2), marginLeft: widthPercentageToDP(5), marginRight: widthPercentageToDP(33) }}>
+                        <Text style={{ color: '#000', marginLeft: widthPercentageToDP(1), fontWeight: '700' }}>
                             {price} €
                         </Text>
                     </View>
@@ -139,7 +139,7 @@ const TicketScreen = ({ route }) => {
                 <View style={{ flexDirection: 'row', marginTop: heightPercentageToDP(2), marginRight: widthPercentageToDP(5), justifyContent: 'space-between' }}>
                     <View style={{ flexDirection: 'row', marginTop: heightPercentageToDP(2), marginLeft: widthPercentageToDP(5), marginRight: widthPercentageToDP(5) }}>
                         <Entypo name="clock" size={20} color="#1a6997" />
-                        <Text style={{ color: '#000', marginLeft: widthPercentageToDP(1) }}>
+                        <Text style={{ color: '#000', marginLeft: widthPercentageToDP(2) }}>
                             {t('common:ExamTime')}
                         </Text>
                     </View>
