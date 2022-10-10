@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
         fontSize: RFValue(15),
         fontWeight: '600',
         textAlign: 'left',
-        marginLeft: '15%',
+        marginLeft: '10%',
         marginTop: '6%',
     },
     lowerTextView: {
