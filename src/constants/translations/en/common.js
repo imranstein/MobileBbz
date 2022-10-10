@@ -180,5 +180,8 @@ export default {
     ExamName: 'Exam Name',
     ExamTimeAndDate: 'Exam Time And Date',
     NoResultFound: 'Exam not found',
+    CountryIsRequired: 'Country is required',
+    CountryOfBirthIsRequired: 'Country of Birth is required',
+    IDProofIsRequired: 'ID Proof is required',
 
 }

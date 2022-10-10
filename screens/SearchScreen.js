@@ -61,7 +61,6 @@ const SearchPage = () => {
   const [isToDatePickerVisible, setToDatePickerVisibility] = useState(false);
 
   const showFromDatePicker = () => {
-    console.log("clicked here");
     setFromDatePickerVisibility(true);
   };
 

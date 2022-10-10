@@ -97,7 +97,6 @@ const MyProfileScreen = (props) => {
 
   const UpdateProfile = async function (): Promise<boolena> {
 
-    console.log(birthday);
     return await axios
       .put(`${BASE_URL}/edit-profile/`,
         { first_name, last_name, email, phone, birthday, address, city, zipCode, country, address2 },
@@ -120,6 +119,9 @@ const MyProfileScreen = (props) => {
           alert('Sorry it is not available', 'Error');
         } else if (e.response.status === 422) {
           alert('Please enter a valid data', 'Error');
+        }
+        else if (e.response.status === 423) {
+          alert('No Changes Made');
         }
         return false;
       });

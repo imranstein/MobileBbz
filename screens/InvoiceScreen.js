@@ -81,7 +81,6 @@ const InvoiceScreen = ({ route }) => {
 
             <p> Fee </p>    
             <p style="font-size:21px;"> Total <div style="margin-left:40em;">${price} €</div> </p>
-            <p style="font-size:21px;"> Paid  <div style="margin-left:40em;">${price} €</div> </p>
             </div>
         </body>
         </html>
@@ -191,12 +190,12 @@ const InvoiceScreen = ({ route }) => {
                         {t('common:Total')}
                     </Text><Text style={[styles.content, { fontSize: 17, fontWeight: 'bold', color: 'red' }]}>{price} €</Text>
                 </View>
-                <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1), justifyContent: 'space-between' }}>
+                {/* <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1), justifyContent: 'space-between' }}>
                     <Text style={[styles.title, { fontSize: 17, fontWeight: 'bold' }]}>
                         {t('common:Paid')}
                     </Text>
                     <Text style={[styles.content, { fontSize: 17, fontWeight: 'bold', alignSelf: 'flex-end', color: 'red' }]}>{price} €</Text>
-                </View>
+                </View> */}
             </View>
         </View >
     )

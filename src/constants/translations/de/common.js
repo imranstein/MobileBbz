@@ -193,5 +193,8 @@ export default {
     ExamName: 'Prüfungsname',
     ExamTimeAndDate: 'Prüfungszeit und Datum',
     NoResultFound: 'Prüfung nicht gefunden',
+    CountryIsRequired: 'Land ist erforderlich',
+    CountryOfBirthIsRequired: 'Geburtsland ist erforderlich',
+    IDProofIsRequired: 'Ausweisnachweis ist erforderlich',
 
 }

@@ -9,6 +9,7 @@ const PaypalScreen = ({ route }) => {
     const [approvalUrl, setApprovalUrl] = useState(null);
     const [accessToken, setAccessToken] = useState(null);
     const [paymentId, setPaymentId] = useState(null);
+    const [status, setStatus] = useState('');
     const navigation = useNavigation();
     const amount = route.params.amount;
     const code = route.params.code;
@@ -50,6 +51,15 @@ const PaypalScreen = ({ route }) => {
             console.log('error');
         })
     }
+    const bookingStatus = async () => {
+        const { result } = await axios
+            .get(`${BASE_URL}/get-booking/${code}`).then(res => {
+                setStatus(res.data.status);
+            })
+    }
+    useEffect(() => {
+        bookingStatus();
+    }, [status]);
 
 
     const getAccessToken = async () => {
@@ -70,21 +80,38 @@ const PaypalScreen = ({ route }) => {
     }, [])
 
     const createPayment = async () => {
-        const { data } = await axios.post(`https://api.sandbox.paypal.com/v1/payments/payment`, dataDetail, {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${accessToken}`
-            }
-        })
-            .then((response) => {
-                console.log('if ', response.data);
-                setPaymentId(response.data.id);
-                setApprovalUrl(response.data.links[1].href)
-            }
-            ).catch((error) => {
-                console.log('here', error);
-            }
+        if (status == 'paid') {
+            alert('Already Paid');
+            navigation.navigate('BookingSuccess'
+                , {
+                    amount: amount,
+                    code: code,
+                    event_id: event_id,
+                    gateway: gateway,
+                    location: location,
+                    slug: slug,
+                    examDate: examDate,
+                    examTime: examTime,
+                    city_name: city_name,
+                }
             );
+        } else {
+            const { data } = await axios.post(`https://api.sandbox.paypal.com/v1/payments/payment`, dataDetail, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`
+                }
+            })
+                .then((response) => {
+                    console.log('if ', response.data);
+                    setPaymentId(response.data.id);
+                    setApprovalUrl(response.data.links[1].href)
+                }
+                ).catch((error) => {
+                    console.log('here', error);
+                }
+                );
+        }
     };
     useEffect(() => {
         createPayment();
@@ -189,7 +216,19 @@ const PaypalScreen = ({ route }) => {
         else if (webViewState.url.includes(`${BASE_URL}/cancel`)) {
             console.log('Payment Cancelled');
             alert('Payment Cancelled');
-            navigation.navigate('BookingScreen');
+            navigation.navigate('BookingSuccess'
+                , {
+                    amount: amount,
+                    code: code,
+                    event_id: event_id,
+                    gateway: gateway,
+                    location: location,
+                    slug: slug,
+                    examDate: examDate,
+                    examTime: examTime,
+                    city_name: city_name,
+                }
+            );
         }
     }
 

@@ -50,9 +50,13 @@ const BookingScreen = ({ route }) => {
             .matches(/^[a-zA-Z0-9 ]+$/, t('common:IdentificationNumberMustBeAlphaNumeric')),
         mother_tongue: Yup.string()
             .required(t('common:MotherTongueIsRequired')),
+        country_of_birth: Yup.string()
+            .required(t('common:CountryOfBirthIsRequired')),
         birth_place: Yup.string()
             .required(t('common:BirthPlaceIsRequired'))
             .min(2, t('common:BirthPlaceMustBeAtLeast2Characters')),
+        id_proof: Yup.string()
+            .required(t('common:IDProofIsRequired')),
         telephone: Yup.string()
             .min(9, t('common:PhoneMustBeAtLeast9Characters'))
             .max(15, t('common:PhoneMustBeAtMost15Characters'))
@@ -76,6 +80,9 @@ const BookingScreen = ({ route }) => {
             .required(t('common:ZipCodeIsRequired'))
             .min(4, t('common:ZipCodeMustBeAtLeast4Characters'))
             .matches(/^[0-9]+$/, t('common:ZipCodeMustBeNumeric')),
+        country: Yup.string()
+            .required(t('common:CountryIsRequired')),
+
 
     }).strict();
 
@@ -118,6 +125,10 @@ const BookingScreen = ({ route }) => {
     const [payment_gateway, setPaymentGateway] = useState('');
     const [result, setResult] = useState('');
     const [motherTongueData, setMotherTongueData] = useState([]);
+    const [birthDayError, setBirthDayError] = useState(false);
+    const [termError, setTermError] = useState(false);
+
+    //
     //images id
     const data = new FormData();
 
@@ -125,7 +136,7 @@ const BookingScreen = ({ route }) => {
         title: 'Select Image',
         type: 'library',
         options: {
-            maxHright: 200,
+            maxHeight: 200,
             maxWidth: 200,
             selectionLimit: 1,
             mediaType: 'photo',
@@ -325,6 +336,8 @@ const BookingScreen = ({ route }) => {
                             navigation.navigate('Home');
                         }
                     }]);
+                } else if (term_conditions == false || term_conditions_1 == false) {
+                    setTermError(true);
                 }
                 else {
                     alert('You Have Already Registered For this Event', [{
@@ -442,6 +455,9 @@ const BookingScreen = ({ route }) => {
                         }
                     }]);
                 }
+                else if (term_conditions == false || term_conditions_1 == false) {
+                    setTermError(true);
+                }
                 else {
                     alert('You Have Already Registered For this Event', [{
                         text: t('common:OK'),
@@ -553,7 +569,7 @@ const BookingScreen = ({ route }) => {
                     <Text style={styles.titleHeader}>{t('common:ContactInformation')}</Text>
 
                     <View style={styles.wrapper}>
-                        <Formik initialValues={{ salutation: '', academic_title: '', first_name: first_name, last_name: last_name, identification_number: '', email: email, birth_place: '', mother_tongue: '', telephone: '', phone: phone, address: address, address2: address2, city: city, zip_code: zip_code }}
+                        <Formik initialValues={{ salutation: '', academic_title: '', first_name: first_name, last_name: last_name, identification_number: '', email: email, birth_place: '', country_of_birth: '', mother_tongue: '', telephone: '', id_proof: id_proof, phone: phone, address: address, address2: address2, city: city, zip_code: zip_code, country: country ?? '' }}
                             enableReinitialize={true}
                             validateOnMount={true}
                             onSubmit={(values) => {
@@ -817,9 +833,12 @@ const BookingScreen = ({ route }) => {
                                                     preferredCountries={['DE', 'IN']}
                                                     onSelect={(country) => {
                                                         setCountryOfBirth(country.name);
+                                                        handleChange('country_of_birth')(country.name);
                                                         console.log(country.name);
+
                                                     }
                                                     }
+                                                    onBlur={handleBlur('country_of_birth')}
                                                 />
                                             </View>
                                             {country_of_birth !== null && (
@@ -841,6 +860,9 @@ const BookingScreen = ({ route }) => {
                                                 }}>{country_of_birth}</Text>
                                             )}
                                         </View>
+                                        {errors.country_of_birth && touched.country_of_birth ? (
+                                            <Text style={styles.error}>{errors.country_of_birth}</Text>
+                                        ) : null}
                                     </View>
                                     <View style={styles.inputs}>
                                         <View>
@@ -962,8 +984,12 @@ const BookingScreen = ({ route }) => {
                                             readOnly={true}
                                             // placeholder={t('common:UploadId')}
                                             placeholderTextColor="#A8B0B5"
+                                            onChange={handleChange('id_proof')}
                                         />
                                     </View>
+                                    {errors.id_proof && touched.id_proof ? (
+                                        <Text style={styles.error}>{errors.id_proof}</Text>
+                                    ) : null}
                                     <View style={{ flex: 1, marginTop: '5%', marginBottom: '5%' }}>
                                         <Text style={{ marginLeft: '5%', fontSize: RFPercentage(2.5), fontWeight: 'bold', color: '#000' }}>{t('common:Address')}</Text>
                                     </View>
@@ -1045,9 +1071,11 @@ const BookingScreen = ({ route }) => {
                                                     preferredCountries={['DE', 'IN']}
                                                     onSelect={(country) => {
                                                         setCountry(country.cca2);
+                                                        handleChange('country')(country.cca2);
                                                         console.log(country.cca2);
                                                     }
                                                     }
+                                                    onBlur={handleBlur('country')}
                                                 />
                                             </View>
                                             {country !== null && (
@@ -1069,6 +1097,9 @@ const BookingScreen = ({ route }) => {
                                                 }}>{country}</Text>
                                             )}
                                         </View>
+                                        {errors.country && touched.country ? (
+                                            <Text style={styles.error}>{errors.country}</Text>
+                                        ) : null}
                                     </View>
                                     <View style={{ flexDirection: 'row', marginBottom: 10, marginLeft: 20, marginTop: 10 }}>
                                         <RadioForm

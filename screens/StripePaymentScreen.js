@@ -9,6 +9,7 @@ import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { t } from 'i18next';
 import CountryPicker from 'react-native-country-picker-modal';
 import { useNavigation } from '@react-navigation/native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 
 const StripePaymentScreen = ({ route }) => {
@@ -30,6 +31,7 @@ const StripePaymentScreen = ({ route }) => {
   const address = route.params.address;
   const zip_code = (route.params.zip_code).toString();
   const name = route.params.name;
+  const [status, setStatus] = useState('');
   // const [country, setCountry] = useState('');
   // const [phone, setPhone] = useState('');
   // const [address, setAddress] = useState('');
@@ -43,6 +45,17 @@ const StripePaymentScreen = ({ route }) => {
   // zip_code = setZipCode(route.params.zip_code);
   // name = setName(route.params.name);
   // city = setCity(route.params.city);
+
+  const bookingStatus = async () => {
+    const { result } = await axios
+      .get(`${BASE_URL}/get-booking/${code}`).then(res => {
+        setStatus(res.data.status);
+        console.log(res.data.status);
+      })
+  }
+  useEffect(() => {
+    bookingStatus();
+  }, [status]);
 
   const { userInfo } = useContext(AuthContext);
   // const [name, setName] = useState('');
@@ -119,52 +132,10 @@ const StripePaymentScreen = ({ route }) => {
     })
   }
   const handlePayPress = async () => {
-    setLoading(true);
-    // Gather the customer's billing information (for example, email)
-    // const billingDetails: BillingDetails = {
-    //   email: 'jenny.rosen@example.com',
-    // };
-    // const billingDetails: BillingDetails = {
-    //   email: userInfo.email,
-    // };
 
-
-    // Fetch the intent client secret from the backend
-    const clientSecret = await fetchPaymentIntentClientSecret();
-
-    // Confirm the payment with the card details
-    const { paymentIntent, error } = await confirmPayment(clientSecret, {
-
-      paymentMethodType: 'Card',
-      paymentMethodData: {
-        billingDetails: {
-          email: email,
-          name: name,
-          phone: phone,
-          address: {
-            line1: address,
-            city: city,
-            postal_code: zip_code,
-            country: country,
-          },
-
-        },
-      },
-
-      // paymentMethodData: {
-      //   billingDetails,
-      // },
-      // type: 'Card',
-      // billingDetails: { email: userInfo.email, name: userInfo.first_name },
-    });
-
-    if (error) {
-      console.log('Payment confirmation error', error);
-      alert(`Payment confirmation error ${error.message}`);
-    } else if (paymentIntent) {
-
-      console.log('Success from promise', paymentIntent);
-      finalize();
+    if (status == 'paid') {
+      console.log('already paid');
+      alert('Already Paid');
       navigation.navigate('BookingSuccess'
         , {
           amount: amount,
@@ -178,11 +149,74 @@ const StripePaymentScreen = ({ route }) => {
           city_name: city_name,
         }
       );
+    } else {
+      setLoading(true);
+      // Gather the customer's billing information (for example, email)
+      // const billingDetails: BillingDetails = {
+      //   email: 'jenny.rosen@example.com',
+      // };
+      // const billingDetails: BillingDetails = {
+      //   email: userInfo.email,
+      // };
+
+
+      // Fetch the intent client secret from the backend
+      const clientSecret = await fetchPaymentIntentClientSecret();
+
+      // Confirm the payment with the card details
+      const { paymentIntent, error } = await confirmPayment(clientSecret, {
+
+        paymentMethodType: 'Card',
+        paymentMethodData: {
+          billingDetails: {
+            email: email,
+            name: name,
+            phone: phone,
+            address: {
+              line1: address,
+              city: city,
+              postal_code: zip_code,
+              country: country,
+            },
+
+          },
+        },
+
+        // paymentMethodData: {
+        //   billingDetails,
+        // },
+        // type: 'Card',
+        // billingDetails: { email: userInfo.email, name: userInfo.first_name },
+      });
+
+      if (error) {
+        console.log('Payment confirmation error', error);
+        alert(`Payment confirmation error ${error.message}`);
+      } else if (paymentIntent) {
+
+        console.log('Success from promise', paymentIntent);
+        finalize();
+        navigation.navigate('BookingSuccess'
+          , {
+            amount: amount,
+            code: code,
+            event_id: event_id,
+            gateway: gateway,
+            location: location,
+            slug: slug,
+            examDate: examDate,
+            examTime: examTime,
+            city_name: city_name,
+          }
+        );
+      }
     }
   };
   return (
     <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
-      <ActivityIndicator size="large" color="#0000ff" animating={isLoading} />
+      {/* <ActivityIndicator size="medium" color="#1570a5" animating={isLoading} /> */}
+      <Spinner visible={isLoading} />
+
       <View style={{
         marginTop: '-5%',
       }}>

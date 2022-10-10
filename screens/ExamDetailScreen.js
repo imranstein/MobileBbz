@@ -39,6 +39,7 @@ const ExamDetailScreen = ({ route }) => {
     const [examTime, setExamTime] = useState(null);
     const [content, setContent] = useState(null);
     const [price, setPrice] = useState(null);
+    const [examLevel, setExamLevel] = useState(null);
 
     // const [description, setDescription] = useState(null)
     // const [image, setImage] = useState('')
@@ -70,6 +71,7 @@ const ExamDetailScreen = ({ route }) => {
                 setExamTime(res.data.data.exam_time);
                 setContent(res.data.data.content);
                 setPrice(res.data.data.price);
+                setExamLevel(res.data.data.exam_level);
                 // setDescription(res.data.data.content);
                 // setImage(res.data.data.media.file_path);
                 // setDate(res.data.data.created_at);
@@ -92,7 +94,7 @@ const ExamDetailScreen = ({ route }) => {
             <ScrollView>
                 <View style={styles.header}>
                     <ImageBackground style={styles.image} source={require('../assets/searchBackground.png')}>
-                        <Text style={styles.h1} numberOfLines={1} ellipsizeMode='tail'>{slug} {t('common:Level')}</Text>
+                        <Text style={styles.h1} numberOfLines={1} ellipsizeMode='tail'>{examLevel} {t('common:Level')}</Text>
                         {location != null ?
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <Text style={{ marginLeft: 10, paddingTop: 2, lineHeight: 22 }} numberOfLines={2} ellipsizeMode='tail'>
