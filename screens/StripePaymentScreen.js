@@ -1,4 +1,4 @@
-import { View, Text, Button, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { View, Text, Button, TouchableOpacity, ActivityIndicator, BackHandler, Alert } from 'react-native'
 import React, { useContext, useState, useEffect } from 'react'
 import { CardField, useStripe, useConfirmPayment, BillingDetails } from '@stripe/stripe-react-native';
 import { scale } from 'react-native-size-matters';
@@ -13,6 +13,61 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 
 const StripePaymentScreen = ({ route }) => {
+
+  // React.useEffect(
+  //   () =>
+  //     navigation.addListener('beforeRemove', (e) => {
+  //       if (!hasUnsavedChanges) {
+  //         // If we don't have unsaved changes, then we don't need to do anything
+  //         return;
+  //       }
+
+  //       // Prevent default behavior of leaving the screen
+  //       e.preventDefault();
+
+  //       // Prompt the user before leaving the screen
+  //       Alert.alert(
+  //         'Discard changes?',
+  //         'You have unsaved changes. Are you sure to discard them and leave the screen?',
+  //         [
+  //           { text: "Don't leave", style: 'cancel', onPress: () => { } },
+  //           {
+  //             text: 'Discard',
+  //             style: 'destructive',
+  //             // If the user confirmed, then we dispatch the action we blocked earlier
+  //             // This will continue the action that had triggered the removal of the screen
+  //             onPress: () => navigation.dispatch(e.data.action),
+  //           },
+  //         ]
+  //       );
+  //     }),
+  //   [navigation, hasUnsavedChanges]
+  // );
+  const backClick = () => {
+    remove();
+    navigation.navigate('Main');
+
+
+  }
+  const backAction = () => {
+    Alert.alert("Hold on!", "Are you sure you want to go back?", [
+      {
+        text: "Cancel",
+        onPress: () => null,
+        style: "cancel"
+      },
+      { text: "YES", onPress: () => backClick() }
+    ]);
+    return true;
+  };
+
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", backAction);
+
+    return () =>
+      BackHandler.removeEventListener("hardwareBackPress", backAction);
+  }, []);
+
   const navigation = useNavigation();
   const { confirmPayment, loading } = useConfirmPayment();
   const amount = route.params.amount;
@@ -131,6 +186,16 @@ const StripePaymentScreen = ({ route }) => {
       console.log('error');
     })
   }
+  const remove = async () => {
+    const { data } = await axios.post(`${BASE_URL}/removeBooking/${code}`
+    ).then((res) => {
+      console.log(res.data);
+      console.log('here is a success');
+    }).catch((err) => {
+      console.log(err);
+      console.log('error');
+    })
+  }
   const handlePayPress = async () => {
 
     if (status == 'paid') {
@@ -192,10 +257,14 @@ const StripePaymentScreen = ({ route }) => {
       if (error) {
         console.log('Payment confirmation error', error);
         alert(`Payment confirmation error ${error.message}`);
+        setLoading(false);
+        remove();
+        navigation.navigate('Main');
       } else if (paymentIntent) {
 
         console.log('Success from promise', paymentIntent);
         finalize();
+        setLoading(false);
         navigation.navigate('BookingSuccess'
           , {
             amount: amount,
@@ -218,7 +287,7 @@ const StripePaymentScreen = ({ route }) => {
       <Spinner visible={isLoading} />
 
       <View style={{
-        marginTop: '-5%',
+        marginTop: '1%',
       }}>
         <Text style={{
           fontSize: scale(20),

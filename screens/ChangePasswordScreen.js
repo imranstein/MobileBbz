@@ -56,7 +56,7 @@ const ChangePasswordScreen = () => {
       })
       .then(res => {
         console.log(res);
-        alert(res.data.message, 'Success');
+        alert(t('common:Success'), 'Success');
         logout();
         // navigation.navigate('My Profile');
         return true;

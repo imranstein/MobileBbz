@@ -20,13 +20,14 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { scale } from 'react-native-size-matters';
 
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string()
-    .required(t('common:EmailIsRequired'))
-    .email(t('common:EmailIsInvalid')),
-}).defined();
+
 
 const ResetPassword = () => {
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .required(t('common:EmailIsRequired'))
+      .email(t('common:EmailIsInvalid')),
+  }).defined();
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
   const [email, setEmail] = useState(null);

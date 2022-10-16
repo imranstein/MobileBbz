@@ -38,7 +38,7 @@ const BookingHistoryScreen = () => {
                 },
             });
         setResult2(data.data);
-        console.log(data);
+        console.log(result2);
     };
     useEffect(() => {
         getData();

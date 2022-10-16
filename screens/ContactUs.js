@@ -19,6 +19,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { t } from 'i18next';
+import { scale } from 'react-native-size-matters';
 
 
 
@@ -55,9 +56,11 @@ const ContactUs = () => {
       })
       .then(res => {
         console.log(res);
-        alert(res.data.success, 'Success');
+        alert(t('common:MessageSentSuccessfully'),t('common:Success'));
+
         navigation.navigate('Home');
         //clear the values
+
         // logout();
         setIsLoading(false);
         return true;
@@ -71,7 +74,7 @@ const ContactUs = () => {
         } else if (e.response.status === 500) {
           alert(e.response.data.error, 'Error');
         } else if (e.response.status === 422) {
-          alert('Name Or Message Can not Be Empty', 'Error');
+          alert(T('common:NameOrMessageCannotBeEmpty'), 'Error');
         }
         setIsLoading(false);
         return true;
@@ -79,7 +82,7 @@ const ContactUs = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={{ height: 650 }}>
+    <ScrollView contentContainerStyle={{ height: 850 }}>
       <View style={styles.container}>
         <Spinner visible={isLoading} />
         {/* <ActivityIndicator animating={isLoading} size="large" color="#0000ff" /> */}
@@ -101,12 +104,16 @@ const ContactUs = () => {
               email = values.email,
               message = values.message,
             );
+            //change values to empty
+
+
           }}
           validationSchema={validationSchema}>
           {({ handleChange, handleBlur, handleSubmit, values, errors, touched, isValid }) => (
             <View style={styles.form}>
               <View style={styles.search}>
                 <View style={styles.label}>
+                  <Text style={styles.labels}>{t('common:FullName')}:<Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                   <TextInput
                     style={styles.textInput}
                     placeholder={t('common:Name')}
@@ -119,6 +126,7 @@ const ContactUs = () => {
                   {touched.full_name && errors.full_name && (
                     <Text style={styles.error}>{errors.full_name}</Text>
                   )}
+                  <Text style={styles.labels}>{t('common:Email')}:<Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                   <TextInput
                     style={styles.textInput}
                     placeholder={t('common:Email')}
@@ -130,6 +138,7 @@ const ContactUs = () => {
                   {touched.email && errors.email && (
                     <Text style={styles.error}>{errors.email}</Text>
                   )}
+                  <Text style={styles.labels}>{t('common:Message')}:<Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                   <TextInput
                     style={styles.message}
                     placeholder={t('common:Message')}
@@ -266,4 +275,9 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     fontSize: RFPercentage(2.1),
   },
+  labels: {
+    color: '#000',
+    fontSize: scale(15),
+    marginBottom: '2%',
+  }
 });

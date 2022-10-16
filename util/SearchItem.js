@@ -90,7 +90,8 @@ const SearchItem = ({ item }) => {
                             fontSize: RFValue(13),
                             fontWeight: '600', color: '#000'
                         }}>{t("common:RegDate")}: </Text>
-                        {daysleft < 5 ? <Text style={styles.regDateText}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text> :
+                        {daysleft < 5 && daysleft > 1 ? <Text style={styles.regDateText}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text> : daysleft <= 1 ?
+                            <Text style={[styles.regDateText, { color: 'red' }]}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text> :
                             <Text style={[styles.regDateText, { color: '#008428' }]}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text>
                         }
                     </View>

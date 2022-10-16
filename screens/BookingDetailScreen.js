@@ -63,7 +63,7 @@ const BookingDetailScreen = ({ route }) => {
                 code: code,
                 event_id: eventID,
                 gateway: gateway,
-                location: location,
+                // location: location,
                 slug: examType,
                 examDate: examDate,
                 examTime: examTime,

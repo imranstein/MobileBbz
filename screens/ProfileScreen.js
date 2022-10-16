@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -25,6 +25,12 @@ const ProfileScreen = () => {
   };
   const navigation = useNavigation();
   const { userInfo, isLoading, logout } = useContext(AuthContext);
+  // const [verification, setVerification] = useState(null);
+  const [data, setData] = useState(null);
+
+  const verification = userInfo.email_verified_at;
+  console.log('verification', verification);
+
   return (
     <View style={styles.container}>
       <Spinner visible={isLoading} />
@@ -81,10 +87,15 @@ const ProfileScreen = () => {
             </TouchableOpacity>
           );
         })} */}
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('My Profile');
-          }}>
+
+        <TouchableOpacity onPress={() => {
+          {
+            verification != null ?
+              navigation.navigate('My Profile')
+              : navigation.navigate('Verify')
+          }
+        }
+        }>
           <View style={{ flexDirection: 'row' }}>
             <Text style={styles.icon}><MaterialIcons
               name="tag-faces"
@@ -98,7 +109,14 @@ const ProfileScreen = () => {
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => { navigation.navigate('BookingHistory') }}>
+        <TouchableOpacity onPress={() => {
+          {
+            verification != null ?
+              navigation.navigate('BookingHistory')
+              : navigation.navigate('Verify')
+          }
+        }
+        }>
           <View style={{ flexDirection: 'row' }}>
             <Text style={styles.icon}>
               <Entypo
@@ -115,7 +133,14 @@ const ProfileScreen = () => {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Change Password')}>
+          onPress={() => {
+            {
+              verification != null ?
+                navigation.navigate('Change Password')
+                : navigation.navigate('Verify')
+            }
+          }
+          }>
           <View style={{ flexDirection: 'row' }}>
             <Text style={styles.icon}>
               <MaterialIcons
@@ -149,7 +174,7 @@ const ProfileScreen = () => {
         </TouchableOpacity>
 
       </View>
-    </View>
+    </View >
   );
 };
 

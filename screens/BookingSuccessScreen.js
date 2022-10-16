@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, ImageBackground, TouchableOpacity, Image } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, ImageBackground, TouchableOpacity, Image, BackHandler, Alert } from 'react-native'
 import React, { useContext, useState, useEffect } from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -16,6 +16,19 @@ import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 
 const BookingSuccessScreen = ({ route }) => {
+
+
+  const backAction = () => {
+    navigation.navigate('Main');
+    return true;
+  };
+
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", backAction);
+
+    return () =>
+      BackHandler.removeEventListener("hardwareBackPress", backAction);
+  }, []);
 
   const navigation = useNavigation();
 
@@ -59,11 +72,9 @@ const BookingSuccessScreen = ({ route }) => {
   const city_name = route.params.city;
   const examDate = route.params.examDate;
   const examTime = route.params.examTime;
-  // const location = 'Addis Ababa';
-  // const city_name = 'Addis Ababa';
-  // const street_name = 'Bole';
 
-  // const code = '03F67260BE95911DA7F47E9107323B';
+  // console.log('here', location);
+
   const getData = async () => {
     const { result } = await axios
       .get(`${BASE_URL}/get-booking/${code}`, {
@@ -92,6 +103,7 @@ const BookingSuccessScreen = ({ route }) => {
         setStatus(res.data.status);
         setId(res.data.id);
         setBookingDate(res.data.start_date);
+        console.log(status);
       }
       ).catch(err => {
         console.log(err);
@@ -142,13 +154,13 @@ const BookingSuccessScreen = ({ route }) => {
                 />
               </Text>
               <View style={{ flexDirection: 'column' }}>
-                <Text style={styles.locationText}>
+                <Text style={styles.locationText1}>
                   {t("common:BookingSuccessful")}
                 </Text>
-                <Text style={styles.locationDescription}>
+                <Text style={styles.locationDescription1}>
                   {t("common:BookingDetailHasBeenSentTo")}:
                 </Text>
-                <Text style={styles.locationDescription}>
+                <Text style={styles.locationDescription1}>
                   {email}
                 </Text>
               </View>
@@ -179,7 +191,7 @@ const BookingSuccessScreen = ({ route }) => {
           </View>
           <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
             <Text style={styles.title}> {t('common:BookingStatus')}:   </Text>
-            <Text style={[styles.value]}>  {status} </Text>
+            <Text style={[styles.value]}>  paid </Text>
 
           </View>
           {/* <View style={{ flexDirection: 'column', marginTop: 20, marginBottom: 2 }}>
@@ -202,23 +214,23 @@ const BookingSuccessScreen = ({ route }) => {
 
           </View> */}
         </View>
-        <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#fff', height: 400, width: '90%', marginLeft: '5%' }}>
+        <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#fff', height: 370, width: '90%', marginLeft: '5%' }}>
           <Text style={styles.descriptionLabel}>{t('common:YourBooking')}</Text>
           <Text style={styles.h1}>{slug}</Text>
           {location != null ?
-            <View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 15 }}>
+            <View style={{ flexDirection: 'row', marginTop: 13, marginBottom: 15 }}>
               <Text style={{ marginRight: 10, marginLeft: 5, }}>
                 <Entypo
                   name="location-pin"
                   size={18}
-                  color="#fff"
+                  color="#000"
                   style={styles.icon}
                 />
               </Text>
               <Text style={styles.locationText}>
-                {location.name} - {city_name}/ {location.street_name}
+                {location.name} - {location.city} / {location.street_name}
               </Text>
-            </View> : <View View style={{ flexDirection: 'column', marginTop: 15, marginBottom: 15 }}>
+            </View> : <View style={{ flexDirection: 'column', marginTop: 15, marginBottom: 15 }}>
               <Text style={{ marginRight: 5, marginLeft: 10, }}>
                 <Entypo
                   name="location-pin"
@@ -227,6 +239,9 @@ const BookingSuccessScreen = ({ route }) => {
                   style={styles.icon}
                 />
               </Text>
+              {/* <Text style={styles.locationText}>
+                {location.name} - {city_name} / {location.street_name}
+              </Text> */}
             </View>}
           <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 2 }}>
 
@@ -337,7 +352,7 @@ const BookingSuccessScreen = ({ route }) => {
           </View>
 
         </View>
-        <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#D9E8F1', width: '90%', marginLeft: '5%', height: heightPercentageToDP(45), borderTopColor: '#1570A5', borderTopWidth: 4, borderTopLeftRadius: 5, borderTopRightRadius: 5, marginBottom: 20 }}>
+        <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#D9E8F1', width: '90%', marginLeft: '5%', height: heightPercentageToDP(52), borderTopColor: '#1570A5', borderTopWidth: 4, borderTopLeftRadius: 5, borderTopRightRadius: 5, marginBottom: 20 }}>
           <View style={{ flexDirection: 'row', marginTop: 20, marginBottom: 15, width: '90%' }}>
             <Text style={{ marginRight: 10, marginLeft: 20, }}>
               <Ionicons
@@ -394,7 +409,26 @@ const BookingSuccessScreen = ({ route }) => {
                 admin@gmail.com
               </Text>
             </View>
+            <TouchableOpacity
+              style={{
+                backgroundColor: '#1570A5',
+                width: '70%',
+                height: 40,
+                borderRadius: 5,
+                marginLeft: '15%',
+                marginBottom: 5,
+                justifyContent: 'center',
+                alignItems: 'center',
 
+              }}
+              onPress={() => {
+                navigation.navigate('Main')
+              }
+              }>
+              <Text style={{ color: '#fff', fontSize: scale(15), fontWeight: '500', marginTop: 5, marginBottom: 5 }}>
+                {t("common:GoBack")}
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView >
@@ -496,14 +530,31 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   locationText: {
-    fontSize: RFPercentage(3),
+    fontSize: scale(15),
+    color: "#000",
+    width: '90%',
+    fontWeight: '400',
+    marginRight: '4%',
+    marginBottom: '1%',
+    marginTop: '-1%',
+  },
+  locationDescription: {
+    fontSize: RFPercentage(2),
+    color: "#000",
+    marginTop: 3,
+    fontWeight: '300',
+    marginRight: '4%',
+  },
+  locationText1: {
+    fontSize: scale(15),
     color: "#fff",
     width: '90%',
     fontWeight: '400',
     marginRight: '4%',
-    marginBottom: '2%',
+    marginBottom: '1%',
+    marginTop: '-1%',
   },
-  locationDescription: {
+  locationDescription1: {
     fontSize: RFPercentage(2),
     color: "#fff",
     marginTop: 3,
@@ -554,7 +605,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     color: '#1a6997',
-    marginHorizontal: 15,
+    marginHorizontal: 10,
     paddingTop: 20,
   },
   titleHeader: {

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, ActivityIndicator, BackHandler, Alert } from 'react-native'
 import axios from 'axios';
 import { BASE_URL } from '../config';
 import { WebView } from 'react-native-webview';
@@ -6,6 +6,32 @@ import React, { useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native';
 
 const PaypalScreen = ({ route }) => {
+
+    const backClick = () => {
+        remove();
+        navigation.navigate('Main');
+
+
+    }
+    const backAction = () => {
+        Alert.alert("Hold on!", "Are you sure you want to go back?", [
+            {
+                text: "Cancel",
+                onPress: () => null,
+                style: "cancel"
+            },
+            { text: "YES", onPress: () => backClick() }
+        ]);
+        return true;
+    };
+
+    useEffect(() => {
+        BackHandler.addEventListener("hardwareBackPress", backAction);
+
+        return () =>
+            BackHandler.removeEventListener("hardwareBackPress", backAction);
+    }, []);
+
     const [approvalUrl, setApprovalUrl] = useState(null);
     const [accessToken, setAccessToken] = useState(null);
     const [paymentId, setPaymentId] = useState(null);
@@ -44,6 +70,16 @@ const PaypalScreen = ({ route }) => {
             amount: amount,
             event_id: event_id,
         }).then((res) => {
+            console.log(res.data);
+            console.log('success');
+        }).catch((err) => {
+            console.log(err);
+            console.log('error');
+        })
+    }
+    const remove = async () => {
+        const { data } = await axios.post(`${BASE_URL}/removeBooking/${code}`
+        ).then((res) => {
             console.log(res.data);
             console.log('success');
         }).catch((err) => {
@@ -147,6 +183,7 @@ const PaypalScreen = ({ route }) => {
             console.log('Payment Successful');
             alert('Payment Successful');
             finalize();
+            setLoading(false);
             navigation.navigate('BookingSuccess'
                 , {
                     amount: amount,
@@ -215,20 +252,24 @@ const PaypalScreen = ({ route }) => {
         }
         else if (webViewState.url.includes(`${BASE_URL}/cancel`)) {
             console.log('Payment Cancelled');
+
             alert('Payment Cancelled');
-            navigation.navigate('BookingSuccess'
-                , {
-                    amount: amount,
-                    code: code,
-                    event_id: event_id,
-                    gateway: gateway,
-                    location: location,
-                    slug: slug,
-                    examDate: examDate,
-                    examTime: examTime,
-                    city_name: city_name,
-                }
-            );
+            remove();
+            navigation.navigate('Main');
+
+            // navigation.navigate('BookingSuccess'
+            //     , {
+            //         amount: amount,
+            //         code: code,
+            //         event_id: event_id,
+            //         gateway: gateway,
+            //         location: location,
+            //         slug: slug,
+            //         examDate: examDate,
+            //         examTime: examTime,
+            //         city_name: city_name,
+            //     }
+            // );
         }
     }
 

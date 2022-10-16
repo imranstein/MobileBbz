@@ -26,11 +26,13 @@ const UpcomingItem = ({ item }) => {
     // const academicTitle = item.academic_title;
     // const source = { html: item.content };
     // const { width } = useWindowDimensions();
-    console.log(item.booked_event)
+    console.log(item.id)
     const paymentDate = item.created_at;
     const title = item.booked_event.title;
     const slug = item.booked_event.slug;
-    const amount = item.pay_now;
+    const amount = item.booked_event.price;
+    const exam_level = item.booked_event.examLevel;
+    console.log(item.booked_event.examLevel)
     return (
 
         <View style={styles.container}>
@@ -64,17 +66,17 @@ const UpcomingItem = ({ item }) => {
                     >
                     </ImageBackground>
                     <View style={styles.detailView}>
-                        <Text style={[styles.detail, { width: '35%', fontSize: RFPercentage(2) }]}>
+                        <Text style={[styles.detail, { width: '55%', fontSize: RFPercentage(2) }]}>
                             {title}
                         </Text>
                         <Text style={[styles.detail, { color: '#1a6997', fontWeight: '600' }]}>
-                            {slug}
+                            {exam_level}
                         </Text>
                         <Text style={[styles.detail, { fontWeight: '600' }]}>
                             {t('common:AmountPaid')} <Text style={[styles.detail, { color: '#4BA765' }]}>{amount} €</Text>
                         </Text>
                     </View>
-                    <View>
+                    {/* <View>
                         <Text style={{ color: 'black', marginLeft: widthPercentageToDP(-12), marginTop: heightPercentageToDP(4) }}>
                             <FontAwesome5
                                 name="greater-than"
@@ -83,7 +85,7 @@ const UpcomingItem = ({ item }) => {
                                 style={styles.icon}
                             />
                         </Text>
-                    </View>
+                    </View> */}
                 </View>
 
 
@@ -232,10 +234,10 @@ const styles = StyleSheet.create({
         textAlign: 'left',
         marginLeft: 13,
         marginBottom: 2,
-        marginRight: 110,
+        // marginRight: 110,
     }, detailView: {
         flexDirection: 'column',
-        marginLeft: '-22%',
+        marginLeft: '-10%',
         flex: 1,
     },
     buttons: {

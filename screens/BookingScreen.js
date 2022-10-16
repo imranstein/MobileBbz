@@ -9,7 +9,7 @@ import * as Progress from 'react-native-progress';
 import { t } from 'i18next';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import DateTimePicker from '@react-native-community/datetimepicker';
+// import DateTimePicker from '@react-native-community/datetimepicker';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
@@ -21,6 +21,7 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { scale } from 'react-native-size-matters';
 import { Picker } from '@react-native-picker/picker';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 
 
@@ -55,15 +56,13 @@ const BookingScreen = ({ route }) => {
         birth_place: Yup.string()
             .required(t('common:BirthPlaceIsRequired'))
             .min(2, t('common:BirthPlaceMustBeAtLeast2Characters')),
-        id_proof: Yup.string()
-            .required(t('common:IDProofIsRequired')),
         telephone: Yup.string()
-            .min(9, t('common:PhoneMustBeAtLeast9Characters'))
+            .min(10, t('common:PhoneMustBeAtLeast9Characters'))
             .max(15, t('common:PhoneMustBeAtMost15Characters'))
             .matches(/^[0-9]+$/, t('common:PhoneMustBeNumeric')),
         phone: Yup.string()
             .required(t('common:PhoneIsRequired'))
-            .min(9, t('common:PhoneMustBeAtLeast9Characters'))
+            .min(10, t('common:PhoneMustBeAtLeast9Characters'))
             .max(15, t('common:PhoneMustBeAtMost15Characters'))
             .matches(/^[0-9]+$/, t('common:PhoneMustBeNumeric')),
         address: Yup.string()
@@ -83,8 +82,7 @@ const BookingScreen = ({ route }) => {
         country: Yup.string()
             .required(t('common:CountryIsRequired')),
 
-
-    }).strict();
+    }).strict(true);
 
     const navigation = useNavigation();
     const { userInfo } = useContext(AuthContext);
@@ -98,6 +96,7 @@ const BookingScreen = ({ route }) => {
     const examTime = route.params.examTime;
     const price = route.params.price;
     const event_id = route.params.id;
+    const term = route.params.term;
     const [first_name, setFirstName] = useState('');
     const [last_name, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -114,6 +113,7 @@ const BookingScreen = ({ route }) => {
     const [academic_title, setAcademicTitle] = useState('');
     const [term_conditions, setTermsConditions] = useState(false);
     const [term_conditions_1, setTermsConditions1] = useState(false);
+    const [term_conditions_2, setTermsConditions2] = useState(false);
     const [birthday, setBirthday] = useState();
     const [birth_place, setBirthPlace] = useState('');
     const [address, setAddress] = useState('');
@@ -122,13 +122,33 @@ const BookingScreen = ({ route }) => {
     const [city, setCity] = useState('');
     const [country, setCountry] = useState('');
     const [id_proof, setIdProof] = useState('');
-    const [payment_gateway, setPaymentGateway] = useState('');
+    const [payment_gateway, setPaymentGateway] = useState(null);
     const [result, setResult] = useState('');
     const [motherTongueData, setMotherTongueData] = useState([]);
-    const [birthDayError, setBirthDayError] = useState(false);
-    const [termError, setTermError] = useState(false);
+    const [paymentError, setPaymentError] = useState(false);
+    const [idProofError, setIdProofError] = useState(false);
+    const [termsError, setTermsError] = useState(false);
+    const [birthDateError, setBirthDateError] = useState(false);
+
 
     //
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+    const showDatePicker = () => {
+        console.log("clicked here");
+        setDatePickerVisibility(true);
+    };
+
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false);
+    };
+
+    const fromHandleConfirm = (date) => {
+        // const date1 = moment(date).format('YYYY-MM-DD');
+        setBirthday(date);
+        console.log("A date has been picked: ", birthday);
+        hideDatePicker();
+    };
     //images id
     const data = new FormData();
 
@@ -136,7 +156,7 @@ const BookingScreen = ({ route }) => {
         title: 'Select Image',
         type: 'library',
         options: {
-            maxHeight: 200,
+            maxHright: 200,
             maxWidth: 200,
             selectionLimit: 1,
             mediaType: 'photo',
@@ -160,7 +180,7 @@ const BookingScreen = ({ route }) => {
         }).then((response) => {
             if (response.data.status == 1) {
                 console.log(response.data);
-                // alert(response.data.message);
+                setIdProofError(false);
             } else {
                 console.log(response.data);
             }
@@ -168,6 +188,16 @@ const BookingScreen = ({ route }) => {
             console.log(error);
         });
     }
+    // const remove = async () => {
+    //     const { data } = await axios.post(`${BASE_URL}/removeBooking/${code}`
+    //     ).then((res) => {
+    //         console.log(res.data);
+    //         console.log('here is a success');
+    //     }).catch((err) => {
+    //         console.log(err);
+    //         console.log('error');
+    //     })
+    // }
     //motherTongue
     const getMotherTongue = async () => {
         const { data } = await axios
@@ -196,7 +226,7 @@ const BookingScreen = ({ route }) => {
         setAddress(data.address);
         setCity(data.city);
         setAddress2(data.address2);
-        setCountry(data.country);
+        // setCountry(data.country);
         setZipCode((data.zip_code).toString());
         setBirthday(data.birthday);
         console.log(first_name);
@@ -211,265 +241,332 @@ const BookingScreen = ({ route }) => {
     const [date, setDate] = useState(new Date());
     //payment 
     var payments = [
-        { label: 'None', value: 'none' },
+        // { label: '', value: '' },
         { label: 'Paypal', value: 'paypal' },
         { label: 'stripe', value: 'stripe' },
     ]
 
     const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
+        const currentDate = selectedDate;
         setShow(Platform.OS === 'ios');
         setDate(currentDate);
+        console.log(currentDate);
         setBirthday(currentDate);
+        console.log(birthday);
     }
     const showMode = (currentMode) => {
         setShow(true);
         setMode(currentMode);
     }
 
-    const book = (event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, price,) => {
-        console.log(event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, price);
-        console.log('here');
-        axios.post(`${BASE_URL}/register-exam`, {
-            event_id: event_id,
-            salutation: salutation,
-            academic_title: academic_title,
-            first_name: first_name,
-            last_name: last_name,
-            identification_number: identification_number,
-            email: email,
-            birth_date: birthday,
-            birth_place: birth_place,
-            country_of_birth: country_of_birth,
-            mother_tongue: mother_tongue,
-            telephone: telephone,
-            phone: phone,
-            address_line_1: address_line_1,
-            street: street,
-            city: city,
-            zip_code: zip_code,
-            country: country,
-            id_proof: id_proof,
-            payment_gateway: payment_gateway,
-            term_conditions_1: term_conditions_1,
-            term_conditions: term_conditions,
-            price: price,
-        }, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'Accept': 'application/json',
-                // Authorization: 'Bearer ' + userInfo.token,
-            }
-        }).then((response) => {
-            if (response.data.status == 1) {
-                console.log(response.data);
-                alert(response.data.message);
-                if (response.data.gateway == 'stripe') {
-                    navigation.navigate('StripePayment'
-                        , {
-                            amount: response.data.amount,
-                            code: response.data.code,
-                            event_id: response.data.event_id,
-                            gateway: response.data.gateway,
-                            location: location,
-                            slug: slug,
-                            examDate: examDate,
-                            examTime: examTime,
-                            city_name: city_name,
-                            email: email,
-                            phone: phone,
-                            city: city,
-                            address: address_line_1,
-                            zip_code: zip_code,
-                            country: country,
-                            name: first_name + ' ' + last_name,
-                        }
-                    );
-                    console.log(response.data.gateway);
-                } else {
-                    // console.log(response.data.gateway);
-                    navigation.navigate('PaypalPayment'
-                        , {
-                            amount: response.data.amount,
-                            code: response.data.code,
-                            event_id: response.data.event_id,
-                            gateway: response.data.gateway,
-                            location: location,
-                            slug: slug,
-                            examDate: examDate,
-                            examTime: examTime,
-                            city_name: city_name,
-                        }
-                    );
-                    // console.log(response.data.gateway);
-                    // }
+    const book = (event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, bamf_id, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, term_conditions_2, price,) => {
+        console.log(event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, bamf_id, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, term_conditions_2, price);
+        if (id_proof == '') {
+            setIdProofError(true);
+        }
+        else if (payment_gateway == null) {
+            setPaymentError(true);
+        } else if (term_conditions == false) {
+            setTermsError(true);
+        } else if (term_conditions_1 == false) {
+            setTermsError(true);
+        }
+        else if (term_conditions_2 == false) {
+            setTermsError(true);
+        }
+        else if (birthday == undefined) {
+            setBirthDateError(true);
+        }
+        else {
+            axios.post(`${BASE_URL}/register-exam`, {
+                event_id: event_id,
+                salutation: salutation,
+                academic_title: academic_title,
+                first_name: first_name,
+                last_name: last_name,
+                identification_number: identification_number,
+                email: email,
+                birth_date: birthday,
+                birth_place: birth_place,
+                country_of_birth: country_of_birth,
+                mother_tongue: mother_tongue,
+                telephone: telephone,
+                phone: phone,
+                bamf_id: bamf_id,
+                address_line_1: address_line_1,
+                street: street,
+                city: city,
+                zip_code: zip_code,
+                country: country,
+                id_proof: id_proof,
+                payment_gateway: payment_gateway,
+                term_conditions_1: term_conditions_1,
+                term_conditions_2: term_conditions_2,
+                term_conditions: term_conditions,
+                price: price,
+            }, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Accept': 'application/json',
+                    // Authorization: 'Bearer ' + userInfo.token,
+                }
+            }).then((response) => {
+                if (response.data.status == 1) {
+                    console.log(response.data);
+                    // alert(response.data.message);
+                    alert(t('common:BookedSuccessfully'));
+                    if (response.data.gateway == 'stripe') {
+                        navigation.navigate('StripePayment'
+                            , {
+                                amount: response.data.amount,
+                                code: response.data.code,
+                                event_id: response.data.event_id,
+                                gateway: response.data.gateway,
+                                location: location,
+                                slug: slug,
+                                examDate: examDate,
+                                examTime: examTime,
+                                city_name: city_name,
+                                email: email,
+                                phone: phone,
+                                city: city,
+                                address: address_line_1,
+                                zip_code: zip_code,
+                                country: country,
+                                name: first_name + ' ' + last_name,
+                            }
+                        );
+                        console.log(response.data.gateway);
+                    } else if (response.data.gateway == 'paypal') {
+                        // console.log(response.data.gateway);
+                        navigation.navigate('PaypalPayment'
+                            , {
+                                amount: response.data.amount,
+                                code: response.data.code,
+                                event_id: response.data.event_id,
+                                gateway: response.data.gateway,
+                                location: location,
+                                slug: slug,
+                                examDate: examDate,
+                                examTime: examTime,
+                                city_name: city_name,
+                            }
+                        );
+                        // console.log(response.data.gateway);
+                        // }
 
+                    }
+                } else {
+                    console.log(response.data);
+                    if (country_of_birth == '') {
+                        alert('Please Choose Country of birth', [{
+                            text: t('common:OK'),
+                            onPress: () => {
+                                navigation.navigate('Home');
+                            }
+                        }]);
+                    } else if (birthday == '') {
+                        alert('Please Choose Birthday', [{
+                            text: t('common:OK'),
+                            onPress: () => {
+                                navigation.navigate('Home');
+                            }
+                        }]);
+                    }
+                    else if (id_proof == '') {
+                        // alert('Please Choose Id Proof', [{
+                        //     text: t('common:OK'),
+                        //     onPress: () => {
+                        //         navigation.navigate('Home');
+                        //     }
+                        // }]);
+                        setIdProofError(true);
+                    } else if (country == '') {
+                        alert('Please Choose Country', [{
+                            text: t('common:OK'),
+                            onPress: () => {
+                                navigation.navigate('Home');
+                            }
+                        }]);
+                    }
+                    else if (payment_gateway == null) {
+                        setPaymentError(true);
+                    }
+                    else if (term_conditions == false) {
+                        setTermsError(true);
+                    } else if (term_conditions_1 == false) {
+                        setTermsError(true);
+                    }
+                    else if (term_conditions_2 == false) {
+                        setTermsError(true);
+                    }
+                    else {
+                        alert(t('common:YouHaveAlreadyRegisteredForthisEvent'), [{
+                            text: t('common:OK'),
+                            onPress: () => {
+                                navigation.navigate('Home');
+                            }
+                        }]);
+                    }
                 }
-            } else {
-                console.log(response.data);
-                if (country_of_birth == '') {
-                    alert('Please Choose Country of birth', [{
-                        text: t('common:OK'),
-                        onPress: () => {
-                            navigation.navigate('Home');
-                        }
-                    }]);
-                } else if (birthday == '') {
-                    alert('Please Choose Birthday', [{
-                        text: t('common:OK'),
-                        onPress: () => {
-                            navigation.navigate('Home');
-                        }
-                    }]);
-                }
-                else if (id_proof == '') {
-                    alert('Please Choose Id Proof', [{
-                        text: t('common:OK'),
-                        onPress: () => {
-                            navigation.navigate('Home');
-                        }
-                    }]);
-                } else if (country == '') {
-                    alert('Please Choose Country', [{
-                        text: t('common:OK'),
-                        onPress: () => {
-                            navigation.navigate('Home');
-                        }
-                    }]);
-                } else if (term_conditions == false || term_conditions_1 == false) {
-                    setTermError(true);
-                }
-                else {
-                    alert('You Have Already Registered For this Event', [{
-                        text: t('common:OK'),
-                        onPress: () => {
-                            navigation.navigate('Home');
-                        }
-                    }]);
-                }
-            }
-        }).catch((error) => {
-            console.log(error);
-        });
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
     }
-    const authBook = (event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, price,) => {
-        console.log(event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, price);
-        console.log('there');
-        axios.post(`${BASE_URL}/auth-register-exam`, {
-            event_id: event_id,
-            salutation: salutation,
-            academic_title: academic_title,
-            first_name: first_name,
-            last_name: last_name,
-            identification_number: identification_number,
-            email: email,
-            birth_date: birthday,
-            birth_place: birth_place,
-            country_of_birth: country_of_birth,
-            mother_tongue: mother_tongue,
-            telephone: telephone,
-            phone: phone,
-            address_line_1: address_line_1,
-            street: street,
-            city: city,
-            zip_code: zip_code,
-            country: country,
-            id_proof: id_proof,
-            payment_gateway: payment_gateway,
-            term_conditions_1: term_conditions_1,
-            term_conditions: term_conditions,
-            price: price,
-        }, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'Accept': 'application/json',
-                Authorization: 'Bearer ' + userInfo.token,
-            }
-        }).then((response) => {
-            if (response.data.status == 1) {
-                console.log(response.data);
-                alert(response.data.message);
-                if (response.data.gateway == 'stripe') {
-                    navigation.navigate('StripePayment'
-                        , {
-                            amount: response.data.amount,
-                            code: response.data.code,
-                            event_id: response.data.event_id,
-                            gateway: response.data.gateway,
-                            location: location,
-                            slug: slug,
-                            examDate: examDate,
-                            examTime: examTime,
-                            city_name: city_name,
-                            email: email,
-                            phone: phone,
-                            city: city,
-                            address: address_line_1,
-                            zip_code: zip_code,
-                            country: country,
-                            name: first_name + ' ' + last_name,
-                        }
-                    );
-                    console.log(response.data.gateway);
-                } else {
-                    // console.log(response.data.gateway);
-                    navigation.navigate('PaypalPayment'
-                        , {
-                            amount: response.data.amount,
-                            code: response.data.code,
-                            event_id: response.data.event_id,
-                            gateway: response.data.gateway,
-                            location: location,
-                            slug: slug,
-                            examDate: examDate,
-                            examTime: examTime,
-                            city_name: city_name,
-                        }
-                    );
-                    // console.log(response.data.gateway);
-                    // }
+    const authBook = (event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, bamf_id, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, term_conditions_2, price,) => {
+        console.log(event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, bamf_id, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, term_conditions_2, price);
+        console.log(payment_gateway);
+        if (id_proof == '') {
+            console.log('empty id');
+            setIdProofError(true);
+        }
+        else if (payment_gateway == null) {
+            console.log('her is e');
+            setPaymentError(true);
+        } else if (term_conditions == false) {
+            console.log('false term');
+            setTermsError(true);
+        } else if (term_conditions_1 == false) {
+            console.log('false term2');
+            setTermsError(true);
+        }
+        else if (term_conditions_2 == false) {
+            console.log('false term2');
+            setTermsError(true);
+        } else if (birthday == '') {
+            setBirthDateError(true);
+        }
+        else {
+            axios.post(`${BASE_URL}/auth-register-exam`, {
+                event_id: event_id,
+                salutation: salutation,
+                academic_title: academic_title,
+                first_name: first_name,
+                last_name: last_name,
+                identification_number: identification_number,
+                email: email,
+                birth_date: birthday,
+                birth_place: birth_place,
+                country_of_birth: country_of_birth,
+                mother_tongue: mother_tongue,
+                telephone: telephone,
+                phone: phone,
+                bamf_id: bamf_id,
+                address_line_1: address_line_1,
+                street: street,
+                city: city,
+                zip_code: zip_code,
+                country: country,
+                id_proof: id_proof,
+                payment_gateway: payment_gateway,
+                term_conditions_1: term_conditions_1,
+                term_conditions_2: term_conditions_2,
+                term_conditions: term_conditions,
+                price: price,
+            }, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Accept': 'application/json',
+                    Authorization: 'Bearer ' + userInfo.token,
+                }
+            }).then((response) => {
+                if (response.data.status == 1) {
+                    console.log(response.data);
+                    // alert(response.data.message);
+                    alert(t('common:BookedSuccessfully'));
+                    if (response.data.gateway == 'stripe') {
+                        navigation.navigate('StripePayment'
+                            , {
+                                amount: response.data.amount,
+                                code: response.data.code,
+                                event_id: response.data.event_id,
+                                gateway: response.data.gateway,
+                                location: location,
+                                slug: slug,
+                                examDate: examDate,
+                                examTime: examTime,
+                                city_name: city_name,
+                                email: email,
+                                phone: phone,
+                                city: city,
+                                address: address_line_1,
+                                zip_code: zip_code,
+                                country: country,
+                                name: first_name + ' ' + last_name,
+                            }
+                        );
+                        console.log(response.data.gateway);
+                    } else if (response.data.gateway == 'paypal') {
+                        console.log(response.data.gateway);
+                        navigation.navigate('PaypalPayment'
+                            , {
+                                amount: response.data.amount,
+                                code: response.data.code,
+                                event_id: response.data.event_id,
+                                gateway: response.data.gateway,
+                                location: location,
+                                slug: slug,
+                                examDate: examDate,
+                                examTime: examTime,
+                                city_name: city_name,
+                            }
+                        );
+                        // console.log(response.data.gateway);
+                        // }
 
+                    }
+                } else {
+                    console.log(response.data);
+                    if (country_of_birth == '') {
+                        alert('Please Choose Country of birth', [{
+                            text: t('common:OK'),
+                            onPress: () => {
+                                navigation.navigate('Home');
+                            }
+                        }]);
+                    } else if (birthday == '') {
+                        alert('Please Choose Birthday', [{
+                            text: t('common:OK'),
+                            onPress: () => {
+                                navigation.navigate('Home');
+                            }
+                        }]);
+                    }
+                    else if (id_proof == '') {
+                        // alert('Please Choose Id Proof', [{
+                        //     text: t('common:OK'),
+                        //     onPress: () => {
+                        //         navigation.navigate('Home');
+                        //     }
+                        // }]);
+                        setIdProofError(true);
+                    }
+                    else if (payment_gateway == null) {
+                        setPaymentError(true);
+                    }
+                    else if (term_conditions == false) {
+                        setTermsError(true);
+                    } else if (term_conditions_1 == false) {
+                        setTermsError(true);
+                    }
+                    else if (term_conditions_2 == false) {
+                        setTermsError(true);
+                    }
+
+                    else {
+                        alert(t('common:YouHaveAlreadyRegisteredForthisEvent'), [{
+                            text: t('common:OK'),
+                            onPress: () => {
+                                navigation.navigate('Home');
+                            }
+                        }]);
+                    }
                 }
-            } else {
-                console.log(response.data);
-                if (country_of_birth == '') {
-                    alert('Please Choose Country of birth', [{
-                        text: t('common:OK'),
-                        onPress: () => {
-                            navigation.navigate('Home');
-                        }
-                    }]);
-                } else if (birthday == '') {
-                    alert('Please Choose Birthday', [{
-                        text: t('common:OK'),
-                        onPress: () => {
-                            navigation.navigate('Home');
-                        }
-                    }]);
-                }
-                else if (id_proof == '') {
-                    alert('Please Choose Id Proof', [{
-                        text: t('common:OK'),
-                        onPress: () => {
-                            navigation.navigate('Home');
-                        }
-                    }]);
-                }
-                else if (term_conditions == false || term_conditions_1 == false) {
-                    setTermError(true);
-                }
-                else {
-                    alert('You Have Already Registered For this Event', [{
-                        text: t('common:OK'),
-                        onPress: () => {
-                            navigation.navigate('Home');
-                        }
-                    }]);
-                }
-            }
-        }).catch((error) => {
-            console.log(error);
-        });
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
     }
     console.log(email);
 
@@ -494,7 +591,7 @@ const BookingScreen = ({ route }) => {
                 </View>
                 <View style={styles.header}>
                     <ImageBackground source={require('../assets/searchBackground.png')}>
-                        <Text style={styles.h1}>{slug} {t('common:Level')}</Text>
+                        <Text style={styles.h1}>{term} {t('common:Level')}</Text>
                         {location != null ?
                             <View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 15 }}>
                                 <Text style={{ marginRight: 10, marginLeft: 5, }}>
@@ -524,7 +621,7 @@ const BookingScreen = ({ route }) => {
                     <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 2 }}>
 
                         <Text style={styles.title}> {t('common:ExamLevel')}: </Text>
-                        <Text style={[styles.value]}> {slug} </Text>
+                        <Text style={[styles.value]}> {term} </Text>
 
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>
@@ -569,10 +666,15 @@ const BookingScreen = ({ route }) => {
                     <Text style={styles.titleHeader}>{t('common:ContactInformation')}</Text>
 
                     <View style={styles.wrapper}>
-                        <Formik initialValues={{ salutation: '', academic_title: '', first_name: first_name, last_name: last_name, identification_number: '', email: email, birth_place: '', country_of_birth: '', mother_tongue: '', telephone: '', id_proof: id_proof, phone: phone, address: address, address2: address2, city: city, zip_code: zip_code, country: country ?? '' }}
+                        <Formik initialValues={{ salutation: '', academic_title: '', first_name: first_name, last_name: last_name, identification_number: '', email: email, birth_place: '', country_of_birth: '', mother_tongue: '', telephone: '', phone: phone, bamf_id: '', address: '', address2: '', city: '', zip_code: '', country: '' }}
+                            // <Formik initialValues={{ salutation: '', academic_title: '', first_name: first_name, last_name: last_name, identification_number: '', email: email, birth_place: '', mother_tongue: '', telephone: '', phone: phone, address: address, address2: address2, city: city, zip_code: zip_code }}
                             enableReinitialize={true}
-                            validateOnMount={true}
+                            // validateOnMount={true}
                             onSubmit={(values) => {
+                                // setPaymentError(false);
+                                // setTermsError(false);
+                                // setBirthDateError(false);
+                                // setIdProofError(false);
                                 userInfo.token ?
 
                                     authBook(
@@ -589,6 +691,7 @@ const BookingScreen = ({ route }) => {
                                         values.mother_tongue,
                                         values.telephone,
                                         values.phone,
+                                        values.bamf_id,
                                         values.address,
                                         values.address2,
                                         values.city,
@@ -598,6 +701,7 @@ const BookingScreen = ({ route }) => {
                                         payment_gateway,
                                         term_conditions,
                                         term_conditions_1,
+                                        term_conditions_2,
                                         price,
                                     ) : book(
                                         event_id,
@@ -613,6 +717,7 @@ const BookingScreen = ({ route }) => {
                                         mother_tongue,
                                         values.telephone,
                                         values.phone,
+                                        values.bamf_id,
                                         values.address,
                                         values.address2,
                                         values.city,
@@ -622,6 +727,7 @@ const BookingScreen = ({ route }) => {
                                         payment_gateway,
                                         term_conditions,
                                         term_conditions_1,
+                                        term_conditions_2,
                                         price,
                                     );
                             }
@@ -796,27 +902,27 @@ const BookingScreen = ({ route }) => {
                                                 height: 42,
                                                 color: '#000',
                                             }}>
-                                                <TouchableOpacity onPress={() => showMode('date')}>
+                                                <TouchableOpacity onPress={showDatePicker}>
                                                     {birthday != null ?
                                                         <Text style={{ fontSize: RFPercentage(2.7), color: '#000', marginTop: 10 }}>{moment(birthday).format('DD/MM/YYYY')}</Text> :
                                                         <Text style={{ fontSize: RFPercentage(2.7), color: '#9e9e9e', marginTop: 10 }}>{t('common:Birthday')}</Text>
                                                     }
                                                 </TouchableOpacity>
-                                                {show && (
-                                                    <DateTimePicker
-                                                        testID="dateTimePicker"
-                                                        timeZoneOffsetInMinutes={0}
-                                                        value={date}
-                                                        mode={mode}
-                                                        maximumDate={new Date(2007, 0, 1)}
-                                                        minimumDate={new Date(1970, 0, 1)}
-                                                        is24Hour={true}
-                                                        display="calendar"
-                                                        onChange={onChange}
-                                                    />
-                                                )}
+
+                                                <DateTimePickerModal
+                                                    isVisible={isDatePickerVisible}
+                                                    mode="date"
+                                                    maximumDate={new Date(2006, 11, 31)}
+                                                    minimumDate={new Date(1970, 0, 1)}
+                                                    onConfirm={fromHandleConfirm}
+                                                    onCancel={hideDatePicker}
+                                                />
+
                                             </View>
                                         </View>
+                                        {birthDateError == true ? (
+                                            <Text style={[styles.error, { marginLeft: '7%' }]}>{t('common:BirthDateError')}</Text>
+                                        ) : null}
                                     </View>
                                     <View style={styles.inputs}>
                                         <View>
@@ -946,7 +1052,10 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>{t('common:Mobile')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            {userInfo.token ?
+                                                <Text style={styles.label}>{t('common:Mobile')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text> :
+                                                <Text style={styles.label}>{t('common:Mobile')} <Text style={{ color: '#999', fontSize: scale(12) }}>{t('common:PhoneIsPassword')}</Text>:<Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            }
                                             <TextInput style={styles.input}
                                                 onChangeText={handleChange('phone')}
                                                 onBlur={handleBlur('phone')}
@@ -959,6 +1068,23 @@ const BookingScreen = ({ route }) => {
                                         </View>
                                         {errors.phone && touched.phone ? (
                                             <Text style={styles.error}>{errors.phone}</Text>
+                                        ) : null}
+                                    </View>
+                                    <View style={styles.inputs}>
+                                        <View style={styles.inputContainer}>
+                                            <Text style={styles.label}>{t('common:PersonalBamfID')}:</Text>
+                                            <TextInput
+                                                style={styles.input}
+                                                onChangeText={handleChange('bamf_id')}
+                                                onBlur={handleBlur('bamf_id')}
+                                                value={values.bamf_id}
+                                                placeholder={t('common:PersonalBamfID')}
+                                                placeholderTextColor="#A8B0B5"
+
+                                            />
+                                        </View>
+                                        {errors.bamf_id && touched.bamf_id ? (
+                                            <Text style={styles.error}>{errors.bamf_id}</Text>
                                         ) : null}
                                     </View>
                                     <View style={styles.inputs}>
@@ -975,7 +1101,7 @@ const BookingScreen = ({ route }) => {
                                                             style={styles.icon}
                                                         />
                                                     </Text>
-                                                    <Text style={{ marginRight: scale(20), marginLeft: scale(10), color: "#1a6997", fontWeight: 'bold', fontSize: scale(17) }}>{t('common:UploadId')}</Text>
+                                                    <Text style={{ marginRight: scale(20), marginLeft: scale(10), color: "#1a6997", fontWeight: 'bold', fontSize: scale(17) }}>{t('common:UploadId')} <Text style={{ color: 'red', fontSize: scale(20), marginTop: 15 }}>*</Text></Text>
                                                 </View>
                                             </TouchableOpacity>
                                         </View>
@@ -984,11 +1110,10 @@ const BookingScreen = ({ route }) => {
                                             readOnly={true}
                                             // placeholder={t('common:UploadId')}
                                             placeholderTextColor="#A8B0B5"
-                                            onChange={handleChange('id_proof')}
                                         />
                                     </View>
-                                    {errors.id_proof && touched.id_proof ? (
-                                        <Text style={styles.error}>{errors.id_proof}</Text>
+                                    {idProofError == true ? (
+                                        <Text style={[styles.error, { marginLeft: '7%' }]}>{t('common:IdProofError')}</Text>
                                     ) : null}
                                     <View style={{ flex: 1, marginTop: '5%', marginBottom: '5%' }}>
                                         <Text style={{ marginLeft: '5%', fontSize: RFPercentage(2.5), fontWeight: 'bold', color: '#000' }}>{t('common:Address')}</Text>
@@ -1111,41 +1236,63 @@ const BookingScreen = ({ route }) => {
                                             labelStyle={{
                                                 fontSize: scale(18),
                                             }}
+                                            initial={false}
                                             labelHorizontal={true}
                                             buttonOuterColor={'#000'}
                                             selectedButtonColor={'#000'}
                                             animation={true}
-                                            onPress={(value) => { setPaymentGateway(value) }}
+                                            onPress={(value) => { setPaymentGateway(value) && setPaymentError(false) }}
                                         />
                                     </View>
+                                    {paymentError == true ? (
+                                        <Text style={[styles.error, { marginLeft: '7%' }]}>{t('common:PaymentError')}</Text>
+                                    ) : null}
+                                    <View>
+                                        <View style={{ flexDirection: 'row', marginBottom: 10, marginLeft: 15 }}>
+                                            <CheckBox
+                                                value={term_conditions}
+                                                onPress={() => setTermsConditions(!term_conditions)}
+                                                onValueChange={newValue => setTermsConditions(newValue)}
+                                                tintColors={{ true: '#1570a5', false: '#000' }}
+                                            />
+                                            <Text style={{
+                                                marginLeft: 10, fontSize: RFPercentage(2.25),
+                                                color: '#999',
+                                                width: '80%'
+                                            }}>{t('common:Terms')}</Text>
+                                            {/* {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>} */}
+                                        </View>
+                                        <View style={{ flexDirection: 'row', marginBottom: 10, marginLeft: 15 }}>
+                                            <CheckBox
+                                                value={term_conditions_1}
+                                                onPress={() => setTermsConditions1(!term_conditions_1)}
+                                                onValueChange={newValue => setTermsConditions1(newValue)}
+                                                tintColors={{ true: '#1570a5', false: '#000' }}
+                                            />
+                                            <Text style={{
+                                                marginLeft: 10, fontSize: RFPercentage(2.25),
+                                                color: '#999',
+                                                width: '80%'
+                                            }}>{t('common:Terms1')}</Text>
 
-                                    <View style={{ flexDirection: 'row', marginBottom: 10, marginLeft: 15 }}>
-                                        <CheckBox
-                                            value={term_conditions}
-                                            onPress={() => setTermsConditions(!term_conditions)}
-                                            onValueChange={newValue => setTermsConditions(newValue)}
-                                            tintColors={{ true: '#1570a5', false: '#000' }}
-                                        />
-                                        <Text style={{
-                                            marginLeft: 10, fontSize: RFPercentage(2.25),
-                                            color: '#999',
-                                            width: '80%'
-                                        }}>{t('common:Terms')}</Text>
-                                        {/* {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>} */}
-                                    </View>
-                                    <View style={{ flexDirection: 'row', marginBottom: 10, marginLeft: 15 }}>
-                                        <CheckBox
-                                            value={term_conditions_1}
-                                            onPress={() => setTermsConditions1(!term_conditions_1)}
-                                            onValueChange={newValue => setTermsConditions1(newValue)}
-                                            tintColors={{ true: '#1570a5', false: '#000' }}
-                                        />
-                                        <Text style={{
-                                            marginLeft: 10, fontSize: RFPercentage(2.25),
-                                            color: '#999',
-                                            width: '80%'
-                                        }}>{t('common:Terms1')}</Text>
-                                        {/* {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>} */}
+                                        </View>
+                                        <View style={{ flexDirection: 'row', marginBottom: 10, marginLeft: 15 }}>
+                                            <CheckBox
+                                                value={term_conditions_2}
+                                                onPress={() => setTermsConditions2(!term_conditions_2)}
+                                                onValueChange={newValue => setTermsConditions2(newValue)}
+                                                tintColors={{ true: '#1570a5', false: '#000' }}
+                                            />
+                                            <Text style={{
+                                                marginLeft: 10, fontSize: RFPercentage(2.25),
+                                                color: '#999',
+                                                width: '80%'
+                                            }}>{t('common:Terms2')}</Text>
+
+                                        </View>
+                                        {termsError == true ? (
+                                            <Text style={[styles.error, { marginLeft: '7%' }]}>{t('common:TermsError')}</Text>
+                                        ) : null}
                                     </View>
                                     <TouchableOpacity onPress={handleSubmit}
                                         // disabled={!isValid}
@@ -1184,7 +1331,7 @@ const BookingScreen = ({ route }) => {
                 {/* <TouchableOpacity style={{ alignSelf: 'flex-end', justifyContent: 'flex-end', marginRight: 20 }}
                     onPress={() => {
                         // console.log('here');
-                        book(event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, address, address2, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, price);
+                        book(event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, address, address2, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1,term_conditions_2, price);
                     }
                     }>
                     <Text style={styles.submitLabel}>{t('common:PayNow')}</Text>

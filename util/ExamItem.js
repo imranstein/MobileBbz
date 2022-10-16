@@ -25,9 +25,14 @@ const ExamItem = ({ item }) => {
     const media = item.media;
     const location = item.location;
     const progress = item.available_seats / item.total_seat;
+    const regTime = item.reg_until_time;
+    //
     // const source = { html: item.content };
     // const { width } = useWindowDimensions();
     const daysleft = moment(item.reg_until_date).diff(moment(), 'days');
+
+    const today = moment().format('YYYY-MM-DD');
+    const nowTime = moment().format('HH:mm:ss');
 
     return (
 
@@ -85,7 +90,8 @@ const ExamItem = ({ item }) => {
                     fontSize: RFValue(13),
                     fontWeight: '600', color: '#000'
                 }}>{t("common:RegDate")}: </Text>
-                {daysleft < 5 ? <Text style={styles.regDateText}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text> :
+                {daysleft < 5 && daysleft > 1 ? <Text style={styles.regDateText}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text> : daysleft <= 1 ?
+                    <Text style={[styles.regDateText, { color: 'red' }]}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text> :
                     <Text style={[styles.regDateText, { color: '#008428' }]}>{moment(item.reg_until_date).format('DD/MM/YY')}</Text>
                 }
             </View>

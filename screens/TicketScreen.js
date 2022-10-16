@@ -102,7 +102,7 @@ const TicketScreen = ({ route }) => {
             <View style={styles.body}>
 
                 <View style={styles.ticket}>
-                    <Text style={{ color: '#1a6997', fontSize: scale(17), marginTop: heightPercentageToDP(2), marginLeft: widthPercentageToDP(5), marginBottom: heightPercentageToDP(2) }}>{title}</Text>
+                    <Text style={{ color: '#1a6997', fontSize: scale(17), marginTop: heightPercentageToDP(2), marginLeft: widthPercentageToDP(6), marginBottom: heightPercentageToDP(2) }}>{title}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightPercentageToDP(2), marginLeft: widthPercentageToDP(5), marginRight: widthPercentageToDP(5) }}>
                     <Entypo name="location-pin" size={20} color="#1a6997" />
@@ -126,7 +126,7 @@ const TicketScreen = ({ route }) => {
                 </View>
                 <View style={{ flexDirection: 'row', marginRight: widthPercentageToDP(5), justifyContent: 'space-between' }}>
                     <View style={{ flexDirection: 'row', marginTop: heightPercentageToDP(2), marginLeft: widthPercentageToDP(5), marginRight: widthPercentageToDP(5) }}>
-                        <Text style={{ color: '#000', marginLeft: widthPercentageToDP(1), fontWeight: '700' }}>
+                        <Text style={{ color: '#000', fontWeight: '700' }}>
                             {examDate}
                         </Text>
                     </View>

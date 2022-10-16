@@ -95,13 +95,13 @@ const InvoiceScreen = ({ route }) => {
         console.log('create pdf');
         let file = await RNHTMLtoPDF.convert(options)
         console.log(file.filePath);
-        alert('PDF created successfully');
+        alert(t('common:PDFCreatedSuccessfully'));
     }
 
     return (
         <View>
             <TouchableOpacity onPress={createPdf}>
-                <Text style={{ alignSelf: 'flex-end', marginEnd: widthPercentageToDP(10), marginVertical: heightPercentageToDP(3) }}>
+                <Text style={{ alignSelf: 'flex-end', marginEnd: widthPercentageToDP(15), marginVertical: heightPercentageToDP(3) }}>
                     <Entypo
                         name="print"
                         size={30}

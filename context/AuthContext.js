@@ -116,6 +116,7 @@ export const AuthProvider = ({ children }) => {
         console.log(res.data);
         AsyncStorage.removeItem('userInfo');
         setUserInfo({});
+        // this.props.navigation.navigate('Main');
         setIsLoading(false);
 
       })

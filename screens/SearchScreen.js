@@ -50,8 +50,8 @@ const SearchPage = () => {
   const [search, setSearch] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [term, setTerm] = useState('');
-  const [from_date, setFromDate] = useState(new Date());
-  const [to_date, setToDate] = useState(new Date());
+  const [from_date, setFromDate] = useState();
+  const [to_date, setToDate] = useState();
   const [location_id, setLocation] = useState('');
   const [exam_level_id, setExamLevel] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
@@ -138,7 +138,7 @@ const SearchPage = () => {
       });
     setData3(data.locations);
     setData4(data.exam_level);
-    console.log(data3);
+    console.log(data4);
   };
   useEffect(() => {
     getSearchDetail();
@@ -294,7 +294,7 @@ const SearchPage = () => {
                 label={t('common:SelectExam')} value="" />
               {data4.map((item, index) => {
                 return (
-                  <Picker.Item label={item.name} value={item.id} key={index} />
+                  <Picker.Item label={item.name} value={item.origin_id} key={index} />
                 )
               })}
             </Picker>
@@ -317,8 +317,8 @@ const SearchPage = () => {
                   () => {
                     setSearch(false);
                     setTerm('');
-                    setFromDate(new Date());
-                    setToDate(new Date());
+                    setFromDate();
+                    setToDate();
                     setLocation('');
                     setExamLevel('');
                   }
