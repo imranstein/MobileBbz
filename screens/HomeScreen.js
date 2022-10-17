@@ -15,10 +15,16 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const Tab = createBottomTabNavigator();
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const { userInfo, isLoading, logout } = useContext(AuthContext);
-
+  React.useEffect(() => {
+    const focusHandler = navigation.addListener('focus', () => {
+      console.log('Refreshed');
+    });
+    return focusHandler;
+  }, [navigation]);
   return (
+
     // <View style={styles.container}>
     //   <Spinner visible={isLoading} />
     //   <Text style={styles.welcome}>Welcome {userInfo.name}</Text>

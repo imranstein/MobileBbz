@@ -37,7 +37,7 @@ const VerifyScreen = () => {
 
         }).then(res => {
             console.log(res);
-            alert(res.data.message, 'Success');
+            alert(t('common:VerificationLinkIsSentToYourEmail'), 'Success');
             setIsLoading(false);
             navigation.navigate('VerifySuccess');
             return true;

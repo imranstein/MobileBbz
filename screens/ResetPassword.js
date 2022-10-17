@@ -42,7 +42,7 @@ const ResetPassword = () => {
       .post(`${BASE_URL}/reset-password`, { email })
       .then(res => {
         console.log(res);
-        alert(res.data.message, 'Success');
+        alert(t('common:PasswordResetLinkIsSentToYourEmail'), t('common:Success'));
         setIsLoading(false);
         navigation.navigate('Success');
         return true;
@@ -53,9 +53,9 @@ const ResetPassword = () => {
         if (e.response.status === 400) {
           alert(e.response.data.message, 'Error');
         } else if (e.response.status === 500) {
-          alert('Sorry the email you entered is not registered', 'Error');
+          alert(t('common:SorryTheEmailYouEnteredIsNotRegistered'), 'Error');
         } else if (e.response.status === 422) {
-          alert('Please enter a valid email', 'Error');
+          alert(t('common:PleaseEnterAValidEmail'), 'Error');
         }
         setIsLoading(false);
         return false;

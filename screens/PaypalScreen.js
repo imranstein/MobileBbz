@@ -4,6 +4,7 @@ import { BASE_URL } from '../config';
 import { WebView } from 'react-native-webview';
 import React, { useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native';
+import { t } from 'i18next';
 
 const PaypalScreen = ({ route }) => {
 
@@ -14,9 +15,9 @@ const PaypalScreen = ({ route }) => {
 
     }
     const backAction = () => {
-        Alert.alert("Hold on!", "Are you sure you want to go back?", [
+        Alert.alert(t("common:HoldOn"), t("common:AreYouSureYouWantToGoBack"), [
             {
-                text: "Cancel",
+                text: t("common:Cancel"),
                 onPress: () => null,
                 style: "cancel"
             },
@@ -117,7 +118,7 @@ const PaypalScreen = ({ route }) => {
 
     const createPayment = async () => {
         if (status == 'paid') {
-            alert('Already Paid');
+            alert(t('common:AlreadyPaid'));
             navigation.navigate('BookingSuccess'
                 , {
                     amount: amount,
@@ -181,9 +182,9 @@ const PaypalScreen = ({ route }) => {
     const onNavigationStateChange = (webViewState) => {
         if (webViewState.url.includes(`${BASE_URL}/success`)) {
             console.log('Payment Successful');
-            alert('Payment Successful');
+            alert(('PaymentSuccessful'));
             finalize();
-            setLoading(false);
+            // setLoading(false);
             navigation.navigate('BookingSuccess'
                 , {
                     amount: amount,
@@ -235,7 +236,8 @@ const PaypalScreen = ({ route }) => {
                         }
                         else if (response.name == "INVALID_RESOURCE_ID") {
                             console.log('Payment Failed');
-                            alert('Payment Failed, Please try again');
+                            alert(t('common:PaymentFailed'));
+                            // alert('Payment Failed, Please try again');
                             setApprovalUrl(null);
                             navigation.navigate('BookingScreen');
                         }
@@ -253,7 +255,7 @@ const PaypalScreen = ({ route }) => {
         else if (webViewState.url.includes(`${BASE_URL}/cancel`)) {
             console.log('Payment Cancelled');
 
-            alert('Payment Cancelled');
+            alert(t('common:PaymentCancelled'));
             remove();
             navigation.navigate('Main');
 

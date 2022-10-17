@@ -7,7 +7,9 @@ import {
   ImageBackground,
   FlatList,
   ScrollView,
-  Dimensions
+  Dimensions,
+  Alert,
+  RefreshControl
 } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { LogBox } from 'react-native';
@@ -40,6 +42,22 @@ const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
 const SearchPage = () => {
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(1000).then(() => setRefreshing(false));
+  }, []);
+
+  React.useEffect(() => {
+    const focusHandler = navigation.addListener('focus', () => {
+      console.log('Refreshed');
+    });
+    return focusHandler;
+  }, [navigation]);
 
   const navigation = useNavigation();
   const { userInfo } = useContext(AuthContext);
@@ -164,7 +182,15 @@ const SearchPage = () => {
   // };
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
+      >
         <Spinner visible={isLoading} />
         <View style={styles.header}>
           <ImageBackground source={require('../assets/searchBackground.png')}>

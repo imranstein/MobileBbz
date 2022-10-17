@@ -113,7 +113,7 @@ const MyProfileScreen = () => {
             if (response.data.status == 1) {
                 console.log('here', response.data);
                 setIsLoading(false);
-                alert('Profile Image Updated Successfully');
+                alert(t('common:ProfileImageUpdatedSuccessfully'));
                 navigation.navigate('Main');
                 // alert(response.data.message);
             } else {
@@ -184,7 +184,7 @@ const MyProfileScreen = () => {
                 })
                 .then(res => {
                     console.log(res.data);
-                    alert(res.data.message, 'Success');
+                    alert(t('common:ProfileUpdated'), t('common:Success'));
                     navigation.navigate('Main');
                     return true;
                 })
@@ -204,13 +204,13 @@ const MyProfileScreen = () => {
                         setCountryError(true);
                     }
                     else if (e.response.status === 423) {
-                        alert('No Changes Made');
+                        alert(t('common:NoChangesMade'));
                     }
                     return false;
                 });
         }
     };
-    // console.log(userInfo.email)
+    console.log(userInfo.email);
     const getData = async () => {
         const { data } = await axios
             .get(`${BASE_URL}/profile`, {

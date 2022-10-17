@@ -27,6 +27,7 @@ const ProfileScreen = () => {
   const { userInfo, isLoading, logout } = useContext(AuthContext);
   // const [verification, setVerification] = useState(null);
   const [data, setData] = useState(null);
+  console.log('info', userInfo);
 
   const verification = userInfo.email_verified_at;
   console.log('verification', verification);

@@ -36,7 +36,9 @@ const ContactUs = () => {
       .required(t('common:EmailIsRequired'))
       .email(t('common:EmailIsInvalid')),
     message: Yup.string()
-      .required(t('common:MessageIsRequired')),
+      .required(t('common:MessageIsRequired'))
+      .min(10, t('common:MessageMustBeAtLeast10Characters'))
+      .matches(/^[a-zA-Z0-9 ]*$/, t('common:MessageMustBeAlphanumeric')),
   });
 
   const navigation = useNavigation();
@@ -46,7 +48,7 @@ const ContactUs = () => {
 
   const SendMessage = (full_name, email, message) => {
     setIsLoading(true);
-    console.log(full_name, email, message);
+    console.log('here', full_name, email, message);
 
     axios
       .post(`${BASE_URL}/contact-us`, {
@@ -56,7 +58,7 @@ const ContactUs = () => {
       })
       .then(res => {
         console.log(res);
-        alert(t('common:MessageSentSuccessfully'),t('common:Success'));
+        alert(t('common:MessageSentSuccessfully'), t('common:Success'));
 
         navigation.navigate('Home');
         //clear the values
@@ -97,13 +99,14 @@ const ContactUs = () => {
         <Formik
           initialValues={{ full_name: '', email: '', message: '' }}
           validateOnMount={true}
-          onSubmit={(values) => {
+          onSubmit={(values, { resetForm }) => {
             console.log(values);
             SendMessage(
               full_name = values.full_name,
               email = values.email,
               message = values.message,
             );
+            resetForm();
             //change values to empty
 
 

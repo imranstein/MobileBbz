@@ -30,6 +30,14 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const BookingScreen = ({ route }) => {
 
+    React.useEffect(() => {
+        const focusHandler = navigation.addListener('focus', () => {
+            console.log('Refreshed');
+        });
+        return focusHandler;
+    }, [navigation]);
+
+
     const validationSchema = Yup.object().shape({
         salutation: Yup.string()
             .required(t('common:SaluteIsRequired')),
@@ -209,33 +217,37 @@ const BookingScreen = ({ route }) => {
     useEffect(() => {
         getMotherTongue();
     }, [])
+    if (userInfo.token) {
+        const getData = async () => {
+            const { data } = await axios
+                .get(`${BASE_URL}/profile`, {
+                    headers: {
+                        Authorization: 'Bearer ' + userInfo.token,
+                    },
+                });
+            setResult(data);
+            setFirstName(userInfo.first_name);
+            setLastName(userInfo.last_name);
+            setEmail(userInfo.email);
+            setTelephone(data.telephone);
+            setPhone(data.phone);
+            setAddress(data.address);
+            setCity(data.city);
+            setAddress2(data.address2);
+            // setCountry(data.country);
+            setZipCode((data.zip_code).toString());
+            setBirthday(data.birthday);
+            console.log('name', data.first_name);
+            console.log(data);
+            console.log('BirthDay', birthday);
+            console.log('phone', phone);
+        };
 
-    const getData = async () => {
-        const { data } = await axios
-            .get(`${BASE_URL}/profile`, {
-                headers: {
-                    Authorization: 'Bearer ' + userInfo.token,
-                },
-            });
-        setResult(data);
-        setFirstName(userInfo.first_name);
-        setLastName(userInfo.last_name);
-        setEmail(userInfo.email);
-        setTelephone(data.telephone);
-        setPhone(data.phone);
-        setAddress(data.address);
-        setCity(data.city);
-        setAddress2(data.address2);
-        // setCountry(data.country);
-        setZipCode((data.zip_code).toString());
-        setBirthday(data.birthday);
-        console.log(first_name);
-    };
+        useEffect(() => {
+            getData();
 
-    useEffect(() => {
-        getData();
-
-    }, [])
+        }, [])
+    }
     const [show, setShow] = useState(false);
     const [mode, setMode] = useState('date');
     const [date, setDate] = useState(new Date());
@@ -399,6 +411,8 @@ const BookingScreen = ({ route }) => {
                     }
                     else if (term_conditions_2 == false) {
                         setTermsError(true);
+                    } else if (response.data.message == 'Email already exists') {
+                        alert(t('common:EmailAlreadyExists'));
                     }
                     else {
                         alert(t('common:YouHaveAlreadyRegisteredForthisEvent'), [{
