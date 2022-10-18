@@ -49,10 +49,10 @@ const RegisterScreen = ({ navigation }) => {
     //   .required(t('common:TermIsRequired')),
   });
 
-  const [term, setTerm] = useState(false);
+  const [term, setTerm] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState(null);
 
-  const { isLoading, isAuthenticating, register, error2 } = useContext(AuthContext);
+  const { isLoading, isAuthenticating, register, error2, termError } = useContext(AuthContext);
 
   return (
     <ImageBackground
@@ -164,8 +164,11 @@ const RegisterScreen = ({ navigation }) => {
                         marginLeft: 8, fontSize: RFPercentage(2),
                         color: '#999', textAlignVertical: 'center', maxWidth: '80%'
                       }}>{t('common:IHaveReadAndAcceptTheTermsAndConditions')}</Text>
+
                       {/* {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>} */}
                     </View>
+                    <Text style={[styles.error, { alignSelf: 'center', marginTop: 10 }]}>{termError ? termError : ''}</Text>
+
                     <View>
                       <Text style={[styles.error, { alignSelf: 'center' }]}>{error2 ? error2 : ''}</Text>
                     </View>

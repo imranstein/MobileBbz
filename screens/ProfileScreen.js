@@ -158,8 +158,8 @@ const ProfileScreen = () => {
           </View>
         </TouchableOpacity>
       </View>
-      <View style={styles.logout}>
-        <TouchableOpacity onPress={() => { }}>
+      <TouchableOpacity onPress={() => { }}>
+        <View style={styles.logout}>
           <View style={{ flexDirection: 'row' }}>
             <Text style={styles.logoutIcon}>
               <MaterialIcons
@@ -172,9 +172,9 @@ const ProfileScreen = () => {
               {t('common:LogOut')}
             </Text>
           </View>
-        </TouchableOpacity>
 
-      </View>
+        </View>
+      </TouchableOpacity>
     </View >
   );
 };

@@ -59,8 +59,7 @@ const ContactUs = () => {
       .then(res => {
         console.log(res);
         alert(t('common:MessageSentSuccessfully'), t('common:Success'));
-
-        navigation.navigate('Home');
+        navigation.navigate('Main');
         //clear the values
 
         // logout();

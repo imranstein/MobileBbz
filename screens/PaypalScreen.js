@@ -181,9 +181,9 @@ const PaypalScreen = ({ route }) => {
 
     const onNavigationStateChange = (webViewState) => {
         if (webViewState.url.includes(`${BASE_URL}/success`)) {
-            console.log('Payment Successful');
-            alert(('PaymentSuccessful'));
             finalize();
+            console.log('Payment Successful1');
+            // alert(('PaymentSuccessful'));
             // setLoading(false);
             navigation.navigate('BookingSuccess'
                 , {
@@ -198,59 +198,59 @@ const PaypalScreen = ({ route }) => {
                     city_name: city_name,
                 }
             );
-            if (webViewState.url.includes('https://example.com/')) {
+            // if (webViewState.url.includes('https://example.com/')) {
 
-                this.setState({
-                    approvalUrl: null
-                })
+            //     this.setState({
+            //         approvalUrl: null
+            //     })
 
-                const { PayerID, paymentId } = webViewState.url
+            //     const { PayerID, paymentId } = webViewState.url
 
-                axios.post(`https://api.sandbox.paypal.com/v1/payments/payment/${paymentId}/execute`, { payer_id: PayerID },
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: `Bearer ${accessToken}`
-                        }
-                    }
-                ).then(res => res.json())
-                    .then(response => {
-                        console.log('2');
-                        console.log("res", response);
-                        if (response.state === 'approved') {
+            //     axios.post(`https://api.sandbox.paypal.com/v1/payments/payment/${paymentId}/execute`, { payer_id: PayerID },
+            //         {
+            //             headers: {
+            //                 'Content-Type': 'application/json',
+            //                 Authorization: `Bearer ${accessToken}`
+            //             }
+            //         }
+            //     ).then(res => res.json())
+            //         .then(response => {
+            //             console.log('2');
+            //             console.log("res", response);
+            //             if (response.state === 'approved') {
 
-                            console.log('Payment Successful');
-                            navigation.navigate('BookingSuccess'
-                                , {
-                                    amount: amount,
-                                    // code: code,
-                                    // event_id: event_id,
-                                    // gateway: gateway,
-                                    // location: location,
-                                    // slug: slug,
-                                    // examDate: examDate,
-                                    // examTime: examTime,
-                                    // city_name: city_name,
-                                }
-                            );
-                        }
-                        else if (response.name == "INVALID_RESOURCE_ID") {
-                            console.log('Payment Failed');
-                            alert(t('common:PaymentFailed'));
-                            // alert('Payment Failed, Please try again');
-                            setApprovalUrl(null);
-                            navigation.navigate('BookingScreen');
-                        }
-                        console.log('success', response.data);
-                        console.log(response);
-                        console.log('3');
+            //                 console.log('Payment Successful');
+            //                 navigation.navigate('BookingSuccess'
+            //                     , {
+            //                         amount: amount,
+            //                         // code: code,
+            //                         // event_id: event_id,
+            //                         // gateway: gateway,
+            //                         // location: location,
+            //                         // slug: slug,
+            //                         // examDate: examDate,
+            //                         // examTime: examTime,
+            //                         // city_name: city_name,
+            //                     }
+            //                 );
+            //             }
+            //             else if (response.name == "INVALID_RESOURCE_ID") {
+            //                 console.log('Payment Failed');
+            //                 alert(t('common:PaymentFailed'));
+            //                 // alert('Payment Failed, Please try again');
+            //                 setApprovalUrl(null);
+            //                 navigation.navigate('BookingScreen');
+            //             }
+            //             console.log('success', response.data);
+            //             console.log(response);
+            //             console.log('3');
 
 
-                    }).catch(err => {
-                        console.log('there', err)
-                    })
+            //         }).catch(err => {
+            //             console.log('there', err)
+            //         })
 
-            }
+            // }
         }
         else if (webViewState.url.includes(`${BASE_URL}/cancel`)) {
             console.log('Payment Cancelled');

@@ -219,5 +219,9 @@ export default {
     PleaseEnterAValidEmail: 'Please enter a valid email',
     VerificationLinkIsSentToYourEmail: 'Verification Link is sent to your email.',
     EmailAlreadyExists: 'Email already exists',
+    RegistrationClosed: 'Exam has expired',
+    PleaseChooseAtLeastOneOption: 'Please choose at least one option',
+    ToDateMustBeGreaterThanFromDate: 'To Date must be greater than From Date',
+    PhoneAlreadyExists: 'Phone already exists',
 
 }

@@ -237,5 +237,10 @@ export default {
     PleaseEnterAValidEmail: 'Bitte geben Sie eine gültige E-Mail ein',
     VerificationLinkIsSentToYourEmail: 'Verifizierungslink wird an Ihre E-Mail gesendet.',
     EmailAlreadyExists: 'E-Mail existiert bereits',
+    RegistrationClosed: 'Prüfung ist abgelaufen',
+    PleaseChooseAtLeastOneOption: 'Bitte wählen Sie mindestens eine Option',
+    ToDateMustBeGreaterThanFromDate: 'Bis-Datum muss größer als Von-Datum sein',
+    Error: 'Fehler',
+    PhoneAlreadyExists: 'Telefonnummer existiert bereits',
 
 }

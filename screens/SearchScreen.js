@@ -48,12 +48,15 @@ const SearchPage = () => {
     return new Promise(resolve => setTimeout(resolve, timeout));
   }
   const onRefresh = React.useCallback(() => {
+    getData();
     setRefreshing(true);
     wait(1000).then(() => setRefreshing(false));
   }, []);
 
   React.useEffect(() => {
     const focusHandler = navigation.addListener('focus', () => {
+    getData();
+
       console.log('Refreshed');
     });
     return focusHandler;
@@ -68,8 +71,8 @@ const SearchPage = () => {
   const [search, setSearch] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [term, setTerm] = useState('');
-  const [from_date, setFromDate] = useState();
-  const [to_date, setToDate] = useState();
+  const [from_date, setFromDate] = useState('');
+  const [to_date, setToDate] = useState('');
   const [location_id, setLocation] = useState('');
   const [exam_level_id, setExamLevel] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
@@ -128,26 +131,48 @@ const SearchPage = () => {
   const searchExam = (term, from_date, to_date, location_id, exam_level_id) => {
     console.log("searching for " + term, from_date, to_date, location_id, exam_level_id);
     setIsLoading(true);
+    if (to_date < from_date) {
+      Alert.alert(
+        t("common:Error"),
+        t("common:ToDateMustBeGreaterThanFromDate"),
+        [
+          {
+            text: "OK",
+            onPress: () => console.log("OK Pressed")
+          }
+        ],
+        { cancelable: false }
+      );
+      setIsLoading(false);
+    } else {
 
-    axios
-      .post(`${BASE_URL}/search`, {
-        term,
-        from_date,
-        to_date,
-        location_id,
-        exam_level_id
-      })
-      .then(res => {
-        setData2(res.data.data);
-        console.log(res.data);
-        setSearch(true);
-        setTerm('');
-        setIsLoading(false);
-      })
-      .catch(err => {
-        console.log(err);
-        setIsLoading(false);
-      });
+      axios
+        .post(`${BASE_URL}/search`, {
+          term,
+          from_date,
+          to_date,
+          location_id,
+          exam_level_id
+        })
+        .then(res => {
+          setData2(res.data.data);
+          console.log(res.data);
+          setSearch(true);
+          setTerm('');
+          setFromDate('');
+          setToDate('');
+          setLocation('');
+          setExamLevel('');
+
+          setIsLoading(false);
+        })
+        .catch(err => {
+          // console.log(err);
+          console.log('here');
+          alert(t('common:PleaseChooseAtLeastOneOption'));
+          setIsLoading(false);
+        });
+    }
   };
 
   const getSearchDetail = async () => {
@@ -262,7 +287,9 @@ const SearchPage = () => {
               color: '#000',
             }}>
               <TouchableOpacity onPress={showFromDatePicker}>
-                <Text style={{ fontSize: RFPercentage(2.4), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 5 }}>{moment(from_date).format('DD/MM/YYYY')}</Text>
+                {from_date != '' ?
+                  <Text style={{ fontSize: RFPercentage(2.4), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 5 }}>{moment(from_date).format('DD/MM/YYYY')}</Text> :
+                  <Text style={{ fontSize: RFPercentage(2.4), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 5 }}></Text>}
               </TouchableOpacity>
               <DateTimePickerModal
                 isVisible={isFromDatePickerVisible}
@@ -287,7 +314,9 @@ const SearchPage = () => {
               color: '#000',
             }}>
               <TouchableOpacity onPress={showToDatePicker}>
-                <Text style={{ fontSize: RFPercentage(2.4), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 5 }}>{moment(to_date).format('DD/MM/YYYY')}</Text>
+                {to_date != '' ?
+                  <Text style={{ fontSize: RFPercentage(2.4), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 5 }}>{moment(to_date).format('DD/MM/YYYY')}</Text> :
+                  <Text style={{ fontSize: RFPercentage(2.4), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 5 }}></Text>}
               </TouchableOpacity>
               <DateTimePickerModal
                 isVisible={isToDatePickerVisible}
@@ -320,7 +349,7 @@ const SearchPage = () => {
                 label={t('common:SelectExam')} value="" />
               {data4.map((item, index) => {
                 return (
-                  <Picker.Item label={item.name} value={item.origin_id} key={index} />
+                  <Picker.Item label={item.name} value={item.id} key={index} />
                 )
               })}
             </Picker>
@@ -343,8 +372,8 @@ const SearchPage = () => {
                   () => {
                     setSearch(false);
                     setTerm('');
-                    setFromDate();
-                    setToDate();
+                    setFromDate('');
+                    setToDate('');
                     setLocation('');
                     setExamLevel('');
                   }

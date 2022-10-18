@@ -41,6 +41,15 @@ const ExamDetailScreen = ({ route }) => {
     const [price, setPrice] = useState(null);
     const [examLevel, setExamLevel] = useState(null);
     const [booking, setBooking] = useState(null);
+    //diff between 10:00:00 and current time
+
+    const diff = moment('10:00:00', 'HH:mm:ss').diff(moment(), 'seconds');
+    //change diff to time
+    const time = moment.utc(diff * 1000).format('HH:mm:ss');
+
+    console.log('diff', diff);
+
+    //
     // const [verification, setVerification] = useState(null);
 
     // const [description, setDescription] = useState(null)
@@ -112,6 +121,7 @@ const ExamDetailScreen = ({ route }) => {
     }, [])
     // console.log(city);
     const daysleft = moment(regDate).diff(moment(), 'days');
+    console.log('daysleft', daysleft);
     console.log('seats', remaining);
 
 
@@ -221,7 +231,9 @@ const ExamDetailScreen = ({ route }) => {
                     />
                 </View> */}
                 <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#fff', height: 400, width: '100%' }}>
-                    <Text style={styles.descriptionLabel}>{t('common:Description')}</Text>
+                    {content != null ?
+                        <Text style={styles.descriptionLabel}>{t('common:Description')}</Text>
+                        : null}
                     <RenderHtml
                         // contentWidth={width}
                         source={{ html: content || '' }}
@@ -243,48 +255,54 @@ const ExamDetailScreen = ({ route }) => {
 
 
             </ScrollView>
-            <View style={styles.submit}>
-                <Text style={{
-                    flex: 0.41,
-                    fontSize: RFValue(16),
-                    color: '#5E6D77',
-                    justifyContent: 'center',
-                    alignSelf: 'center',
-                    marginLeft: 15,
+            {diff <= 0 && daysleft == 0 ?
+                <View style={{
+                    width: '100%',
+                    height: 30,
+                    backgroundColor: '#fff',
 
-                }}>{t('common:Fee')} </Text>
-                <Text style={{
-                    flex: 0.59,
-                    fontSize: RFValue(18),
-                    fontWeight: '500',
-                    justifyContent: 'center',
-                    alignSelf: 'center',
-                    color: '#1a6997'
+                }}>
+                    <Text style={{
 
-                }}
-                > {price} € </Text>
-                {booking != 'booked' && remaining > 0 ?
-                    <TouchableOpacity style={{ alignSelf: 'flex-end', justifyContent: 'flex-end', marginRight: 15 }}
-                        onPress={() => {
-                            // userInfo.token ?
-                            {
-                                verification != null && userInfo.token != null ?
-                                    navigation.navigate('Booking', {
-                                        id: id,
-                                        slug: slug,
-                                        price: price,
-                                        examDate: examDate,
-                                        examTime: examTime,
-                                        regDate: regDate,
-                                        location: location,
-                                        name: location.name,
-                                        street_name: location.street_name,
-                                        city: city,
-                                        total: total,
-                                        remaining: remaining,
-                                        content: content,
-                                        term: examLevel
-                                    }) : verification == null && userInfo.token == null ?
+                        fontSize: RFValue(20),
+                        color: 'red',
+                        justifyContent: 'center',
+                        alignSelf: 'center',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        marginLeft: 15,
+
+                    }}>
+                        {t('common:RegistrationClosed')}
+                    </Text>
+                </View> :
+
+                <View style={styles.submit}>
+                    <Text style={{
+                        flex: 0.41,
+                        fontSize: RFValue(16),
+                        color: '#5E6D77',
+                        justifyContent: 'center',
+                        alignSelf: 'center',
+                        marginLeft: 15,
+
+                    }}>{t('common:Fee')} </Text>
+                    <Text style={{
+                        flex: 0.59,
+                        fontSize: RFValue(18),
+                        fontWeight: '500',
+                        justifyContent: 'center',
+                        alignSelf: 'center',
+                        color: '#1a6997'
+
+                    }}
+                    > {price} € </Text>
+                    {booking != 'booked' && remaining > 0 ?
+                        <TouchableOpacity style={{ alignSelf: 'flex-end', justifyContent: 'flex-end', marginRight: 15 }}
+                            onPress={() => {
+                                // userInfo.token ?
+                                {
+                                    verification != null && userInfo.token != null ?
                                         navigation.navigate('Booking', {
                                             id: id,
                                             slug: slug,
@@ -300,39 +318,57 @@ const ExamDetailScreen = ({ route }) => {
                                             remaining: remaining,
                                             content: content,
                                             term: examLevel
-                                        })
-                                        : navigation.navigate('Verify')
+                                        }) : verification == null && userInfo.token == null ?
+                                            navigation.navigate('Booking', {
+                                                id: id,
+                                                slug: slug,
+                                                price: price,
+                                                examDate: examDate,
+                                                examTime: examTime,
+                                                regDate: regDate,
+                                                location: location,
+                                                name: location.name,
+                                                street_name: location.street_name,
+                                                city: city,
+                                                total: total,
+                                                remaining: remaining,
+                                                content: content,
+                                                term: examLevel
+                                            })
+                                            : navigation.navigate('Verify')
+                                }
+                                // navigation.navigate('BookingSuccess')
+                                // navigation.navigate('StripePayment', {
+                                //     amount: price,
+
+                                // })
+                                // navigation.navigate('PaypalPayment', {
+                                //     amount: price,
+                                //     slug: slug,
+                                // })
                             }
-                            // navigation.navigate('BookingSuccess')
-                            // navigation.navigate('StripePayment', {
-                            //     amount: price,
-
-                            // })
-                            // navigation.navigate('PaypalPayment', {
-                            //     amount: price,
-                            //     slug: slug,
-                            // })
-                        }
-                        }
-                    >
-
-                        <Text style={styles.submitLabel}>{t('common:BookNow')}</Text>
-                    </TouchableOpacity>
-                    : <TouchableOpacity style={{ alignSelf: 'flex-end', justifyContent: 'flex-end', marginRight: 15 }}
-                        onPress={() => {
-                            // userInfo.token ?
-                            if (booking == 'booked') {
-                                alert(t('common:YouHaveAlreadyBookedThisExam'))
-                            } else if (remaining >= 1) {
-                                alert(t('common:NoSeatsAvailable'))
                             }
+                        >
 
-                        }
-                        }
-                    >
-                        <Text style={styles.submitLabel}>{t('common:BookNow')}</Text>
-                    </TouchableOpacity>}
-            </View>
+                            <Text style={styles.submitLabel}>{t('common:BookNow')}</Text>
+                        </TouchableOpacity>
+                        : <TouchableOpacity style={{ alignSelf: 'flex-end', justifyContent: 'flex-end', marginRight: 15 }}
+                            onPress={() => {
+                                // userInfo.token ?
+                                if (booking == 'booked') {
+                                    alert(t('common:YouHaveAlreadyBookedThisExam'));
+                                } else if (remaining >= 1) {
+                                    console.log('remaining', remaining);
+                                    alert('No Seat');
+                                    // alert(t('common:NoSeatsAvailable'));
+                                }
+
+                            }
+                            }
+                        >
+                            <Text style={styles.submitLabel}>{t('common:BookNow')}</Text>
+                        </TouchableOpacity>}
+                </View>}
         </View >
         // <View>
         //     <Text>{route.params.paramKey}</Text>

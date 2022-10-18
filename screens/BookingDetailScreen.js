@@ -37,6 +37,7 @@ const BookingDetailScreen = ({ route }) => {
     const [bookingId, setBookingId] = useState('');
     const [gateway, setGateway] = useState('');
     const [examType, setExamType] = useState('');
+    const [examLevel, setExamLevel] = useState('');
     const [examDate, setExamDate] = useState('');
     const [examTime, setExamTime] = useState('');
     const [examFee, setExamFee] = useState('');
@@ -113,8 +114,10 @@ const BookingDetailScreen = ({ route }) => {
                 setExamDate(res.data.booked_event.exam_date);
                 setExamTime(res.data.booked_event.exam_time);
                 setExamFee(res.data.booked_event.price);
+                setExamLevel(res.data.examLevel);
                 setCode(res.data.code);
                 setEventID(res.data.object_id);
+                console.log(examLevel);
             }
             ).catch(err => {
                 throw err;
@@ -150,7 +153,7 @@ const BookingDetailScreen = ({ route }) => {
                     </View>
                     <View style={{ flexDirection: 'row', marginBottom: 11 }}>
                         <Text style={styles.title}> {t('common:ExamType')} </Text>
-                        <Text style={[styles.infovalue]}> {examType} </Text>
+                        <Text style={[styles.infovalue]}> {examLevel} </Text>
                     </View>
                     <View style={{ flexDirection: 'row', marginBottom: 11 }}>
                         <Text style={styles.title}> {t('common:ExamDate')} </Text>
@@ -230,7 +233,7 @@ const BookingDetailScreen = ({ route }) => {
                         <Text style={styles.title}> {t('common:Address')} </Text>
                         <Text style={[styles.infovalue]}>{city},{address},{zipCode} </Text>
                     </View>
-                    {status === 'unpaid' ?
+                    {status === 'unpaid' || status === null ?
                         <View style={{ flexDirection: 'row', marginBottom: 40, alignItems: 'center', justifyContent: 'center', alignContent: 'center' }}>
                             <TouchableOpacity style={{
                                 backgroundColor: '#1570A5',

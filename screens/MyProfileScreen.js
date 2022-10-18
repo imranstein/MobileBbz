@@ -196,6 +196,7 @@ const MyProfileScreen = () => {
                         alert('Sorry it is not available', 'Error');
                     }
                     // else if (e.response.status === 422) {
+
                     //     alert('Please enter a valid data', 'Error');
                     // }
                     else if (birthday == null) {
@@ -211,9 +212,11 @@ const MyProfileScreen = () => {
         }
     };
     console.log(userInfo.email);
+    console.log(userInfo.id);
+    const id = userInfo.id;
     const getData = async () => {
         const { data } = await axios
-            .get(`${BASE_URL}/profile`, {
+            .get(`${BASE_URL}/profile/${id}`, {
                 headers: {
                     Authorization: 'Bearer ' + userInfo.token,
                 },
@@ -511,25 +514,26 @@ const MyProfileScreen = () => {
                                             // onBlur={handleBlur('country')}
                                             />
                                         </View>
-                                        {country !== null && (
-                                            <Text style={{
-                                                flex: 1,
-                                                marginBottom: 20,
-                                                borderWidth: 1,
-                                                borderColor: '#DAE1E7',
-                                                borderRadius: 4,
-                                                paddingVertical: 12,
-                                                paddingHorizontal: 14,
-                                                color: '#000',
-                                                width: '100%',
-                                                height: 47,
-                                                color: '#000',
-                                            }}>{country}</Text>
-                                        )}
+
+                                        <Text style={{
+                                            flex: 1,
+                                            marginBottom: 20,
+                                            borderWidth: 1,
+                                            borderColor: '#DAE1E7',
+                                            borderRadius: 4,
+                                            paddingVertical: 12,
+                                            paddingHorizontal: 14,
+                                            color: '#000',
+                                            width: '100%',
+                                            height: 47,
+                                            color: '#000',
+                                            marginTop: 10,
+                                        }}>{country}</Text>
+
                                     </View>
                                 </View>
                                 {countryError == true ? (
-                                    <Text style={styles.error}>{t('common:CountryIsRequired')}</Text>
+                                    <Text style={[styles.error, { marginVertical: scale(5) }]}>{t('common:CountryIsRequired')}</Text>
                                 ) : null}
 
                                 <View style={styles.inputs}>

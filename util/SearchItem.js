@@ -58,14 +58,14 @@ const SearchItem = ({ item }) => {
                                 style={{ width: width * 1, height: height * 0.37, borderRadius: 2 }}
                                 source={{ uri: `${IMAGE_URL}${item.media.file_path}` }}
                             >
-                                <View style={styles.upperTextView}><Text style={styles.upperText}>{item.slug}</Text></View>
+                                <View style={styles.upperTextView}><Text style={styles.upperText}>{item.term_name}</Text></View>
                                 <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} €</Text></View>
                             </ImageBackground>
                         </View> : <View style={styles.image}><ImageBackground
                             style={{ width: width * 1, height: height * 0.37, borderRadius: 2 }}
                             source={require('../assets/testinghall.png')}
                         >
-                            <View style={styles.upperTextView}><Text style={styles.upperText} >{item.slug}</Text></View>
+                            <View style={styles.upperTextView}><Text style={styles.upperText} >{item.term_name}</Text></View>
                             <View style={styles.lowerTextView}><Text style={styles.lowerText}>{item.price} €</Text></View>
                         </ImageBackground></View>}
 

@@ -28,6 +28,7 @@ const InvoiceScreen = ({ route }) => {
     const [examDate, setExamDate] = useState('');
     const [examTime, setExamTime] = useState('');
     const [price, setPrice] = useState('');
+    const [examLevel, setExamLevel] = useState('');
 
     const getInvoice = async () => {
         const { data } = await axios
@@ -50,8 +51,9 @@ const InvoiceScreen = ({ route }) => {
         setExamDate(moment(data.data.service.exam_date).format('DD.MM.YYYY'));
         setExamTime((data.data.service.exam_time));
         setPrice(data.data.service.price);
+        setExamLevel(data.data.booking.examLevel);
         const full_name = data.data.booking.first_name + ' ' + data.data.booking.last_name;
-        console.log(examTime);
+        console.log(examLevel);
     };
     useEffect(() => {
         getInvoice();
@@ -76,7 +78,7 @@ const InvoiceScreen = ({ route }) => {
             <p> Booking Status <div style="margin-left:40em;">Paid</div> </p>
             <p> Payment Method <div style="margin-left:40em;">${gateway}</div> </p>
             <p> Exam Name <div style="margin-left:40em;">${title}</div> </p>
-            <p> Exam Type <div style="margin-left:40em;">${title}</div> </p>
+            <p> Exam Type <div style="margin-left:40em;">${examLevel}</div> </p>
             <p> Exam time and Date <div style="margin-left:40em;">${examDate}(${examTime})</div> </p>
 
             <p> Fee </p>    
@@ -173,7 +175,7 @@ const InvoiceScreen = ({ route }) => {
                 <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1), justifyContent: 'space-between' }}>
                     <Text style={styles.title}>
                         {t('common:ExamType')}
-                    </Text><Text style={styles.content}>{title}</Text>
+                    </Text><Text style={styles.content}>{examLevel}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', marginBottom: heightPercentageToDP(1), justifyContent: 'space-between' }}>
                     <Text style={styles.title}>

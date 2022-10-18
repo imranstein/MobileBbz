@@ -12,40 +12,51 @@ export const AuthProvider = ({ children }) => {
   const [splashLoading, setSplashLoading] = useState(false);
   const [error, setError] = useState(null);
   const [error2, setError2] = useState(null);
+  const [termError, setTermError] = useState(null);
 
   const register = (first_name, last_name, email, password, phone, term) => {
     setIsLoading(true);
     setError2(null);
     // console.log(first_name, last_name, email, phone, password, term);
-    axios
-      .post(`${BASE_URL}/signup`, {
-        first_name,
-        last_name,
-        email,
-        password,
-        phone,
-        term,
-      })
-      .then(res => {
-        console.log(res.data.error,);
-        if (res.data.error) {
-          // alert('email or Phone is already taken', 'Error');
-          setError2('email or Phone is already taken');
-          setIsLoading(false);
-        } else {
-          alert('Successfully registered');
-          let userInfo = res.data;
-          setUserInfo(userInfo);
-          AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
-          setIsLoading(false);
-        }
+    if (term == false || term == null) {
+      setTermError('Please accept the terms and conditions');
+      setIsLoading(false);
+    } else {
+      axios
+        .post(`${BASE_URL}/signup`, {
+          first_name,
+          last_name,
+          email,
+          password,
+          phone,
+          term,
+        })
+        .then(res => {
+          console.log(res.data.error,);
+          if (res.data.error) {
+            // alert('email or Phone is already taken', 'Error');
+            setError2('email or Phone is already taken');
+            setIsLoading(false);
+          }
+          // else if (term == null || term == false) {
+          //   setTermError('Please accept the terms and conditions');
+          //   setIsLoading(false);
+          // }
+          else {
+            alert('Successfully registered');
+            let userInfo = res.data;
+            setUserInfo(userInfo);
+            AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
+            setIsLoading(false);
+          }
 
-      })
-      .catch(e => {
-        console.log(`register error ${e}`);
-        alert('Something went wrong', 'Error');
-        setIsLoading(false);
-      });
+        })
+        .catch(e => {
+          console.log(`register error ${e}`);
+          alert('Something went wrong', 'Error');
+          setIsLoading(false);
+        });
+    }
   };
 
   const login = (email, password) => {
@@ -161,6 +172,7 @@ export const AuthProvider = ({ children }) => {
         isLoggedIn,
         error,
         error2,
+        termError,
       }}>
       {children}
     </AuthContext.Provider>

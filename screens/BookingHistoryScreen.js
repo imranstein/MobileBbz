@@ -16,13 +16,14 @@ const BookingHistoryScreen = () => {
     const { userInfo } = useContext(AuthContext);
     const [result, setResult] = useState([]);
     const [result2, setResult2] = useState([]);
+    const id = userInfo.id;
     const { t } = useTranslation();
     useEffect(() => {
         LogBox.ignoreLogs(['VirtualizedLists should never be nested', 'TRenderHtml']);
     }, [])
     const getData = async () => {
         const { data } = await axios
-            .get(`${BASE_URL}/upcoming-exams`, {
+            .get(`${BASE_URL}/upcoming-exams/${id}`, {
                 headers: {
                     Authorization: 'Bearer ' + userInfo.token,
                 },
@@ -32,7 +33,7 @@ const BookingHistoryScreen = () => {
     };
     const getData2 = async () => {
         const { data } = await axios
-            .get(`${BASE_URL}/past-exams`, {
+            .get(`${BASE_URL}/past-exams/${id}`, {
                 headers: {
                     Authorization: 'Bearer ' + userInfo.token,
                 },

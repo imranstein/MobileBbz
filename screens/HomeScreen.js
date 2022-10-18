@@ -17,12 +17,7 @@ const Tab = createBottomTabNavigator();
 
 const HomeScreen = ({ navigation }) => {
   const { userInfo, isLoading, logout } = useContext(AuthContext);
-  React.useEffect(() => {
-    const focusHandler = navigation.addListener('focus', () => {
-      console.log('Refreshed');
-    });
-    return focusHandler;
-  }, [navigation]);
+
   return (
 
     // <View style={styles.container}>
