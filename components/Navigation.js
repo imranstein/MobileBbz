@@ -52,8 +52,6 @@ const Navigation = () => {
               component={MainScreen}
               options={{ headerShown: false }}
             />
-            <Stack.Screen name="Home" component={HomeScreen} />
-
             <Stack.Screen
               options={{ title: t('common:MyProfile'), headerTintColor: '#1a6997' }}
               name="My Profile" component={MyProfileScreen} />

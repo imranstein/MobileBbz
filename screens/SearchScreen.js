@@ -55,7 +55,7 @@ const SearchPage = () => {
 
   React.useEffect(() => {
     const focusHandler = navigation.addListener('focus', () => {
-    getData();
+      getData();
 
       console.log('Refreshed');
     });
@@ -155,14 +155,28 @@ const SearchPage = () => {
           exam_level_id
         })
         .then(res => {
+          if (res.data.status == 'error') {
+            Alert.alert(
+              t("common:Error"),
+              t('common:PleaseChooseAtLeastOneOption'),
+              [
+                {
+                  text: "OK",
+                  onPress: () => setSearch(false)
+                }
+              ],
+              { cancelable: false }
+            );
+            setIsLoading(false);
+          }
           setData2(res.data.data);
-          console.log(res.data);
+          console.log('here', res.data);
           setSearch(true);
-          setTerm('');
-          setFromDate('');
-          setToDate('');
-          setLocation('');
-          setExamLevel('');
+          // setTerm('');
+          // setFromDate('');
+          // setToDate('');
+          // setLocation('');
+          // setExamLevel('');
 
           setIsLoading(false);
         })
@@ -289,7 +303,7 @@ const SearchPage = () => {
               <TouchableOpacity onPress={showFromDatePicker}>
                 {from_date != '' ?
                   <Text style={{ fontSize: RFPercentage(2.4), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 5 }}>{moment(from_date).format('DD/MM/YYYY')}</Text> :
-                  <Text style={{ fontSize: RFPercentage(2.4), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 5 }}></Text>}
+                  <Text style={{ fontSize: RFPercentage(2.4), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 5 }}>{t('common:From')}</Text>}
               </TouchableOpacity>
               <DateTimePickerModal
                 isVisible={isFromDatePickerVisible}
@@ -316,7 +330,7 @@ const SearchPage = () => {
               <TouchableOpacity onPress={showToDatePicker}>
                 {to_date != '' ?
                   <Text style={{ fontSize: RFPercentage(2.4), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 5 }}>{moment(to_date).format('DD/MM/YYYY')}</Text> :
-                  <Text style={{ fontSize: RFPercentage(2.4), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 5 }}></Text>}
+                  <Text style={{ fontSize: RFPercentage(2.4), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 5 }}>{t('common:To')}</Text>}
               </TouchableOpacity>
               <DateTimePickerModal
                 isVisible={isToDatePickerVisible}

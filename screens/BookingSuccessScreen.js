@@ -60,6 +60,7 @@ const BookingSuccessScreen = ({ route }) => {
   const [country, setCountry] = useState('');
   const [address2, setAddress2] = useState('');
   const [status, setStatus] = useState('');
+  const [examLevel, setExamLevel] = useState('');
   const [id, setId] = useState('');
   const [bookingDate, setBookingDate] = useState('');
   const code = route.params.code;
@@ -103,6 +104,7 @@ const BookingSuccessScreen = ({ route }) => {
         setStatus(res.data.status);
         setId(res.data.id);
         setBookingDate(res.data.start_date);
+        setExamLevel(res.data.examLevel);
         console.log(status);
       }
       ).catch(err => {
@@ -214,7 +216,7 @@ const BookingSuccessScreen = ({ route }) => {
 
           </View> */}
         </View>
-        <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#fff', height: 370, width: '90%', marginLeft: '5%' }}>
+        <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#fff', height: 430, width: '90%', marginLeft: '5%' }}>
           <Text style={styles.descriptionLabel}>{t('common:YourBooking')}</Text>
           <Text style={styles.h1}>{slug}</Text>
           {location != null ?
@@ -246,7 +248,7 @@ const BookingSuccessScreen = ({ route }) => {
           <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 2 }}>
 
             <Text style={styles.title}> {t('common:ExamLevel')}: </Text>
-            <Text style={[styles.value]}> {slug}</Text>
+            <Text style={[styles.value]}> {examLevel}</Text>
 
           </View>
           <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 2 }}>

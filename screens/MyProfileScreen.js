@@ -211,17 +211,17 @@ const MyProfileScreen = () => {
                 });
         }
     };
-    console.log(userInfo.email);
-    console.log(userInfo.id);
-    const id = userInfo.id;
+    token = userInfo.token;
+    console.log(token);
     const getData = async () => {
         const { data } = await axios
-            .get(`${BASE_URL}/profile/${id}`, {
+            .get(`${BASE_URL}/profile`, {
                 headers: {
-                    Authorization: 'Bearer ' + userInfo.token,
+                    Authorization: 'Bearer ' + token,
                 },
             });
         setData(data);
+        // console.log('herr', data);
         setFirstName(data.first_name);
         setLastName(data.last_name);
         setEmail(data.email);
@@ -436,7 +436,7 @@ const MyProfileScreen = () => {
                                 </View>
                                 <View style={styles.inputs}>
                                     <View>
-                                        <Text style={styles.label}>C/o</Text>
+                                        <Text style={styles.label}>C/o : <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                         <TextInput style={styles.input}
                                             onChangeText={handleChange('address')}
                                             onBlur={handleBlur('address')}

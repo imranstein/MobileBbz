@@ -223,5 +223,12 @@ export default {
     PleaseChooseAtLeastOneOption: 'Please choose at least one option',
     ToDateMustBeGreaterThanFromDate: 'To Date must be greater than From Date',
     PhoneAlreadyExists: 'Phone already exists',
+    MessageMustStartWithALetter: 'Message must start with a letter',
+    ZipCodeMustBeAtMost10Characters: 'Zip Code must be at most 10 characters',
+    CityMustStartWithLetter: 'City must start with letter',
+    AddressMustStartWithLetterOrNumber: 'Address must start with letter or number',
+    PleaseChooseAtLeastOneOption: 'Please choose at least one option',
+    BirthPlaceMustBeAlphabetical: 'Birth Place must be alphabetical',
+    AlreadyBooking:'Exam is Already Booking'
 
 }

@@ -9,7 +9,7 @@ import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { t } from 'i18next';
 import CountryPicker from 'react-native-country-picker-modal';
 import { useNavigation } from '@react-navigation/native';
-import Spinner from 'react-native-loading-spinner-overlay';
+// import Spinner from 'react-native-loading-spinner-overlay';
 
 
 const StripePaymentScreen = ({ route }) => {
@@ -120,7 +120,7 @@ const StripePaymentScreen = ({ route }) => {
   // const [city, setCity] = useState('');
   const [postal_code, setPostalCode] = useState('');
   // const [country, setCountry] = useState('');
-  const [isLoading, setLoading] = useState(false);
+  // const [isLoading, setLoading] = useState(false);
 
   // console.log(userInfo);
   // const getData = async () => {
@@ -215,7 +215,7 @@ const StripePaymentScreen = ({ route }) => {
         }
       );
     } else {
-      setLoading(true);
+      // setLoading(true);
       // Gather the customer's billing information (for example, email)
       // const billingDetails: BillingDetails = {
       //   email: 'jenny.rosen@example.com',
@@ -257,14 +257,14 @@ const StripePaymentScreen = ({ route }) => {
       if (error) {
         console.log('Payment confirmation error', error);
         alert(`Payment confirmation error ${error.message}`);
-        setLoading(false);
+        // setLoading(false);
         remove();
         navigation.navigate('Main');
       } else if (paymentIntent) {
 
         console.log('Success from promise', paymentIntent);
         finalize();
-        setLoading(false);
+        // setLoading(false);
         navigation.navigate('BookingSuccess'
           , {
             amount: amount,
@@ -284,7 +284,7 @@ const StripePaymentScreen = ({ route }) => {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
       {/* <ActivityIndicator size="medium" color="#1570a5" animating={isLoading} /> */}
-      <Spinner visible={isLoading} />
+      {/* <Spinner visible={isLoading} /> */}
 
       <View style={{
         marginTop: '1%',

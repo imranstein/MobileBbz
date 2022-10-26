@@ -38,7 +38,7 @@ const ContactUs = () => {
     message: Yup.string()
       .required(t('common:MessageIsRequired'))
       .min(10, t('common:MessageMustBeAtLeast10Characters'))
-      .matches(/^[a-zA-Z0-9 ]*$/, t('common:MessageMustBeAlphanumeric')),
+      .matches(/^[a-zA-Z]/, t('common:MessageMustStartWithALetter')),
   });
 
   const navigation = useNavigation();
@@ -48,7 +48,7 @@ const ContactUs = () => {
 
   const SendMessage = (full_name, email, message) => {
     setIsLoading(true);
-    console.log('here', full_name, email, message);
+    // console.log('here', full_name, email, message);
 
     axios
       .post(`${BASE_URL}/contact-us`, {

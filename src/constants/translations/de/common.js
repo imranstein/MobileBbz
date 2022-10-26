@@ -242,5 +242,13 @@ export default {
     ToDateMustBeGreaterThanFromDate: 'Bis-Datum muss größer als Von-Datum sein',
     Error: 'Fehler',
     PhoneAlreadyExists: 'Telefonnummer existiert bereits',
+    MessageMustStartWithALetter: 'Nachricht muss mit einem Buchstaben beginnen',
+    ZipCodeMustBeAtMost10Characters: 'Postleitzahl darf höchstens 10 Zeichen lang sein',
+    CityMustStartWithLetter: 'Stadt muss mit einem Buchstaben beginnen',
+    AddressMustStartWithLetterOrNumber: 'Adresse muss mit einem Buchstaben oder einer Nummer beginnen',
+    PleaseChooseAtLeastOneOption: 'Bitte wählen Sie mindestens eine Option',
+    BirthPlaceMustBeAlphabetical: 'Geburtsort muss alphabetisch sein',
+    AlreadyBooking: 'Die Prüfung ist bereits gebucht'
+
 
 }

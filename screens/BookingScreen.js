@@ -22,6 +22,8 @@ import { scale } from 'react-native-size-matters';
 import { Picker } from '@react-native-picker/picker';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+// import Spinner from 'react-native-loading-spinner-overlay';
+
 
 
 
@@ -63,7 +65,8 @@ const BookingScreen = ({ route }) => {
             .required(t('common:CountryOfBirthIsRequired')),
         birth_place: Yup.string()
             .required(t('common:BirthPlaceIsRequired'))
-            .min(2, t('common:BirthPlaceMustBeAtLeast2Characters')),
+            .min(2, t('common:BirthPlaceMustBeAtLeast2Characters'))
+            .matches(/^[a-zA-Z ]+$/, t('common:BirthPlaceMustBeAlphabetical')),
         telephone: Yup.string()
             .min(10, t('common:PhoneMustBeAtLeast9Characters'))
             .max(15, t('common:PhoneMustBeAtMost15Characters'))
@@ -75,18 +78,24 @@ const BookingScreen = ({ route }) => {
             .matches(/^[0-9]+$/, t('common:PhoneMustBeNumeric')),
         address: Yup.string()
             .required(t('common:AddressLine1IsRequired'))
+            .matches(/^[a-zA-Z0-9]/, t('common:AddressMustStartWithLetterOrNumber'))
             .min(2, t('common:AddressLine1MustBeAtLeast2Characters')),
         address2: Yup.string()
             .required(t('common:StreetIsRequired'))
+            .matches(/^[a-zA-Z0-9]/, t('common:AddressMustStartWithLetterOrNumber'))
             .min(2, t('common:StreetMustBeAtLeast2Characters')),
         city: Yup.string()
             .required(t('common:CityIsRequired'))
-            .min(2, t('common:CityMustBeAtLeast2Characters'))
-            .matches(/^[a-zA-Z ]+$/, t('common:CityMustBeAlphabetical')),
+            .matches(/^[a-zA-Z]/, t('common:CityMustStartWithLetter'))
+            .matches(/^[a-zA-Z ]+$/, t('common:CityMustBeAlphabetical'))
+            .min(2, t('common:CityMustBeAtLeast2Characters')),
+
         zip_code: Yup.string()
             .required(t('common:ZipCodeIsRequired'))
             .min(4, t('common:ZipCodeMustBeAtLeast4Characters'))
-            .matches(/^[0-9]+$/, t('common:ZipCodeMustBeNumeric')),
+            .matches(/^[0-9]+$/, t('common:ZipCodeMustBeNumeric'))
+            .max(10, t('common:ZipCodeMustBeAtMost10Characters')),
+
         country: Yup.string()
             .required(t('common:CountryIsRequired')),
 
@@ -137,6 +146,7 @@ const BookingScreen = ({ route }) => {
     const [idProofError, setIdProofError] = useState(false);
     const [termsError, setTermsError] = useState(false);
     const [birthDateError, setBirthDateError] = useState(false);
+    const [loading, setLoading] = useState(false);
 
 
     //
@@ -272,24 +282,45 @@ const BookingScreen = ({ route }) => {
     }
 
     const book = (event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, bamf_id, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, term_conditions_2, price,) => {
-        console.log(event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, bamf_id, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, term_conditions_2, price);
+        // console.log('here');
+        //setLoading(true);
+
+        // console.log(event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, bamf_id, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, term_conditions_2, price);
         if (id_proof == '') {
             setIdProofError(true);
-        }
-        else if (payment_gateway == null) {
-            setPaymentError(true);
-        } else if (term_conditions == false) {
-            setTermsError(true);
-        } else if (term_conditions_1 == false) {
-            setTermsError(true);
-        }
-        else if (term_conditions_2 == false) {
-            setTermsError(true);
+            //setLoading(false);
+
         }
         else if (birthday == undefined) {
             setBirthDateError(true);
+            //setLoading(false);
+
+
         }
+        else if (payment_gateway == null) {
+            setPaymentError(true);
+            //setLoading(false);
+
+        } else if (term_conditions == false) {
+            setTermsError(true);
+            //setLoading(false);
+
+
+        } else if (term_conditions_1 == false) {
+            setTermsError(true);
+            //setLoading(false);
+
+
+        }
+        else if (term_conditions_2 == false) {
+            setTermsError(true);
+            //setLoading(false);
+
+
+        }
+
         else {
+            setLoading(true);
             axios.post(`${BASE_URL}/register-exam`, {
                 event_id: event_id,
                 salutation: salutation,
@@ -326,8 +357,11 @@ const BookingScreen = ({ route }) => {
                 if (response.data.status == 1) {
                     console.log(response.data);
                     // alert(response.data.message);
+                    // setLoading(false);
                     alert(t('common:BookedSuccessfully'));
                     if (response.data.gateway == 'stripe') {
+                        //setLoading(false);
+
                         navigation.navigate('StripePayment'
                             , {
                                 amount: response.data.amount,
@@ -351,6 +385,8 @@ const BookingScreen = ({ route }) => {
                         console.log(response.data.gateway);
                     } else if (response.data.gateway == 'paypal') {
                         // console.log(response.data.gateway);
+                        //setLoading(false);
+
                         navigation.navigate('PaypalPayment'
                             , {
                                 amount: response.data.amount,
@@ -377,13 +413,18 @@ const BookingScreen = ({ route }) => {
                                 navigation.navigate('Home');
                             }
                         }]);
-                    } else if (birthday == '') {
-                        alert('Please Choose Birthday', [{
-                            text: t('common:OK'),
-                            onPress: () => {
-                                navigation.navigate('Home');
-                            }
-                        }]);
+                        //setLoading(false);
+
+                    } else if (birthday == undefined) {
+                        // alert('Please Choose Birthday', [{
+                        //     text: t('common:OK'),
+                        //     onPress: () => {
+                        //         navigation.navigate('Home');
+                        //     }
+                        // }]);
+                        setBirthDateError(true);
+                        //setLoading(false);
+
                     }
                     else if (id_proof == '') {
                         // alert('Please Choose Id Proof', [{
@@ -393,6 +434,8 @@ const BookingScreen = ({ route }) => {
                         //     }
                         // }]);
                         setIdProofError(true);
+                        //setLoading(false);
+
                     } else if (country == '') {
                         alert('Please Choose Country', [{
                             text: t('common:OK'),
@@ -400,19 +443,36 @@ const BookingScreen = ({ route }) => {
                                 navigation.navigate('Home');
                             }
                         }]);
+                        //setLoading(false);
+
                     }
                     else if (payment_gateway == null) {
                         setPaymentError(true);
+                        //setLoading(false);
+
                     }
                     else if (term_conditions == false) {
                         setTermsError(true);
+                        //setLoading(false);
+
                     } else if (term_conditions_1 == false) {
                         setTermsError(true);
+                        //setLoading(false);
+
                     }
                     else if (term_conditions_2 == false) {
                         setTermsError(true);
+                        //setLoading(false);
+
                     } else if (response.data.message == 'Email already exists') {
                         alert(t('common:EmailAlreadyExists'));
+                        //setLoading(false);
+
+                    }
+                    else if (response.data.message == 'Phone already exists') {
+                        alert(t('common:PhoneAlreadyExists'));
+                        //setLoading(false);
+
                     }
                     else {
                         alert(t('common:YouHaveAlreadyRegisteredForthisEvent'), [{
@@ -421,6 +481,8 @@ const BookingScreen = ({ route }) => {
                                 navigation.navigate('Home');
                             }
                         }]);
+                        //setLoading(false);
+
                     }
                 }
             }).catch((error) => {
@@ -428,30 +490,52 @@ const BookingScreen = ({ route }) => {
             });
         }
     }
+    // if (userInfo.token) {
     const authBook = (event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, bamf_id, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, term_conditions_2, price,) => {
+        //setLoading(true);
+
         console.log(event_id, salutation, academic_title, first_name, last_name, identification_number, email, birthday, birth_place, country_of_birth, mother_tongue, telephone, phone, bamf_id, address_line_1, street, city, zip_code, country, id_proof, payment_gateway, term_conditions, term_conditions_1, term_conditions_2, price);
         console.log(payment_gateway);
         if (id_proof == '') {
             console.log('empty id');
             setIdProofError(true);
+            //setLoading(false);
+
+
+        }
+        else if (birthday == '') {
+            setBirthDateError(true);
+            //setLoading(false);
+
         }
         else if (payment_gateway == null) {
             console.log('her is e');
             setPaymentError(true);
+            //setLoading(false);
+
+
         } else if (term_conditions == false) {
             console.log('false term');
             setTermsError(true);
+            //setLoading(false);
+
+
         } else if (term_conditions_1 == false) {
             console.log('false term2');
             setTermsError(true);
+            //setLoading(false);
+
+
         }
         else if (term_conditions_2 == false) {
             console.log('false term2');
             setTermsError(true);
-        } else if (birthday == '') {
-            setBirthDateError(true);
+            //setLoading(false);
+
+
         }
         else {
+            setLoading(true);
             axios.post(`${BASE_URL}/auth-register-exam`, {
                 event_id: event_id,
                 salutation: salutation,
@@ -490,6 +574,8 @@ const BookingScreen = ({ route }) => {
                     // alert(response.data.message);
                     alert(t('common:BookedSuccessfully'));
                     if (response.data.gateway == 'stripe') {
+                        //setLoading(false);
+
                         navigation.navigate('StripePayment'
                             , {
                                 amount: response.data.amount,
@@ -510,8 +596,11 @@ const BookingScreen = ({ route }) => {
                                 name: first_name + ' ' + last_name,
                             }
                         );
+
                         console.log(response.data.gateway);
                     } else if (response.data.gateway == 'paypal') {
+                        // //setLoading(false);
+
                         console.log(response.data.gateway);
                         navigation.navigate('PaypalPayment'
                             , {
@@ -526,6 +615,7 @@ const BookingScreen = ({ route }) => {
                                 city_name: city_name,
                             }
                         );
+
                         // console.log(response.data.gateway);
                         // }
 
@@ -539,13 +629,19 @@ const BookingScreen = ({ route }) => {
                                 navigation.navigate('Home');
                             }
                         }]);
-                    } else if (birthday == '') {
+                        //setLoading(false);
+
+
+                    } else if (birthday == undefined) {
                         alert('Please Choose Birthday', [{
                             text: t('common:OK'),
                             onPress: () => {
                                 navigation.navigate('Home');
                             }
                         }]);
+                        //setLoading(false);
+
+
                     }
                     else if (id_proof == '') {
                         // alert('Please Choose Id Proof', [{
@@ -555,17 +651,32 @@ const BookingScreen = ({ route }) => {
                         //     }
                         // }]);
                         setIdProofError(true);
+                        //setLoading(false);
+
+
                     }
                     else if (payment_gateway == null) {
                         setPaymentError(true);
+                        //setLoading(false);
+
+
                     }
                     else if (term_conditions == false) {
                         setTermsError(true);
+                        //setLoading(false);
+
+
                     } else if (term_conditions_1 == false) {
                         setTermsError(true);
+                        //setLoading(false);
+
+
                     }
                     else if (term_conditions_2 == false) {
                         setTermsError(true);
+                        //setLoading(false);
+
+
                     }
 
                     else {
@@ -575,6 +686,9 @@ const BookingScreen = ({ route }) => {
                                 navigation.navigate('Home');
                             }
                         }]);
+                        //setLoading(false);
+
+
                     }
                 }
             }).catch((error) => {
@@ -582,10 +696,13 @@ const BookingScreen = ({ route }) => {
             });
         }
     }
+    // }
+
     console.log(email);
 
     return (
         <View style={styles.container}>
+            {/* <Spinner visible={isloading} /> */}
             <ScrollView>
                 <View style={{
                     backgroundColor: '#fff',
@@ -605,7 +722,7 @@ const BookingScreen = ({ route }) => {
                 </View>
                 <View style={styles.header}>
                     <ImageBackground source={require('../assets/searchBackground.png')}>
-                        <Text style={styles.h1}>{term} {t('common:Level')}</Text>
+                        <Text style={styles.h1}>{slug}</Text>
                         {location != null ?
                             <View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 15 }}>
                                 <Text style={{ marginRight: 10, marginLeft: 5, }}>
@@ -1308,11 +1425,19 @@ const BookingScreen = ({ route }) => {
                                             <Text style={[styles.error, { marginLeft: '7%' }]}>{t('common:TermsError')}</Text>
                                         ) : null}
                                     </View>
-                                    <TouchableOpacity onPress={handleSubmit}
-                                        // disabled={!isValid}
-                                        style={[styles.submitLabel, { backgroundColor: '#1570a5' }]}>
-                                        <Text style={{ color: '#fff' }}>{t('common:PayNow')}</Text>
-                                    </TouchableOpacity>
+                                    {loading == false ?
+                                        <TouchableOpacity onPress={handleSubmit}
+                                            // disabled={!isValid}
+                                            style={[styles.submitLabel, { backgroundColor: '#1570a5' }]}>
+                                            <Text style={{ color: '#fff' }}>{t('common:PayNow')}</Text>
+                                        </TouchableOpacity> :
+                                        <TouchableOpacity
+                                            //show alret on press
+                                            onPress={() => alert(t('common:AlreadyBooking'))}
+                                            // disabled={!isValid}
+                                            style={[styles.submitLabel, { backgroundColor: '#cecece' }]}>
+                                            <Text style={{ color: '#fff' }}>{t('common:PayNow')}</Text>
+                                        </TouchableOpacity>}
                                 </View>
                             )}
                         </Formik>
