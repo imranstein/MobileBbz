@@ -56,8 +56,45 @@ const ExamDetailScreen = ({ route }) => {
     // const [image, setImage] = useState('')
     // const [date, setDate] = useState(null)
     const { width } = useWindowDimensions()
-    const verification = userInfo.email_verified_at;
-    console.log('verify', verification);
+    const [verification, setVerification] = useState(null);
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const wait = (timeout) => {
+        return new Promise(resolve => setTimeout(resolve, timeout));
+    }
+    const onRefresh = React.useCallback(() => {
+        verify();
+        setRefreshing(true);
+        wait(1000).then(() => setRefreshing(false));
+    }, []);
+    React.useEffect(() => {
+        const focusHandler = navigation.addListener('focus', () => {
+            verify();
+
+            console.log('Refreshed');
+        });
+        return focusHandler;
+    }, [navigation]);
+
+    const pid = userInfo.id;
+    const verify = () => {
+        axios.post(`${BASE_URL}/verify`, {
+            id: pid
+        }).then(res => {
+            console.log(res);
+            setVerification(res.data.email_verified_at);
+            console.log('verification', verification);
+            // return true;
+        }
+        ).catch(e => {
+            console.log(e);
+        }
+        )
+    }
+    useEffect(() => {
+        verify();
+    })
+
 
     useEffect(() => {
         LogBox.ignoreLogs(['VirtualizedLists should never be nested', 'TRenderEngineProvider', '']);

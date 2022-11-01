@@ -77,7 +77,12 @@ const PaypalScreen = ({ route }) => {
             console.log(err);
             console.log('error');
         })
-    }
+    };
+
+    useEffect(() => {
+        finalize();
+    }, []);
+
     const remove = async () => {
         const { data } = await axios.post(`${BASE_URL}/removeBooking/${code}`
         ).then((res) => {

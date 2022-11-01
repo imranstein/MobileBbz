@@ -357,7 +357,7 @@ const BookingScreen = ({ route }) => {
                 if (response.data.status == 1) {
                     console.log(response.data);
                     // alert(response.data.message);
-                    // setLoading(false);
+                    setLoading(false);
                     alert(t('common:BookedSuccessfully'));
                     if (response.data.gateway == 'stripe') {
                         //setLoading(false);
@@ -405,6 +405,7 @@ const BookingScreen = ({ route }) => {
 
                     }
                 } else {
+                    setLoading(false);
                     console.log(response.data);
                     if (country_of_birth == '') {
                         alert('Please Choose Country of birth', [{
@@ -422,11 +423,13 @@ const BookingScreen = ({ route }) => {
                         //         navigation.navigate('Home');
                         //     }
                         // }]);
+                        setLoading(false);
                         setBirthDateError(true);
                         //setLoading(false);
 
                     }
                     else if (id_proof == '') {
+                        setLoading(false);
                         // alert('Please Choose Id Proof', [{
                         //     text: t('common:OK'),
                         //     onPress: () => {
@@ -437,6 +440,7 @@ const BookingScreen = ({ route }) => {
                         //setLoading(false);
 
                     } else if (country == '') {
+                        setLoading(false);
                         alert('Please Choose Country', [{
                             text: t('common:OK'),
                             onPress: () => {
@@ -447,34 +451,42 @@ const BookingScreen = ({ route }) => {
 
                     }
                     else if (payment_gateway == null) {
+                        setLoading(false);
                         setPaymentError(true);
                         //setLoading(false);
 
                     }
                     else if (term_conditions == false) {
+                        setLoading(false);
                         setTermsError(true);
                         //setLoading(false);
 
                     } else if (term_conditions_1 == false) {
+                        setLoading(false);
                         setTermsError(true);
                         //setLoading(false);
 
                     }
                     else if (term_conditions_2 == false) {
+                        setLoading(false);
                         setTermsError(true);
                         //setLoading(false);
 
-                    } else if (response.data.message == 'Email already exists') {
+                    } else if (response.data.message ==
+                        'Email already exists') {
+                        setLoading(false);
                         alert(t('common:EmailAlreadyExists'));
                         //setLoading(false);
 
                     }
                     else if (response.data.message == 'Phone already exists') {
+                        setLoading(false);
                         alert(t('common:PhoneAlreadyExists'));
                         //setLoading(false);
 
                     }
                     else {
+                        setLoading(false);
                         alert(t('common:YouHaveAlreadyRegisteredForthisEvent'), [{
                             text: t('common:OK'),
                             onPress: () => {
@@ -570,6 +582,7 @@ const BookingScreen = ({ route }) => {
                 }
             }).then((response) => {
                 if (response.data.status == 1) {
+                    setLoading(false);
                     console.log(response.data);
                     // alert(response.data.message);
                     alert(t('common:BookedSuccessfully'));
@@ -600,7 +613,7 @@ const BookingScreen = ({ route }) => {
                         console.log(response.data.gateway);
                     } else if (response.data.gateway == 'paypal') {
                         // //setLoading(false);
-
+                        setLoading(false);
                         console.log(response.data.gateway);
                         navigation.navigate('PaypalPayment'
                             , {
@@ -621,8 +634,11 @@ const BookingScreen = ({ route }) => {
 
                     }
                 } else {
+                    setLoading(false);
                     console.log(response.data);
                     if (country_of_birth == '') {
+                        setLoading(false);
+
                         alert('Please Choose Country of birth', [{
                             text: t('common:OK'),
                             onPress: () => {

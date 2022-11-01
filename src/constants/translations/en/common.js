@@ -229,6 +229,7 @@ export default {
     AddressMustStartWithLetterOrNumber: 'Address must start with letter or number',
     PleaseChooseAtLeastOneOption: 'Please choose at least one option',
     BirthPlaceMustBeAlphabetical: 'Birth Place must be alphabetical',
-    AlreadyBooking:'Exam is Already Booking'
+
+    AlreadyBooking: 'Exam is Booking,Please Wait'
 
 }

@@ -248,7 +248,7 @@ export default {
     AddressMustStartWithLetterOrNumber: 'Adresse muss mit einem Buchstaben oder einer Nummer beginnen',
     PleaseChooseAtLeastOneOption: 'Bitte wählen Sie mindestens eine Option',
     BirthPlaceMustBeAlphabetical: 'Geburtsort muss alphabetisch sein',
-    AlreadyBooking: 'Die Prüfung ist bereits gebucht'
+    AlreadyBooking: 'Prüfung wird gebucht, bitte warten.'
 
 
 }

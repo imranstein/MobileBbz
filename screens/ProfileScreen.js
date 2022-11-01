@@ -9,6 +9,8 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useTranslation } from "react-i18next";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { BASE_URL } from '../config';
+import axios from 'axios';
 
 
 const LANGUAGES = [
@@ -16,8 +18,26 @@ const LANGUAGES = [
   { code: "de", label: "Deutsch" },
 ];
 
-const ProfileScreen = () => {
 
+const ProfileScreen = () => {
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
+  const onRefresh = React.useCallback(() => {
+    verify();
+    setRefreshing(true);
+    wait(1000).then(() => setRefreshing(false));
+  }, []);
+  React.useEffect(() => {
+    const focusHandler = navigation.addListener('focus', () => {
+      verify();
+
+      console.log('Refreshed');
+    });
+    return focusHandler;
+  }, [navigation]);
   const { t, i18n } = useTranslation();
   const selectedLanguageCode = i18n.language;
   const setLanguage = (code) => {
@@ -27,10 +47,31 @@ const ProfileScreen = () => {
   const { userInfo, isLoading, logout } = useContext(AuthContext);
   // const [verification, setVerification] = useState(null);
   const [data, setData] = useState(null);
-  console.log('info', userInfo);
+  const [verification, setVerification] = useState(null);
 
-  const verification = userInfo.email_verified_at;
-  console.log('verification', verification);
+
+  const id = userInfo.id;
+  const verify = () => {
+    axios.post(`${BASE_URL}/verify`, {
+      id: id
+    }).then(res => {
+      console.log(res.data);
+      setVerification(res.data.email_verified_at);
+      console.log('verification', verification);
+      // return true;
+    }
+    ).catch(e => {
+      console.log(e);
+    }
+    )
+  }
+  useEffect(() => {
+    verify();
+  })
+
+
+  // const verification = userInfo.email_verified_at;
+  // console.log('verification', verification);
 
   return (
     <View style={styles.container}>
