@@ -33,7 +33,7 @@ const Welcome = ({ navigation }) => {
       <View>
         <TouchableOpacity
           onPress={() => navigation.navigate('Language')}>
-          <View style={{ alignContent: 'flex-end', justifyContent: 'flex-end', alignSelf: 'flex-end', alignItems: 'flex-end', marginTop: scale(10), marginBottom: scale(30), marginRight: scale(10), borderColor: '#cecece', borderWidth: scale(1), padding: scale(5), borderRadius: scale(5) }}>
+          <View style={{ alignContent: 'flex-end', justifyContent: 'flex-end', alignSelf: 'flex-end', alignItems: 'flex-end', marginTop: scale(10), marginBottom: scale(-10), marginRight: scale(10), borderColor: '#cecece', borderWidth: scale(1), padding: scale(5), borderRadius: scale(5) }}>
             <View style={{ flexDirection: 'row' }}>
               <Entypo
                 name="language"
@@ -74,15 +74,23 @@ const Welcome = ({ navigation }) => {
       </View>
       <TouchableOpacity
         onPress={() => navigation.navigate('Main')}>
-        <Text
-          style={{
-            color: '#1570A5',
-            fontSize: RFPercentage(2.45),
-            textAlign: 'center',
-            marginTop: '1%',
-          }}>
-          {t('common:ContinueAsAGuest')}
-        </Text>
+        <View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
+          <Text style={{ marginTop: 7, marginRight: 5, }}><Entypo
+            name="arrow-long-left"
+            size={18}
+            color="#1a6997"
+            style={styles.icon}
+          /></Text>
+          <Text
+            style={{
+              color: '#1570A5',
+              fontSize: RFPercentage(2.45),
+              textAlign: 'center',
+              marginTop: '1%',
+            }}>
+            {t('common:ContinueAsAGuest')}
+          </Text>
+        </View>
       </TouchableOpacity>
     </ImageBackground>
   );
@@ -91,11 +99,12 @@ const Welcome = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   welcome: {
-    color: '#1570a5',
-    fontSize: scale(21),
+    color: '#1570A5',
+    fontSize: scale(26),
     fontWeight: 'normal',
     textAlign: 'center',
     marginTop: scale(32),
+    fontFamily: 'Poppins-Medium'
   },
   container: {
     flex: 1,
@@ -105,14 +114,15 @@ const styles = StyleSheet.create({
     opacity: 1,
   },
   description: {
+    fontFamily: 'Poppins-Regular',
     color: 'gray',
     textAlign: 'center',
     marginTop: height / 35,
     paddingHorizontal: width * 0.042,
-    fontSize: RFValue(17),
+    fontSize: RFValue(16),
   },
   button: {
-    backgroundColor: '#1570a5',
+    backgroundColor: '#1570A5',
     borderRadius: 5,
     paddingHorizontal: '12%',
     width: '90%',

@@ -48,6 +48,7 @@ const SearchItem = ({ item }) => {
                         onPress={() => {
                             navigation.navigate('ExamDetail', {
                                 paramKey: item.id,
+                                name: item.title,
                             })
                         }
                         }
@@ -231,9 +232,10 @@ const styles = StyleSheet.create({
         marginTop: '6%',
     },
     lowerTextView: {
-        // backgroundColor: '#fff',
+        marginLeft: '2%',
+        backgroundColor: '#1a6997',
         height: '12%',
-        width: '20%',
+        width: '16%',
         marginTop: height * 0.24,
     },
     lowerText: {
@@ -241,6 +243,8 @@ const styles = StyleSheet.create({
         fontSize: RFValue(16),
         fontWeight: '500',
         textAlign: 'center',
+        // marginLeft: '10%',
+        marginTop: '8%',
         // marginTop: '2%',
     },
     examDateText: {

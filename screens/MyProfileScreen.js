@@ -310,7 +310,7 @@ const MyProfileScreen = () => {
                             <View>
                                 <View style={styles.name}>
                                     <View>
-                                        <Text style={styles.label} >{t('common:FirstName')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                        <Text style={styles.label} >{t('common:FirstName')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                         <TextInput style={{
                                             flex: 1,
                                             // marginBottom: 20,
@@ -326,11 +326,11 @@ const MyProfileScreen = () => {
                                             onChangeText={handleChange('first_name')}
                                             onBlur={handleBlur('first_name')}
                                             value={values.first_name}
-                                            placeholder={t('common:FirstName')}
+                                            placeholder={t('common:PleaseEnter')}
                                             placeholderTextColor="#A8B0B5" />
                                     </View>
                                     <View>
-                                        <Text style={styles.label} >{t('common:LastName')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                        <Text style={styles.label} >{t('common:LastName')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                         <TextInput style={{
                                             flex: 1,
                                             // marginBottom: 20,
@@ -347,7 +347,7 @@ const MyProfileScreen = () => {
                                             onChangeText={handleChange('last_name')}
                                             onBlur={handleBlur('last_name')}
                                             value={values.last_name}
-                                            placeholder={t('common:LastName')}
+                                            placeholder={t('common:PleaseEnter')}
                                             placeholderTextColor="#A8B0B5" />
                                     </View>
                                 </View>
@@ -359,12 +359,12 @@ const MyProfileScreen = () => {
                                 ) : null}
                                 <View style={styles.inputs}>
                                     <View>
-                                        <Text style={styles.label}>{t('common:Email')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                        <Text style={styles.label}>{t('common:Email')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                         <TextInput style={styles.input}
                                             onChangeText={handleChange('email')}
                                             onBlur={handleBlur('email')}
                                             value={values.email.trim()}
-                                            placeholder={t('common:Email')}
+                                            placeholder={t('common:PleaseEnter')}
                                             editable={false}
                                             placeholderTextColor="#A8B0B5" />
                                     </View>
@@ -374,12 +374,12 @@ const MyProfileScreen = () => {
                                 ) : null}
                                 <View style={styles.inputs}>
                                     <View>
-                                        <Text style={styles.label}>{t('common:Phone')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                        <Text style={styles.label}>{t('common:Phone')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                         <TextInput style={styles.input}
                                             onChangeText={handleChange('phone')}
                                             onBlur={handleBlur('phone')}
                                             value={values.phone}
-                                            placeholder={t('common:Mobile')}
+                                            placeholder={t('common:PleaseEnter')}
                                             placeholderTextColor="#A8B0B5"
                                             keyboardType='phone-pad'
                                             keyboardAppearance='dark' />
@@ -390,7 +390,7 @@ const MyProfileScreen = () => {
                                 ) : null}
                                 <View style={styles.inputs}>
                                     <View>
-                                        <Text style={styles.label}>{t('common:Birthdate')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                        <Text style={styles.label}>{t('common:Birthdate')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                         <View style={{
                                             borderWidth: 1,
                                             borderColor: '#DAE1E7',
@@ -436,12 +436,12 @@ const MyProfileScreen = () => {
                                 </View>
                                 <View style={styles.inputs}>
                                     <View>
-                                        <Text style={styles.label}>C/o : <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                        <Text style={styles.label}>C/o <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                         <TextInput style={styles.input}
                                             onChangeText={handleChange('address')}
                                             onBlur={handleBlur('address')}
                                             value={values.address}
-                                            placeholder={t('common:Address')}
+                                            placeholder={t('common:PleaseEnter')}
                                             placeholderTextColor="#A8B0B5" />
                                     </View>
                                 </View>
@@ -450,12 +450,12 @@ const MyProfileScreen = () => {
                                 ) : null}
                                 <View style={styles.inputs}>
                                     <View>
-                                        <Text style={styles.label}>{t('common:Street')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                        <Text style={styles.label}>{t('common:Street')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                         <TextInput style={styles.input}
                                             onChangeText={handleChange('address2')}
                                             onBlur={handleBlur('address2')}
                                             value={values.address2}
-                                            placeholder={t('common:Street')}
+                                            placeholder={t('common:PleaseEnter')}
                                             placeholderTextColor="#A8B0B5" />
                                     </View>
                                 </View>
@@ -464,12 +464,12 @@ const MyProfileScreen = () => {
                                 ) : null}
                                 <View style={styles.inputs}>
                                     <View>
-                                        <Text style={styles.label}>{t('common:City')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                        <Text style={styles.label}>{t('common:City')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                         <TextInput style={styles.input}
                                             onChangeText={handleChange('city')}
                                             onBlur={handleBlur('city')}
                                             value={values.city}
-                                            placeholder={t('common:City')}
+                                            placeholder={t('common:PleaseEnter')}
                                             placeholderTextColor="#A8B0B5" />
                                     </View>
                                 </View>
@@ -478,12 +478,12 @@ const MyProfileScreen = () => {
                                 ) : null}
                                 <View style={styles.inputs}>
                                     <View>
-                                        <Text style={styles.label}>{t('common:PostalCode')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                        <Text style={styles.label}>{t('common:PostalCode')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                         <TextInput style={styles.input}
                                             onChangeText={handleChange('zipCode')}
                                             onBlur={handleBlur('zipCode')}
                                             value={values.zipCode}
-                                            placeholder={t('common:PostalCode')}
+                                            placeholder={t('common:PleaseEnter')}
                                             placeholderTextColor="#A8B0B5"
                                             keyboardType='phone-pad'
                                             keyboardAppearance='dark' />
@@ -494,7 +494,7 @@ const MyProfileScreen = () => {
                                 ) : null}
                                 <View style={styles.inputs}>
                                     <View>
-                                        <Text style={styles.label}>{t('common:Country')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                        <Text style={styles.label}>{t('common:Country')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                         <View style={{
                                             // marginLeft: '4%',
                                             // borderColor: '#cecece',

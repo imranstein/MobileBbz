@@ -17,11 +17,14 @@ export const AuthProvider = ({ children }) => {
   const register = (first_name, last_name, email, password, phone, term) => {
     setIsLoading(true);
     setError2(null);
+    setTermError(null);
     // console.log(first_name, last_name, email, phone, password, term);
     if (term == false || term == null) {
       setTermError('Please accept the terms and conditions');
       setIsLoading(false);
     } else {
+      setTermError(null);
+      setError2(null);
       axios
         .post(`${BASE_URL}/signup`, {
           first_name,
@@ -43,6 +46,8 @@ export const AuthProvider = ({ children }) => {
           //   setIsLoading(false);
           // }
           else {
+            setTermError(null);
+            setError2(null);
             alert('Successfully registered');
             let userInfo = res.data;
             setUserInfo(userInfo);
@@ -68,7 +73,9 @@ export const AuthProvider = ({ children }) => {
         password,
       })
       .then(res => {
+
         let userInfo = res.data;
+        setError(null);
         console.log(userInfo);
         setUserInfo(userInfo);
         AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));

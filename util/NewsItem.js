@@ -21,6 +21,7 @@ const NewsItem = ({ item }) => {
             <TouchableOpacity
                 onPress={() => navigation.navigate('NewsDetail', {
                     paramKey: item.id,
+                    title: item.title
                 })}>
                 {media != null ? <View style={styles.image}>
                     <Image
@@ -79,6 +80,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         color: '#000',
+        fontFamily: 'poppins-regular',
     },
     ImageBackground: {
         opacity: 0.3,
@@ -91,13 +93,16 @@ const styles = StyleSheet.create({
     dateText: {
         fontSize: RFPercentage(2.2),
         color: '#1a6997',
+        fontFamily: 'poppins-regular',
     },
     title: {
         // marginBottom: 10,
         flexDirection: 'row',
+        fontFamily: 'poppins-regular',
         // marginLeft: '2%',
     },
     titleText: {
+        fontFamily: 'poppins-regular',
         fontSize: RFPercentage(2.4),
         color: '#000',
         fontWeight: 'bold',
@@ -106,9 +111,12 @@ const styles = StyleSheet.create({
         // marginBottom: 20,
         flexDirection: 'row',
         maxHeight: 85,
+        fontFamily: 'poppins-regular',
+
         // marginLeft: '2%',
     },
     descriptionText: {
+        fontFamily: 'poppins-regular',
         fontSize: RFPercentage(2.4),
         color: '#5E6D77',
     },

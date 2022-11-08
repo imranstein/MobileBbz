@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   ImageBackground,
   ScrollView,
+  Image,
 } from 'react-native';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useFocusEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import axios from 'axios';
 import { BASE_URL } from '../config';
@@ -20,25 +21,32 @@ import * as Yup from 'yup';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { t } from 'i18next';
 import { scale } from 'react-native-size-matters';
-
+import { heightPercentageToDP } from 'react-native-responsive-screen';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 
 
 const ContactUs = () => {
+
+
   const { t } = useTranslation();
 
   const validationSchema = Yup.object().shape({
     full_name: Yup.string()
       .required(t('common:NameIsRequired'))
+      .matches(/^[a-zA-Z]/, t('common:NameMustStartWithALetter'))
+      .matches(/^[a-zA-Z ]+$/, t('common:NameMustBeOnlyLetters'))
       .min(4, t('common:NameMustBeAtLeast4Characters')),
     email: Yup.string()
       .required(t('common:EmailIsRequired'))
       .email(t('common:EmailIsInvalid')),
     message: Yup.string()
       .required(t('common:MessageIsRequired'))
-      .min(10, t('common:MessageMustBeAtLeast10Characters'))
-      .matches(/^[a-zA-Z]/, t('common:MessageMustStartWithALetter')),
+      .matches(/^[a-zA-Z]/, t('common:MessageMustStartWithALetter'))
+      .min(10, t('common:MessageMustBeAtLeast10Characters')),
   });
 
   const navigation = useNavigation();
@@ -83,7 +91,7 @@ const ContactUs = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={{ height: 850 }}>
+    <ScrollView contentContainerStyle={{ height: 1050 }}>
       <View style={styles.container}>
         <Spinner visible={isLoading} />
         {/* <ActivityIndicator animating={isLoading} size="large" color="#0000ff" /> */}
@@ -98,6 +106,8 @@ const ContactUs = () => {
         <Formik
           initialValues={{ full_name: '', email: '', message: '' }}
           validateOnMount={true}
+          validateOnChange={false}
+          validateOnBlur={false}
           onSubmit={(values, { resetForm }) => {
             console.log(values);
             SendMessage(
@@ -168,7 +178,77 @@ const ContactUs = () => {
             </View>
           )}
         </Formik>
+        <View style={{ marginTop: 100, marginBottom: 10, backgroundColor: '#D9E8F1', width: '90%', marginLeft: '5%', height: heightPercentageToDP(52), borderTopColor: '#1570A5', borderTopWidth: 4, borderTopLeftRadius: 5, borderTopRightRadius: 5, marginBottom: 20 }}>
+          <View style={{ flexDirection: 'row', marginTop: 20, marginBottom: 15, width: '90%' }}>
+            <Text style={{ marginRight: 10, marginLeft: 20, }}>
+              <Image source={require('../assets/logo.png')} style={{ width: 50, height: 50, marginTop: -20, }} />
+            </Text>
+            <View style={{ flexDirection: 'column' }}>
+              <Text style={{ fontSize: 19, color: '#4F94BC', fontWeight: '600', marginTop: 5, marginLeft: 2, fontFamily: 'poppins-regular' }}>
+                {t("common:BbzLanguageSchool")}
+              </Text>
+              <Text style={{ fontSize: 15, color: '#333', fontWeight: '500', marginTop: 5, marginBottom: 5, marginLeft: 2, width: 240, fontFamily: 'poppins-regular' }}>
+                {t("common:ContactDescription")}
+              </Text>
+            </View>
+          </View>
+          <View style={{ borderTopColor: '#888', borderTopWidth: 1 }}>
+            <Text style={{ color: '#555', fontSize: 17, fontWeight: 'bold', marginTop: 15, marginLeft: 15, fontFamily: 'poppins-regular' }}>{t('common:ContactUs')}</Text>
+            <Text style={{ color: '#555', fontSize: 15, fontWeight: '500', marginTop: 5, marginLeft: 15, fontFamily: 'poppins-regular' }}>Deutschtest für Zuwanderer (DTZ / A2-B1)(PR-220409-HU-DTZ)</Text>
+            <View style={{ flexDirection: 'row', marginTop: 10 }}>
+              <Text style={{ marginRight: 5, marginLeft: 13, }}>
+                <Entypo
+                  name="location-pin"
+                  size={20}
+                  color="#666"
+                />
+              </Text>
+              <Text style={{ fontSize: 14, color: '#4F94BC', fontWeight: '600', marginLeft: 1, width: '85%', fontFamily: 'poppins-regular' }}>
+                BBZ Altenkirchen GmbH & Co. KG Konrad-Adenauer-Platz 5 57610 Altenkirchen
+              </Text>
+            </View>
+            <View style={{ flexDirection: 'row', marginTop: 10 }}>
+              <Text style={{ marginRight: 5, marginLeft: 13, }}>
+                <Entypo
+                  name="phone"
+                  size={20}
+                  color="#666"
+                />
+              </Text>
+              <Text style={{ fontSize: 14, color: '#4F94BC', fontWeight: '600', marginLeft: 1, width: '85%' }}>
+                02681 8797-0
+              </Text>
+            </View>
+            <View style={{ flexDirection: 'row', marginTop: 10 }}>
+              <Text style={{ marginRight: 5, marginLeft: 13, }}>
+                <FontAwesome
+                  name="building"
+                  size={20}
+                  color="#666"
+                />
+              </Text>
+              <Text style={{ fontSize: 14, color: '#4F94BC', fontWeight: '600', marginLeft: 1, width: '85%' }}>
+                02681 8797-111
+              </Text>
+            </View>
+            <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 20 }}>
+              <Text style={{ marginRight: 5, marginLeft: 13, fontFamily: 'poppins-regular' }}>
+                <MaterialCommunityIcons
+                  name="web"
+                  size={20}
+                  color="#666"
+                />
+              </Text>
+              <Text style={{ fontFamily: 'poppins-regular', fontSize: 14, color: '#4F94BC', fontWeight: '600', marginLeft: 1, width: '85%' }}>
+                www.bbz-altenkirchen.de
+              </Text>
+            </View>
+
+
+          </View>
+        </View>
       </View>
+
     </ScrollView >
   );
 };
@@ -278,6 +358,7 @@ const styles = StyleSheet.create({
     fontSize: RFPercentage(2.1),
   },
   labels: {
+    fontFamily: 'poppins-regular',
     color: '#000',
     fontSize: scale(15),
     marginBottom: '2%',

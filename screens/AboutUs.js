@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     color: '#999',
   },
   header: {
+    fontFamily: 'poppins-regular',
     flex: 1,
     // backgroundColor: '#1a6997',
     // height: 200,
@@ -53,12 +54,14 @@ const styles = StyleSheet.create({
   },
   h1: {
     // fontSize: 25,
+    fontFamily: 'poppins-regular',
     fontSize: RFPercentage(4),
     color: '#fff',
     marginHorizontal: 10,
     paddingTop: 16,
   },
   search: {
+    fontFamily: 'poppins-regular',
     backgroundColor: '#fff',
     marginHorizontal: 10,
     borderRadius: 4,
@@ -73,6 +76,7 @@ const styles = StyleSheet.create({
   },
   description: {
     // fontSize: 14,
+    fontFamily: 'poppins-regular',
     fontSize: RFPercentage(2.4),
     // fontWeight: 'bold',
     paddingVertical: 10,
@@ -83,6 +87,7 @@ const styles = StyleSheet.create({
   },
   lastdescription: {
     // fontSize: 14,
+    fontFamily: 'poppins-regular',
     fontSize: RFPercentage(2.4),
     // fontWeight: 'bold',
     paddingVertical: 10,

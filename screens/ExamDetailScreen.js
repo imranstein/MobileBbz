@@ -221,7 +221,7 @@ const ExamDetailScreen = ({ route }) => {
                                 style={styles.icon}
                             />
                         </Text>
-                        <Text style={styles.dateTitle}> {t('common:ExamDate')} | {moment(examDate).format('DD/MM/YY')} </Text>
+                        <Text style={styles.dateTitle}> {t('common:ExamDate')} | {moment(examDate).format('DD/MM/YY (ddd)')} </Text>
 
                     </View>
                     <View style={{ flexDirection: 'row', marginBottom: 27, alignItems: 'center' }}>
@@ -233,10 +233,10 @@ const ExamDetailScreen = ({ route }) => {
                                 style={styles.icon}
                             />
                         </Text>
-                        {daysleft < 5 && daysleft > 1 ? <Text style={styles.regTitle}> {t('common:RegUntil')} | <Text style={{ color: '#C16D00' }}>{moment(regDate).format('DD/MM/YY')}</Text> </Text> :
+                        {daysleft < 5 && daysleft > 1 ? <Text style={styles.regTitle}> {t('common:RegUntil')} | <Text style={{ color: '#C16D00' }}>{moment(regDate).format('DD/MM/YY')}(10:00 AM)</Text> </Text> :
                             daysleft <= 1 ?
-                                <Text style={styles.regTitle}> {t('common:RegUntil')} | <Text style={{ color: 'red' }}>{moment(regDate).format('DD/MM/YY')}</Text> </Text> :
-                                <Text style={styles.regTitle}> {t('common:RegUntil')} | <Text style={{ color: '#008428' }}>{moment(regDate).format('DD/MM/YY')}</Text> </Text>}
+                                <Text style={styles.regTitle}> {t('common:RegUntil')} | <Text style={{ color: 'red' }}>{moment(regDate).format('DD/MM/YY')}(10:00 AM)</Text> </Text> :
+                                <Text style={styles.regTitle}> {t('common:RegUntil')} | <Text style={{ color: '#008428' }}>{moment(regDate).format('DD/MM/YY')}(10:00 AM)</Text> </Text>}
 
                     </View>
                     <View style={{ flexDirection: 'row', marginBottom: 15, alignItems: 'center' }}>
@@ -319,7 +319,7 @@ const ExamDetailScreen = ({ route }) => {
                         flex: 0.41,
                         fontSize: RFValue(16),
                         color: '#5E6D77',
-                        justifyContent: 'center',
+                        // justifyContent: 'center',
                         alignSelf: 'center',
                         marginLeft: 15,
 
@@ -328,7 +328,7 @@ const ExamDetailScreen = ({ route }) => {
                         flex: 0.59,
                         fontSize: RFValue(18),
                         fontWeight: '500',
-                        justifyContent: 'center',
+                        // justifyContent: 'center',
                         alignSelf: 'center',
                         color: '#1a6997'
 
@@ -370,7 +370,8 @@ const ExamDetailScreen = ({ route }) => {
                                                 total: total,
                                                 remaining: remaining,
                                                 content: content,
-                                                term: examLevel
+                                                term: examLevel,
+                                                name: slug,
                                             })
                                             : navigation.navigate('Verify')
                                 }

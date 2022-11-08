@@ -146,7 +146,7 @@ const BookingSuccessScreen = ({ route }) => {
               <Text style={{ marginRight: 10, marginLeft: 20, marginTop: 20 }}>
                 <FontAwesome
                   name="check-circle"
-                  size={30}
+                  size={35}
                   color="#3E8529"
                   borderColor="#fff"
                   style={styles.icon}
@@ -260,14 +260,18 @@ const BookingSuccessScreen = ({ route }) => {
 
 
           </View>
-          <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 10 }}>
+          <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 10,paddingBottom: 20,
+        borderBottomWidth: 1,
+        borderColor: '#EBEBEB', }}>
             <Text style={styles.title}> {t('common:ExamTime')}:   </Text>
             <Text style={[styles.value]}>
               {examTime}
             </Text>
 
           </View>
-          <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 2 }}>
+          <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 2,paddingBottom: 20,
+        borderBottomWidth: 1,
+        borderColor: '#EBEBEB', }}>
             <Text style={styles.title}> {t('common:ExaminationFee')}:   </Text>
             <Text style={[styles.value]}>
               {amount}

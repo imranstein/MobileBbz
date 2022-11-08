@@ -20,11 +20,14 @@ import * as Yup from 'yup';
 import LoadingOverlay from '../components/ui/LoadingOverlay';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { scale } from 'react-native-size-matters';
+import Entypo from 'react-native-vector-icons/Entypo';
+import CheckBox from '@react-native-community/checkbox';
 
 
 const Login = ({ navigation }) => {
   // const [email, setEmail] = useState(null);
   // const [password, setPassword] = useState(null);
+  const [rememberMe, setRememberMe] = useState(false);
   const { isLoading, isAuthenticating, login, error } = useContext(AuthContext);
 
   const validationSchema = Yup.object().shape({
@@ -93,11 +96,29 @@ const Login = ({ navigation }) => {
                 <View>
                   <Text style={[styles.error, { alignSelf: 'center' }]}>{error ? error : ''}</Text>
                 </View>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => navigation.navigate('Reset Your Password')}>
-                  <Text style={styles.buttonText}>{t('common:ForgotPassword')}</Text>
-                </TouchableOpacity>
+                <View style={{ flexDirection: 'row' }}>
+                  <View style={{ flexDirection: 'row', marginTop: -15 }}>
+                    <CheckBox
+                      value={rememberMe}
+                      onPress={() => setRememberMe(!rememberMe)}
+                      onValueChange={newValue => setRememberMe(newValue)}
+                      tintColors={{ true: '#1570A5', false: '#B4B9BE', borderWidth: 1, }}
+                    />
+                    <Text style={{
+                      fontSize: RFPercentage(2),
+                      color: '#999', marginTop: 6, maxWidth: '80%'
+                    }}>{t('common:RememberMe')}</Text>
+
+                    {/* {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>} */}
+                  </View>
+                  <TouchableOpacity
+                    style={[styles.button, {
+                      marginLeft: 60,
+                    }]}
+                    onPress={() => navigation.navigate('Reset Your Password')}>
+                    <Text style={styles.buttonText}>{t('common:ForgotPassword')}</Text>
+                  </TouchableOpacity>
+                </View>
                 <TouchableOpacity style={[styles.loginButton, {
                   // backgroundColor: isValid ? '#1a6997' : '#9c9c9c',
                   backgroundColor: '#1a6997',
@@ -112,6 +133,27 @@ const Login = ({ navigation }) => {
                     <Text style={styles.signupButton}>{t('common:SignUp')}</Text>
                   </TouchableOpacity>
                 </View>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Main')}>
+                  <View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
+
+                    <Text
+                      style={{
+                        color: '#1570A5',
+                        fontSize: RFPercentage(2.45),
+                        textAlign: 'center',
+                        marginTop: '1%',
+                      }}>
+                      {t('common:ContinueAsAGuest')}
+                    </Text>
+                    <Text style={{ marginTop: 7, marginLeft: 5, }}><Entypo
+                      name="arrow-long-right"
+                      size={18}
+                      color="#1a6997"
+                      style={styles.icon}
+                    /></Text>
+                  </View>
+                </TouchableOpacity>
               </View>
             )}
           </Formik>
@@ -152,7 +194,7 @@ const Login = ({ navigation }) => {
         </TouchableOpacity>
       </View> */}
       </View>
-    </ImageBackground>
+    </ImageBackground >
   );
 };
 
@@ -173,7 +215,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: 30,
     paddingBottom: 26,
-    marginTop: 32,
+    marginTop: 50,
     borderWidth: 1,
     borderColor: '#fff',
     borderRadius: 10,

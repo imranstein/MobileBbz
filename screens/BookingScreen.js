@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TextInput, TouchableOpacity } from 'react-native';
 import { BASE_URL, IMAGE_URL } from '../config';
-import moment from 'moment';
+import moment, { relativeTimeRounding } from 'moment';
 import RenderHtml from 'react-native-render-html';
 import { useWindowDimensions } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -778,17 +778,20 @@ const BookingScreen = ({ route }) => {
 
 
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 2, marginBottom: 10 }}>
+                    <View style={{ flexDirection: 'row', marginTop: 2, paddingBottom: 10,  borderColor: '#EBEBEB',
+                                                borderBottomWidth: 1 }}>
                         <Text style={styles.title}> {t('common:ExamTime')}:   </Text>
                         <Text style={[styles.value]}> {examTime} </Text>
 
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 2 }}>
-                        <Text style={styles.title}> {t('common:ExaminationFee')}:   </Text>
+                    <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 0, paddingBottom: 10,
+                borderColor: '#EBEBEB',
+                borderBottomWidth: 1 }}>
+                        <Text style={styles.title}> {t('common:ExaminationFees')}:   </Text>
                         <Text style={[styles.value]}> {price} € </Text>
 
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: 20, marginBottom: 2 }}>
+                    <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 2 }}>
                         <Text style={{
                             fontSize: 22,
                             color: '#1a6997',
@@ -803,12 +806,12 @@ const BookingScreen = ({ route }) => {
                             paddingTop: 5,
                             textAlign: 'right',
                             flex: 1,
-                            marginRight: 7,
+                            marginRight: 10,
                         }}> {price} €</Text>
 
                     </View>
                 </View>
-                <View style={{ marginTop: 50, marginBottom: 10, backgroundColor: '#fff', width: '90%', marginLeft: '5%' }}>
+                <View style={{ marginTop: 20, marginBottom: 10, backgroundColor: '#fff', width: '90%', marginLeft: '5%' }}>
                     <Text style={styles.descriptionLabel}>{t('common:BookingSubmission')}</Text>
                     <Text style={styles.titleHeader}>{t('common:ContactInformation')}</Text>
 
@@ -885,7 +888,7 @@ const BookingScreen = ({ route }) => {
                                 <View>
                                     <View style={styles.inputs}>
                                         <View style={styles.inputContainer}>
-                                            <Text style={styles.label}>{t('common:Salutation')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <Text style={styles.label}>{t('common:Salutation')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
 
                                             <View style={{
                                                 flex: 1,
@@ -912,13 +915,13 @@ const BookingScreen = ({ route }) => {
                                                     }}
                                                     onBlur={handleBlur('salutation')}
                                                     mode="dialog"
-                                                    dropdownIconColor="#000"
-                                                    dropdownIconRippleColor="#000"
+                                                    dropdownIconColor="#1570A5"
+                                                    dropdownIconRippleColor="#1570A5"
                                                 //dropdown icon position
 
 
                                                 >
-                                                    <Picker.Item label={t('common:Select')} value="" />
+                                                    <Picker.Item label={t('common:PleaseSelect')} value="" />
                                                     <Picker.Item label={t('common:Mr')} value="Mr" />
                                                     <Picker.Item label={t('common:Mrs')} value="Mrs" />
                                                     <Picker.Item label={t('common:Ms')} value="Ms" />
@@ -931,13 +934,13 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View style={styles.inputContainer}>
-                                            <Text style={styles.label}>{t('common:AcademicTitle')}:</Text>
+                                            <Text style={styles.label}>{t('common:AcademicTitle')}</Text>
                                             <TextInput
                                                 style={styles.input}
                                                 onChangeText={handleChange('academic_title')}
                                                 onBlur={handleBlur('academic_title')}
                                                 value={values.academic_title}
-                                                placeholder={t('common:AcademicTitle')}
+                                                placeholder={t('common:PleaseEnter')}
                                                 placeholderTextColor="#A8B0B5"
 
                                             />
@@ -948,7 +951,7 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.name}>
                                         <View style={styles.inputContainer}>
-                                            <Text style={styles.label}>{t('common:FirstName')}:<Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <Text style={styles.label}>{t('common:FirstName')}<Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <TextInput style={{
                                                 flex: 1,
                                                 fontSize: RFPercentage(2.4),
@@ -966,13 +969,13 @@ const BookingScreen = ({ route }) => {
                                                 onChangeText={handleChange('first_name')}
                                                 onBlur={handleBlur('first_name')}
                                                 value={values.first_name}
-                                                placeholder={t('common:FirstName')}
+                                                placeholder={t('common:PleaseEnter')}
                                                 placeholderTextColor="#A8B0B5"
                                             />
                                         </View>
 
                                         <View style={styles.inputContainer}>
-                                            <Text style={styles.label}>{t('common:LastName')}:<Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <Text style={styles.label}>{t('common:LastName')}<Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <TextInput style={{
                                                 flex: 1,
                                                 fontSize: RFPercentage(2.4),
@@ -990,7 +993,7 @@ const BookingScreen = ({ route }) => {
                                                 onChangeText={handleChange('last_name')}
                                                 onBlur={handleBlur('last_name')}
                                                 value={values.last_name}
-                                                placeholder={t('common:LastName')}
+                                                placeholder={t('common:PleaseEnter')}
                                                 placeholderTextColor="#A8B0B5"
                                             />
                                         </View>
@@ -1004,12 +1007,12 @@ const BookingScreen = ({ route }) => {
                                     ) : null}
                                     <View style={styles.inputs}>
                                         <View style={styles.inputContainer}>
-                                            <Text style={styles.label}>{t('common:Email')}:<Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <Text style={styles.label}>{t('common:Email')}<Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <TextInput style={styles.input}
                                                 onChangeText={handleChange('email')}
                                                 onBlur={handleBlur('email')}
                                                 value={values.email}
-                                                placeholder={t('common:Email')}
+                                                placeholder={t('common:PleaseEnter')}
                                                 placeholderTextColor="#A8B0B5"
                                             />
                                         </View>
@@ -1019,12 +1022,12 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View style={styles.inputContainer}>
-                                            <Text style={styles.label}>{t('common:IdentificationNumber')}:<Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <Text style={styles.label}>{t('common:IdentificationNumber')}<Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <TextInput style={styles.input}
                                                 onChangeText={handleChange('identification_number')}
                                                 onBlur={handleBlur('identification_number')}
                                                 value={values.identification_number}
-                                                placeholder={t('common:IdentificationNumber')}
+                                                placeholder={t('common:PleaseEnter')}
                                                 placeholderTextColor="#A8B0B5"
                                             />
                                         </View>
@@ -1034,7 +1037,7 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>{t('common:BirthDate')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <Text style={styles.label}>{t('common:BirthDate')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <View style={{
                                                 flex: 1,
                                                 fontSize: RFPercentage(2.7),
@@ -1052,7 +1055,7 @@ const BookingScreen = ({ route }) => {
                                                 <TouchableOpacity onPress={showDatePicker}>
                                                     {birthday != null ?
                                                         <Text style={{ fontSize: RFPercentage(2.7), color: '#000', marginTop: 10 }}>{moment(birthday).format('DD/MM/YYYY')}</Text> :
-                                                        <Text style={{ fontSize: RFPercentage(2.7), color: '#9e9e9e', marginTop: 10 }}>{t('common:Birthday')}</Text>
+                                                        <Text style={{ fontSize: RFPercentage(2.7), color: '#9e9e9e', marginTop: 10 }}>{t('common:PleaseEnter')}</Text>
                                                     }
                                                 </TouchableOpacity>
 
@@ -1073,7 +1076,7 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>{t('common:CountryOfBirth')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <Text style={styles.label}>{t('common:CountryOfBirth')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <View style={{
                                                 marginLeft: '4%',
                                                 borderColor: '#cecece',
@@ -1119,12 +1122,12 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>{t('common:BirthPlace')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <Text style={styles.label}>{t('common:BirthPlace')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <TextInput style={styles.input}
                                                 onChangeText={handleChange('birth_place')}
                                                 onBlur={handleBlur('birth_place')}
                                                 value={values.birth_place}
-                                                placeholder={t('common:BirthPlace')}
+                                                placeholder={t('common:PleaseEnter')}
                                                 placeholderTextColor="#A8B0B5"
                                             />
                                         </View>
@@ -1134,7 +1137,7 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>{t('common:MotherTongue')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <Text style={styles.label}>{t('common:MotherTongue')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             {/* <TextInput style={styles.input}
                                     value={mother_tongue}
                                     onChangeText={setMotherTongue} /> */}
@@ -1161,12 +1164,12 @@ const BookingScreen = ({ route }) => {
                                                         handleChange('mother_tongue')(itemValue);
                                                     }}
                                                     onBlur={handleBlur('mother_tongue')}
-                                                    dropdownIconColor="#000"
-                                                    dropdownIconRippleColor="#000"
+                                                    dropdownIconColor="#1570A5"
+                                                    dropdownIconRippleColor="#1570A5"
                                                 >
                                                     <Picker.Item
                                                         color='#A8B0B5'
-                                                        label={t('common:SelectMotherTongue')} value="" />
+                                                        label={t('common:PleaseEnter')} value="" />
                                                     {motherTongueData.map((item, index) => {
                                                         return (
                                                             <Picker.Item label={item.language} value={item.language} key={index} />
@@ -1182,12 +1185,12 @@ const BookingScreen = ({ route }) => {
 
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>{t('common:TelePhone')}:</Text>
+                                            <Text style={styles.label}>{t('common:TelePhone')}</Text>
                                             <TextInput style={styles.input}
                                                 onChangeText={handleChange('telephone')}
                                                 onBlur={handleBlur('telephone')}
                                                 value={values.telephone}
-                                                placeholder={t('common:TelePhone')}
+                                                placeholder={t('common:PleaseEnter')}
                                                 placeholderTextColor="#A8B0B5"
                                                 keyboardType='phone-pad'
                                                 keyboardAppearance='dark'
@@ -1200,14 +1203,14 @@ const BookingScreen = ({ route }) => {
                                     <View style={styles.inputs}>
                                         <View>
                                             {userInfo.token ?
-                                                <Text style={styles.label}>{t('common:Mobile')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text> :
+                                                <Text style={styles.label}>{t('common:Mobile')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text> :
                                                 <Text style={styles.label}>{t('common:Mobile')} <Text style={{ color: '#999', fontSize: scale(12) }}>{t('common:PhoneIsPassword')}</Text>:<Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             }
                                             <TextInput style={styles.input}
                                                 onChangeText={handleChange('phone')}
                                                 onBlur={handleBlur('phone')}
                                                 value={values.phone}
-                                                placeholder={t('common:Mobile')}
+                                                placeholder={t('common:PleaseEnter')}
                                                 placeholderTextColor="#A8B0B5"
                                                 keyboardType='phone-pad'
                                                 keyboardAppearance='dark'
@@ -1219,13 +1222,13 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View style={styles.inputContainer}>
-                                            <Text style={styles.label}>{t('common:PersonalBamfID')}:</Text>
+                                            <Text style={styles.label}>{t('common:PersonalBamfID')}</Text>
                                             <TextInput
                                                 style={styles.input}
                                                 onChangeText={handleChange('bamf_id')}
                                                 onBlur={handleBlur('bamf_id')}
                                                 value={values.bamf_id}
-                                                placeholder={t('common:PersonalBamfID')}
+                                                placeholder={t('common:PleaseEnter')}
                                                 placeholderTextColor="#A8B0B5"
 
                                             />
@@ -1248,7 +1251,8 @@ const BookingScreen = ({ route }) => {
                                                             style={styles.icon}
                                                         />
                                                     </Text>
-                                                    <Text style={{ marginRight: scale(20), marginLeft: scale(10), color: "#1a6997", fontWeight: 'bold', fontSize: scale(17) }}>{t('common:UploadId')} <Text style={{ color: 'red', fontSize: scale(20), marginTop: 15 }}>*</Text></Text>
+                                                    <Text style={{ marginRight: scale(20), marginLeft: scale(10), color: "#1a6997", fontWeight: 'bold', fontSize: scale(17) }}>{t('common:UploadId')} <Text style={{ color: 'red', fontSize: scale(20), marginTop: 15 }}>*</Text>
+                                                    <Text style={{ color: "#5E6D77", fontWeight: 'bold', fontSize: scale(13),marginLeft: scale(10) }}>{t('common:sizeupto500kb')} </Text></Text>
                                                 </View>
                                             </TouchableOpacity>
                                         </View>
@@ -1268,12 +1272,12 @@ const BookingScreen = ({ route }) => {
 
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>C/o: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <Text style={styles.label}>C/o <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <TextInput style={styles.input}
                                                 onChangeText={handleChange('address')}
                                                 onBlur={handleBlur('address')}
                                                 value={values.address}
-                                                placeholder={t('common:Address')}
+                                                placeholder={t('common:PleaseEnter')}
                                                 placeholderTextColor="#A8B0B5"
                                             />
                                         </View>
@@ -1283,12 +1287,12 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>{t('common:Street')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <Text style={styles.label}>{t('common:Street')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <TextInput style={styles.input}
                                                 onChangeText={handleChange('address2')}
                                                 onBlur={handleBlur('address2')}
                                                 value={values.address2}
-                                                placeholder={t('common:Street')}
+                                                placeholder={t('common:PleaseEnter')}
                                                 placeholderTextColor="#A8B0B5"
                                             />
                                         </View>
@@ -1298,12 +1302,12 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>{t('common:City')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <Text style={styles.label}>{t('common:City')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <TextInput style={styles.input}
                                                 onChangeText={handleChange('city')}
                                                 onBlur={handleBlur('city')}
                                                 value={values.city}
-                                                placeholder={t('common:City')}
+                                                placeholder={t('common:PleaseEnter')}
                                                 placeholderTextColor="#A8B0B5"
                                             />
                                         </View>
@@ -1313,12 +1317,12 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>{t('common:PostalCode')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <Text style={styles.label}>{t('common:PostalCode')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <TextInput style={styles.input}
                                                 onChangeText={handleChange('zip_code')}
                                                 onBlur={handleBlur('zip_code')}
                                                 value={values.zip_code}
-                                                placeholder={t('common:PostalCode')}
+                                                placeholder={t('common:PleaseEnter')}
                                                 placeholderTextColor="#A8B0B5"
                                                 keyboardType='phone-pad'
                                                 keyboardAppearance='dark'
@@ -1330,7 +1334,7 @@ const BookingScreen = ({ route }) => {
                                     </View>
                                     <View style={styles.inputs}>
                                         <View>
-                                            <Text style={styles.label}>{t('common:Country')}: <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <Text style={styles.label}>{t('common:Country')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
                                             <View style={{
                                                 marginLeft: '4%',
                                                 borderColor: '#cecece',
@@ -1373,27 +1377,35 @@ const BookingScreen = ({ route }) => {
                                             <Text style={styles.error}>{errors.country}</Text>
                                         ) : null}
                                     </View>
-                                    <View style={{ flexDirection: 'row', marginBottom: 10, marginLeft: 20, marginTop: 10 }}>
-                                        <RadioForm
-                                            radio_props={payments}
-                                            buttonSize={12}
-                                            // initial={0}
-                                            // formHorizontal={true}
-                                            labelColor={'#1570a5'}
-                                            labelStyle={{
-                                                fontSize: scale(18),
-                                            }}
-                                            initial={false}
-                                            labelHorizontal={true}
-                                            buttonOuterColor={'#000'}
-                                            selectedButtonColor={'#000'}
-                                            animation={true}
-                                            onPress={(value) => { setPaymentGateway(value) && setPaymentError(false) }}
-                                        />
+                                 <View>
+                                    <Text style={{ color: '#000', fontSize: scale(20), paddingLeft: 20,paddingTop: 15, 
+                                    paddingBottom: 15 }}>
+                                        {t('common:SelectPaymentMethod')} 
+                                    </Text>
+                                        <View style={{ marginHorizontal: 30, marginVertical:10, paddingBottom: 0, flexDirection: 'row',  }}>
+                                            <RadioForm
+                                                style= {{ display: 'flex', alignItems: 'center', }}
+                                                radio_props={payments}
+                                                buttonSize={12}
+                                                // initial={0}
+                                                // formHorizontal={true}
+                                                labelColor={'#000000'}
+                                                labelStyle={{ 
+                                               width:'100%',  paddingBottom:15, fontSize: scale(18), textTransform: 'capitalize',display: 'flex', alignItems: 'center', 
+                                                }}
+                                                initial={false}
+                                                labelHorizontal={true} 
+                                                buttonWrapStyle={{marginLeft: 20}}
+                                                buttonOuterColor={'#000'}
+                                                selectedButtonColor={'#000'}
+                                                animation={true}
+                                                onPress={(value) => { setPaymentGateway(value) && setPaymentError(false) }}
+                                            />
+                                        </View>
+                                        {paymentError == true ? (
+                                            <Text style={[styles.error, { marginLeft: '7%' }]}>{t('common:PaymentError')}</Text>
+                                        ) : null}
                                     </View>
-                                    {paymentError == true ? (
-                                        <Text style={[styles.error, { marginLeft: '7%' }]}>{t('common:PaymentError')}</Text>
-                                    ) : null}
                                     <View>
                                         <View style={{ flexDirection: 'row', marginBottom: 10, marginLeft: 15 }}>
                                             <CheckBox
@@ -1461,21 +1473,21 @@ const BookingScreen = ({ route }) => {
                     </View>
                 </View>
             </ScrollView >
-            <View style={styles.submit}>
+            <View style={{justifyContent: 'center',  alignSelf: 'flex-end',
+        backgroundColor: '#fff',
+        width: '100%',
+        flexDirection: 'row',
+        height: 50,}}>
                 <Text style={{
-                    flex: 0.4,
                     fontSize: scale(22),
-                    justifyContent: 'center',
                     alignSelf: 'center',
                     marginLeft: 30,
                     color: '#000'
 
                 }}>{t('common:Total')} </Text>
                 <Text style={{
-                    flex: 0.6,
                     fontSize: scale(20),
                     fontWeight: 'bold',
-                    justifyContent: 'center',
                     alignSelf: 'center',
                     marginRight: 10,
                     color: '#1a6997'
@@ -1526,7 +1538,8 @@ const styles = StyleSheet.create({
         height: hp('32%'),
         // borderWidth: 0.5,
         borderRadius: 5,
-        padding: 10,
+        paddingTop: 10,
+        paddingBottom: 10,
         margin: 10,
         elevation: 1,
         backgroundColor: '#fff',
@@ -1623,8 +1636,12 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: 'bold',
         color: '#1a6997',
-        marginHorizontal: 15,
+        // marginHorizontal: 15,
         paddingTop: 20,
+        paddingBottom: 20,
+        borderBottomWidth: 1,
+        borderColor: '#EBEBEB',
+        paddingHorizontal:15,
     },
     titleHeader: {
         fontSize: 19,
@@ -1660,6 +1677,7 @@ const styles = StyleSheet.create({
         color: '#000',
         fontSize: RFPercentage(2.4),
         marginLeft: '2%',
+        textTransform: 'capitalize'
     },
     error: {
         color: 'red',

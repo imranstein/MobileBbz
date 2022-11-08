@@ -241,7 +241,7 @@ const SearchPage = () => {
         </View>
         <View style={styles.search}>
           <View style={styles.label}>
-            <Text style={styles.title}> {t('common:Location')} ,{t('common:Date')} Or {t('common:Level')}</Text>
+            <Text style={styles.title}> {t('common:Location')}, {t('common:Date')} Or {t('common:Level')}</Text>
             <View style={styles.titleHeader}>
               <TextInput
                 value={term}
@@ -253,7 +253,7 @@ const SearchPage = () => {
               />
             </View>
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', borderBottomColor: '#cecece', borderBottomWidth: 0.5, marginBottom: 5 }}>
             <Text style={{ marginLeft: 5, marginBottom: '2%', }}>
               <Entypo
                 name="location-pin"
@@ -263,7 +263,8 @@ const SearchPage = () => {
               />
             </Text>
             <Picker
-              itemStyle={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', borderColor: '#c9c9c9', borderWidth: 0.5, borderRadius: 5, }}
+              dropdownIconColor="#1a6997" dropdownIconRippleColor="#1a6988"
+              itemStyle={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', borderColor: '#c9c9c9', borderWidth: 0.5, borderRadius: 5 }}
               selectedValue={location_id}
               style={{ height: 50, width: '96%', color: '#A8B0B5', marginBottom: '2%', }}
               onValueChange={(itemValue, itemIndex) => setLocation(itemValue)}
@@ -278,7 +279,7 @@ const SearchPage = () => {
               })}
             </Picker>
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: '2%' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: '2%', borderBottomColor: '#cecece', borderBottomWidth: 0.5, }}>
             <Text style={{ marginLeft: 5 }}>
               <Entypo
                 name="calendar"
@@ -291,7 +292,7 @@ const SearchPage = () => {
               flex: 1,
               fontSize: RFPercentage(2.7),
               // marginTop: '2%',
-              // marginBottom: '2%',
+              marginBottom: '3%',
               marginLeft: '2%',
               borderColor: '#cecece',
               borderWidth: 1,
@@ -302,8 +303,8 @@ const SearchPage = () => {
             }}>
               <TouchableOpacity onPress={showFromDatePicker}>
                 {from_date != '' ?
-                  <Text style={{ fontSize: RFPercentage(2.4), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 5 }}>{moment(from_date).format('DD/MM/YYYY')}</Text> :
-                  <Text style={{ fontSize: RFPercentage(2.4), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 5 }}>{t('common:From')}</Text>}
+                  <Text style={{ fontSize: RFPercentage(2.2), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 5 }}>{moment(from_date).format('DD/MM/YYYY')}</Text> :
+                  <Text style={{ fontSize: RFPercentage(2.2), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 5 }}>{t('common:From')}</Text>}
               </TouchableOpacity>
               <DateTimePickerModal
                 isVisible={isFromDatePickerVisible}
@@ -318,7 +319,7 @@ const SearchPage = () => {
             <View style={{
               flex: 1,
               fontSize: RFPercentage(2.7),
-              // marginBottom: '2%',
+              marginBottom: '3%',
               marginLeft: '2%',
               borderColor: '#cecece',
               borderWidth: 1,
@@ -329,8 +330,8 @@ const SearchPage = () => {
             }}>
               <TouchableOpacity onPress={showToDatePicker}>
                 {to_date != '' ?
-                  <Text style={{ fontSize: RFPercentage(2.4), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 5 }}>{moment(to_date).format('DD/MM/YYYY')}</Text> :
-                  <Text style={{ fontSize: RFPercentage(2.4), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 5 }}>{t('common:To')}</Text>}
+                  <Text style={{ fontSize: RFPercentage(2.2), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 5 }}>{moment(to_date).format('DD/MM/YYYY')}</Text> :
+                  <Text style={{ fontSize: RFPercentage(2.2), color: '#A8B0B5', marginTop: 5, marginBottom: 5, marginLeft: 5 }}>{t('common:To')}</Text>}
               </TouchableOpacity>
               <DateTimePickerModal
                 isVisible={isToDatePickerVisible}
@@ -343,7 +344,7 @@ const SearchPage = () => {
 
             </View>
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', borderBottomColor: '#cecece', borderBottomWidth: 0.5, }}>
             <Text style={{ marginLeft: 5, marginTop: scale(10), marginBottom: '2%' }}>
               <FontAwesome
                 name="language"
@@ -353,6 +354,7 @@ const SearchPage = () => {
               />
             </Text>
             <Picker
+              dropdownIconColor="#1a6997" dropdownIconRippleColor="#1a6988"
               itemStyle={{ fontSize: RFPercentage(2.7), color: '#A8B0B5', borderColor: '#c9c9c9', borderWidth: 0.5, borderRadius: 5, }}
               selectedValue={exam_level_id}
               style={{ height: 50, width: '96%', marginLeft: '2%', color: '#A8B0B5' }}
@@ -480,7 +482,7 @@ const styles = StyleSheet.create({
   },
   search: {
     width: width * 0.94,
-    height: height * 0.36,
+    height: height * 0.4,
     // borderWidth: 0.5,
     borderRadius: 5,
     padding: height * 0.02,
@@ -511,12 +513,12 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#1a6997',
     // paddingHorizontal: 10,
-    paddingVertical: 8,
-    margin: 10,
+    paddingVertical: 4,
+    // margin: 10,
     borderRadius: 5,
     elevation: 1,
-    width: 150,
-    height: 45,
+    width: 155,
+    height: 35,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: -50,
@@ -556,13 +558,13 @@ const styles = StyleSheet.create({
   },
   searchButton: {
     width: '100%',
-    height: 50,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
   },
   searchButton2: {
     width: '100%',
-    height: 50,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',

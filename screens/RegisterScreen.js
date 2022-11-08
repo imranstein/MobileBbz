@@ -17,17 +17,22 @@ import * as Yup from 'yup';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { scale } from 'react-native-size-matters';
+import Entypo from 'react-native-vector-icons/Entypo';
+import { Linking } from 'react-native';
 
 
 const RegisterScreen = ({ navigation }) => {
 
+
   const validationSchema = Yup.object().shape({
     first_name: Yup.string()
       .required(t('common:FirstNameIsRequired'))
+      .matches(/^[a-zA-Z]/, t('common:NameMustStartWithLetter'))
       .min(2, t('common:FirstNameMustBeAtLeast2Characters'))
       .matches(/^[a-zA-Z ]+$/, t('common:FirstNameMustBeAlphabetical')),
     last_name: Yup.string()
       .required(t('common:LastNameIsRequired'))
+      .matches(/^[a-zA-Z]/, t('common:NameMustStartWithLetter'))
       .min(2, t('common:LastNameMustBeAtLeast2Characters'))
       .matches(/^[a-zA-Z ]+$/, t('common:LastNameMustBeAlphabetical')),
     email: Yup.string()
@@ -158,23 +163,23 @@ const RegisterScreen = ({ navigation }) => {
                         value={term}
                         onPress={() => setTerm(!term)}
                         onValueChange={newValue => setTerm(newValue)}
-                        tintColors={{ true: '#1570a5', false: '#B4B9BE', borderWidth: 1, }}
+                        tintColors={{ true: '#1570A5', false: '#B4B9BE', borderWidth: 1, }}
                       />
                       <Text style={{
                         marginLeft: 8, fontSize: RFPercentage(2),
                         color: '#999', textAlignVertical: 'center', maxWidth: '80%'
-                      }}>{t('common:IHaveReadAndAcceptTheTermsAndConditions')}</Text>
+                      }}>{t('common:IHaveReadAndAcceptThe')} <Text style={{ color: '#1570A5' }} onPress={() => Linking.openURL('https://bbzstage.addwebprojects.com/')}>{t('common:TermsAndConditions')}</Text></Text>
 
                       {/* {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>} */}
                     </View>
-                    <Text style={[styles.error, { alignSelf: 'center', marginTop: 10 }]}>{termError ? termError : ''}</Text>
+                    <Text style={[styles.error, { marginTop: 10 }]}>{termError ? termError : ''}</Text>
 
                     <View>
-                      <Text style={[styles.error, { alignSelf: 'center' }]}>{error2 ? error2 : ''}</Text>
+                      <Text style={[styles.error, { marginTop: 5 }]}>{error2 ? error2 : ''}</Text>
                     </View>
                     <TouchableOpacity onPress={handleSubmit}
                       // disabled={!isValid}
-                      style={[styles.loginButton, { backgroundColor: '#1570a5' }]}>
+                      style={[styles.loginButton, { backgroundColor: '#1570A5' }]}>
                       <Text style={styles.loginButtonText}>{t('common:SignUp')}</Text>
                     </TouchableOpacity>
 
@@ -184,7 +189,7 @@ const RegisterScreen = ({ navigation }) => {
               <View
                 style={{
                   flexDirection: 'row',
-                  marginTop: 17,
+                  marginTop: 10,
                   justifyContent: 'center',
                 }}>
                 <Text style={{ color: '#000', fontSize: scale(12), }}>{t('common:AlreadyHaveAnAccount')} </Text>
@@ -193,16 +198,25 @@ const RegisterScreen = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Home')}>
-                <Text
-                  style={{
-                    color: '#166795',
-                    fontSize: scale(14),
-                    textAlign: 'center',
-                    marginTop: 14,
-                  }}>
-                  {t('common:ContinueAsAGuest')}
-                </Text>
+                onPress={() => navigation.navigate('Exam')}>
+                <View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
+
+                  <Text
+                    style={{
+                      color: '#1570A5',
+                      fontSize: RFPercentage(2.2),
+                      textAlign: 'center',
+                      marginTop: '1%',
+                    }}>
+                    {t('common:ContinueAsAGuest')}
+                  </Text>
+                  <Text style={{ marginTop: 6, marginLeft: 5, }}><Entypo
+                    name="arrow-long-right"
+                    size={15}
+                    color="#1a6997"
+                    style={styles.icon}
+                  /></Text>
+                </View>
               </TouchableOpacity>
             </View>
           </View>
@@ -223,10 +237,11 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     paddingVertical: 30,
     paddingHorizontal: 15,
-    marginTop: 32,
+    marginVertical: 50,
     marginHorizontal: 10,
   },
   input: {
+    fontFamily: 'poppins-regular',
     marginBottom: 20,
     borderWidth: 1,
     borderColor: '#DAE1E7',
@@ -236,10 +251,12 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   link: {
-    color: '#1570a5',
+    fontFamily: 'poppins-regular',
+    color: '#1570A5',
     marginTop: '1%',
   },
   name: {
+    fontFamily: 'poppins-regular',
     flexDirection: 'row',
   },
   ImageContainer: {
@@ -250,14 +267,16 @@ const styles = StyleSheet.create({
     opacity: 1,
   },
   loginButton: {
+    fontFamily: 'poppins-regular',
     // marginTop: scale(-20),
-    // backgroundColor: '#1570a5',
+    // backgroundColor: '#1570A5',
     paddingVertical: 12,
     borderRadius: 4,
-    alignItems: 'center',
+    // alignItems: 'center',
     justifyContent: 'flex-start',
   },
   loginButtonText: {
+    fontFamily: 'poppins-regular',
     color: '#fff',
     fontSize: RFPercentage(2.4),
     fontWeight: 'bold',
@@ -265,8 +284,9 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   error: {
+    fontFamily: 'poppins-regular',
     color: 'red',
-    marginBottom: 20,
+    marginBottom: 10,
   },
 });
 

@@ -19,11 +19,18 @@ import CustomDrawer from './CustomDrawer';
 import Language from './Language';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import WeWorkScreen from './WeWorkScreen';
+import { useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../context/AuthContext';
+import AboutScreen from './AboutScreen';
+
 
 const Drawer = createDrawerNavigator();
 // const { t } = useTranslation();
 
 const MainScreen = () => {
+  // const { userInfo, isLoading, logout } = useContext(AuthContext);
+  const navigation = useNavigation();
+
   return (
     <Drawer.Navigator
 
@@ -42,9 +49,10 @@ const MainScreen = () => {
             size={size}
             color={focused ? '#fff' : '#1a6997'}
           />
-        ), headerTintColor: '#1a6997'
+        ), headerTintColor: '#1a6997',
+        headerTitleAlign: 'center'
       }} />
-      <Drawer.Screen name={t('common:AboutUs')} component={AboutUs}
+      <Drawer.Screen name={t('common:AboutUs')} component={AboutScreen}
         options={{
           // title: '.{t('common: AboutUs')}.',
           drawerIcon: ({ focused, size }) => (
@@ -53,7 +61,20 @@ const MainScreen = () => {
               size={size}
               color={focused ? '#fff' : '#1a6997'}
             />
-          ), headerTintColor: '#1a6997'
+          ), headerTintColor: '#1a6997',
+          headerTitleAlign: 'center',
+
+          headerRight: () => (
+
+            <View style={{ flexDirection: 'row', marginRight: 10 }}>
+              <Icon
+                name="user-circle-o"
+                size={30}
+                color="#1a6997"
+                onPress={() => navigation.navigate('Profile')}
+              />
+            </View>
+          ),
         }} />
       <Drawer.Screen name={t('common:WeWork')} component={WeWorkScreen}
         options={{
@@ -64,7 +85,18 @@ const MainScreen = () => {
               size={size}
               color={focused ? '#fff' : '#1a6997'}
             />
-          ), headerTintColor: '#1a6997'
+          ), headerTintColor: '#1a6997',
+          headerTitleAlign: 'center',
+          headerRight: () => (
+            <View style={{ flexDirection: 'row', marginRight: 10 }}>
+              <Icon
+                name="user-circle-o"
+                size={30}
+                color="#1a6997"
+                onPress={() => navigation.navigate('Profile')}
+              />
+            </View>
+          ),
         }} />
       <Drawer.Screen name={t('common:Location')} component={Location}
         options={{
@@ -75,7 +107,18 @@ const MainScreen = () => {
               size={size}
               color={focused ? '#fff' : '#1a6997'}
             />
-          ), headerTintColor: '#1a6997'
+          ), headerTintColor: '#1a6997',
+          headerTitleAlign: 'center',
+          headerRight: () => (
+            <View style={{ flexDirection: 'row', marginRight: 10 }}>
+              <Icon
+                name="user-circle-o"
+                size={30}
+                color="#1a6997"
+                onPress={() => navigation.navigate('Profile')}
+              />
+            </View>
+          ),
         }} />
       <Drawer.Screen name={t('common:ContactUs')} component={ContactUs}
         options={{
@@ -86,7 +129,18 @@ const MainScreen = () => {
               size={size}
               color={focused ? '#fff' : '#1a6997'}
             />
-          ), headerTintColor: '#1a6997'
+          ), headerTintColor: '#1a6997',
+          headerTitleAlign: 'center',
+          headerRight: () => (
+            <View style={{ flexDirection: 'row', marginRight: 10 }}>
+              <Icon
+                name="user-circle-o"
+                size={30}
+                color="#1a6997"
+                onPress={() => navigation.navigate('Profile')}
+              />
+            </View>
+          ),
         }} />
       <Drawer.Screen name={t('common:News')} component={News}
         options={{
@@ -97,7 +151,18 @@ const MainScreen = () => {
               size={size}
               color={focused ? '#fff' : '#1a6997'}
             />
-          ), headerTintColor: '#1a6997'
+          ), headerTintColor: '#1a6997',
+          headerTitleAlign: 'center',
+          headerRight: () => (
+            <View style={{ flexDirection: 'row', marginRight: 10 }}>
+              <Icon
+                name="user-circle-o"
+                size={30}
+                color="#1a6997"
+                onPress={() => navigation.navigate('Profile')}
+              />
+            </View>
+          ),
         }} />
       <Drawer.Screen name={t('common:Language')} component={Language}
         options={{
@@ -108,7 +173,18 @@ const MainScreen = () => {
               size={size}
               color={focused ? '#fff' : '#1a6997'}
             />
-          ), headerTintColor: '#1a6997'
+          ), headerTintColor: '#1a6997',
+          headerTitleAlign: 'center',
+          headerRight: () => (
+            <View style={{ flexDirection: 'row', marginRight: 10 }}>
+              <Icon
+                name="user-circle-o"
+                size={30}
+                color="#1a6997"
+                onPress={() => navigation.navigate('Profile')}
+              />
+            </View>
+          ),
         }} />
     </Drawer.Navigator>
   );

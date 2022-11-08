@@ -40,9 +40,7 @@ const NewsDetailScreen = React.memo(({ route }) => {
         console.log(description),
 
         <View style={styles.container}>
-            <View style={styles.title}>
-                <Text style={styles.titleText}>{title}</Text>
-            </View>
+
             <ScrollView>
                 {image != null ? <View style={styles.image}>
                     <Image
@@ -57,8 +55,8 @@ const NewsDetailScreen = React.memo(({ route }) => {
                     {date != null ? <Text style={styles.dateText}>
                         {moment(date).format('DD/MM/YY')}
                     </Text> : <Text style={styles.dateText}>
-                            {moment(date).format('DD/MM/YY')}
-                        </Text>}
+                        {moment(date).format('DD/MM/YY')}
+                    </Text>}
                 </View>
                 <View style={styles.description}>
                     {/* <Text style={styles.descriptionText}>{item.content}</Text> */}

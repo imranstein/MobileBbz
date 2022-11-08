@@ -51,7 +51,7 @@ const HomeScreen = ({ navigation }) => {
       {userInfo.token ?
         <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false, title: t('common:Profile') }} />
         :
-        <Tab.Screen name="Login" component={Login} options={{ title: t('common:Login') }} />}
+        <Tab.Screen name="Login" component={Login} options={{ title: t('common:Login'), headerShown: false }} />}
     </Tab.Navigator>
   );
 };

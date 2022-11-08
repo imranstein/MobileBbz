@@ -154,15 +154,15 @@ export default {
     SearchResult: 'Suchergebnis',
     SelectLocation: 'Wählen Sie Ihren Center-Standort aus',
     SearchEverything: 'Suche hier alles...',
-    SelectExam: 'Wählen Sie den Prüfungstyp aus',
+    SelectExam: 'Wählen Sie Ihre Prüfungsstufe aus',
     UploadId: 'Ausweisnachweis hochladen',
     WeWork: 'Wie wir arbeiten',
-    KnowWhoWeAre: 'Wer wir sind',
+    KnowWhoWeAre: 'Unser Prozess für Ihr besseres Verständnis',
     BillingAddress: 'Rechnungs adresse',
     StripePayment: 'Stripe Zahlung',
     PaypalPayment: 'Paypal Zahlung',
     SelectMotherTongue: 'Muttersprache auswählen',
-    Welcome: 'Willkommen',
+    Welcome: 'Einloggen Anmelden',
     SaluteIsRequired: 'Anrede ist erforderlich',
     AcademicRequired: 'Akademischer Titel ist erforderlich',
     IdentificationNumberIsRequired: 'Identifikationsnummer ist erforderlich',
@@ -248,7 +248,14 @@ export default {
     AddressMustStartWithLetterOrNumber: 'Adresse muss mit einem Buchstaben oder einer Nummer beginnen',
     PleaseChooseAtLeastOneOption: 'Bitte wählen Sie mindestens eine Option',
     BirthPlaceMustBeAlphabetical: 'Geburtsort muss alphabetisch sein',
-    AlreadyBooking: 'Prüfung wird gebucht, bitte warten.'
+    AlreadyBooking: 'Prüfung wird gebucht, bitte warten.',
+    BbzLanguageSchool: 'BBZ Sprachschule',
+    ContactDescription: 'are a a subsidiary of BBZAltenkirchen GmbH & Co. KG',
+    PleaseEnter: 'Bitte geben Sie',
+    SelectPaymentMethod: 'Wählen Sie die Zahlungsmethode',
+    sizeupto500kb: '(Größe bis 500kb)',
+    NameMustStartWithLetter: 'Name muss mit einem Buchstaben beginnen',
+    NameMustBeOnlyLetters: 'Name darf nur Buchstaben enthalten',
 
 
 }
