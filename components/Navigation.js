@@ -55,11 +55,21 @@ const Navigation = () => {
             />
             <Stack.Screen
               name="Profile"
-              options={{ title: t('common:Profile'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+              options={{
+                title: t('common:Profile'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              }}
               component={ProfileScreen}
             />
             <Stack.Screen
-              options={{ title: t('common:MyProfile'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+              options={{
+                title: t('common:MyProfile'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              }}
               name="My Profile" component={MyProfileScreen} />
             <Stack.Screen
               name="Change Password"
@@ -67,94 +77,209 @@ const Navigation = () => {
             />
             <Stack.Screen name="Exams" component={SearchPage} />
             <Stack.Screen name="NewsDetail"
-              options={({ route }) => ({ title: route.params.title, headerTintColor: '#1a6997', headerTitleAlign: 'center' })}
-              // options={{ title: t('common:NewsDetail'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+              options={({ route }) => ({
+                title: route.params.title, headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              })}
+
               component={NewsDetailScreen} />
             <Stack.Screen name="ExamDetail"
-              options={({ route }) => ({ title: route.params.name, headerTintColor: '#1a6997', headerTitleAlign: 'center' })}
+              options={({ route }) => ({
+                title: route.params.name, headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              })}
 
-              // options={{ title: t('common:ExamDetail'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+
               component={ExamDetailScreen} />
             <Stack.Screen name="Booking"
-              options={({ route }) => ({ title: route.params.slug, headerTintColor: '#1a6997', headerTitleAlign: 'center' })}
-              // options={{ title: t('common:Booking'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+              options={({ route }) => ({
+                title: route.params.slug, headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              })}
+              // options={{ title: t('common:Booking'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
               component={BookingScreen} />
             <Stack.Screen name="BookingHistory"
-              options={{ title: t('common:BookingHistory'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+              options={{
+                title: t('common:BookingHistory'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              }}
               component={BookingHistoryScreen} />
             <Stack.Screen name="StripePayment"
-              options={{ title: t('common:StripePayment'), headerTintColor: '#1a6997', headerTitleAlign: 'center', headerBackVisible: false }}
+              options={{
+                title: t('common:StripePayment'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }, headerBackVisible: false
+              }}
               component={StripePaymentScreen} />
             <Stack.Screen name="PaypalPayment"
-              options={{ title: t('common:PaypalPayment'), headerTintColor: '#1a6997', headerTitleAlign: 'center', headerBackVisible: false }}
+              options={{
+                title: t('common:PaypalPayment'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }, headerBackVisible: false
+              }}
               component={PaypalScreen} />
             <Stack.Screen name="BookingSuccess"
-              options={{ title: t('common:BookingSuccess'), headerTintColor: '#1a6997', headerTitleAlign: 'center', headerBackVisible: false }}
+              options={{
+                title: t('common:BookingSuccess'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }, headerBackVisible: false
+              }}
               component={BookingSuccessScreen} />
             <Stack.Screen name="BookingDetail"
-              options={{ title: t('common:BookingDetail'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+              options={{
+                title: t('common:BookingDetail'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              }}
               component={BookingDetailScreen} />
             <Stack.Screen name="InvoiceScreen"
-              options={{ title: t('common:InvoiceScreen'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+              options={{
+                title: t('common:InvoiceScreen'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              }}
               component={InvoiceScreen} />
             <Stack.Screen name="TicketScreen"
-              options={{ title: t('common:TicketScreen'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+              options={{
+                title: t('common:TicketScreen'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              }}
               component={TicketScreen} />
             <Stack.Screen name="Language"
-              options={{ title: t('common:language'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+              options={{
+                title: t('common:language'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              }}
               component={LanguageWelcome} />
             <Stack.Screen name="Verify"
-              options={{ title: t('common:Verify'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+              options={{
+                title: t('common:Verify'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              }}
               component={VerifyScreen} />
             <Stack.Screen name="VerifySuccess"
-              options={{ title: t('common:VerifySuccess'), headerTintColor: '#1a6997', headerTitleAlign: 'center', headerBackVisible: false }}
+              options={{
+                title: t('common:VerifySuccess'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }, headerBackVisible: false
+              }}
               component={VerifySuccessScreen} />
 
           </>
         ) : (
           <>
             <Stack.Screen name="Welcome"
-              options={{ title: t('common:Welcome'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+              options={{
+                title: t('common:Welcome'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              }}
               component={Welcome} />
             <Stack.Screen name="Exam" component={HomeScreen} />
             <Stack.Screen
               name="Login"
               component={Login}
-              options={{ title: t('common:Login'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+              options={{
+                title: t('common:Login'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              }}
             />
             <Stack.Screen
               name="Register"
               component={RegisterScreen}
-              options={{ title: t('common:SignUp'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+              options={{
+                title: t('common:SignUp'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              }}
             />
             <Stack.Screen
               name="Reset Your Password"
               component={ResetPassword}
-              options={{ headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+              options={{
+                headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              }}
 
             />
             <Stack.Screen name="Success" component={ResetSuccess} />
             <Stack.Screen name="Exams" component={SearchPage} />
             <Stack.Screen name="NewsDetail"
-              options={({ route }) => ({ title: route.params.title, headerTintColor: '#1a6997', headerTitleAlign: 'center' })}
-              // options={{ title: t('common:NewsDetail'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+              options={({ route }) => ({
+                title: route.params.title, headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              })}
+
               component={NewsDetailScreen} />
             <Stack.Screen name="ExamDetail"
-              options={({ route }) => ({ title: route.params.name, headerTintColor: '#1a6997', headerTitleAlign: 'center' })}
-              // options={{ title: t('common:ExamDetail'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+              options={({ route }) => ({
+                title: route.params.name, headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              })}
+
               component={ExamDetailScreen} />
             <Stack.Screen name="Booking"
-              options={({ route }) => ({ title: route.params.slug, headerTintColor: '#1a6997', headerTitleAlign: 'center' })}
-              // options={{ title: t('common:Booking'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+              options={({ route }) => ({
+                title: route.params.slug, headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              })}
+
               component={BookingScreen} />
             <Stack.Screen name="StripePayment"
-              options={{ title: t('common:StripePayment'), headerTintColor: '#1a6997', headerTitleAlign: 'center', headerBackVisible: false }}
+              options={{
+                title: t('common:StripePayment'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }, headerBackVisible: false
+              }}
               component={StripePaymentScreen} />
             <Stack.Screen name="PaypalPayment"
-              options={{ title: t('common:PaypalPayment'), headerTintColor: '#1a6997', headerTitleAlign: 'center', headerBackVisible: false }}
+              options={{
+                title: t('common:PaypalPayment'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }, headerBackVisible: false
+              }}
               component={PaypalScreen} />
             <Stack.Screen name="BookingSuccess"
-              options={{ title: t('common:BookingSuccess'), headerTintColor: '#1a6997', headerTitleAlign: 'center', headerBackVisible: false }}
+              options={{
+                title: t('common:BookingSuccess'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }, headerBackVisible: false
+              }}
               component={BookingSuccessScreen} />
             <Stack.Screen
               name="Main"
@@ -162,7 +287,12 @@ const Navigation = () => {
               options={{ headerShown: false }}
             />
             <Stack.Screen name="Language"
-              options={{ title: t('common:language'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+              options={{
+                title: t('common:language'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              }}
               component={LanguageWelcome} />
 
           </>

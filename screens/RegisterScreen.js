@@ -89,14 +89,16 @@ const RegisterScreen = ({ navigation }) => {
                     <View style={styles.name}>
                       <TextInput
                         style={{
-                          marginBottom: 20,
+                          // marginBottom: 20,
                           borderWidth: 1,
                           borderColor: '#DAE1E7',
                           borderRadius: 4,
                           paddingVertical: 12,
                           paddingHorizontal: 14,
                           width: '47%',
+                          height: scale(45),
                           color: '#000',
+                          marginTop: scale(30)
                         }}
                         placeholder={t('common:FirstName')}
                         placeholderTextColor='#9c9c9c'
@@ -107,14 +109,16 @@ const RegisterScreen = ({ navigation }) => {
                       <TextInput
                         style={{
                           marginLeft: '6%',
-                          marginBottom: 20,
+                          // marginBottom: 20,
                           borderWidth: 1,
                           borderColor: '#DAE1E7',
                           borderRadius: 4,
                           paddingVertical: 12,
                           paddingHorizontal: 14,
                           width: '47%',
+                          height: scale(45),
                           color: '#000',
+                          marginTop: scale(30)
                         }}
                         placeholder={t('common:LastName')}
                         placeholderTextColor='#9c9c9c'
@@ -158,7 +162,7 @@ const RegisterScreen = ({ navigation }) => {
 
                     />
                     {touched.phone && errors.phone && <Text style={styles.error}>{errors.phone}</Text>}
-                    <View style={{ flexDirection: 'row', marginLeft: -7 }}>
+                    <View style={{ flexDirection: 'row', marginLeft: -7, marginTop: scale(21), }}>
                       <CheckBox
                         value={term}
                         onPress={() => setTerm(!term)}
@@ -172,11 +176,12 @@ const RegisterScreen = ({ navigation }) => {
 
                       {/* {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>} */}
                     </View>
-                    <Text style={[styles.error, { marginTop: 10 }]}>{termError ? termError : ''}</Text>
-
-                    <View>
-                      <Text style={[styles.error, { marginTop: 5 }]}>{error2 ? error2 : ''}</Text>
-                    </View>
+                    {termError ?
+                      <Text style={[styles.error, { marginTop: 10 }]}>{termError ? termError : ''}</Text> : null}
+                    {error2 ?
+                      <View>
+                        <Text style={[styles.error, { marginTop: 5 }]}>{error2 ? error2 : ''}</Text>
+                      </View> : null}
                     <TouchableOpacity onPress={handleSubmit}
                       // disabled={!isValid}
                       style={[styles.loginButton, { backgroundColor: '#1570A5' }]}>
@@ -189,28 +194,30 @@ const RegisterScreen = ({ navigation }) => {
               <View
                 style={{
                   flexDirection: 'row',
-                  marginTop: 10,
+                  marginTop: scale(17),
                   justifyContent: 'center',
+
                 }}>
-                <Text style={{ color: '#000', fontSize: scale(12), }}>{t('common:AlreadyHaveAnAccount')} </Text>
+                <Text style={{ color: '#000', fontSize: scale(12), fontFamily: 'Poppins-Light' }}>{t('common:AlreadyHaveAnAccount')} </Text>
                 <TouchableOpacity onPress={() => navigation.push('Login')}>
                   <Text style={styles.link}>{t('common:Login')}</Text>
                 </TouchableOpacity>
               </View>
               <TouchableOpacity
                 onPress={() => navigation.push('Main')}>
-                <View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: scale(14), marginBottom: scale(30) }}>
 
                   <Text
                     style={{
                       color: '#1570A5',
-                      fontSize: RFPercentage(2.2),
+                      fontSize: scale(14),
                       textAlign: 'center',
-                      marginTop: '1%',
+                      fontFamily: 'Poppins',
+                      // marginTop: '1%',
                     }}>
                     {t('common:ContinueAsAGuest')}
                   </Text>
-                  <Text style={{ marginTop: 6, marginLeft: 5, }}><Entypo
+                  <Text style={{ marginTop: 3, marginLeft: 5, }}><Entypo
                     name="arrow-long-right"
                     size={15}
                     color="#1a6997"
@@ -235,25 +242,28 @@ const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: '#fff',
     borderRadius: 4,
-    paddingVertical: 30,
+    // paddingVertical: 30,
     paddingHorizontal: 15,
-    marginVertical: 50,
+    // marginVertical: 50,
+    marginTop: scale(32),
     marginHorizontal: 10,
   },
   input: {
     fontFamily: 'poppins-regular',
-    marginBottom: 20,
+    // marginBottom: 20,
     borderWidth: 1,
     borderColor: '#DAE1E7',
     borderRadius: 4,
-    paddingVertical: 12,
+    // paddingVertical: 12,
+    marginTop: scale(20),
     paddingHorizontal: 14,
+    height: scale(45),
     color: '#000',
   },
   link: {
-    fontFamily: 'poppins-regular',
+    fontFamily: 'Poppins-Light',
     color: '#1570A5',
-    marginTop: '1%',
+    // marginTop: '1%',
   },
   name: {
     fontFamily: 'poppins-regular',
@@ -274,6 +284,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     // alignItems: 'center',
     justifyContent: 'flex-start',
+    marginTop: scale(29),
   },
   loginButtonText: {
     fontFamily: 'poppins-regular',

@@ -21,7 +21,7 @@ export default {
     Level: 'Eben',
     ContinueAsAGuest: 'Weiter als Gast',
     DoNotHaveAnAccount: 'Du hast kein Konto?',
-    AlreadyHaveAnAccount: 'Du hast bereits ein Konto?',
+    AlreadyHaveAnAccount: 'Du hast bereits ein Konto ?',
     ToGetYourProfileAndStayUpdatedWithTheUpcomingExamsAndNews: 'Um Ihr Profil zu erhalten und über die bevorstehenden Prüfungen und Nachrichten auf dem Laufenden zu bleiben',
     WelcomeTo: 'Willkommen bei',
     Enter: 'Eingabe',

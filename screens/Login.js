@@ -93,9 +93,10 @@ const Login = ({ navigation }) => {
                     <Text style={styles.error}>{errors.password}</Text>
                   )}
                 </View>
-                <View>
-                  <Text style={[styles.error, { alignSelf: 'center' }]}>{error ? error : ''}</Text>
-                </View>
+                {error ?
+                  <View>
+                    <Text style={[styles.error, { alignSelf: 'center' }]}>{error ? error : ''}</Text>
+                  </View> : null}
                 <View style={{ flexDirection: 'row' }}>
                   <View style={{ flexDirection: 'row', marginTop: -15 }}>
                     <CheckBox
@@ -105,8 +106,9 @@ const Login = ({ navigation }) => {
                       tintColors={{ true: '#1570A5', false: '#B4B9BE', borderWidth: 1, }}
                     />
                     <Text style={{
-                      fontSize: RFPercentage(2),
-                      color: '#999', marginTop: 6, maxWidth: '80%'
+                      fontSize: scale(12),
+                      fontFamily: 'Poppins-Light',
+                      color: '#000000', marginTop: 6, maxWidth: '80%'
                     }}>{t('common:RememberMe')}</Text>
 
                     {/* {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>} */}
@@ -142,11 +144,11 @@ const Login = ({ navigation }) => {
                         color: '#1570A5',
                         fontSize: RFPercentage(2.45),
                         textAlign: 'center',
-                        marginTop: '1%',
+                        // marginTop: '1%',
                       }}>
                       {t('common:ContinueAsAGuest')}
                     </Text>
-                    <Text style={{ marginTop: 7, marginLeft: 5, }}><Entypo
+                    <Text style={{ marginTop: 3, marginLeft: 5, }}><Entypo
                       name="arrow-long-right"
                       size={18}
                       color="#1a6997"
@@ -215,11 +217,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: 30,
     paddingBottom: 26,
-    marginTop: 50,
+    marginTop: scale(32),
     borderWidth: 1,
     borderColor: '#fff',
     borderRadius: 10,
     shadowColor: '#000',
+    marginBottom: scale(30),
     // shadowOffset: { width: 0, height: 2 },
     // shadowOpacity: 0.8,
     // shadowRadius: 2,
@@ -257,6 +260,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'flex-start',
+    marginBottom: scale(16),
   },
   loginButtonText: {
     color: '#fff',
@@ -269,7 +273,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
-    marginTop: 10,
+    // marginTop: 10,
   },
   signupButton: {
     color: '#166795',

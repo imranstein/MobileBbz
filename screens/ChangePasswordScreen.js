@@ -7,6 +7,7 @@ import { AuthContext } from '../context/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { scale } from 'react-native-size-matters';
 
 
 
@@ -193,7 +194,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     backgroundColor: '#fff',
-    marginTop: 32,
+    marginTop: scale(32),
     marginHorizontal: 10,
     borderRadius: 4,
     paddingHorizontal: 15,

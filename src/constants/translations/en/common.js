@@ -18,8 +18,8 @@ export default {
     Date: 'Date',
     Level: 'Level',
     ContinueAsAGuest: 'Continue as a Guest',
-    DoNotHaveAnAccount: 'Do not have an account?',
-    AlreadyHaveAnAccount: 'Already have an account?',
+    DoNotHaveAnAccount: 'Do not have an account ?',
+    AlreadyHaveAnAccount: 'Already have an account ?',
     ToGetYourProfileAndStayUpdatedWithTheUpcomingExamsAndNews: 'to get your profile and stay updated with the upcoming exams And news',
     WelcomeTo: 'Welcome To',
     Enter: 'Enter',
@@ -239,5 +239,6 @@ export default {
     sizeupto500kb: '(size up to 500 kb)',
     NameMustStartWithLetter: 'Name must start with letter',
     NameMustBeOnlyLetters: 'Name must be only letters',
+    RememberMe: 'Remember me'
 
 }
