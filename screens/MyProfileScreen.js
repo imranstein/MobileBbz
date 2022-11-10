@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, TextInput, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TextInput, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { t } from 'i18next';
 import Icons from 'react-native-vector-icons/EvilIcons';
@@ -245,316 +245,326 @@ const MyProfileScreen = () => {
 
     return (
         console.log(zipCode),
-        <View style={styles.container}>
-            <ScrollView>
+        <ImageBackground
+            source={require('../assets/background.png')}
+            resizeMode="cover"
+            style={styles.ImageContainer}
+            imageStyle={styles.ImageBackground}>
+            <View style={styles.container}>
+                <ScrollView>
 
-                <View style={styles.wrapper}>
-                    <View style={styles.image} >
-                        <Text>
-                            {image != null ? <View style={styles.image1}>
-                                <Image
-                                    style={{ width: 80, height: 80, borderRadius: 40 }}
-                                    source={{ uri: `${IMAGE_URL}/${image}` }}
-                                />
-                            </View> :
+                    <View style={styles.wrapper}>
+                        <View style={styles.image} >
+                            <Text>
+                                {image != null ? <View style={styles.image1}>
+                                    <Image
+                                        style={{ width: scale(89), height: scale(89), borderRadius: 45, marginLeft: scale(15) }}
+                                        source={{ uri: `${IMAGE_URL}/${image}` }}
+                                    />
+                                </View> :
 
-                                <View style={styles.image1}>
-                                    {/* <Image
+                                    <View style={styles.image1}>
+                                        {/* <Image
                                         style={{ width: 80, height: 80, borderRadius: 40, }}
                                         source={require('../assets/searchBackground.png')}
                                         />
                                          */}
-                                    <Icons name="user" size={100} color="#1a6997" />
-                                </View>
-                            }
-                        </Text>
-                        <TouchableOpacity
-                            onPress={() => { openGallery() }}
-                        >
-                            <Text style={styles.imageLabel}>{t('common:EditPicture')}</Text>
-                        </TouchableOpacity>
-                        <Spinner visible={isLoading} />
+                                        <Icons name="user" size={100} color="#1570A5" />
+                                    </View>
+                                }
+                            </Text>
+                            <TouchableOpacity
+                                onPress={() => { openGallery() }}
+                            >
+                                <Text style={styles.imageLabel}>{t('common:EditPicture')}</Text>
+                            </TouchableOpacity>
+                            <Spinner visible={isLoading} />
 
-                    </View>
-                    <Formik initialValues={{
-                        first_name: first_name,
-                        last_name: last_name,
-                        email: email,
-                        phone: phone ?? '',
-                        address: address ?? '',
-                        address2: address2 ?? '',
-                        city: city ?? '',
-                        zipCode: zipCode ?? '',
-                    }}
-                        validateOnMount={true}
-                        enableReinitialize={true}
-                        onSubmit={(values) => {
-                            console.log('here');
-                            console.log(values);
-                            UpdateProfile(
-                                values.first_name,
-                                values.last_name,
-                                values.email,
-                                values.phone,
-                                birthday,
-                                values.address,
-                                values.address2,
-                                values.city,
-                                values.zipCode,
-                                country,
-                            );
+                        </View>
+                        <Formik initialValues={{
+                            first_name: first_name,
+                            last_name: last_name,
+                            email: email,
+                            phone: phone ?? '',
+                            address: address ?? '',
+                            address2: address2 ?? '',
+                            city: city ?? '',
+                            zipCode: zipCode ?? '',
                         }}
-                        validationSchema={validationSchema}
-                    >
-                        {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
-                            <View>
-                                <View style={styles.name}>
-                                    <View>
-                                        <Text style={styles.label} >{t('common:FirstName')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
-                                        <TextInput style={{
-                                            flex: 1,
-                                            // marginBottom: 20,
-                                            borderWidth: 1,
-                                            borderColor: '#DAE1E7',
-                                            borderRadius: 4,
-                                            // paddingVertical: 12,
-                                            paddingHorizontal: 14,
-                                            width: 162,
-                                            height: 42,
-                                            color: '#000',
-                                        }}
-                                            onChangeText={handleChange('first_name')}
-                                            onBlur={handleBlur('first_name')}
-                                            value={values.first_name}
-                                            placeholder={t('common:PleaseEnter')}
-                                            placeholderTextColor="#A8B0B5" />
-                                    </View>
-                                    <View>
-                                        <Text style={styles.label} >{t('common:LastName')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
-                                        <TextInput style={{
-                                            flex: 1,
-                                            // marginBottom: 20,
-                                            marginLeft: 20,
-                                            borderWidth: 1,
-                                            borderColor: '#DAE1E7',
-                                            borderRadius: 4,
-                                            // paddingVertical: 12,
-                                            paddingHorizontal: 14,
-                                            width: 162,
-                                            height: 42,
-                                            color: '#000',
-                                        }}
-                                            onChangeText={handleChange('last_name')}
-                                            onBlur={handleBlur('last_name')}
-                                            value={values.last_name}
-                                            placeholder={t('common:PleaseEnter')}
-                                            placeholderTextColor="#A8B0B5" />
-                                    </View>
-                                </View>
-                                {errors.first_name && touched.first_name ? (
-                                    <Text style={[styles.error, { marginLeft: scale(20) }]}>{errors.first_name}</Text>
-                                ) : null}
-                                {errors.last_name && touched.last_name ? (
-                                    <Text style={[styles.error, { marginLeft: scale(20) }]}>{errors.last_name}</Text>
-                                ) : null}
-                                <View style={styles.inputs}>
-                                    <View>
-                                        <Text style={styles.label}>{t('common:Email')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
-                                        <TextInput style={styles.input}
-                                            onChangeText={handleChange('email')}
-                                            onBlur={handleBlur('email')}
-                                            value={values.email.trim()}
-                                            placeholder={t('common:PleaseEnter')}
-                                            editable={false}
-                                            placeholderTextColor="#A8B0B5" />
-                                    </View>
-                                </View>
-                                {errors.email && touched.email ? (
-                                    <Text style={styles.error}>{errors.email}</Text>
-                                ) : null}
-                                <View style={styles.inputs}>
-                                    <View>
-                                        <Text style={styles.label}>{t('common:Phone')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
-                                        <TextInput style={styles.input}
-                                            onChangeText={handleChange('phone')}
-                                            onBlur={handleBlur('phone')}
-                                            value={values.phone}
-                                            placeholder={t('common:PleaseEnter')}
-                                            placeholderTextColor="#A8B0B5"
-                                            keyboardType='phone-pad'
-                                            keyboardAppearance='dark' />
-                                    </View>
-                                </View>
-                                {errors.phone && touched.phone ? (
-                                    <Text style={styles.error}>{errors.phone}</Text>
-                                ) : null}
-                                <View style={styles.inputs}>
-                                    <View>
-                                        <Text style={styles.label}>{t('common:Birthdate')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
-                                        <View style={{
-                                            borderWidth: 1,
-                                            borderColor: '#DAE1E7',
-                                            // marginVertical: 10,
-                                            borderRadius: 4,
-                                            // marginBottom: 20,
-                                            justifyContent: 'flex-start',
-                                            paddingHorizontal: 14,
-                                            // paddingVertical: 12,
-                                            color: '#000',
-                                            width: '100%',
-                                            height: 42,
-                                        }}>
-                                            <TouchableOpacity onPress={showDatePicker}>
-                                                {birthday != null ?
-                                                    <Text style={{ fontSize: scale(14), color: '#000', marginTop: 10 }}>{moment(birthday).format('DD/MM/YYYY')}</Text> :
-                                                    <Text style={{ fontSize: RFPercentage(2.7), color: '#9e9e9e', marginTop: 10 }}>{t('common:Birthday')}</Text>
-                                                }
-                                            </TouchableOpacity>
-                                            <DateTimePickerModal
-                                                isVisible={isDatePickerVisible}
-                                                mode="date"
-                                                maximumDate={new Date(2006, 11, 31)}
-                                                minimumDate={new Date(1970, 0, 1)}
-                                                onConfirm={fromHandleConfirm}
-                                                onCancel={hideDatePicker}
-                                            />
+                            validateOnMount={true}
+                            enableReinitialize={true}
+                            onSubmit={(values) => {
+                                console.log('here');
+                                console.log(values);
+                                UpdateProfile(
+                                    values.first_name,
+                                    values.last_name,
+                                    values.email,
+                                    values.phone,
+                                    birthday,
+                                    values.address,
+                                    values.address2,
+                                    values.city,
+                                    values.zipCode,
+                                    country,
+                                );
+                            }}
+                            validationSchema={validationSchema}
+                        >
+                            {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+                                <View>
+                                    <View style={styles.name}>
+                                        <View>
+                                            <Text style={styles.label} >{t('common:FirstName')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <TextInput style={{
+                                                flex: 1,
+                                                // marginBottom: 20,
+                                                borderWidth: 1,
+                                                borderColor: '#DAE1E7',
+                                                borderRadius: 4,
+                                                // paddingVertical: 12,
+                                                paddingHorizontal: 14,
+                                                width: scale(140),
+                                                height: scale(44),
+                                                color: '#000',
+                                            }}
+                                                onChangeText={handleChange('first_name')}
+                                                onBlur={handleBlur('first_name')}
+                                                value={values.first_name}
+                                                placeholder={t('common:PleaseEnter')}
+                                                placeholderTextColor="#A8B0B5" />
+                                        </View>
+                                        <View>
+                                            <Text style={styles.label} >{t('common:LastName')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <TextInput style={{
+                                                flex: 1,
+                                                // marginBottom: 20,
+                                                marginLeft: 20,
+                                                borderWidth: 1,
+                                                borderColor: '#DAE1E7',
+                                                borderRadius: 4,
+                                                // paddingVertical: 12,
+                                                paddingHorizontal: 14,
+                                                width: scale(140),
+                                                height: scale(44),
+                                                color: '#000',
+                                            }}
+                                                onChangeText={handleChange('last_name')}
+                                                onBlur={handleBlur('last_name')}
+                                                value={values.last_name}
+                                                placeholder={t('common:PleaseEnter')}
+                                                placeholderTextColor="#A8B0B5" />
                                         </View>
                                     </View>
-                                    {birthdayError == true ? (
-                                        <Text style={styles.error}>{t('common:BirthDateError')}</Text>
+                                    {errors.first_name && touched.first_name ? (
+                                        <Text style={[styles.error, { marginLeft: scale(20) }]}>{errors.first_name}</Text>
                                     ) : null}
-                                </View>
-                                <View style={{ flex: 1 }}>
-                                    <Text style={{
-                                        fontSize: RFPercentage(2.6),
-                                        fontWeight: '500',
-                                        color: '#000',
-                                        // marginHorizontal: 10,
-                                        paddingTop: 20,
-                                        paddingBottom: 5
-                                    }}>{t('common:Address')}</Text>
-                                </View>
-                                <View style={styles.inputs}>
-                                    <View>
-                                        <Text style={styles.label}>C/o <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
-                                        <TextInput style={styles.input}
-                                            onChangeText={handleChange('address')}
-                                            onBlur={handleBlur('address')}
-                                            value={values.address}
-                                            placeholder={t('common:PleaseEnter')}
-                                            placeholderTextColor="#A8B0B5" />
-                                    </View>
-                                </View>
-                                {errors.address && touched.address ? (
-                                    <Text style={styles.error}>{errors.address}</Text>
-                                ) : null}
-                                <View style={styles.inputs}>
-                                    <View>
-                                        <Text style={styles.label}>{t('common:Street')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
-                                        <TextInput style={styles.input}
-                                            onChangeText={handleChange('address2')}
-                                            onBlur={handleBlur('address2')}
-                                            value={values.address2}
-                                            placeholder={t('common:PleaseEnter')}
-                                            placeholderTextColor="#A8B0B5" />
-                                    </View>
-                                </View>
-                                {errors.address2 && touched.address2 ? (
-                                    <Text style={styles.error}>{errors.address2}</Text>
-                                ) : null}
-                                <View style={styles.inputs}>
-                                    <View>
-                                        <Text style={styles.label}>{t('common:City')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
-                                        <TextInput style={styles.input}
-                                            onChangeText={handleChange('city')}
-                                            onBlur={handleBlur('city')}
-                                            value={values.city}
-                                            placeholder={t('common:PleaseEnter')}
-                                            placeholderTextColor="#A8B0B5" />
-                                    </View>
-                                </View>
-                                {errors.city && touched.city ? (
-                                    <Text style={styles.error}>{errors.city}</Text>
-                                ) : null}
-                                <View style={styles.inputs}>
-                                    <View>
-                                        <Text style={styles.label}>{t('common:PostalCode')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
-                                        <TextInput style={styles.input}
-                                            onChangeText={handleChange('zipCode')}
-                                            onBlur={handleBlur('zipCode')}
-                                            value={values.zipCode}
-                                            placeholder={t('common:PleaseEnter')}
-                                            placeholderTextColor="#A8B0B5"
-                                            keyboardType='phone-pad'
-                                            keyboardAppearance='dark' />
-                                    </View>
-                                </View>
-                                {errors.zipCode && touched.zipCode ? (
-                                    <Text style={styles.error}>{errors.zipCode}</Text>
-                                ) : null}
-                                <View style={styles.inputs}>
-                                    <View>
-                                        <Text style={styles.label}>{t('common:Country')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
-                                        <View style={{
-                                            // marginLeft: '4%',
-                                            // borderColor: '#cecece',
-                                            // borderBottomWidth: 0.5,
-                                        }}
-                                        >
-                                            <CountryPicker
-                                                withFilter
-                                                withFlag
-                                                preferredCountries={['DE', 'IN']}
-                                                onSelect={(country) => {
-                                                    setCountry(country.cca2);
-                                                    // handleChange('country')(country.cca2);
-                                                    console.log(country.cca2);
-                                                }
-                                                }
-                                            // onBlur={handleBlur('country')}
-                                            />
+                                    {errors.last_name && touched.last_name ? (
+                                        <Text style={[styles.error, { marginLeft: scale(20) }]}>{errors.last_name}</Text>
+                                    ) : null}
+                                    <View style={styles.inputs}>
+                                        <View>
+                                            <Text style={styles.label}>{t('common:Email')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <TextInput style={styles.input}
+                                                onChangeText={handleChange('email')}
+                                                onBlur={handleBlur('email')}
+                                                value={values.email.trim()}
+                                                placeholder={t('common:PleaseEnter')}
+                                                editable={false}
+                                                placeholderTextColor="#A8B0B5" />
                                         </View>
-
-                                        <Text style={{
-                                            flex: 1,
-                                            marginBottom: 20,
-                                            borderWidth: 1,
-                                            borderColor: '#DAE1E7',
-                                            borderRadius: 4,
-                                            paddingVertical: 12,
-                                            paddingHorizontal: 14,
-                                            color: '#000',
-                                            width: '100%',
-                                            height: 47,
-                                            color: '#000',
-                                            marginTop: 10,
-                                        }}>{country}</Text>
-
                                     </View>
-                                </View>
-                                {countryError == true ? (
-                                    <Text style={[styles.error, { marginVertical: scale(5) }]}>{t('common:CountryIsRequired')}</Text>
-                                ) : null}
+                                    {errors.email && touched.email ? (
+                                        <Text style={styles.error}>{errors.email}</Text>
+                                    ) : null}
+                                    <View style={styles.inputs}>
+                                        <View>
+                                            <Text style={styles.label}>{t('common:Phone')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <TextInput style={styles.input}
+                                                onChangeText={handleChange('phone')}
+                                                onBlur={handleBlur('phone')}
+                                                value={values.phone}
+                                                placeholder={t('common:PleaseEnter')}
+                                                placeholderTextColor="#A8B0B5"
+                                                keyboardType='phone-pad'
+                                                keyboardAppearance='dark' />
+                                        </View>
+                                    </View>
+                                    {errors.phone && touched.phone ? (
+                                        <Text style={styles.error}>{errors.phone}</Text>
+                                    ) : null}
+                                    <View style={styles.inputs}>
+                                        <View>
+                                            <Text style={styles.label}>{t('common:Birthdate')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <View style={{
+                                                borderWidth: 1,
+                                                borderColor: '#DAE1E7',
+                                                // marginVertical: 10,
+                                                borderRadius: 4,
+                                                // marginBottom: 20,
+                                                justifyContent: 'flex-start',
+                                                paddingHorizontal: 14,
+                                                // paddingVertical: 12,
+                                                color: '#000',
+                                                width: scale(300),
+                                                height: scale(44),
+                                                fontFamily: 'Poppins-Light',
+                                                fontSize: scale(14),
+                                            }}>
+                                                <TouchableOpacity onPress={showDatePicker}>
+                                                    {birthday != null ?
+                                                        <Text style={{ fontSize: scale(14), color: '#000', marginTop: 10 }}>{moment(birthday).format('DD/MM/YYYY')}</Text> :
+                                                        <Text style={{ fontSize: RFPercentage(2.7), color: '#9e9e9e', marginTop: 10 }}>{t('common:Birthday')}</Text>
+                                                    }
+                                                </TouchableOpacity>
+                                                <DateTimePickerModal
+                                                    isVisible={isDatePickerVisible}
+                                                    mode="date"
+                                                    maximumDate={new Date(2006, 11, 31)}
+                                                    minimumDate={new Date(1970, 0, 1)}
+                                                    onConfirm={fromHandleConfirm}
+                                                    onCancel={hideDatePicker}
+                                                />
+                                            </View>
+                                        </View>
+                                        {birthdayError == true ? (
+                                            <Text style={styles.error}>{t('common:BirthDateError')}</Text>
+                                        ) : null}
+                                    </View>
+                                    <View style={{ flex: 1 }}>
+                                        <Text style={{
+                                            fontSize: RFPercentage(2.6),
+                                            fontWeight: '500',
+                                            color: '#000',
+                                            // marginHorizontal: 10,
+                                            paddingTop: 20,
+                                            paddingBottom: 5
+                                        }}>{t('common:Address')}</Text>
+                                    </View>
+                                    <View style={styles.inputs}>
+                                        <View>
+                                            <Text style={styles.label}>C/o <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <TextInput style={styles.input}
+                                                onChangeText={handleChange('address')}
+                                                onBlur={handleBlur('address')}
+                                                value={values.address}
+                                                placeholder={t('common:PleaseEnter')}
+                                                placeholderTextColor="#A8B0B5" />
+                                        </View>
+                                    </View>
+                                    {errors.address && touched.address ? (
+                                        <Text style={styles.error}>{errors.address}</Text>
+                                    ) : null}
+                                    <View style={styles.inputs}>
+                                        <View>
+                                            <Text style={styles.label}>{t('common:Street')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <TextInput style={styles.input}
+                                                onChangeText={handleChange('address2')}
+                                                onBlur={handleBlur('address2')}
+                                                value={values.address2}
+                                                placeholder={t('common:PleaseEnter')}
+                                                placeholderTextColor="#A8B0B5" />
+                                        </View>
+                                    </View>
+                                    {errors.address2 && touched.address2 ? (
+                                        <Text style={styles.error}>{errors.address2}</Text>
+                                    ) : null}
+                                    <View style={styles.inputs}>
+                                        <View>
+                                            <Text style={styles.label}>{t('common:City')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <TextInput style={styles.input}
+                                                onChangeText={handleChange('city')}
+                                                onBlur={handleBlur('city')}
+                                                value={values.city}
+                                                placeholder={t('common:PleaseEnter')}
+                                                placeholderTextColor="#A8B0B5" />
+                                        </View>
+                                    </View>
+                                    {errors.city && touched.city ? (
+                                        <Text style={styles.error}>{errors.city}</Text>
+                                    ) : null}
+                                    <View style={styles.inputs}>
+                                        <View>
+                                            <Text style={styles.label}>{t('common:PostalCode')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <TextInput style={styles.input}
+                                                onChangeText={handleChange('zipCode')}
+                                                onBlur={handleBlur('zipCode')}
+                                                value={values.zipCode}
+                                                placeholder={t('common:PleaseEnter')}
+                                                placeholderTextColor="#A8B0B5"
+                                                keyboardType='phone-pad'
+                                                keyboardAppearance='dark' />
+                                        </View>
+                                    </View>
+                                    {errors.zipCode && touched.zipCode ? (
+                                        <Text style={styles.error}>{errors.zipCode}</Text>
+                                    ) : null}
+                                    <View style={styles.inputs}>
+                                        <View>
+                                            <Text style={styles.label}>{t('common:Country')} <Text style={{ color: 'red', fontSize: scale(18), marginTop: 15 }}>*</Text></Text>
+                                            <View style={{
+                                                // marginLeft: '4%',
+                                                // borderColor: '#cecece',
+                                                // borderBottomWidth: 0.5,
+                                            }}
+                                            >
+                                                <CountryPicker
+                                                    withFilter
+                                                    withFlag
+                                                    preferredCountries={['DE', 'IN']}
+                                                    onSelect={(country) => {
+                                                        setCountry(country.cca2);
+                                                        // handleChange('country')(country.cca2);
+                                                        console.log(country.cca2);
+                                                    }
+                                                    }
+                                                // onBlur={handleBlur('country')}
+                                                />
+                                            </View>
 
-                                <View style={styles.inputs}>
+                                            <Text style={{
+                                                fontFamily: 'Poppins-Light',
+                                                fontSize: scale(14),
+                                                flex: 1,
+                                                marginBottom: 20,
+                                                borderWidth: 1,
+                                                borderColor: '#DAE1E7',
+                                                borderRadius: 4,
+                                                paddingVertical: 12,
+                                                paddingHorizontal: 14,
+                                                color: '#000',
+                                                width: scale(300),
+                                                height: scale(44),
+                                                color: '#000',
+                                                marginTop: 10,
+                                            }}>{country}</Text>
+
+                                        </View>
+                                    </View>
+                                    {countryError == true ? (
+                                        <Text style={[styles.error, { marginVertical: scale(5) }]}>{t('common:CountryIsRequired')}</Text>
+                                    ) : null}
+
+                                    <View style={styles.inputs}>
+                                        <TouchableOpacity
+                                            onPress={() => navigation.navigate('Change Password')}>
+                                            <Text style={styles.changePassword}>{t('common:ChangePassword')}</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    {/* <View style={styles.submit}> */}
                                     <TouchableOpacity
-                                        onPress={() => navigation.navigate('Change Password')}>
-                                        <Text style={styles.changePassword}>{t('common:ChangePassword')}</Text>
+                                        onPress={handleSubmit}>
+                                        <Text style={styles.submitLabel}>{t('common:SaveChanges')}</Text>
                                     </TouchableOpacity>
-                                </View>
-                                {/* <View style={styles.submit}> */}
-                                <TouchableOpacity
-                                    onPress={handleSubmit}>
-                                    <Text style={styles.submitLabel}>{t('common:SaveChanges')}</Text>
-                                </TouchableOpacity>
-                                {/* </View> */}
-                            </View >
-                        )}
-                    </Formik>
-                </View>
-            </ScrollView >
+                                    {/* </View> */}
+                                </View >
+                            )}
+                        </Formik>
+                    </View>
+                </ScrollView >
 
-        </View >
+            </View >
+        </ImageBackground>
     );
     // }
 };
@@ -562,17 +572,24 @@ const MyProfileScreen = () => {
 export default MyProfileScreen;
 
 const styles = StyleSheet.create({
+    ImageContainer: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
+    ImageBackground: {
+        opacity: 1,
+    },
     container: {
         backgroundColor: '#F0EFEF',
         flex: 1,
     },
     wrapper: {
         backgroundColor: '#fff',
-        marginTop: 32,
-        marginHorizontal: 8,
+        marginTop: scale(32),
+        marginHorizontal: scale(10),
         borderRadius: 4,
         paddingHorizontal: 15,
-        paddingTop: 16,
+        paddingTop: scale(20),
         paddingBottom: 7,
     },
     name: {
@@ -581,15 +598,16 @@ const styles = StyleSheet.create({
         // marginTop: '2%',
     },
     image: {
+        marginHorizontal: scale(15),
         width: '100%',
         borderColor: '#F0EFEF',
         borderWidth: 1,
         borderRadius: 10,
         alignSelf: 'center',
-        marginTop: 20,
+        // marginTop: 20,
         // marginHorizontal: '5%',
-        paddingVertical: 12,
-        paddingHorizontal: 20,
+        paddingVertical: scale(12),
+        paddingHorizontal: scale(15),
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,
@@ -597,36 +615,43 @@ const styles = StyleSheet.create({
     },
     imageLabel: {
         fontSize: RFValue(16),
-        marginLeft: '5%',
-        marginRight: '10%',
-        color: '#1a6997',
-        borderColor: '#1a6997',
+        marginLeft: scale(20),
+        marginRight: scale(15),
+        color: '#1570A5',
+        borderColor: '#1570A5',
         borderWidth: 2,
-        paddingHorizontal: '8%',
-        paddingVertical: '2%',
+        paddingHorizontal: scale(36),
+        paddingVertical: scale(9),
         borderRadius: 4,
         textAlign: 'center',
         alignSelf: 'center',
-        justifyContent: 'center',
+        width: scale(175),
+        height: scale(40),
+        // justifyContent: 'center',
+        fontFamily: 'Poppins-Medium',
         textTransform: 'uppercase',
     },
     submit: {
         width: '100%'
     },
     submitLabel: {
-        fontSize: RFPercentage(2.7),
-        marginVertical: 20,
-        marginHorizontal: 20,
+        fontSize: scale(16),
+        fontFamily: 'Poppins-Regular',
+        marginVertical: scale(18),
+        // marginHorizontal: 20,
         color: '#fff',
-        borderColor: '#1a6997',
-        backgroundColor: '#1a6997',
+        borderColor: '#1570A5',
+        backgroundColor: '#1570A5',
         borderWidth: 2,
-        paddingVertical: 8,
+        paddingVertical: scale(9),
         borderRadius: 4,
         textAlign: 'center',
         textTransform: 'uppercase',
+        height: scale(40),
+        // paddingHorizontal: scale(100),
     },
     input: {
+        fontFamily: 'Poppins-Light',
         fontSize: scale(14),
         borderWidth: 1,
         borderColor: '#DAE1E7',
@@ -637,8 +662,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 14,
         // paddingVertical: 12,
         color: '#000',
-        width: '100%',
-        height: 44,
+        width: scale(300),
+        height: scale(44),
     },
     inputs: {
         // marginLeft: '5%',
@@ -648,8 +673,8 @@ const styles = StyleSheet.create({
         fontSize: RFPercentage(2.7),
         marginTop: 40,
         marginBottom: 40,
-        color: '#1a6997',
-        borderColor: '#1a6997',
+        color: '#1570A5',
+        borderColor: '#1570A5',
         borderWidth: 2,
         paddingVertical: 8,
         width: '100%',
@@ -658,9 +683,10 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase'
     },
     label: {
-        fontSize: RFPercentage(2.1),
+        fontSize: scale(14),
+        fontFamily: 'Poppins-Light',
         color: '#000',
-        marginVertical: 15,
+        marginVertical: scale(14),
     },
     image1: {
         flex: 1,

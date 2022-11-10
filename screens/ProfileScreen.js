@@ -134,8 +134,8 @@ const ProfileScreen = () => {
         <TouchableOpacity onPress={() => {
           {
             verification != null ?
-              navigation.navigate('My Profile')
-              : navigation.navigate('Verify')
+              navigation.push('My Profile')
+              : navigation.push('Verify')
           }
         }
         }>
