@@ -32,7 +32,7 @@ const Welcome = ({ navigation }) => {
 
       <View>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Language')}>
+          onPress={() => navigation.push('Language')}>
           <View style={{ alignContent: 'flex-end', justifyContent: 'flex-end', alignSelf: 'flex-end', alignItems: 'flex-end', marginTop: scale(10), marginBottom: scale(-10), marginRight: scale(10), borderColor: '#cecece', borderWidth: scale(1), padding: scale(5), borderRadius: scale(5) }}>
             <View style={{ flexDirection: 'row' }}>
               <Entypo
@@ -58,7 +58,7 @@ const Welcome = ({ navigation }) => {
         </Text>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Login')}>
+          onPress={() => navigation.push('Login')}>
           <Text style={styles.buttonText}>{t('common:Login')}
           </Text>
         </TouchableOpacity>
@@ -67,13 +67,13 @@ const Welcome = ({ navigation }) => {
         <Text style={{
           fontSize: RFPercentage(2.45), color: '#000000'
         }}>{t('common:DoNotHaveAnAccount')} </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+        <TouchableOpacity onPress={() => navigation.push('Register')}>
           <Text style={styles.signupButton}>{t('common:SignUp')}
           </Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity
-        onPress={() => navigation.navigate('Main')}>
+        onPress={() => navigation.push('Main')}>
         <View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
           <Text style={{ marginTop: 7, marginRight: 5, }}><Entypo
             name="arrow-long-left"

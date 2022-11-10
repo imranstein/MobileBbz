@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './HomeScreen';
@@ -28,9 +28,10 @@ const Drawer = createDrawerNavigator();
 // const { t } = useTranslation();
 
 const MainScreen = () => {
-  // const { userInfo, isLoading, logout } = useContext(AuthContext);
+  const { userInfo } = useContext(AuthContext);
   const navigation = useNavigation();
 
+  const token = userInfo.token;
   return (
     <Drawer.Navigator
 
@@ -52,7 +53,7 @@ const MainScreen = () => {
         ), headerTintColor: '#1a6997',
         headerTitleAlign: 'center'
       }} />
-      <Drawer.Screen name={t('common:AboutUs')} component={AboutScreen}
+      <Drawer.Screen name={t('common:AboutUs')} component={AboutUs}
         options={{
           // title: '.{t('common: AboutUs')}.',
           drawerIcon: ({ focused, size }) => (
@@ -64,17 +65,30 @@ const MainScreen = () => {
           ), headerTintColor: '#1a6997',
           headerTitleAlign: 'center',
 
-          headerRight: () => (
+          headerRight: token != null ? () => (
+
+
 
             <View style={{ flexDirection: 'row', marginRight: 10 }}>
               <Icon
                 name="user-circle-o"
                 size={30}
                 color="#1a6997"
-                onPress={() => navigation.navigate('Profile')}
+                onPress={() => navigation.push('Profile')}
               />
             </View>
-          ),
+          ) : () => (
+
+
+
+            <View style={{ flexDirection: 'row', marginRight: 10 }}>
+              <Entypo
+                name="login"
+                size={30}
+                color="#1a6997"
+                onPress={() => navigation.push('Login')}
+              />
+            </View>),
         }} />
       <Drawer.Screen name={t('common:WeWork')} component={WeWorkScreen}
         options={{
@@ -87,16 +101,30 @@ const MainScreen = () => {
             />
           ), headerTintColor: '#1a6997',
           headerTitleAlign: 'center',
-          headerRight: () => (
+          headerRight: token != null ? () => (
+
+
+
             <View style={{ flexDirection: 'row', marginRight: 10 }}>
               <Icon
                 name="user-circle-o"
                 size={30}
                 color="#1a6997"
-                onPress={() => navigation.navigate('Profile')}
+                onPress={() => navigation.push('Profile')}
               />
             </View>
-          ),
+          ) : () => (
+
+
+
+            <View style={{ flexDirection: 'row', marginRight: 10 }}>
+              <Entypo
+                name="login"
+                size={30}
+                color="#1a6997"
+                onPress={() => navigation.push('Login')}
+              />
+            </View>),
         }} />
       <Drawer.Screen name={t('common:Location')} component={Location}
         options={{
@@ -109,16 +137,30 @@ const MainScreen = () => {
             />
           ), headerTintColor: '#1a6997',
           headerTitleAlign: 'center',
-          headerRight: () => (
+          headerRight: token != null ? () => (
+
+
+
             <View style={{ flexDirection: 'row', marginRight: 10 }}>
               <Icon
                 name="user-circle-o"
                 size={30}
                 color="#1a6997"
-                onPress={() => navigation.navigate('Profile')}
+                onPress={() => navigation.push('Profile')}
               />
             </View>
-          ),
+          ) : () => (
+
+
+
+            <View style={{ flexDirection: 'row', marginRight: 10 }}>
+              <Entypo
+                name="login"
+                size={30}
+                color="#1a6997"
+                onPress={() => navigation.push('Login')}
+              />
+            </View>),
         }} />
       <Drawer.Screen name={t('common:ContactUs')} component={ContactUs}
         options={{
@@ -131,16 +173,30 @@ const MainScreen = () => {
             />
           ), headerTintColor: '#1a6997',
           headerTitleAlign: 'center',
-          headerRight: () => (
+          headerRight: token != null ? () => (
+
+
+
             <View style={{ flexDirection: 'row', marginRight: 10 }}>
               <Icon
                 name="user-circle-o"
                 size={30}
                 color="#1a6997"
-                onPress={() => navigation.navigate('Profile')}
+                onPress={() => navigation.push('Profile')}
               />
             </View>
-          ),
+          ) : () => (
+
+
+
+            <View style={{ flexDirection: 'row', marginRight: 10 }}>
+              <Entypo
+                name="login"
+                size={30}
+                color="#1a6997"
+                onPress={() => navigation.push('Login')}
+              />
+            </View>),
         }} />
       <Drawer.Screen name={t('common:News')} component={News}
         options={{
@@ -153,16 +209,30 @@ const MainScreen = () => {
             />
           ), headerTintColor: '#1a6997',
           headerTitleAlign: 'center',
-          headerRight: () => (
+          headerRight: token != null ? () => (
+
+
+
             <View style={{ flexDirection: 'row', marginRight: 10 }}>
               <Icon
                 name="user-circle-o"
                 size={30}
                 color="#1a6997"
-                onPress={() => navigation.navigate('Profile')}
+                onPress={() => navigation.push('Profile')}
               />
             </View>
-          ),
+          ) : () => (
+
+
+
+            <View style={{ flexDirection: 'row', marginRight: 10 }}>
+              <Entypo
+                name="login"
+                size={30}
+                color="#1a6997"
+                onPress={() => navigation.push('Login')}
+              />
+            </View>),
         }} />
       <Drawer.Screen name={t('common:Language')} component={Language}
         options={{
@@ -175,16 +245,30 @@ const MainScreen = () => {
             />
           ), headerTintColor: '#1a6997',
           headerTitleAlign: 'center',
-          headerRight: () => (
+          headerRight: token != null ? () => (
+
+
+
             <View style={{ flexDirection: 'row', marginRight: 10 }}>
               <Icon
                 name="user-circle-o"
                 size={30}
                 color="#1a6997"
-                onPress={() => navigation.navigate('Profile')}
+                onPress={() => navigation.push('Profile')}
               />
             </View>
-          ),
+          ) : () => (
+
+
+
+            <View style={{ flexDirection: 'row', marginRight: 10 }}>
+              <Entypo
+                name="login"
+                size={30}
+                color="#1a6997"
+                onPress={() => navigation.push('Login')}
+              />
+            </View>),
         }} />
     </Drawer.Navigator>
   );

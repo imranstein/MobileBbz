@@ -15,7 +15,7 @@ const Language = () => {
     const selectedLanguageCode = i18n.language;
     const setLanguage = (code) => {
         i18n.changeLanguage(code);
-        navigation.navigate('Search');
+        navigation.push('Main');
     };
 
     return (

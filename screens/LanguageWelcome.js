@@ -15,7 +15,7 @@ const LanguageWelcome = () => {
     const selectedLanguageCode = i18n.language;
     const setLanguage = (code) => {
         i18n.changeLanguage(code);
-        navigation.navigate('Login/Signup');
+        navigation.push('Welcome');
     };
 
     return (

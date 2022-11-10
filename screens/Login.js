@@ -115,7 +115,7 @@ const Login = ({ navigation }) => {
                     style={[styles.button, {
                       marginLeft: 60,
                     }]}
-                    onPress={() => navigation.navigate('Reset Your Password')}>
+                    onPress={() => navigation.push('Reset Your Password')}>
                     <Text style={styles.buttonText}>{t('common:ForgotPassword')}</Text>
                   </TouchableOpacity>
                 </View>
@@ -129,12 +129,12 @@ const Login = ({ navigation }) => {
                 </TouchableOpacity>
                 <View style={styles.signup}>
                   <Text style={{ color: '#000000' }}>{t('common:DoNotHaveAnAccount')} </Text>
-                  <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+                  <TouchableOpacity onPress={() => navigation.push('Register')}>
                     <Text style={styles.signupButton}>{t('common:SignUp')}</Text>
                   </TouchableOpacity>
                 </View>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('Main')}>
+                  onPress={() => navigation.push('Main')}>
                   <View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
 
                     <Text
@@ -177,7 +177,7 @@ const Login = ({ navigation }) => {
       </View>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('Reset Your Password')}>
+        onPress={() => navigation.push('Reset Your Password')}>
         <Text style={styles.buttonText}>{t('common:ForgotPassword')}</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -189,7 +189,7 @@ const Login = ({ navigation }) => {
       </TouchableOpacity>
       <View style={styles.signup}>
         <Text style={{ color: '#999' }}>{t('common:DoNotHaveAnAccount')} </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+        <TouchableOpacity onPress={() => navigation.push('Register')}>
           <Text style={styles.signupButton}>{t('common:SignUp')}</Text>
         </TouchableOpacity>
       </View> */}

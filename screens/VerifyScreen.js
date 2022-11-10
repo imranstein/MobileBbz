@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import React from 'react';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
@@ -27,7 +27,30 @@ const VerifyScreen = () => {
     const { userInfo } = useContext(AuthContext);
     // const {isLoading, reset} = useContext(AuthContext);
     const email = userInfo.email;
+    const [verification, setVerification] = useState(null);
 
+
+    const id = userInfo.id;
+    const verify = () => {
+        axios.post(`${BASE_URL}/verify`, {
+            id: id
+        }).then(res => {
+            console.log(res.data);
+            setVerification(res.data.email_verified_at);
+            console.log('verification', verification);
+            // return true;
+        }
+        ).catch(e => {
+            console.log(e);
+        }
+        )
+    }
+    useEffect(() => {
+        verify();
+    })
+    if (verification != null) {
+        navigation.popToTop();
+    }
     const verifyEmail = () => {
         setIsLoading(true);
         axios.get(`${BASE_URL}/user-verify`, {

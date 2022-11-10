@@ -148,7 +148,7 @@ export default {
     YourSearchedResult: 'Your Searched Result',
     SelectLocation: 'Select Your Center Location',
     SearchEverything: 'Search everything here...',
-    SelectExam: 'Select Your Exam Level',
+    SelectExam: 'Select Your Language Level',
     UploadId: 'Upload ID Proof',
     WeWork: 'How We Work',
     KnowWhoWeAre: 'Our process for your better understanding',

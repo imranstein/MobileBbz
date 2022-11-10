@@ -163,6 +163,8 @@ export default {
     PaypalPayment: 'Paypal Zahlung',
     SelectMotherTongue: 'Muttersprache auswählen',
     Welcome: 'Einloggen Anmelden',
+    IHaveReadAndAcceptThe: 'Ich habe die gelesen und akzeptiere sie',
+    TermsAndConditions: 'Nutzungsbedingungen und Datenschutzrichtlinie',
     SaluteIsRequired: 'Anrede ist erforderlich',
     AcademicRequired: 'Akademischer Titel ist erforderlich',
     IdentificationNumberIsRequired: 'Identifikationsnummer ist erforderlich',

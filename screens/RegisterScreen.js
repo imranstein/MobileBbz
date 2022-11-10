@@ -168,7 +168,7 @@ const RegisterScreen = ({ navigation }) => {
                       <Text style={{
                         marginLeft: 8, fontSize: RFPercentage(2),
                         color: '#999', textAlignVertical: 'center', maxWidth: '80%'
-                      }}>{t('common:IHaveReadAndAcceptThe')} <Text style={{ color: '#1570A5' }} onPress={() => Linking.openURL('https://bbzstage.addwebprojects.com/')}>{t('common:TermsAndConditions')}</Text></Text>
+                      }}>{t('common:IHaveReadAndAcceptThe')} <Text style={{ color: '#1570A5' }} onPress={() => Linking.openURL('https://www.sprachtestcenter.de/page/privacy-policy')}>{t('common:TermsAndConditions')}</Text></Text>
 
                       {/* {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>} */}
                     </View>
@@ -193,12 +193,12 @@ const RegisterScreen = ({ navigation }) => {
                   justifyContent: 'center',
                 }}>
                 <Text style={{ color: '#000', fontSize: scale(12), }}>{t('common:AlreadyHaveAnAccount')} </Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                <TouchableOpacity onPress={() => navigation.push('Login')}>
                   <Text style={styles.link}>{t('common:Login')}</Text>
                 </TouchableOpacity>
               </View>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Exam')}>
+                onPress={() => navigation.push('Main')}>
                 <View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
 
                   <Text

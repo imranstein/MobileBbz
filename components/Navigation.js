@@ -113,7 +113,7 @@ const Navigation = () => {
           </>
         ) : (
           <>
-            <Stack.Screen name="Login/Signup"
+            <Stack.Screen name="Welcome"
               options={{ title: t('common:Welcome'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
               component={Welcome} />
             <Stack.Screen name="Exam" component={HomeScreen} />
