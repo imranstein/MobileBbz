@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, StatusBar } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -36,9 +36,11 @@ const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
   const { userInfo, splashLoading } = useContext(AuthContext);
-
+  
   return (
     <NavigationContainer>
+      <StatusBar translucent backgroundColor="transparent" />
+
       <Stack.Navigator>
         {splashLoading ? (
           <Stack.Screen
@@ -114,7 +116,16 @@ const Navigation = () => {
         ) : (
           <>
             <Stack.Screen name="Login/Signup"
-              options={{ title: t('common:Welcome'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+          
+              options={{ 
+                title: t('common:Welcome'), 
+              headerTintColor: '#1a6997', 
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontFamily: "Poppins-Medium",
+                fontSize: 16,
+              }
+            }}
               component={Welcome} />
             <Stack.Screen name="Exam" component={HomeScreen} />
             <Stack.Screen
@@ -125,7 +136,15 @@ const Navigation = () => {
             <Stack.Screen
               name="Register"
               component={RegisterScreen}
-              options={{ title: t('common:SignUp'), headerTintColor: '#1a6997', headerTitleAlign: 'center' }}
+              options={{ 
+                title: t('common:SignUp'), 
+                headerTintColor: '#1a6997', 
+                headerTitleAlign: 'center',
+                headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              }}
             />
             <Stack.Screen
               name="Reset Your Password"

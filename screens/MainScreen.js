@@ -21,7 +21,7 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import WeWorkScreen from './WeWorkScreen';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../context/AuthContext';
-import AboutScreen from './AboutScreen';
+// import AboutScreen from './AboutScreen';
 
 
 const Drawer = createDrawerNavigator();
@@ -33,7 +33,6 @@ const MainScreen = () => {
 
   return (
     <Drawer.Navigator
-
       screenOptions={{
         drawerActiveBackgroundColor: '#166795',
         drawerActiveTintColor: '#fff',
@@ -52,7 +51,7 @@ const MainScreen = () => {
         ), headerTintColor: '#1a6997',
         headerTitleAlign: 'center'
       }} />
-      <Drawer.Screen name={t('common:AboutUs')} component={AboutScreen}
+      <Drawer.Screen name={t('common:AboutUs')} component={AboutUs}
         options={{
           // title: '.{t('common: AboutUs')}.',
           drawerIcon: ({ focused, size }) => (

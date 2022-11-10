@@ -97,6 +97,8 @@ const RegisterScreen = ({ navigation }) => {
                           paddingHorizontal: 14,
                           width: '47%',
                           color: '#000',
+                          fontFamily: "Poppins-Light",
+                          fontSize: 14,                                             
                         }}
                         placeholder={t('common:FirstName')}
                         placeholderTextColor='#9c9c9c'
@@ -115,6 +117,8 @@ const RegisterScreen = ({ navigation }) => {
                           paddingHorizontal: 14,
                           width: '47%',
                           color: '#000',
+                          fontFamily: "Poppins-Light",
+                          fontSize: 14,
                         }}
                         placeholder={t('common:LastName')}
                         placeholderTextColor='#9c9c9c'
@@ -249,6 +253,8 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 14,
     color: '#000',
+    fontFamily: "Poppins-Light",
+    fontSize: 14,
   },
   link: {
     fontFamily: 'poppins-regular',

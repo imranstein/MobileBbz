@@ -35,9 +35,6 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 
 
-
-
-
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
@@ -126,8 +123,7 @@ const SearchPage = () => {
   useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested', 'TRenderHtml']);
   }, [])
-
-
+  
   const searchExam = (term, from_date, to_date, location_id, exam_level_id) => {
     console.log("searching for " + term, from_date, to_date, location_id, exam_level_id);
     setIsLoading(true);

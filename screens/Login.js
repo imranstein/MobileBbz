@@ -24,6 +24,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import CheckBox from '@react-native-community/checkbox';
 
 
+
 const Login = ({ navigation }) => {
   // const [email, setEmail] = useState(null);
   // const [password, setPassword] = useState(null);
@@ -38,6 +39,7 @@ const Login = ({ navigation }) => {
       .required(t('common:PasswordIsRequired'))
       .min(6, t('common:PasswordMustBeAtLeast6Characters')),
   });
+  
   if (isAuthenticating) {
     return <LoadingOverlay message="Logging you in..." />;
   }
@@ -150,7 +152,7 @@ const Login = ({ navigation }) => {
                       name="arrow-long-right"
                       size={18}
                       color="#1a6997"
-                      style={styles.icon}
+                      // style={styles.icon}
                     /></Text>
                   </View>
                 </TouchableOpacity>
@@ -203,7 +205,7 @@ export default Login;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#000000',
     padding: 10,
   },
   ImageBackground: {

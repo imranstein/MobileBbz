@@ -11,7 +11,6 @@ import SplashScreen from 'react-native-splash-screen';
 const App = () => {
   const [publishableKey, setPublishableKey] = useState(null);
 
-
   const getPublishableKey = async () => {
     const key = await axios.get(`${BASE_URL}/stripe-gateway`, {}, {
       headers: {
@@ -32,7 +31,7 @@ const App = () => {
   useEffect(() => {
     setTimeout(() => {
       SplashScreen.hide();
-    }, 500);
+    }, 1000);
   }, [])
   return (
     // <StripeProvider publishableKey="pk_test_51Ll82qSE1zKryg0yM2lHHw01sYprPfkQMJPMVWwq1oVEyEHhcdpQ5TCXCVirLyrvqQtdqX0v8uvfhzdAAX5Sevc5004SMzN7Fh">

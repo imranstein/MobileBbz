@@ -1,5 +1,6 @@
 export default {
     Login: 'Log In',
+    LoginCapital: 'LOGIN',
     SignUp: 'Sign Up',
     MyProfile: 'My Profile',
     BookingHistory: 'Booking History',
@@ -20,7 +21,7 @@ export default {
     ContinueAsAGuest: 'Continue as a Guest',
     DoNotHaveAnAccount: 'Do not have an account?',
     AlreadyHaveAnAccount: 'Already have an account?',
-    ToGetYourProfileAndStayUpdatedWithTheUpcomingExamsAndNews: 'to get your profile and stay updated with the upcoming exams And news',
+    ToGetYourProfileAndStayUpdatedWithTheUpcomingExamsAndNews: 'to get your profile and stay updated with the upcoming exams And news.',
     WelcomeTo: 'Welcome To',
     Enter: 'Enter',
     Email: 'E-mail',
