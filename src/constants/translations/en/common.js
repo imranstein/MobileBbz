@@ -1,5 +1,6 @@
 export default {
     Login: 'Log In',
+    LoginCap: 'LOGIN',
     SignUp: 'Sign Up',
     MyProfile: 'My Profile',
     BookingHistory: 'Booking History',

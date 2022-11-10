@@ -127,7 +127,7 @@ const Login = ({ navigation }) => {
                 }]}
                   // disabled={!isValid}
                   onPress={handleSubmit}>
-                  <Text style={styles.loginButtonText}>{t('common:Login')}</Text>
+                  <Text style={styles.loginButtonText}>{t('common:LoginCap')}</Text>
                 </TouchableOpacity>
                 <View style={styles.signup}>
                   <Text style={{ color: '#000000' }}>{t('common:DoNotHaveAnAccount')} </Text>
