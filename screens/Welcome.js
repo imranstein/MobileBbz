@@ -59,7 +59,7 @@ const Welcome = ({ navigation }) => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.push('Login')}>
-          <Text style={styles.buttonText}>{t('common:Login')}
+          <Text style={styles.buttonText}>{t('common:LoginCap')}
           </Text>
         </TouchableOpacity>
       </View>
