@@ -74,6 +74,12 @@ const Navigation = () => {
             <Stack.Screen
               name="Change Password"
               component={ChangePasswordScreen}
+              options={({ route }) => ({
+                title: t('common:ChangePassword'), headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 16,
+                }
+              })}
             />
             <Stack.Screen name="Exams" component={SearchPage} />
             <Stack.Screen name="NewsDetail"

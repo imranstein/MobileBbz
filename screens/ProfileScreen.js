@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { BASE_URL } from '../config';
 import axios from 'axios';
+import { scale } from 'react-native-size-matters';
 4
 
 const LANGUAGES = [
@@ -80,7 +81,7 @@ const ProfileScreen = () => {
         <Text style={{
           color: '#1a6997',
           marginLeft: 19,
-          marginVertical: 30,
+          // marginVertical: 30,
           fontWeight: 'bold',
         }}>
 
@@ -169,8 +170,7 @@ const ProfileScreen = () => {
               />
             </Text>
             <Text style={styles.label}>
-
-              <Text style={{ marginRight: 20 }}>{t('common:BookingHistory')}</Text>
+              {t('common:BookingHistory')}
             </Text>
           </View>
         </TouchableOpacity>
@@ -206,7 +206,7 @@ const ProfileScreen = () => {
               <MaterialIcons
                 name="power-settings-new"
                 size={27}
-                color="red"
+                color="#ED0925"
               />
             </Text>
             <Text style={styles.logoutLabel} onPress={logout}>
@@ -228,31 +228,37 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   profile: {
+    marginTop: scale(29),
     flexDirection: 'row',
     // flex: 0.2,
-    borderBottomWidth: 2,
-    borderBottomColor: '#DAE1E7',
+    // borderBottomWidth: 2,
+    // borderBottomColor: '#DAE1E7',
+    marginBottom: scale(27),
     // marginBottom: 5,
   },
   name: {
     fontSize: RFPercentage(3.3),
     color: '#1a6997',
     marginLeft: 11,
-    marginTop: 30,
+    // marginTop: 30,
     fontWeight: '600',
   },
   label: {
-    fontSize: RFPercentage(2.5),
+    fontSize: scale(14),
+    fontFamily: 'Poppins-Regular',
     color: '#5E6D77',
-    marginLeft: 18,
+    marginLeft: scale(18),
     marginTop: 30,
     fontWeight: '400',
   },
   list: {
     // flex: 0.3,
+    borderTopColor: '#DAE1E7',
+    borderTopWidth: 2,
     borderBottomWidth: 2,
     borderBottomColor: '#DAE1E7',
-    paddingBottom: 30,
+    paddingBottom: scale(32),
+    marginTop: 30,
     // shadowColor: '#000',
     // shadowOffset: { width: 0, height: 2 },
     // shadowOpacity: 0.8,
@@ -264,10 +270,10 @@ const styles = StyleSheet.create({
     // marginLeft: 5,
   },
   logoutLabel: {
-    fontSize: RFPercentage(2.65),
-    color: 'red',
-    marginLeft: 20,
-    marginTop: 30,
+    fontSize: scale(14),
+    color: '#ED0925',
+    marginLeft: scale(14),
+    marginTop: scale(32),
   },
   icon: {
     color: '#1a6997',
