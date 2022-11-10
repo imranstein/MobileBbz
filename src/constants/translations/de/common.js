@@ -3,6 +3,7 @@ import Welcome from "../../../../screens/Welcome";
 export default {
     Login: 'Anmeldung',
     LoginCap: 'Anmeldung',
+    ResetPassword: 'Passwort zurücksetzen',
     SignUp: 'Registrieren',
     MyProfile: 'Mein Profil',
     BookingHistory: 'Buchungsverlauf',

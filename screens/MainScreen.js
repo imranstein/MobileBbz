@@ -22,6 +22,7 @@ import WeWorkScreen from './WeWorkScreen';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../context/AuthContext';
 import AboutScreen from './AboutScreen';
+import { scale } from 'react-native-size-matters';
 
 
 const Drawer = createDrawerNavigator();
@@ -38,7 +39,7 @@ const MainScreen = () => {
       screenOptions={{
         drawerActiveBackgroundColor: '#166795',
         drawerActiveTintColor: '#fff',
-        drawerLabelStyle: { fontSize: RFPercentage(2.4), marginLeft: -16, fontFamily: 'Roboto-medium' }
+        drawerLabelStyle: { fontSize: scale(14), marginLeft: -17, fontFamily: 'Poppins-Regular' }
       }}
       drawerContent={props => <CustomDrawer{...props} />} initialRouteName="Main">
       <Drawer.Screen name={t('common:Home')} component={HomeScreen} options={{
@@ -51,7 +52,8 @@ const MainScreen = () => {
             color={focused ? '#fff' : '#1a6997'}
           />
         ), headerTintColor: '#1a6997',
-        headerTitleAlign: 'center'
+        headerTitleAlign: 'center',
+        headerTitleStyle: { fontFamily: 'Poppins-Regular', fontSize: scale(16) },
       }} />
       <Drawer.Screen name={t('common:AboutUs')} component={AboutUs}
         options={{
@@ -64,7 +66,7 @@ const MainScreen = () => {
             />
           ), headerTintColor: '#1a6997',
           headerTitleAlign: 'center',
-
+          headerTitleStyle: { fontFamily: 'Poppins-Regular', fontSize: scale(16) },
           headerRight: token != null ? () => (
 
 
@@ -101,6 +103,7 @@ const MainScreen = () => {
             />
           ), headerTintColor: '#1a6997',
           headerTitleAlign: 'center',
+          headerTitleStyle: { fontFamily: 'Poppins-Regular', fontSize: scale(16) },
           headerRight: token != null ? () => (
 
 
@@ -137,6 +140,7 @@ const MainScreen = () => {
             />
           ), headerTintColor: '#1a6997',
           headerTitleAlign: 'center',
+          headerTitleStyle: { fontFamily: 'Poppins-Regular', fontSize: scale(16) },
           headerRight: token != null ? () => (
 
 
@@ -173,6 +177,7 @@ const MainScreen = () => {
             />
           ), headerTintColor: '#1a6997',
           headerTitleAlign: 'center',
+          headerTitleStyle: { fontFamily: 'Poppins-Regular', fontSize: scale(16) },
           headerRight: token != null ? () => (
 
 
@@ -209,6 +214,7 @@ const MainScreen = () => {
             />
           ), headerTintColor: '#1a6997',
           headerTitleAlign: 'center',
+          headerTitleStyle: { fontFamily: 'Poppins-Regular', fontSize: scale(16) },
           headerRight: token != null ? () => (
 
 
@@ -245,6 +251,7 @@ const MainScreen = () => {
             />
           ), headerTintColor: '#1a6997',
           headerTitleAlign: 'center',
+          headerTitleStyle: { fontFamily: 'Poppins-Regular', fontSize: scale(16) },
           headerRight: token != null ? () => (
 
 

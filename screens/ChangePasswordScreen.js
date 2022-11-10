@@ -161,9 +161,10 @@ const ChangePasswordScreen = () => {
                     </View>
 
                   </View>
-                  <View>
-                    <Text style={[styles.error, { alignSelf: 'center' }]}>{error ? error : ''}</Text>
-                  </View>
+                  {error ?
+                    <View>
+                      <Text style={[styles.error, { alignSelf: 'center' }]}>{error ? error : ''}</Text>
+                    </View> : null}
                 </View>
 
               </View>
@@ -198,7 +199,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     borderRadius: 4,
     paddingHorizontal: 15,
-    paddingTop: 16,
+    paddingTop: scale(16),
     paddingBottom: 7,
   },
   submit: {
@@ -207,8 +208,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   submitLabel: {
+    fontFamily: 'Poppins-Medium',
     width: '90%',
-    fontSize: 16,
+    fontSize: scale(16),
     textTransform: 'uppercase',
     marginHorizontal: 20,
     marginVertical: 10,
@@ -228,12 +230,13 @@ const styles = StyleSheet.create({
     borderColor: '#DAE1E7',
     // marginVertical: 10,
     borderRadius: 4,
-    marginBottom: 20,
+    marginBottom: scale(20),
     justifyContent: 'flex-start',
     paddingHorizontal: 14,
     paddingVertical: 12,
     color: '#000',
     width: '100%',
+    height: scale(45),
     // marginRight: '5%',
   },
   inputs: {
@@ -246,7 +249,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     color: '#000',
-    marginBottom: '6%',
+    marginBottom: scale(14),
     fontWeight: '400',
   },
   error: {

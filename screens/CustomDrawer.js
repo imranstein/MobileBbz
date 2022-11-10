@@ -6,6 +6,7 @@ import { t } from 'i18next'
 import { useTranslation } from "react-i18next"
 import { AuthContext } from '../context/AuthContext'
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { scale } from 'react-native-size-matters'
 
 const CustomDrawer = (props) => {
     const { t } = useTranslation()
@@ -15,8 +16,8 @@ const CustomDrawer = (props) => {
         <DrawerContentScrollView {...props}>
             <View style={styles.drawerContent}>
                 <View style={styles.userInfoSection}>
-                    <View style={{ flexDirection: 'row', marginTop: 15, }}>
-                        <View style={{ marginLeft: 5, flexDirection: 'row', marginRight: 15, marginBottom: 20 }}>
+                    <View style={{ flexDirection: 'row', }}>
+                        <View style={{ marginLeft: 5, flexDirection: 'row', marginRight: 15, marginTop: scale(21), marginBottom: scale(19) }}>
                             <Text>
                                 <Icons
                                     name="hand-wave-outline"
@@ -46,17 +47,17 @@ const styles = StyleSheet.create({
         flex: 1,
         borderBottomColor: '#DAE1E7',
         borderBottomWidth: 2,
-        marginBottom: 20,
+        // marginBottom: 20,
     },
     userInfoSection: {
         paddingLeft: 23,
     },
     title: {
-        fontSize: RFValue(20),
-        marginTop: 12,
-        fontWeight: '800',
+        fontSize: scale(26),
+        // marginTop: scale(21),
+        // fontWeight: '800',
         color: '#1570a5',
         marginLeft: 12,
-        fontFamily: 'Roboto-Medium',
+        fontFamily: 'Poppins-Medium',
     },
 })

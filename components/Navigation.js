@@ -227,6 +227,7 @@ const Navigation = () => {
               name="Reset Your Password"
               component={ResetPassword}
               options={{
+                title: t('common:ResetPassword'),
                 headerTintColor: '#1570A5', headerTitleAlign: 'center', headerTitleStyle: {
                   fontFamily: "Poppins-Medium",
                   fontSize: 16,

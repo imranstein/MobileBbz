@@ -2,6 +2,7 @@ export default {
     Login: 'Log In',
     LoginCap: 'LOGIN',
     SignUp: 'Sign Up',
+    ResetPassword:'Reset Your Password',
     MyProfile: 'My Profile',
     BookingHistory: 'Booking History',
     ChangePassword: 'Change Password',
