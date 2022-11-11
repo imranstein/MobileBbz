@@ -22,7 +22,7 @@ export default {
     ContinueAsAGuest: 'Continue as a Guest',
     DoNotHaveAnAccount: 'Do not have an account ?',
     AlreadyHaveAnAccount: 'Already have an account ?',
-    ToGetYourProfileAndStayUpdatedWithTheUpcomingExamsAndNews: 'to get your profile and stay updated with the upcoming exams And news',
+    ToGetYourProfileAndStayUpdatedWithTheUpcomingExamsAndNews: 'Login/Sign Up to get your profile and stayupdated with the upcoming exams and news.',
     WelcomeTo: 'Welcome To',
     Enter: 'Enter',
     Email: 'E-mail',

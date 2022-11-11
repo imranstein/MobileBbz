@@ -54,7 +54,7 @@ const Welcome = ({ navigation }) => {
         </TouchableOpacity>
         <Text style={styles.welcome}>{t('common:WelcomeTo')} BBZ!</Text>
         <Text style={styles.description}>
-          {t('common:Login')}/{t('common:SignUp')} {t('common:ToGetYourProfileAndStayUpdatedWithTheUpcomingExamsAndNews')}
+          {t('common:ToGetYourProfileAndStayUpdatedWithTheUpcomingExamsAndNews')}
         </Text>
         <TouchableOpacity
           style={styles.button}
@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 140,
     textAlign: 'center',
     fontSize: 14,
+    fontWeight: 'bold',
   },
   signup: {
     marginTop: 15,

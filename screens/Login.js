@@ -242,6 +242,7 @@ const styles = StyleSheet.create({
   loginButtonText: {
     color: '#fff',
     fontFamily: 'Poppins-Bold',
+    fontWeight: 'bold',
     fontSize: 14,
     textAlign: 'center',
     paddingVertical: 13,

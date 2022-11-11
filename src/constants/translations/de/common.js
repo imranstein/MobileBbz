@@ -24,7 +24,7 @@ export default {
     ContinueAsAGuest: 'Weiter als Gast',
     DoNotHaveAnAccount: 'Du hast kein Konto?',
     AlreadyHaveAnAccount: 'Du hast bereits ein Konto ?',
-    ToGetYourProfileAndStayUpdatedWithTheUpcomingExamsAndNews: 'Um Ihr Profil zu erhalten und über die bevorstehenden Prüfungen und Nachrichten auf dem Laufenden zu bleiben',
+    ToGetYourProfileAndStayUpdatedWithTheUpcomingExamsAndNews: 'Melden Sie sich an/registrieren Sie sich, um Ihr Profil zu erhalten und über bevorstehende Prüfungen und Neuigkeiten auf dem Laufenden zu bleiben.',
     WelcomeTo: 'Willkommen bei',
     Enter: 'Eingabe',
     Email: 'E-Mail',
