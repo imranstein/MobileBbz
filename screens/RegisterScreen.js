@@ -96,9 +96,9 @@ const RegisterScreen = ({ navigation }) => {
                           paddingVertical: 12,
                           paddingHorizontal: 14,
                           width: '47%',
-                          height: scale(45),
+                          height: 45,
                           color: '#000',
-                          marginTop: scale(30)
+                          marginTop: 30
                         }}
                         placeholder={t('common:FirstName')}
                         placeholderTextColor='#9c9c9c'
@@ -116,9 +116,9 @@ const RegisterScreen = ({ navigation }) => {
                           paddingVertical: 12,
                           paddingHorizontal: 14,
                           width: '47%',
-                          height: scale(45),
+                          height: 45,
                           color: '#000',
-                          marginTop: scale(30)
+                          marginTop: 30
                         }}
                         placeholder={t('common:LastName')}
                         placeholderTextColor='#9c9c9c'
@@ -162,7 +162,7 @@ const RegisterScreen = ({ navigation }) => {
 
                     />
                     {touched.phone && errors.phone && <Text style={styles.error}>{errors.phone}</Text>}
-                    <View style={{ flexDirection: 'row', marginLeft: -7, marginTop: scale(21), }}>
+                    <View style={{ flexDirection: 'row', marginLeft: -7, marginTop: 21, }}>
                       <CheckBox
                         value={term}
                         onPress={() => setTerm(!term)}
@@ -170,7 +170,8 @@ const RegisterScreen = ({ navigation }) => {
                         tintColors={{ true: '#1570A5', false: '#B4B9BE', borderWidth: 1, }}
                       />
                       <Text style={{
-                        marginLeft: 8, fontSize: RFPercentage(2),
+                        fontSize: 12,
+                        fontFamily: 'Poppins-Light',
                         color: '#999', textAlignVertical: 'center', maxWidth: '80%'
                       }}>{t('common:IHaveReadAndAcceptThe')} <Text style={{ color: '#1570A5' }} onPress={() => Linking.openURL('https://www.sprachtestcenter.de/page/privacy-policy')}>{t('common:TermsAndConditions')}</Text></Text>
 
@@ -194,25 +195,25 @@ const RegisterScreen = ({ navigation }) => {
               <View
                 style={{
                   flexDirection: 'row',
-                  marginTop: scale(17),
+                  marginTop: 17,
                   justifyContent: 'center',
 
                 }}>
-                <Text style={{ color: '#000', fontSize: scale(12), fontFamily: 'Poppins-Light' }}>{t('common:AlreadyHaveAnAccount')} </Text>
+                <Text style={{ color: '#000', fontSize: 12, fontFamily: 'Poppins-Light' }}>{t('common:AlreadyHaveAnAccount')} </Text>
                 <TouchableOpacity onPress={() => navigation.push('Login')}>
                   <Text style={styles.link}>{t('common:Login')}</Text>
                 </TouchableOpacity>
               </View>
               <TouchableOpacity
                 onPress={() => navigation.push('Main')}>
-                <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: scale(14), marginBottom: scale(30) }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 14, marginBottom: 30 }}>
 
                   <Text
                     style={{
                       color: '#1570A5',
-                      fontSize: scale(14),
+                      fontSize: 14,
                       textAlign: 'center',
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Poppins-Regular',
                       // marginTop: '1%',
                     }}>
                     {t('common:ContinueAsAGuest')}
@@ -225,11 +226,11 @@ const RegisterScreen = ({ navigation }) => {
                   /></Text>
                 </View>
               </TouchableOpacity>
-            </View>
-          </View>
-        </ScrollView>
-      </View>
-    </ImageBackground>
+            </View >
+          </View >
+        </ScrollView >
+      </View >
+    </ImageBackground >
   );
 };
 
@@ -245,24 +246,25 @@ const styles = StyleSheet.create({
     // paddingVertical: 30,
     paddingHorizontal: 15,
     // marginVertical: 50,
-    marginTop: scale(32),
+    marginTop: 32,
     marginHorizontal: 10,
   },
   input: {
-    fontFamily: 'poppins-regular',
+    fontFamily: 'Poppins-Regular',
     // marginBottom: 20,
     borderWidth: 1,
     borderColor: '#DAE1E7',
     borderRadius: 4,
     // paddingVertical: 12,
-    marginTop: scale(20),
+    marginTop: 20,
     paddingHorizontal: 14,
-    height: scale(45),
+    height: 45,
     color: '#000',
   },
   link: {
     fontFamily: 'Poppins-Light',
     color: '#1570A5',
+    fontSize: 12
     // marginTop: '1%',
   },
   name: {
@@ -278,24 +280,24 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     fontFamily: 'poppins-regular',
-    // marginTop: scale(-20),
+    // marginTop: -20),
     // backgroundColor: '#1570A5',
     paddingVertical: 12,
     borderRadius: 4,
     // alignItems: 'center',
     justifyContent: 'flex-start',
-    marginTop: scale(29),
+    marginTop: 29,
   },
   loginButtonText: {
-    fontFamily: 'poppins-regular',
+    fontFamily: 'Poppins-Bold',
     color: '#fff',
-    fontSize: RFPercentage(2.4),
+    fontSize: 14,
     fontWeight: 'bold',
     textAlign: 'center',
     textTransform: 'uppercase',
   },
   error: {
-    fontFamily: 'poppins-regular',
+    fontFamily: 'Poppins-Regular',
     color: 'red',
     marginBottom: 10,
   },
