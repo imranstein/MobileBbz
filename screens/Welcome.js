@@ -33,7 +33,7 @@ const Welcome = ({ navigation }) => {
       <View>
         <TouchableOpacity
           onPress={() => navigation.push('Language')}>
-          <View style={{ alignContent: 'flex-end', justifyContent: 'flex-end', alignSelf: 'flex-end', alignItems: 'flex-end', marginTop: scale(10), marginBottom: scale(-10), marginRight: scale(10), borderColor: '#cecece', borderWidth: scale(1), padding: scale(5), borderRadius: scale(5) }}>
+          <View style={{ alignContent: 'flex-end', justifyContent: 'flex-end', alignSelf: 'flex-end', alignItems: 'flex-end', marginTop: 10, marginBottom: -10, marginRight: 10, borderColor: '#cecece', borderWidth: 1, padding: 5, borderRadius: 5 }}>
             <View style={{ flexDirection: 'row' }}>
               <Entypo
                 name="language"
@@ -43,8 +43,8 @@ const Welcome = ({ navigation }) => {
               />
               {/* <Text style={{
               color: '#000',
-              marginLeft: scale(5),
-              fontSize: scale(16)
+              marginLeft: 5),
+              fontSize: 16)
             }}>
               {t('common:Language')}</Text> */}
 
@@ -65,7 +65,8 @@ const Welcome = ({ navigation }) => {
       </View>
       <View style={styles.signup}>
         <Text style={{
-          fontSize: RFPercentage(2.45), color: '#000000'
+          fontFamily: 'Poppins-light',
+          fontSize: 14, color: '#000000'
         }}>{t('common:DoNotHaveAnAccount')} </Text>
         <TouchableOpacity onPress={() => navigation.push('Register')}>
           <Text style={styles.signupButton}>{t('common:SignUp')}
@@ -75,7 +76,7 @@ const Welcome = ({ navigation }) => {
       <TouchableOpacity
         onPress={() => navigation.push('Main')}>
         <View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
-          <Text style={{ marginTop: 7, marginRight: 5, }}><Entypo
+          <Text style={{ marginTop: 7, marginRight: 9, }}><Entypo
             name="arrow-long-left"
             size={18}
             color="#1a6997"
@@ -84,9 +85,10 @@ const Welcome = ({ navigation }) => {
           <Text
             style={{
               color: '#1570A5',
-              fontSize: RFPercentage(2.45),
+              fontSize: 14,
               textAlign: 'center',
-              marginTop: '1%',
+              fontFamily: 'Poppins-Regular',
+              marginTop: 7,
             }}>
             {t('common:ContinueAsAGuest')}
           </Text>
@@ -100,10 +102,10 @@ const Welcome = ({ navigation }) => {
 const styles = StyleSheet.create({
   welcome: {
     color: '#1570A5',
-    fontSize: scale(26),
+    fontSize: 26,
     fontWeight: 'normal',
     textAlign: 'center',
-    marginTop: scale(32),
+    marginTop: 32,
     fontFamily: 'Poppins-Medium'
   },
   container: {
@@ -115,39 +117,43 @@ const styles = StyleSheet.create({
   },
   description: {
     fontFamily: 'Poppins-Regular',
-    color: 'gray',
+    color: '#5E6D77',
     textAlign: 'center',
-    marginTop: scale(9),
-    paddingHorizontal: width * 0.042,
-    fontSize: RFValue(16),
+    marginTop: 9,
+    marginHorizontal: 50,
+    fontSize: 12,
+    height: 55,
+    width: 274
   },
   button: {
     backgroundColor: '#1570A5',
     borderRadius: 5,
-    paddingHorizontal: '12%',
-    width: '90%',
+
+    width: width - 36,
     marginLeft: '5%',
-    height: '17%',
-    marginTop: scale(20),
+    height: 45,
+    marginTop: 20,
+
   },
   buttonText: {
+    fontFamily: 'Poppins-Bold',
     color: '#fff',
+    paddingVertical: 13,
+    paddingHorizontal: 140,
     textAlign: 'center',
-    fontSize: width * 0.05,
-    fontWeight: 'bold',
-    marginTop: scale(13),
+    fontSize: 14,
   },
   signup: {
+    marginTop: 15,
     flexDirection: 'row',
     justifyContent: 'center',
     paddingHorizontal: 10,
-    marginTop: '-5%',
+
   },
   signupButton: {
     color: '#1570A5',
-    fontSize: RFValue(14),
-    marginLeft: '1%',
-    marginTop: '4%',
+    fontSize: 14,
+    // marginTop: '4%',
   },
 });
 export default Welcome;
