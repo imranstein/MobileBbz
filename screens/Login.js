@@ -98,24 +98,29 @@ const Login = ({ navigation }) => {
                     <Text style={[styles.error, { alignSelf: 'center' }]}>{error ? error : ''}</Text>
                   </View> : null}
                 <View style={{ flexDirection: 'row' }}>
-                  <View style={{ flexDirection: 'row', marginTop: -15 }}>
-                    <CheckBox
-                      value={rememberMe}
-                      onPress={() => setRememberMe(!rememberMe)}
-                      onValueChange={newValue => setRememberMe(newValue)}
-                      tintColors={{ true: '#1570A5', false: '#B4B9BE', borderWidth: 1, }}
-                    />
+                  <View style={{ flexDirection: 'row' }}>
                     <Text style={{
-                      fontSize: scale(12),
+                      marginTop: -8,
+                      marginLeft: -6,
+                    }}><CheckBox
+                        s
+                        value={rememberMe}
+                        onPress={() => setRememberMe(!rememberMe)}
+                        onValueChange={newValue => setRememberMe(newValue)}
+                        tintColors={{ true: '#1570A5', false: '#B4B9BE', borderWidth: 0.5, }}
+                      />
+                    </Text>
+                    <Text style={{
+                      fontSize: 12,
                       fontFamily: 'Poppins-Light',
-                      color: '#000000', marginTop: 6, maxWidth: '80%'
+                      color: '#000000'
                     }}>{t('common:RememberMe')}</Text>
 
                     {/* {touched.terms && errors.terms && <Text style={styles.error}>{errors.terms}</Text>} */}
                   </View>
                   <TouchableOpacity
                     style={[styles.button, {
-                      marginLeft: 60,
+                      marginLeft: 107,
                     }]}
                     onPress={() => navigation.push('Reset Your Password')}>
                     <Text style={styles.buttonText}>{t('common:ForgotPassword')}</Text>
@@ -130,25 +135,29 @@ const Login = ({ navigation }) => {
                   <Text style={styles.loginButtonText}>{t('common:LoginCap')}</Text>
                 </TouchableOpacity>
                 <View style={styles.signup}>
-                  <Text style={{ color: '#000000' }}>{t('common:DoNotHaveAnAccount')} </Text>
+                  <Text style={{
+                    fontFamily: 'Poppins-Light',
+                    fontSize: 12, color: '#000000'
+                  }}>{t('common:DoNotHaveAnAccount')} </Text>
                   <TouchableOpacity onPress={() => navigation.push('Register')}>
                     <Text style={styles.signupButton}>{t('common:SignUp')}</Text>
                   </TouchableOpacity>
                 </View>
                 <TouchableOpacity
                   onPress={() => navigation.push('Main')}>
-                  <View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
+                  <View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center', marginTop: 11 }}>
 
                     <Text
                       style={{
                         color: '#1570A5',
-                        fontSize: RFPercentage(2.45),
+                        fontFamily: 'Poppins-Regular',
+                        fontSize: 14,
                         textAlign: 'center',
                         // marginTop: '1%',
                       }}>
                       {t('common:ContinueAsAGuest')}
                     </Text>
-                    <Text style={{ marginTop: 3, marginLeft: 5, }}><Entypo
+                    <Text style={{ marginTop: 1.5, marginLeft: 5, }}><Entypo
                       name="arrow-long-right"
                       size={18}
                       color="#1a6997"
@@ -160,41 +169,7 @@ const Login = ({ navigation }) => {
             )}
           </Formik>
         </ScrollView>
-        {/* <View style={styles.loginContent}>
-        <TextInput
-          style={styles.textInput}
-          placeholder={t('common:Email')}
-          placeholderTextColor='#9c9c9c'
-          onChangeText={text => setEmail(text)}
-        />
-      </View>
-      <View>
-        <TextInput
-          style={styles.textInput}
-          placeholder={t('common:Password')}
-          placeholderTextColor='#9c9c9c'
-          onChangeText={text => setPassword(text)}
-          secureTextEntry
-        />
-      </View>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.push('Reset Your Password')}>
-        <Text style={styles.buttonText}>{t('common:ForgotPassword')}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.loginButton}
-        onPress={() => {
-          login(email, password);
-        }}>
-        <Text style={styles.loginButtonText}>{t('common:Login')}</Text>
-      </TouchableOpacity>
-      <View style={styles.signup}>
-        <Text style={{ color: '#999' }}>{t('common:DoNotHaveAnAccount')} </Text>
-        <TouchableOpacity onPress={() => navigation.push('Register')}>
-          <Text style={styles.signupButton}>{t('common:SignUp')}</Text>
-        </TouchableOpacity>
-      </View> */}
+
       </View>
     </ImageBackground >
   );
@@ -217,12 +192,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: 30,
     paddingBottom: 26,
-    marginTop: scale(32),
+    marginTop: 32,
     borderWidth: 1,
     borderColor: '#fff',
     borderRadius: 10,
     shadowColor: '#000',
-    marginBottom: scale(30),
+    marginBottom: 30,
     // shadowOffset: { width: 0, height: 2 },
     // shadowOpacity: 0.8,
     // shadowRadius: 2,
@@ -230,6 +205,7 @@ const styles = StyleSheet.create({
     // opacity: 0.8,
   },
   textInput: {
+    height: 45,
     borderWidth: 1,
     borderColor: '#DAE1E7',
     borderRadius: 4,
@@ -242,42 +218,45 @@ const styles = StyleSheet.create({
   // loginContent: {
   //   // marginTop: 50,
   // },
-  // button: {
-  //   // marginTop: 10,
-  //   justifyContent: 'flex-end',
-  // },
+  button: {
+    // marginTop: 10,
+    // justifyContent: 'flex-end',
+  },
   buttonText: {
     color: '#1570A5',
-    fontSize: RFPercentage(2.1),
+    fontSize: 12,
     marginBottom: 29,
     textAlign: 'right',
-    marginTop: scale(-10),
+    fontFamily: 'Poppins-Light'
+
   },
   loginButton: {
     // marginTop: 10,
     // backgroundColor: '#1570a5',
-    paddingVertical: 12,
+    // paddingVertical: 12,
     borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    marginBottom: scale(16),
+    marginBottom: 16,
   },
   loginButtonText: {
     color: '#fff',
-    fontWeight: 'bold',
-    fontSize: RFPercentage(2.7),
+    fontFamily: 'Poppins-Bold',
+    fontSize: 14,
     textAlign: 'center',
+    paddingVertical: 13,
+    height: 45,
   },
   signup: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
     // marginTop: 10,
   },
   signupButton: {
+    fontFamily: 'Poppins-Light',
     color: '#166795',
-    fontSize: RFPercentage(2.1),
+    fontSize: 12,
     marginLeft: 4,
   },
   error: {
